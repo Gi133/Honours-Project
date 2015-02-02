@@ -1,0 +1,3 @@
+WindowSettings = {
+	name = "Angel Demo",
+}
