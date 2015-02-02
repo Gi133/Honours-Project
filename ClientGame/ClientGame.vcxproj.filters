@@ -51,6 +51,18 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMap.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UINPCInfo.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIWorldInfo.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -68,6 +80,18 @@
       <Filter>SourceCode\Headers</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
+      <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMap.h">
+      <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UINPCInfo.h">
+      <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWorldInfo.h">
       <Filter>SourceCode\Headers\UI</Filter>
     </ClInclude>
   </ItemGroup>

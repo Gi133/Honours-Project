@@ -28,18 +28,18 @@ int main(int argc, char* argv[])
 	}
 
 	sysLog.Log("TEST");
-	
+
 	//adds the default grid so you can more easily place Actors
 	theWorld.Add(new GridActor(), -1);
-	
+
 	// Add custom game manager
 	theWorld.SetGameManager(&theGameManger);
-	
+
 	// do all your setup first, because this function won't return until you're exiting
 	theWorld.StartGame();
-	
+
 	// any cleanup can go here
 	theWorld.Destroy();
-	
+
 	return 0;
 }

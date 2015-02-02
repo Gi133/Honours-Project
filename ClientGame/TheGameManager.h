@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stdafx.h"
+#include "UIManager.h"
 
 #define theGameManger TheGameManager::getInstance()
 
@@ -15,5 +16,8 @@ public:
 protected:
 	TheGameManager();
 	static TheGameManager* _instance;
+
+private:
+	std::unique_ptr<UIManager> theUIManager;
 };
 

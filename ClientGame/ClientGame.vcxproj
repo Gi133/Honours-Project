@@ -183,7 +183,11 @@ cd ..\Tools\BuildScripts\
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="TheGameManager.cpp" />
+    <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UIMap.cpp" />
+    <ClCompile Include="UINPCInfo.cpp" />
+    <ClCompile Include="UIWorldInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc" />
@@ -192,7 +196,11 @@ cd ..\Tools\BuildScripts\
     <ClInclude Include="platforms\win\resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TheGameManager.h" />
+    <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIMap.h" />
+    <ClInclude Include="UINPCInfo.h" />
+    <ClInclude Include="UIWorldInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\defaults.lua" />
@@ -210,4 +218,9 @@ cd ..\Tools\BuildScripts\
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="platforms\win\ClientGame.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

@@ -12,6 +12,7 @@ TheGameManager& TheGameManager::getInstance()
 
 TheGameManager::TheGameManager()
 {
+	theUIManager.reset(new UIManager());
 }
 
 void TheGameManager::Render()
