@@ -119,4 +119,6 @@ void UINPCInfo::SetupTextActors()
 	textClassContent->SetFont("UIContentFont");
 	textClassContent->SetPosition(textClass->GetBoundingBox().Max.X + contentOffsetX, textClass->GetBoundingBox().Min.Y);
 	theWorld.Add(textClassContent.get(), "UITextLayer");
+
+	// I AM A CHANGE!!
 }
