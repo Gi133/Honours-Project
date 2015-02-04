@@ -177,6 +177,9 @@ cd ..\Tools\BuildScripts\
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/wd4716 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/wd4716 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="City.cpp" />
+    <ClCompile Include="Location.cpp" />
+    <ClCompile Include="MapPOI.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -193,6 +196,9 @@ cd ..\Tools\BuildScripts\
     <ResourceCompile Include="platforms\win\ClientGame.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="City.h" />
+    <ClInclude Include="Location.h" />
+    <ClInclude Include="MapPOI.h" />
     <ClInclude Include="platforms\win\resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TheGameManager.h" />

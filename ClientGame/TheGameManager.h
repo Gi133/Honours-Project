@@ -2,6 +2,8 @@
 
 #include "stdafx.h"
 #include "UIManager.h"
+#include "City.h"
+#include "Location.h"
 
 #define theGameManger TheGameManager::getInstance()
 
@@ -10,8 +12,8 @@ class TheGameManager :
 {
 public:
 	static TheGameManager& getInstance();
-	virtual void Render();
-	virtual void Update(float dt);
+	virtual void Render() override;
+	virtual void Update(float dt) override;
 
 protected:
 	TheGameManager();
@@ -19,4 +21,12 @@ protected:
 
 private:
 	std::unique_ptr<UIManager> uiManager;
+	std::vector<std::unique_ptr<City>> cityContainer;
+	std::vector<std::unique_ptr<Location>> locationContainer;
+
+	Vector2 mapSize;
+
+	void GenerateMap();
+	void GenerateCities(int cityNumber); // Function that generates cities.
+	void GenerateLocations(); // Function that generate locations.
 };

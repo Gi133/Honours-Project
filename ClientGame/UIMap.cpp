@@ -53,6 +53,9 @@ void UIMap::Setup()
 	backgroundUI->SetColor(0.0f, 0.8f, 0.0f, 1.0f);
 	theWorld.Add(backgroundUI.get(), "UILayer");
 
+	thePrefs.SetFloat("Map", "width", width);
+	thePrefs.SetFloat("Map", "height", height);
+
 	UpdateMinMax();
 }
 

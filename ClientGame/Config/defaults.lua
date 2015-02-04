@@ -16,6 +16,12 @@ LayerNames =
 	UIText = "UITextLayer",
 }
 
+MapGeneratorSettings = 
+{
+	cities = 10,
+	locations = 10,
+}
+
 -- The data below is in percentages.
 UINPCInfoSettings = 
 {

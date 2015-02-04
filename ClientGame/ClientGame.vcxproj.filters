@@ -46,6 +46,12 @@
     <Filter Include="SourceCode\Headers\Core">
       <UniqueIdentifier>{fd7bdece-4387-4795-94c9-4aaf9c602924}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\Code\Map Entities">
+      <UniqueIdentifier>{9afe6538-e5bc-47f6-b051-849e18b2111d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Headers\Map Entities">
+      <UniqueIdentifier>{6eb05561-71c2-473e-bf6b-ce25b065bc5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Angel\Scripting\Interfaces\AngelLuaWrapping.cpp">
@@ -74,6 +80,15 @@
     </ClCompile>
     <ClCompile Include="TheGameManager.cpp">
       <Filter>SourceCode\Code\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="MapPOI.cpp">
+      <Filter>SourceCode\Code\Map Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="City.cpp">
+      <Filter>SourceCode\Code\Map Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Location.cpp">
+      <Filter>SourceCode\Code\Map Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +120,15 @@
     </ClInclude>
     <ClInclude Include="TheGameManager.h">
       <Filter>SourceCode\Headers\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MapPOI.h">
+      <Filter>SourceCode\Headers\Map Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="City.h">
+      <Filter>SourceCode\Headers\Map Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Location.h">
+      <Filter>SourceCode\Headers\Map Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
