@@ -77,6 +77,9 @@ void UINPCInfo::Update()
 
 void UINPCInfo::SetupTextActors()
 {
+	// TODO:
+	// Tidy up a little bit.
+
 	// Variable Declarations
 	// offset to move the starting position of the text.
 	Vector2 offset = Vector2(width * thePrefs.GetFloat("UINPCInfoSettings", "textStartX"), height * thePrefs.GetFloat("UINPCInfoSettings", "textStartY"));
@@ -119,6 +122,4 @@ void UINPCInfo::SetupTextActors()
 	textClassContent->SetFont("UIContentFont");
 	textClassContent->SetPosition(textClass->GetBoundingBox().Max.X + contentOffsetX, textClass->GetBoundingBox().Min.Y);
 	theWorld.Add(textClassContent.get(), "UITextLayer");
-
-	// I AM A CHANGE!!
 }
