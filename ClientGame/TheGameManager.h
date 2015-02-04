@@ -18,6 +18,5 @@ protected:
 	static TheGameManager* _instance;
 
 private:
-	std::unique_ptr<UIManager> theUIManager;
+	std::unique_ptr<UIManager> uiManager;
 };
-

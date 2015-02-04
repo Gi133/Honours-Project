@@ -4,9 +4,7 @@
 int main(int argc, char* argv[])
 {
 	// Initialize a new log file.
-	FileLog *fileLog = new FileLog(FileLog::MakeLogFileName("StartupLog"));
-	sysLog.AddLog(fileLog);
-	fileLog->Log("TEST");
+	sysLog.AddLog(new FileLog(FileLog::MakeLogFileName("StartupLog")));
 
 	std::string windowTableName = "WindowSettings";
 
@@ -14,6 +12,7 @@ int main(int argc, char* argv[])
 	{
 		// World could not be initialized.
 		// Write down the info in log.
+		// ISSUE : File logging does not appear to work properly, look into it.
 		sysLog.Log("Error Initializing theWorld.\n");
 		sysLog.Log("Parameters used:\n");
 		sysLog.Log("Window Width: " + thePrefs.GetInt(windowTableName, "width"));
@@ -27,10 +26,17 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	sysLog.Log("TEST");
+	// Layer setup
+	// TODO: Add error detection.
+	theWorld.NameLayer(thePrefs.GetString("LayerNames", "UI"), 1);
+	theWorld.NameLayer(thePrefs.GetString("LayerNames", "UIText"), 2);
+
+	// Register Text Font
+	RegisterFont("Resources/Fonts/Inconsolata.otf", 25, "UITitleFont");
+	RegisterFont("Resources/Fonts/Inconsolata.otf", 16, "UIContentFont");
 
 	//adds the default grid so you can more easily place Actors
-	theWorld.Add(new GridActor(), -1);
+	theWorld.Add(new GridActor(), 0);
 
 	// Add custom game manager
 	theWorld.SetGameManager(&theGameManger);

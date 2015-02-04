@@ -7,4 +7,3 @@ public:
 	UIMap();
 	~UIMap();
 };
-

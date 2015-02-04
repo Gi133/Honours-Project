@@ -7,4 +7,3 @@ public:
 	UIWorldInfo();
 	~UIWorldInfo();
 };
-

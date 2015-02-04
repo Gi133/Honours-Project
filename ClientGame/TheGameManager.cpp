@@ -12,7 +12,7 @@ TheGameManager& TheGameManager::getInstance()
 
 TheGameManager::TheGameManager()
 {
-	theUIManager.reset(new UIManager());
+	uiManager.reset(new UIManager());
 }
 
 void TheGameManager::Render()
@@ -21,5 +21,5 @@ void TheGameManager::Render()
 
 void TheGameManager::Update(float dt)
 {
-	
+	uiManager->Update();
 }

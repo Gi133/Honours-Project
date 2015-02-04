@@ -34,6 +34,18 @@
     <Filter Include="SourceCode\Headers\UI">
       <UniqueIdentifier>{d96ad208-19bd-4cd9-a533-963347a09551}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\Code\NPC">
+      <UniqueIdentifier>{97bda387-dea9-49ed-b312-633a0247c320}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Headers\NPC">
+      <UniqueIdentifier>{a48b8d06-b285-4f6e-86b4-918f7e2a7286}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Code\Core">
+      <UniqueIdentifier>{3e74f2a5-609d-4d33-9533-a4c493215ca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Headers\Core">
+      <UniqueIdentifier>{fd7bdece-4387-4795-94c9-4aaf9c602924}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Angel\Scripting\Interfaces\AngelLuaWrapping.cpp">
@@ -41,12 +53,6 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>sys</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>SourceCode\Code</Filter>
-    </ClCompile>
-    <ClCompile Include="TheGameManager.cpp">
-      <Filter>SourceCode\Code</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
       <Filter>SourceCode\Code\UI</Filter>
@@ -63,6 +69,12 @@
     <ClCompile Include="UIWorldInfo.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>SourceCode\Code\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="TheGameManager.cpp">
+      <Filter>SourceCode\Code\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -75,9 +87,6 @@
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>sys</Filter>
-    </ClInclude>
-    <ClInclude Include="TheGameManager.h">
-      <Filter>SourceCode\Headers</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>SourceCode\Headers\UI</Filter>
@@ -93,6 +102,9 @@
     </ClInclude>
     <ClInclude Include="UIWorldInfo.h">
       <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGameManager.h">
+      <Filter>SourceCode\Headers\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
