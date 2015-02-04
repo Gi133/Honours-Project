@@ -19,10 +19,26 @@ LayerNames =
 -- The data below is in percentages.
 UINPCInfoSettings = 
 {
-	width = 0.33,
+	width = 0.20,
 	height = 1.00,
 	textStartX = 0.1,
-	textStartY = 0.1,
+	textStartY = 0.18,
 	textOffsetY = 0.8,
 	contentOffset = 0.1,
+}
+
+UIWorldInfoSettings =
+{
+	width = 0.80,
+	height = 0.15,
+	textStartX = 0.15,
+	textStartY = 0.5,
+	textOffsetX = 1.2,
+	contentOffset = 0.1,
+}
+
+UIMapSettings = 
+{
+	width = 0.80,
+	height = 0.85,
 }

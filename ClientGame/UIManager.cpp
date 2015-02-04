@@ -19,4 +19,5 @@ void UIManager::Update()
 {
 	// Update function for UI.
 	uiNPCInfo->Update();
+	uiWorldInfo->Update();
 }

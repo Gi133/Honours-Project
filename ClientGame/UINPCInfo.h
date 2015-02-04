@@ -13,7 +13,7 @@ private:
 	std::string nameString, classString;
 
 	void Setup() override;
-	void SetupTextActors();
+	void SetupTextActors() override;
 
 public:
 	UINPCInfo();

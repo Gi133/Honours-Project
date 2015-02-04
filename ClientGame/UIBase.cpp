@@ -29,3 +29,7 @@ void UIBase::UpdateMinMax()
 void UIBase::Setup()
 {
 }
+
+void UIBase::SetupTextActors()
+{
+}

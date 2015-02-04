@@ -26,4 +26,5 @@ protected:
 
 private:
 	virtual void Setup(); // Override in children.
+	virtual void SetupTextActors(); // Override in children.
 };

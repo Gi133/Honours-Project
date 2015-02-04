@@ -9,6 +9,8 @@ namespace
 	const float contentOffsetXFallBack = 0.1f;
 	const float textOffsetYFallBack = 1.2f;
 	const Vector2 namePositionFallBack = Vector2(0.1f, 0.1f);
+
+	// Font Color
 	const Color textColour = Color(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
