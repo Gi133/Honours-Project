@@ -2,8 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
-
+	*/
 
 #include "Gwen/Anim.h"
 #include "Gwen/Utility.h"
@@ -16,29 +15,29 @@ using namespace Gwen;
 static Gwen::Anim::Animation::List	g_Animations;
 static Gwen::Anim::Animation::ChildList g_AnimationsListed;
 
-void Gwen::Anim::Add( Gwen::Controls::Base* control, Animation* animation )
+void Gwen::Anim::Add(Gwen::Controls::Base* control, Animation* animation)
 {
 	animation->m_Control = control;
 
-	g_Animations[control].push_back( animation );
+	g_Animations[control].push_back(animation);
 }
 
-void Gwen::Anim::Cancel( Gwen::Controls::Base* control )
+void Gwen::Anim::Cancel(Gwen::Controls::Base* control)
 {
 	/* cannot use std::list iterator with algoryhtmns based on pointers
-	struct AnimDeletePredicate 
+	struct AnimDeletePredicate
 	{
-		AnimDeletePredicate( Gwen::Controls::Base* control )
-		{
-			this->control = control;
-		}
+	AnimDeletePredicate( Gwen::Controls::Base* control )
+	{
+	this->control = control;
+	}
 
-		bool operator() ( Gwen::Anim::Animation* anim ) 
-		{
-			return anim->m_Control == control;
-		}
+	bool operator() ( Gwen::Anim::Animation* anim )
+	{
+	return anim->m_Control == control;
+	}
 
-		Gwen::Controls::Base* control;
+	Gwen::Controls::Base* control;
 	};
 
 	std::remove_if ( g_Animations.begin(), g_Animations.end(), AnimDeletePredicate( control ) );
@@ -53,7 +52,7 @@ void Gwen::Anim::Cancel( Gwen::Controls::Base* control )
 			do
 			{
 				delete (*iAnimationChild);
-			}while(++iAnimationChild != ChildAnimationsForControl.end());
+			} while (++iAnimationChild != ChildAnimationsForControl.end());
 		}
 		g_Animations.erase(iAnimations);
 	}
@@ -63,10 +62,10 @@ void Gwen::Anim::Think()
 {
 	Gwen::Anim::Animation::List::iterator it = g_Animations.begin();
 
-	if ( it != g_Animations.end() )
+	if (it != g_Animations.end())
 	{
 		Gwen::Anim::Animation::ChildList::iterator itChild;
-		
+
 		Gwen::Anim::Animation* anim;
 
 		do
@@ -79,9 +78,9 @@ void Gwen::Anim::Think()
 
 					anim->Think();
 
-					if ( anim->Finished() )
+					if (anim->Finished())
 					{
-						itChild = it->second.erase( itChild );
+						itChild = it->second.erase(itChild);
 
 						delete anim;
 					}
@@ -89,16 +88,13 @@ void Gwen::Anim::Think()
 					{
 						++itChild;
 					}
-
-				}while(itChild != it->second.end());
+				} while (itChild != it->second.end());
 			}
-			
-		}while(++it != g_Animations.end());
+		} while (++it != g_Animations.end());
 	}
-
 }
 
-Gwen::Anim::TimedAnimation::TimedAnimation( float fLength, float fDelay, float fEase )
+Gwen::Anim::TimedAnimation::TimedAnimation(float fLength, float fDelay, float fEase)
 {
 	m_fStart = Platform::GetTimeInSeconds() + fDelay;
 	m_fEnd = m_fStart + fLength;
@@ -107,38 +103,38 @@ Gwen::Anim::TimedAnimation::TimedAnimation( float fLength, float fDelay, float f
 	m_bFinished = false;
 }
 
-float GetEased( float fTime, float fEase )
+float GetEased(float fTime, float fEase)
 {
 	// Ease in and Out if ease is < 0
-	if ( fEase < 0 )
-		return -fTime/2 * (cos(3.14159f*fTime) - 1);
+	if (fEase < 0)
+		return -fTime / 2 * (cos(3.14159f*fTime) - 1);
 
-	return pow( fTime, fEase );
+	return pow(fTime, fEase);
 }
 
 void Gwen::Anim::TimedAnimation::Think()
 {
-	if ( m_bFinished ) return;
+	if (m_bFinished) return;
 
 	float fCurrent = Platform::GetTimeInSeconds();
 	float fSecondsIn = fCurrent - m_fStart;
-	if ( fSecondsIn < 0.0f ) return;
+	if (fSecondsIn < 0.0f) return;
 
-	if ( !m_bStarted )
+	if (!m_bStarted)
 	{
 		m_bStarted = true;
 		OnStart();
 	}
 
-	float fDelta = fSecondsIn / ( m_fEnd - m_fStart );
-	if ( fDelta < 0.0f ) fDelta = 0.0f;
-	if ( fDelta > 1.0f ) fDelta = 1.0f;
+	float fDelta = fSecondsIn / (m_fEnd - m_fStart);
+	if (fDelta < 0.0f) fDelta = 0.0f;
+	if (fDelta > 1.0f) fDelta = 1.0f;
 
-	float fEased = GetEased( fDelta, m_fEase );
+	float fEased = GetEased(fDelta, m_fEase);
 
-	Run( fEased );
+	Run(fEased);
 
-	if ( fDelta == 1.0f )
+	if (fDelta == 1.0f)
 	{
 		m_bFinished = true;
 		OnFinish();

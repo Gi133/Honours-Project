@@ -41,7 +41,7 @@ void b2FrictionJointDef::Initialize(b2Body* bA, b2Body* bB, const b2Vec2& anchor
 }
 
 b2FrictionJoint::b2FrictionJoint(const b2FrictionJointDef* def)
-: b2Joint(def)
+	: b2Joint(def)
 {
 	m_localAnchorA = def->localAnchorA;
 	m_localAnchorB = def->localAnchorB;

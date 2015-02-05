@@ -1,29 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2008-2014, Shane Liesegang
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without 
+//
+// Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimer in the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the copyright holder nor the names of any 
-//       contributors may be used to endorse or promote products derived from 
+//     * Neither the name of the copyright holder nor the names of any
+//       contributors may be used to endorse or promote products derived from
 //       this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
@@ -42,12 +42,8 @@ void DemoScreenMovingActor::Start()
 	a->SetColor(1.0f, 1.0f, 0.0f, 0.5f);
 	theWorld.Add(a);
 
-
-
-
-
-	//Demo housekeeping below this point. 
-	#pragma region Demo Housekeeping
+	//Demo housekeeping below this point.
+#pragma region Demo Housekeeping
 	t = new TextActor("Console", "This Actor gets moved around by the left thumbstick. Try it.");
 	t->SetPosition(0, 3.5);
 	t->SetAlignment(TXT_Center);
@@ -69,7 +65,7 @@ void DemoScreenMovingActor::Start()
 	_objects.push_back(t2);
 	_objects.push_back(t3);
 	_objects.push_back(a);
-	#pragma endregion
+#pragma endregion
 }
 
 void DemoScreenMovingActor::Update(float dt)
@@ -85,12 +81,12 @@ void DemoScreenMovingActor::Update(float dt)
 
 	//Update position based on thumbstick
 	Vec2i movementL = theController.GetLeftThumbstick(); //returns a 2d integer vector
-														 // where each component ranges
-														 // from -32768 to 32768
+	// where each component ranges
+	// from -32768 to 32768
 
 	//NOTE: by default, the thumbstick has a dead zone around the middle where
 	//  it will report position as 0. This prevents jitter when the stick isn't
-	//  being touched. 
+	//  being touched.
 
 	Vector2 position;
 	if (movementL.X)
@@ -112,7 +108,7 @@ void DemoScreenMovingActor::Update(float dt)
 		position.Y = 0.0f;
 	}
 
-	//Update the position with our calculated values. 
+	//Update the position with our calculated values.
 	a->SetPosition(position);
 
 	//Every tick, update the rotation if B is held down
@@ -125,16 +121,15 @@ void DemoScreenMovingActor::Update(float dt)
 		}
 	}
 
-
 	//Doing the same math we did above for the regular Actor, but this
-	//  time applying the position changes to theCamera singleton. 
+	//  time applying the position changes to theCamera singleton.
 	Vec2i movementR = theController.GetRightThumbstick();
-	if ( (movementR.X != 0) || (movementR.Y != 0) )
+	if ((movementR.X != 0) || (movementR.Y != 0))
 	{
 		Vector2 camPos;
 		camPos.X = 2.0f * ((float)movementR.X / 32768.0f);
 		camPos.Y = 2.0f * ((float)movementR.Y / 32768.0f);
-		theCamera.SetPosition(camPos.X, camPos.Y);		
+		theCamera.SetPosition(camPos.X, camPos.Y);
 	}
 	else
 	{

@@ -23,7 +23,7 @@
 #include <memory>
 using namespace std;
 
-int32 b2BlockAllocator::s_blockSizes[b2_blockSizes] = 
+int32 b2BlockAllocator::s_blockSizes[b2_blockSizes] =
 {
 	16,		// 0
 	32,		// 1
@@ -61,7 +61,7 @@ b2BlockAllocator::b2BlockAllocator()
 	m_chunkSpace = b2_chunkArrayIncrement;
 	m_chunkCount = 0;
 	m_chunks = (b2Chunk*)b2Alloc(m_chunkSpace * sizeof(b2Chunk));
-	
+
 	memset(m_chunks, 0, m_chunkSpace * sizeof(b2Chunk));
 	memset(m_freeLists, 0, sizeof(m_freeLists));
 
@@ -181,8 +181,8 @@ void b2BlockAllocator::Free(void* p, int32 size)
 		b2Chunk* chunk = m_chunks + i;
 		if (chunk->blockSize != blockSize)
 		{
-			b2Assert(	(int8*)p + blockSize <= (int8*)chunk->blocks ||
-						(int8*)chunk->blocks + b2_chunkSize <= (int8*)p);
+			b2Assert((int8*)p + blockSize <= (int8*)chunk->blocks ||
+				(int8*)chunk->blocks + b2_chunkSize <= (int8*)p);
 		}
 		else
 		{

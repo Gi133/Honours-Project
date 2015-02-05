@@ -37,14 +37,14 @@
 #include "Gwen/Controls/WindowControl.h"
 
 #if defined(__APPLE__)
-	// included files from gwen trigger Clang/GCC warnings
-	#pragma GCC diagnostic push
-	#pragma GCC diagnostic ignored "-Wdangling-else"
-	#pragma GCC diagnostic ignored "-Wunused-variable"
+// included files from gwen trigger Clang/GCC warnings
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdangling-else"
+#pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
-		#include "Gwen/Skins/TexturedBase.h"
+#include "Gwen/Skins/TexturedBase.h"
 #if defined(__APPLE__)
-	#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
 #endif
 
 #include "../UI/GwenRenderer.h"
@@ -52,39 +52,37 @@
 #include "../Infrastructure/Camera.h"
 #include "../Infrastructure/World.h"
 
-
-typedef std::map<AngelUIHandle, void (*)()> ButtonMapping;
-typedef std::map<AngelUIHandle, void (*)(int)> ChoiceMapping;
+typedef std::map<AngelUIHandle, void(*)()> ButtonMapping;
+typedef std::map<AngelUIHandle, void(*)(int)> ChoiceMapping;
 
 class EventHandler : public Gwen::Event::Handler
 {
 public:
-	void AddButtonCallback(Gwen::Controls::Base* control, void (*callback)())
+	void AddButtonCallback(Gwen::Controls::Base* control, void(*callback)())
 	{
 		_buttonCallbacks[control] = callback;
 	}
-	
-	void AddChoiceCallback(Gwen::Controls::Base* control, void (*callback)(int))
+
+	void AddChoiceCallback(Gwen::Controls::Base* control, void(*callback)(int))
 	{
 		_choiceCallbacks[control] = callback;
 	}
-	
-	
+
 	void OnPress(Gwen::Controls::Base* control)
 	{
 		Check(control);
 	}
-	
+
 private:
 	void Check(Gwen::Controls::Base* control)
 	{
 		ButtonMapping::iterator buttonIt = _buttonCallbacks.find(control);
 		if (buttonIt != _buttonCallbacks.end())
 		{
-            if (buttonIt->second != NULL)
-            {
-                buttonIt->second();
-            }
+			if (buttonIt->second != NULL)
+			{
+				buttonIt->second();
+			}
 			return;
 		}
 
@@ -105,26 +103,25 @@ private:
 				butIt++;
 				count++;
 			}
-			
-            if (choiceIt->second != NULL)
-            {
-                choiceIt->second(button);
-            }
+
+			if (choiceIt->second != NULL)
+			{
+				choiceIt->second(button);
+			}
 			theUI.RemoveUIElement(choiceIt->first);
 			return;
 		}
 	}
-	
+
 	ButtonMapping _buttonCallbacks;
 	ChoiceMapping _choiceCallbacks;
 };
 
-
-namespace 
+namespace
 {
 	Gwen::Controls::Canvas* AngelCanvas;
 	Gwen::Skin::Base* AngelSkin;
-	
+
 	EventHandler handler;
 }
 
@@ -141,14 +138,14 @@ UserInterface& UserInterface::GetInstance()
 
 UserInterface::UserInterface()
 {
-	#if !ANGEL_MOBILE
-		double mpos_x, mpos_y;
-		glfwGetCursorPos(theWorld.GetMainWindow(), &mpos_x, &mpos_y);
-		_mousePosition.X = (float)mpos_x;
-		_mousePosition.Y = (float)mpos_y;
-	#else
-		_mousePosition.X = _mousePosition.Y = 0;
-	#endif
+#if !ANGEL_MOBILE
+	double mpos_x, mpos_y;
+	glfwGetCursorPos(theWorld.GetMainWindow(), &mpos_x, &mpos_y);
+	_mousePosition.X = (float)mpos_x;
+	_mousePosition.Y = (float)mpos_y;
+#else
+	_mousePosition.X = _mousePosition.Y = 0;
+#endif
 
 	const String skinTexture = "Resources/Images/DefaultSkin.png";
 
@@ -157,7 +154,7 @@ UserInterface::UserInterface()
 	AngelSkin = new Gwen::Skin::TexturedBase(_renderer);
 	((Gwen::Skin::TexturedBase*)AngelSkin)->Init(skinTexture);
 	AngelSkin->SetDefaultFont(Gwen::Utility::StringToUnicode("Resources/Fonts/Inconsolata.otf"), 20);
-	
+
 	_renderer->FinishInit();
 
 	AngelCanvas = new Gwen::Controls::Canvas(AngelSkin);
@@ -168,110 +165,109 @@ UserInterface::UserInterface()
 
 UserInterface::~UserInterface()
 {
-	
 }
 
 void UserInterface::Shutdown()
 {
 	delete AngelCanvas;
 	delete AngelSkin;
-	
+
 	delete _renderer;
 }
 
 void UserInterface::Render()
 {
-	for (unsigned int i=0; i < _deferredRemoves.size(); i++)
+	for (unsigned int i = 0; i < _deferredRemoves.size(); i++)
 	{
 		RemoveUIElement(_deferredRemoves[i]);
 	}
 	_deferredRemoves.clear();
-	
+
 	_locked = true;
-		AngelCanvas->DoThink();
-		AngelCanvas->RenderCanvas();
+	AngelCanvas->DoThink();
+	AngelCanvas->RenderCanvas();
 	_locked = false;
 }
 
 #if ANGEL_MOBILE
-    void UserInterface::TouchMotionEvent(Touch* movedTouch)
-    {
-        Vec2i translatedPoint(movedTouch->CurrentPoint.X * 2, movedTouch->CurrentPoint.Y * 2);
-        int deltaX = _mousePosition.X - translatedPoint.X;
-        int deltaY = _mousePosition.Y - translatedPoint.Y;
-        _mousePosition.X = translatedPoint.X;
-        _mousePosition.Y = translatedPoint.Y;
-        AngelCanvas->InputMouseMoved(translatedPoint.X, translatedPoint.Y, deltaX, deltaY);
-    }
+void UserInterface::TouchMotionEvent(Touch* movedTouch)
+{
+	Vec2i translatedPoint(movedTouch->CurrentPoint.X * 2, movedTouch->CurrentPoint.Y * 2);
+	int deltaX = _mousePosition.X - translatedPoint.X;
+	int deltaY = _mousePosition.Y - translatedPoint.Y;
+	_mousePosition.X = translatedPoint.X;
+	_mousePosition.Y = translatedPoint.Y;
+	AngelCanvas->InputMouseMoved(translatedPoint.X, translatedPoint.Y, deltaX, deltaY);
+}
 
-    void UserInterface::TouchEndEvent(Touch* endedTouch)
-    {
-        _locked = true;
-            TouchMotionEvent(endedTouch);
-            AngelCanvas->InputMouseButton(0, false); // 0 = left button
-        _locked = false;
-    }
+void UserInterface::TouchEndEvent(Touch* endedTouch)
+{
+	_locked = true;
+	TouchMotionEvent(endedTouch);
+	AngelCanvas->InputMouseButton(0, false); // 0 = left button
+	_locked = false;
+}
 
-    void UserInterface::TouchStartEvent(Touch* startedTouch)
-    {
-        _locked = true;
-            TouchMotionEvent(startedTouch);
-            AngelCanvas->InputMouseButton(0, true); // 0 = left button
-        _locked = false;
-    }
+void UserInterface::TouchStartEvent(Touch* startedTouch)
+{
+	_locked = true;
+	TouchMotionEvent(startedTouch);
+	AngelCanvas->InputMouseButton(0, true); // 0 = left button
+	_locked = false;
+}
 
 #else //ANGEL_MOBILE
-    void UserInterface::MouseMotionEvent(Vec2i screenCoordinates)
-    {
-        if (theWorld.GetConsole()->IsEnabled())
-        {
-            return;
-        }
-        
-        _locked = true;
-            int deltaX = _mousePosition.X - screenCoordinates.X;
-            int deltaY = _mousePosition.Y - screenCoordinates.Y;
-            _mousePosition.X = screenCoordinates.X;
-            _mousePosition.Y = screenCoordinates.Y;
-            AngelCanvas->InputMouseMoved(screenCoordinates.X, screenCoordinates.Y, deltaX, deltaY);
-        _locked = false;
-    }
+void UserInterface::MouseMotionEvent(Vec2i screenCoordinates)
+{
+	if (theWorld.GetConsole()->IsEnabled())
+	{
+		return;
+	}
 
-    void UserInterface::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
-    {
-        if (theWorld.GetConsole()->IsEnabled())
-        {
-            return;
-        }
-        
-        _locked = true;
-            AngelCanvas->InputMouseButton(button, true);
-        _locked = false;
-    }
+	_locked = true;
+	int deltaX = _mousePosition.X - screenCoordinates.X;
+	int deltaY = _mousePosition.Y - screenCoordinates.Y;
+	_mousePosition.X = screenCoordinates.X;
+	_mousePosition.Y = screenCoordinates.Y;
+	AngelCanvas->InputMouseMoved(screenCoordinates.X, screenCoordinates.Y, deltaX, deltaY);
+	_locked = false;
+}
 
-    void UserInterface::MouseUpEvent(Vec2i screenCoordinates, MouseButtonInput button)
-    {
-        if (theWorld.GetConsole()->IsEnabled())
-        {
-            return;
-        }
-        
-        _locked = true;
-            AngelCanvas->InputMouseButton(button, false);
-        _locked = false;
-    }
+void UserInterface::MouseDownEvent(Vec2i screenCoordinates, MouseButtonInput button)
+{
+	if (theWorld.GetConsole()->IsEnabled())
+	{
+		return;
+	}
 
-    void UserInterface::MouseWheelEvent(const Vector2& position)
-    {
-        if (theWorld.GetConsole()->IsEnabled())
-        {
-            return;
-        }
-        
-        _locked = true;
-            AngelCanvas->InputMouseWheel(position.Y);
-        _locked = false;
-    }
+	_locked = true;
+	AngelCanvas->InputMouseButton(button, true);
+	_locked = false;
+}
+
+void UserInterface::MouseUpEvent(Vec2i screenCoordinates, MouseButtonInput button)
+{
+	if (theWorld.GetConsole()->IsEnabled())
+	{
+		return;
+	}
+
+	_locked = true;
+	AngelCanvas->InputMouseButton(button, false);
+	_locked = false;
+}
+
+void UserInterface::MouseWheelEvent(const Vector2& position)
+{
+	if (theWorld.GetConsole()->IsEnabled())
+	{
+		return;
+	}
+
+	_locked = true;
+	AngelCanvas->InputMouseWheel(position.Y);
+	_locked = false;
+}
 #endif //ANGEL_MOBILE
 
 void UserInterface::RemoveUIElement(AngelUIHandle element)
@@ -289,7 +285,7 @@ void UserInterface::RemoveUIElement(AngelUIHandle element)
 	}
 }
 
-AngelUIHandle UserInterface::AddButton(const String& label, Vec2i position, void (*callback)(), bool center, const String& font, Vec2i padding)
+AngelUIHandle UserInterface::AddButton(const String& label, Vec2i position, void(*callback)(), bool center, const String& font, Vec2i padding)
 {
 	Gwen::Controls::Button* button = new Gwen::Controls::Button(AngelCanvas);
 	if (font != "")
@@ -311,13 +307,13 @@ AngelUIHandle UserInterface::AddButton(const String& label, Vec2i position, void
 
 	button->onPress.Add(&handler, &EventHandler::OnPress);
 	handler.AddButtonCallback(button, callback);
-	
+
 	_elements.insert(button);
-	
+
 	return button;
 }
 
-AngelUIHandle UserInterface::ShowChoiceBox(const String& choiceLabel, const StringList& labels, void (*callback)(int), const String& font, Vec2i padding, bool modal)
+AngelUIHandle UserInterface::ShowChoiceBox(const String& choiceLabel, const StringList& labels, void(*callback)(int), const String& font, Vec2i padding, bool modal)
 {
 	Gwen::Controls::WindowControl* box = new Gwen::Controls::WindowControl(AngelCanvas);
 
@@ -328,7 +324,7 @@ AngelUIHandle UserInterface::ShowChoiceBox(const String& choiceLabel, const Stri
 	Vec2i maxSize;
 	std::vector<Gwen::Controls::Button*> buttons;
 
-	for	(unsigned int i=0; i < labels.size(); i++)
+	for (unsigned int i = 0; i < labels.size(); i++)
 	{
 		Gwen::Controls::Button* button = new Gwen::Controls::Button(box);
 		buttons.push_back(button);
@@ -348,11 +344,11 @@ AngelUIHandle UserInterface::ShowChoiceBox(const String& choiceLabel, const Stri
 		{
 			maxSize.Y = size.y;
 		}
-		
+
 		button->onPress.Add(&handler, &EventHandler::OnPress);
 	}
 
-	for (unsigned int i=0; i < buttons.size(); i++)
+	for (unsigned int i = 0; i < buttons.size(); i++)
 	{
 		buttons[i]->SetPos(maxSize.X / 2 - (buttons[i]->GetSize().x / 2), i * (maxSize.Y + padding.Y));
 	}

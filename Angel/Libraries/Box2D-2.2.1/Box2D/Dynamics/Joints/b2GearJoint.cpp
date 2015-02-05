@@ -42,7 +42,7 @@
 // K = J * invM * JT = invMass + invI * cross(r, ug)^2
 
 b2GearJoint::b2GearJoint(const b2GearJointDef* def)
-: b2Joint(def)
+	: b2Joint(def)
 {
 	m_joint1 = def->joint1;
 	m_joint2 = def->joint2;

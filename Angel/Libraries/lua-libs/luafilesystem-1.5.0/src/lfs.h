@@ -17,5 +17,4 @@
 #define luaL_register(L,n,f) \
 { if ((n) == NULL) luaL_setfuncs(L,f,0); else luaL_newlib(L,f); }
 
-
-int luaopen_lfs (lua_State *L);
+int luaopen_lfs(lua_State *L);

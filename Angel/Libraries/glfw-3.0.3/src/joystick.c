@@ -27,64 +27,62 @@
 
 #include "internal.h"
 
-
 //////////////////////////////////////////////////////////////////////////
 //////                        GLFW public API                       //////
 //////////////////////////////////////////////////////////////////////////
 
 GLFWAPI int glfwJoystickPresent(int joy)
 {
-    _GLFW_REQUIRE_INIT_OR_RETURN(0);
+	_GLFW_REQUIRE_INIT_OR_RETURN(0);
 
-    if (joy < 0 || joy > GLFW_JOYSTICK_LAST)
-    {
-        _glfwInputError(GLFW_INVALID_ENUM, NULL);
-        return 0;
-    }
+	if (joy < 0 || joy > GLFW_JOYSTICK_LAST)
+	{
+		_glfwInputError(GLFW_INVALID_ENUM, NULL);
+		return 0;
+	}
 
-    return _glfwPlatformJoystickPresent(joy);
+	return _glfwPlatformJoystickPresent(joy);
 }
 
 GLFWAPI const float* glfwGetJoystickAxes(int joy, int* count)
 {
-    *count = 0;
+	*count = 0;
 
-    _GLFW_REQUIRE_INIT_OR_RETURN(NULL);
+	_GLFW_REQUIRE_INIT_OR_RETURN(NULL);
 
-    if (joy < 0 || joy > GLFW_JOYSTICK_LAST)
-    {
-        _glfwInputError(GLFW_INVALID_ENUM, NULL);
-        return NULL;
-    }
+	if (joy < 0 || joy > GLFW_JOYSTICK_LAST)
+	{
+		_glfwInputError(GLFW_INVALID_ENUM, NULL);
+		return NULL;
+	}
 
-    return _glfwPlatformGetJoystickAxes(joy, count);
+	return _glfwPlatformGetJoystickAxes(joy, count);
 }
 
 GLFWAPI const unsigned char* glfwGetJoystickButtons(int joy, int* count)
 {
-    *count = 0;
+	*count = 0;
 
-    _GLFW_REQUIRE_INIT_OR_RETURN(NULL);
+	_GLFW_REQUIRE_INIT_OR_RETURN(NULL);
 
-    if (joy < 0 || joy > GLFW_JOYSTICK_LAST)
-    {
-        _glfwInputError(GLFW_INVALID_ENUM, NULL);
-        return NULL;
-    }
+	if (joy < 0 || joy > GLFW_JOYSTICK_LAST)
+	{
+		_glfwInputError(GLFW_INVALID_ENUM, NULL);
+		return NULL;
+	}
 
-    return _glfwPlatformGetJoystickButtons(joy, count);
+	return _glfwPlatformGetJoystickButtons(joy, count);
 }
 
 GLFWAPI const char* glfwGetJoystickName(int joy)
 {
-    _GLFW_REQUIRE_INIT_OR_RETURN(NULL);
+	_GLFW_REQUIRE_INIT_OR_RETURN(NULL);
 
-    if (joy < 0 || joy > GLFW_JOYSTICK_LAST)
-    {
-        _glfwInputError(GLFW_INVALID_ENUM, NULL);
-        return NULL;
-    }
+	if (joy < 0 || joy > GLFW_JOYSTICK_LAST)
+	{
+		_glfwInputError(GLFW_INVALID_ENUM, NULL);
+		return NULL;
+	}
 
-    return _glfwPlatformGetJoystickName(joy);
+	return _glfwPlatformGetJoystickName(joy);
 }
-

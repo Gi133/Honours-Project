@@ -2,8 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
-
+	*/
 
 #include "Gwen/ToolTip.h"
 #include "Gwen/Utility.h"
@@ -20,25 +19,25 @@ namespace ToolTip
 		return g_ToolTip != NULL;
 	}
 
-	void Enable( Controls::Base* pControl )
+	void Enable(Controls::Base* pControl)
 	{
-		if ( !pControl->GetToolTip() )
+		if (!pControl->GetToolTip())
 			return;
 
 		g_ToolTip = pControl;
 	}
 
-	void Disable( Controls::Base* pControl )
+	void Disable(Controls::Base* pControl)
 	{
-		if ( g_ToolTip == pControl )
+		if (g_ToolTip == pControl)
 		{
 			g_ToolTip = NULL;
 		}
 	}
 
-	void RenderToolTip( Skin::Base* skin )
+	void RenderToolTip(Skin::Base* skin)
 	{
-		if ( !g_ToolTip ) return;
+		if (!g_ToolTip) return;
 
 		Gwen::Renderer::Base* render = skin->GetRender();
 
@@ -46,21 +45,21 @@ namespace ToolTip
 		Gwen::Point MousePos = Input::GetMousePosition();
 		Gwen::Rect Bounds = g_ToolTip->GetToolTip()->GetBounds();
 
-		Gwen::Rect rOffset = Gwen::Rect( MousePos.x - Bounds.w * 0.5f, MousePos.y - Bounds.h - 10, Bounds.w, Bounds.h  );
-		rOffset = Utility::ClampRectToRect( rOffset, g_ToolTip->GetCanvas()->GetBounds() );
-		
+		Gwen::Rect rOffset = Gwen::Rect(MousePos.x - Bounds.w * 0.5f, MousePos.y - Bounds.h - 10, Bounds.w, Bounds.h);
+		rOffset = Utility::ClampRectToRect(rOffset, g_ToolTip->GetCanvas()->GetBounds());
+
 		//Calculate offset on screen bounds
-		render->AddRenderOffset( rOffset );
+		render->AddRenderOffset(rOffset);
 		render->EndClip();
 
-			skin->DrawToolTip( g_ToolTip->GetToolTip() );
-			g_ToolTip->GetToolTip()->DoRender( skin );
+		skin->DrawToolTip(g_ToolTip->GetToolTip());
+		g_ToolTip->GetToolTip()->DoRender(skin);
 
-		render->SetRenderOffset( pOldRenderOffset );
+		render->SetRenderOffset(pOldRenderOffset);
 	}
 
-	void ControlDeleted( Controls::Base* pControl )
+	void ControlDeleted(Controls::Base* pControl)
 	{
-		Disable( pControl );
+		Disable(pControl);
 	}
 }

@@ -1,29 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2008-2014, Shane Liesegang
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without 
+//
+// Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimer in the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the copyright holder nor the names of any 
-//       contributors may be used to endorse or promote products derived from 
+//     * Neither the name of the copyright holder nor the names of any
+//       contributors may be used to endorse or promote products derived from
 //       this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
@@ -47,7 +47,6 @@ const float MathUtil::MaxFloat = 3.402823E+38f;
 const float MathUtil::MinFloat = -3.402823E+38f;
 const float MathUtil::Epsilon = 0.000001f;
 
-
 float MathUtil::ToDegrees(float radians)
 {
 	return (radians * 57.29578f);
@@ -68,7 +67,7 @@ float MathUtil::AngleFromVector(const Vector2& v1)
 	Vector2 localVector = v1;
 
 	localVector.Normalize();
-	return atan2( localVector.Y, localVector.X );	
+	return atan2(localVector.Y, localVector.X);
 }
 
 float MathUtil::AngleFromVectors(const Vector2& v1, const Vector2& v2)
@@ -76,21 +75,20 @@ float MathUtil::AngleFromVectors(const Vector2& v1, const Vector2& v2)
 	return atan2(v1.Y, v1.X) - atan2(v2.Y, v2.X);
 }
 
-
 int MathUtil::RoundToInt(double x)
 {
-	return ((int)(floor(x+0.5)));
+	return ((int)(floor(x + 0.5)));
 }
 
 int MathUtil::RandomInt(int maximum)
 {
 	static bool firstTime = true;
-	if (firstTime) 
+	if (firstTime)
 	{
 		firstTime = false;
 		srand((int)time(NULL));
 	}
-	if (maximum <= 0) 
+	if (maximum <= 0)
 	{
 		return 0;
 	}
@@ -99,30 +97,30 @@ int MathUtil::RandomInt(int maximum)
 
 int MathUtil::RandomIntInRange(int min, int max)
 {
-	return RandomInt(max-min) + min;
+	return RandomInt(max - min) + min;
 }
 
 int MathUtil::RandomIntWithError(int target, int error)
 {
-	return RandomIntInRange(target-error, target+error);
+	return RandomIntInRange(target - error, target + error);
 }
 
 float MathUtil::RandomFloat(float maximum)
 {
 	const float bigNumber = 10000.0f;
 	float randFloat = (float)RandomInt((int)bigNumber);
-	randFloat = randFloat/bigNumber;
+	randFloat = randFloat / bigNumber;
 	return randFloat*maximum;
 }
 
 float MathUtil::RandomFloatInRange(float min, float max)
 {
-	return RandomFloat(max-min) + min;
+	return RandomFloat(max - min) + min;
 }
 
 float MathUtil::RandomFloatWithError(float target, float error)
 {
-	return RandomFloatInRange(target-error, target+error);
+	return RandomFloatInRange(target - error, target + error);
 }
 
 bool MathUtil::RandomBool()
@@ -147,7 +145,7 @@ Vector2 MathUtil::RandomVector(const Vector2& minValues, const Vector2& maxValue
 
 bool __poissonFieldCheck(Vector2List list, Vector2 point, float minDist)
 {
-	for (int i=0; i < list.size(); i++) {
+	for (int i = 0; i < list.size(); i++) {
 		if (Vector2::DistanceSquared(list[i], point) < minDist)
 		{
 			return true;
@@ -159,34 +157,33 @@ bool __poissonFieldCheck(Vector2List list, Vector2 point, float minDist)
 Vector2List MathUtil::RandomPointField(int numPoints, const Vector2& min, const Vector2& max, float minDistance)
 {
 	Vector2List forReturn;
-	
+
 	int tryLimit = 100;
 	float reductionFactor = 0.75f;
-	
+
 	int tries;
 	Vector2 newPoint;
-	
+
 	while (forReturn.size() < numPoints)
 	{
 		tries = 0;
-		
+
 		do
 		{
 			newPoint = RandomVector(min, max);
 			tries++;
-		}
-		while (__poissonFieldCheck(forReturn, newPoint, minDistance) && tries < tryLimit);
+		} while (__poissonFieldCheck(forReturn, newPoint, minDistance) && tries < tryLimit);
 
 		if (tries < tryLimit)
 		{
 			forReturn.push_back(newPoint);
 		}
-		else 
+		else
 		{
 			minDistance *= reductionFactor;
 		}
 	}
-	
+
 	return forReturn;
 }
 
@@ -200,10 +197,9 @@ bool MathUtil::FuzzyEquals(float value1, float value2, float epsilon)
 	return false;
 }
 
-
 bool MathUtil::FuzzyEquals(const Vector2& v1, const Vector2& v2, float epsilon)
 {
-	if ( (MathUtil::FuzzyEquals(v1.X, v2.X, epsilon)) && (MathUtil::FuzzyEquals(v1.Y, v2.Y, epsilon)) )
+	if ((MathUtil::FuzzyEquals(v1.X, v2.X, epsilon)) && (MathUtil::FuzzyEquals(v1.Y, v2.Y, epsilon)))
 	{
 		return true;
 	}
@@ -222,15 +218,15 @@ Vector2 MathUtil::ScreenToWorld(int x, int y)
 		x *= 2;
 		y *= 2;
 	}
-	
+
 	Vector2 worldDimensions = GetWorldDimensions();
 
-	float worldX = ( ((float)x / (float)theCamera.GetWindowWidth()) - 0.5f ) * worldDimensions.X;
-	float worldY = ( 0.5f - ((float)y / (float)theCamera.GetWindowHeight()) ) * worldDimensions.Y;
-	
+	float worldX = (((float)x / (float)theCamera.GetWindowWidth()) - 0.5f) * worldDimensions.X;
+	float worldY = (0.5f - ((float)y / (float)theCamera.GetWindowHeight())) * worldDimensions.Y;
+
 	Vector2 camPos = theCamera.GetPosition();
 	Vector2 forReturn(worldX + camPos.X, worldY + camPos.Y);
-	
+
 	return Vector2::Rotate(forReturn, MathUtil::ToRadians(-theCamera.GetRotation()));
 }
 
@@ -241,12 +237,12 @@ Vector2 MathUtil::WorldToScreen(const Vector2& worldCoordinates)
 	startingWorldCoords.X -= camPos.X;
 	startingWorldCoords.Y -= camPos.Y;
 	startingWorldCoords = Vector2::Rotate(startingWorldCoords, ToRadians(theCamera.GetRotation()));
-	
+
 	Vector2 worldDimensions = GetWorldDimensions();
-	
-	float screenX = theCamera.GetWindowWidth() * ( (startingWorldCoords.X / worldDimensions.X) + 0.5f );
-	float screenY = theCamera.GetWindowHeight() - (theCamera.GetWindowHeight() * ( 0.5f + (startingWorldCoords.Y / worldDimensions.Y) ));
-	
+
+	float screenX = theCamera.GetWindowWidth() * ((startingWorldCoords.X / worldDimensions.X) + 0.5f);
+	float screenY = theCamera.GetWindowHeight() - (theCamera.GetWindowHeight() * (0.5f + (startingWorldCoords.Y / worldDimensions.Y)));
+
 	return Vector2(screenX, screenY);
 }
 
@@ -273,22 +269,22 @@ Vector2 MathUtil::GetWorldDimensions()
 		worldWidth = theCamera.GetViewRadius() * 2.0f;
 		worldHeight = worldWidth / aspect;
 	}
-	
-	return Vector2(worldWidth, worldHeight); 
+
+	return Vector2(worldWidth, worldHeight);
 }
 
 float MathUtil::PixelsToWorldUnits(float pixels)
 {
-	float ratio = theCamera.GetWindowWidth() / GetWorldDimensions().X; 
-	
-	return pixels / ratio; 
+	float ratio = theCamera.GetWindowWidth() / GetWorldDimensions().X;
+
+	return pixels / ratio;
 }
 
 float MathUtil::WorldUnitsToPixels(float worldUnits)
 {
-	float ratio = theCamera.GetWindowWidth() / GetWorldDimensions().X; 
-	
-	return worldUnits * ratio; 
+	float ratio = theCamera.GetWindowWidth() / GetWorldDimensions().X;
+
+	return worldUnits * ratio;
 }
 
 MathUtil::AABBSplittingAxis MathUtil::GetMajorAxis(const BoundingBox& source)
@@ -330,12 +326,12 @@ float MathUtil::DeltaAngle(float A1, float A2)
 	float Delta = A2 - A1;
 
 	// If change is larger than PI
-	if(Delta > Pi)
+	if (Delta > Pi)
 	{
 		// Flip to negative equivalent
 		Delta = Delta - (TwoPi);
 	}
-	else if(Delta < -Pi)
+	else if (Delta < -Pi)
 	{
 		// Otherwise, if change is smaller than -PI
 		// Flip to positive equivalent
@@ -348,6 +344,5 @@ float MathUtil::DeltaAngle(float A1, float A2)
 
 float MathUtil::VectorDeltaAngle(const Vector2& v1, const Vector2& v2)
 {
-	return acos( Vector2::Dot(v1, v2) );
+	return acos(Vector2::Dot(v1, v2));
 }
-

@@ -21,7 +21,6 @@
 #include <cfloat>
 using namespace std;
 
-
 b2DynamicTree::b2DynamicTree()
 {
 	m_root = b2_nullNode;
@@ -37,8 +36,8 @@ b2DynamicTree::b2DynamicTree()
 		m_nodes[i].next = i + 1;
 		m_nodes[i].height = -1;
 	}
-	m_nodes[m_nodeCapacity-1].next = b2_nullNode;
-	m_nodes[m_nodeCapacity-1].height = -1;
+	m_nodes[m_nodeCapacity - 1].next = b2_nullNode;
+	m_nodes[m_nodeCapacity - 1].height = -1;
 	m_freeList = 0;
 
 	m_path = 0;
@@ -74,8 +73,8 @@ int32 b2DynamicTree::AllocateNode()
 			m_nodes[i].next = i + 1;
 			m_nodes[i].height = -1;
 		}
-		m_nodes[m_nodeCapacity-1].next = b2_nullNode;
-		m_nodes[m_nodeCapacity-1].height = -1;
+		m_nodes[m_nodeCapacity - 1].next = b2_nullNode;
+		m_nodes[m_nodeCapacity - 1].height = -1;
 		m_freeList = m_nodeCount;
 	}
 
@@ -456,7 +455,7 @@ int32 b2DynamicTree::Balance(int32 iA)
 
 		return iC;
 	}
-	
+
 	// Rotate B up
 	if (balance < -1)
 	{
@@ -759,7 +758,7 @@ void b2DynamicTree::RebuildBottomUp()
 		child1->parent = parentIndex;
 		child2->parent = parentIndex;
 
-		nodes[jMin] = nodes[count-1];
+		nodes[jMin] = nodes[count - 1];
 		nodes[iMin] = parentIndex;
 		--count;
 	}

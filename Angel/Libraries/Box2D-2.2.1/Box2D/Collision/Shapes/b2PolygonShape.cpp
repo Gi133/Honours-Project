@@ -22,7 +22,7 @@
 b2Shape* b2PolygonShape::Clone(b2BlockAllocator* allocator) const
 {
 	void* mem = allocator->Allocate(sizeof(b2PolygonShape));
-	b2PolygonShape* clone = new (mem) b2PolygonShape;
+	b2PolygonShape* clone = new (mem)b2PolygonShape;
 	*clone = *this;
 	return clone;
 }
@@ -31,9 +31,9 @@ void b2PolygonShape::SetAsBox(float32 hx, float32 hy)
 {
 	m_vertexCount = 4;
 	m_vertices[0].Set(-hx, -hy);
-	m_vertices[1].Set( hx, -hy);
-	m_vertices[2].Set( hx,  hy);
-	m_vertices[3].Set(-hx,  hy);
+	m_vertices[1].Set(hx, -hy);
+	m_vertices[2].Set(hx, hy);
+	m_vertices[3].Set(-hx, hy);
 	m_normals[0].Set(0.0f, -1.0f);
 	m_normals[1].Set(1.0f, 0.0f);
 	m_normals[2].Set(0.0f, 1.0f);
@@ -45,9 +45,9 @@ void b2PolygonShape::SetAsBox(float32 hx, float32 hy, const b2Vec2& center, floa
 {
 	m_vertexCount = 4;
 	m_vertices[0].Set(-hx, -hy);
-	m_vertices[1].Set( hx, -hy);
-	m_vertices[2].Set( hx,  hy);
-	m_vertices[3].Set(-hx,  hy);
+	m_vertices[1].Set(hx, -hy);
+	m_vertices[2].Set(hx, hy);
+	m_vertices[3].Set(-hx, hy);
 	m_normals[0].Set(0.0f, -1.0f);
 	m_normals[1].Set(1.0f, 0.0f);
 	m_normals[2].Set(0.0f, 1.0f);
@@ -97,7 +97,7 @@ static b2Vec2 ComputeCentroid(const b2Vec2* vs, int32 count)
 		// Triangle vertices.
 		b2Vec2 p1 = pRef;
 		b2Vec2 p2 = vs[i];
-		b2Vec2 p3 = i + 1 < count ? vs[i+1] : vs[0];
+		b2Vec2 p3 = i + 1 < count ? vs[i + 1] : vs[0];
 
 		b2Vec2 e1 = p2 - p1;
 		b2Vec2 e2 = p3 - p1;
@@ -155,7 +155,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 			{
 				continue;
 			}
-			
+
 			b2Vec2 r = m_vertices[j] - m_vertices[i1];
 
 			// If this crashes, your polygon is non-convex, has colinear edges,
@@ -187,7 +187,7 @@ bool b2PolygonShape::TestPoint(const b2Transform& xf, const b2Vec2& p) const
 }
 
 bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& input,
-								const b2Transform& xf, int32 childIndex) const
+	const b2Transform& xf, int32 childIndex) const
 {
 	B2_NOT_USED(childIndex);
 
@@ -209,7 +209,7 @@ bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& inpu
 		float32 denominator = b2Dot(m_normals[i], d);
 
 		if (denominator == 0.0f)
-		{	
+		{
 			if (numerator < 0.0f)
 			{
 				return false;
@@ -326,7 +326,7 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float32 density) const
 	{
 		// Triangle vertices.
 		b2Vec2 e1 = m_vertices[i] - s;
-		b2Vec2 e2 = i + 1 < m_vertexCount ? m_vertices[i+1] - s : m_vertices[0] - s;
+		b2Vec2 e2 = i + 1 < m_vertexCount ? m_vertices[i + 1] - s : m_vertices[0] - s;
 
 		float32 D = b2Cross(e1, e2);
 
@@ -355,7 +355,7 @@ void b2PolygonShape::ComputeMass(b2MassData* massData, float32 density) const
 
 	// Inertia tensor relative to the local origin (point s).
 	massData->I = density * I;
-	
+
 	// Shift to center of mass then to original body origin.
 	massData->I += massData->mass * (b2Dot(massData->center, massData->center) - b2Dot(center, center));
 }

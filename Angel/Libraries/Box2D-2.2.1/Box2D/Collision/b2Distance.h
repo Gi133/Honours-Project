@@ -1,4 +1,3 @@
-
 /*
 * Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
@@ -64,7 +63,7 @@ struct b2SimplexCache
 
 /// Input for b2Distance.
 /// You have to option to use the shape radii
-/// in the computation. Even 
+/// in the computation. Even
 struct b2DistanceInput
 {
 	b2DistanceProxy proxyA;
@@ -87,9 +86,8 @@ struct b2DistanceOutput
 /// b2CircleShape, b2PolygonShape, b2EdgeShape. The simplex cache is input/output.
 /// On the first call set b2SimplexCache.count to zero.
 void b2Distance(b2DistanceOutput* output,
-				b2SimplexCache* cache, 
-				const b2DistanceInput* input);
-
+	b2SimplexCache* cache,
+	const b2DistanceInput* input);
 
 //////////////////////////////////////////////////////////////////////////
 

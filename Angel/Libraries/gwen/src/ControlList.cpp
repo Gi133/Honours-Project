@@ -2,8 +2,7 @@
 	GWEN
 	Copyright (c) 2012 Facepunch Studios
 	See license in Gwen.h
-*/
-
+	*/
 
 #include "Gwen/Gwen.h"
 #include "Gwen/ControlList.h"
@@ -13,23 +12,23 @@ using namespace Gwen::Controls;
 
 void ControlList::Enable()
 {
-	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	for (List::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
-		(*it)->SetDisabled( false );
+		(*it)->SetDisabled(false);
 	}
 }
 
 void ControlList::Disable()
 {
-	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	for (List::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
-		(*it)->SetDisabled( true );
+		(*it)->SetDisabled(true);
 	}
 }
 
 void ControlList::Show()
 {
-	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	for (List::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
 		(*it)->Show();
 	}
@@ -37,7 +36,7 @@ void ControlList::Show()
 
 void ControlList::Hide()
 {
-	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	for (List::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
 		(*it)->Hide();
 	}
@@ -45,7 +44,7 @@ void ControlList::Hide()
 
 Gwen::TextObject ControlList::GetValue()
 {
-	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	for (List::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
 		return (*it)->GetValue();
 	}
@@ -53,34 +52,34 @@ Gwen::TextObject ControlList::GetValue()
 	return "";
 }
 
-void ControlList::SetValue( const Gwen::TextObject& value )
+void ControlList::SetValue(const Gwen::TextObject& value)
 {
-	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	for (List::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
-		(*it)->SetValue( value );
+		(*it)->SetValue(value);
 	}
 }
 
-void ControlList::MoveBy( const Gwen::Point& point )
+void ControlList::MoveBy(const Gwen::Point& point)
 {
-	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	for (List::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
-		(*it)->MoveBy( point.x, point.y );
+		(*it)->MoveBy(point.x, point.y);
 	}
 }
 
 void ControlList::DoAction()
 {
-	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	for (List::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
 		(*it)->DoAction();
 	}
 }
 
-void ControlList::SetActionInternal( Gwen::Event::Handler* pObject, void (Gwen::Event::Handler::*f)( Gwen::Event::Info ), const Gwen::Event::Packet& packet )
+void ControlList::SetActionInternal(Gwen::Event::Handler* pObject, void (Gwen::Event::Handler::*f)(Gwen::Event::Info), const Gwen::Event::Packet& packet)
 {
-	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	for (List::const_iterator it = list.begin(); it != list.end(); ++it)
 	{
-		(*it)->SetAction( pObject, f, packet );
+		(*it)->SetAction(pObject, f, packet);
 	}
 }

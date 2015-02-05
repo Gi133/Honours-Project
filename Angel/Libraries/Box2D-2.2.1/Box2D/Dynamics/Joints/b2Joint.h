@@ -36,7 +36,7 @@ enum b2JointType
 	e_mouseJoint,
 	e_gearJoint,
 	e_wheelJoint,
-    e_weldJoint,
+	e_weldJoint,
 	e_frictionJoint,
 	e_ropeJoint
 };

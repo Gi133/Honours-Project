@@ -35,7 +35,6 @@
 #include <float.h>
 #endif // __BORLANDC__
 
-
 #if defined(_GLFW_USE_OPTIMUS_HPG)
 
 // Applications exporting this symbol with this value will be automatically
@@ -51,7 +50,7 @@ GLFWAPI DWORD NvOptimusEnablement = 0x00000001;
 //
 BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
 {
-    return TRUE;
+	return TRUE;
 }
 
 #endif // _GLFW_BUILD_DLL
@@ -61,45 +60,45 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
 static GLboolean initLibraries(void)
 {
 #ifndef _GLFW_NO_DLOAD_WINMM
-    // winmm.dll (for joystick and timer support)
+	// winmm.dll (for joystick and timer support)
 
-    _glfw.win32.winmm.instance = LoadLibrary(L"winmm.dll");
-    if (!_glfw.win32.winmm.instance)
-        return GL_FALSE;
+	_glfw.win32.winmm.instance = LoadLibrary(L"winmm.dll");
+	if (!_glfw.win32.winmm.instance)
+		return GL_FALSE;
 
-    _glfw.win32.winmm.joyGetDevCaps = (JOYGETDEVCAPS_T)
-        GetProcAddress(_glfw.win32.winmm.instance, "joyGetDevCapsW");
-    _glfw.win32.winmm.joyGetPos = (JOYGETPOS_T)
-        GetProcAddress(_glfw.win32.winmm.instance, "joyGetPos");
-    _glfw.win32.winmm.joyGetPosEx = (JOYGETPOSEX_T)
-        GetProcAddress(_glfw.win32.winmm.instance, "joyGetPosEx");
-    _glfw.win32.winmm.timeGetTime = (TIMEGETTIME_T)
-        GetProcAddress(_glfw.win32.winmm.instance, "timeGetTime");
+	_glfw.win32.winmm.joyGetDevCaps = (JOYGETDEVCAPS_T)
+		GetProcAddress(_glfw.win32.winmm.instance, "joyGetDevCapsW");
+	_glfw.win32.winmm.joyGetPos = (JOYGETPOS_T)
+		GetProcAddress(_glfw.win32.winmm.instance, "joyGetPos");
+	_glfw.win32.winmm.joyGetPosEx = (JOYGETPOSEX_T)
+		GetProcAddress(_glfw.win32.winmm.instance, "joyGetPosEx");
+	_glfw.win32.winmm.timeGetTime = (TIMEGETTIME_T)
+		GetProcAddress(_glfw.win32.winmm.instance, "timeGetTime");
 
-    if (!_glfw.win32.winmm.joyGetDevCaps ||
-        !_glfw.win32.winmm.joyGetPos ||
-        !_glfw.win32.winmm.joyGetPosEx ||
-        !_glfw.win32.winmm.timeGetTime)
-    {
-        return GL_FALSE;
-    }
+	if (!_glfw.win32.winmm.joyGetDevCaps ||
+		!_glfw.win32.winmm.joyGetPos ||
+		!_glfw.win32.winmm.joyGetPosEx ||
+		!_glfw.win32.winmm.timeGetTime)
+	{
+		return GL_FALSE;
+	}
 #endif // _GLFW_NO_DLOAD_WINMM
 
-    _glfw.win32.user32.instance = LoadLibrary(L"user32.dll");
-    if (_glfw.win32.user32.instance)
-    {
-        _glfw.win32.user32.SetProcessDPIAware = (SETPROCESSDPIAWARE_T)
-            GetProcAddress(_glfw.win32.user32.instance, "SetProcessDPIAware");
-    }
+	_glfw.win32.user32.instance = LoadLibrary(L"user32.dll");
+	if (_glfw.win32.user32.instance)
+	{
+		_glfw.win32.user32.SetProcessDPIAware = (SETPROCESSDPIAWARE_T)
+			GetProcAddress(_glfw.win32.user32.instance, "SetProcessDPIAware");
+	}
 
-    _glfw.win32.dwmapi.instance = LoadLibrary(L"dwmapi.dll");
-    if (_glfw.win32.dwmapi.instance)
-    {
-        _glfw.win32.dwmapi.DwmIsCompositionEnabled = (DWMISCOMPOSITIONENABLED_T)
-            GetProcAddress(_glfw.win32.dwmapi.instance, "DwmIsCompositionEnabled");
-    }
+	_glfw.win32.dwmapi.instance = LoadLibrary(L"dwmapi.dll");
+	if (_glfw.win32.dwmapi.instance)
+	{
+		_glfw.win32.dwmapi.DwmIsCompositionEnabled = (DWMISCOMPOSITIONENABLED_T)
+			GetProcAddress(_glfw.win32.dwmapi.instance, "DwmIsCompositionEnabled");
+	}
 
-    return GL_TRUE;
+	return GL_TRUE;
 }
 
 // Unload used libraries (DLLs)
@@ -107,20 +106,19 @@ static GLboolean initLibraries(void)
 static void terminateLibraries(void)
 {
 #ifndef _GLFW_NO_DLOAD_WINMM
-    if (_glfw.win32.winmm.instance != NULL)
-    {
-        FreeLibrary(_glfw.win32.winmm.instance);
-        _glfw.win32.winmm.instance = NULL;
-    }
+	if (_glfw.win32.winmm.instance != NULL)
+	{
+		FreeLibrary(_glfw.win32.winmm.instance);
+		_glfw.win32.winmm.instance = NULL;
+	}
 #endif // _GLFW_NO_DLOAD_WINMM
 
-    if (_glfw.win32.user32.instance)
-        FreeLibrary(_glfw.win32.user32.instance);
+	if (_glfw.win32.user32.instance)
+		FreeLibrary(_glfw.win32.user32.instance);
 
-    if (_glfw.win32.dwmapi.instance)
-        FreeLibrary(_glfw.win32.dwmapi.instance);
+	if (_glfw.win32.dwmapi.instance)
+		FreeLibrary(_glfw.win32.dwmapi.instance);
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 //////                       GLFW internal API                      //////
@@ -130,61 +128,60 @@ static void terminateLibraries(void)
 //
 BOOL _glfwIsCompositionEnabled(void)
 {
-    BOOL enabled;
+	BOOL enabled;
 
-    if (!_glfw_DwmIsCompositionEnabled)
-        return FALSE;
+	if (!_glfw_DwmIsCompositionEnabled)
+		return FALSE;
 
-    if (_glfw_DwmIsCompositionEnabled(&enabled) != S_OK)
-        return FALSE;
+	if (_glfw_DwmIsCompositionEnabled(&enabled) != S_OK)
+		return FALSE;
 
-    return enabled;
+	return enabled;
 }
 
 // Returns a wide string version of the specified UTF-8 string
 //
 WCHAR* _glfwCreateWideStringFromUTF8(const char* source)
 {
-    WCHAR* target;
-    int length;
+	WCHAR* target;
+	int length;
 
-    length = MultiByteToWideChar(CP_UTF8, 0, source, -1, NULL, 0);
-    if (!length)
-        return NULL;
+	length = MultiByteToWideChar(CP_UTF8, 0, source, -1, NULL, 0);
+	if (!length)
+		return NULL;
 
-    target = calloc(length + 1, sizeof(WCHAR));
+	target = calloc(length + 1, sizeof(WCHAR));
 
-    if (!MultiByteToWideChar(CP_UTF8, 0, source, -1, target, length + 1))
-    {
-        free(target);
-        return NULL;
-    }
+	if (!MultiByteToWideChar(CP_UTF8, 0, source, -1, target, length + 1))
+	{
+		free(target);
+		return NULL;
+	}
 
-    return target;
+	return target;
 }
 
 // Returns a UTF-8 string version of the specified wide string
 //
 char* _glfwCreateUTF8FromWideString(const WCHAR* source)
 {
-    char* target;
-    int length;
+	char* target;
+	int length;
 
-    length = WideCharToMultiByte(CP_UTF8, 0, source, -1, NULL, 0, NULL, NULL);
-    if (!length)
-        return NULL;
+	length = WideCharToMultiByte(CP_UTF8, 0, source, -1, NULL, 0, NULL, NULL);
+	if (!length)
+		return NULL;
 
-    target = calloc(length + 1, sizeof(char));
+	target = calloc(length + 1, sizeof(char));
 
-    if (!WideCharToMultiByte(CP_UTF8, 0, source, -1, target, length + 1, NULL, NULL))
-    {
-        free(target);
-        return NULL;
-    }
+	if (!WideCharToMultiByte(CP_UTF8, 0, source, -1, target, length + 1, NULL, NULL))
+	{
+		free(target);
+		return NULL;
+	}
 
-    return target;
+	return target;
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 //////                       GLFW platform API                      //////
@@ -192,78 +189,77 @@ char* _glfwCreateUTF8FromWideString(const WCHAR* source)
 
 int _glfwPlatformInit(void)
 {
-    // To make SetForegroundWindow work as we want, we need to fiddle
-    // with the FOREGROUNDLOCKTIMEOUT system setting (we do this as early
-    // as possible in the hope of still being the foreground process)
-    SystemParametersInfo(SPI_GETFOREGROUNDLOCKTIMEOUT, 0,
-                         &_glfw.win32.foregroundLockTimeout, 0);
-    SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, UIntToPtr(0),
-                         SPIF_SENDCHANGE);
+	// To make SetForegroundWindow work as we want, we need to fiddle
+	// with the FOREGROUNDLOCKTIMEOUT system setting (we do this as early
+	// as possible in the hope of still being the foreground process)
+	SystemParametersInfo(SPI_GETFOREGROUNDLOCKTIMEOUT, 0,
+		&_glfw.win32.foregroundLockTimeout, 0);
+	SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, UIntToPtr(0),
+		SPIF_SENDCHANGE);
 
-    if (!initLibraries())
-        return GL_FALSE;
+	if (!initLibraries())
+		return GL_FALSE;
 
-    if (_glfw_SetProcessDPIAware)
-        _glfw_SetProcessDPIAware();
+	if (_glfw_SetProcessDPIAware)
+		_glfw_SetProcessDPIAware();
 
 #ifdef __BORLANDC__
-    // With the Borland C++ compiler, we want to disable FPU exceptions
-    // (this is recommended for OpenGL applications under Windows)
-    _control87(MCW_EM, MCW_EM);
+	// With the Borland C++ compiler, we want to disable FPU exceptions
+	// (this is recommended for OpenGL applications under Windows)
+	_control87(MCW_EM, MCW_EM);
 #endif
 
-    if (!_glfwInitContextAPI())
-        return GL_FALSE;
+	if (!_glfwInitContextAPI())
+		return GL_FALSE;
 
-    _glfwInitTimer();
-    _glfwInitJoysticks();
+	_glfwInitTimer();
+	_glfwInitJoysticks();
 
-    return GL_TRUE;
+	return GL_TRUE;
 }
 
 void _glfwPlatformTerminate(void)
 {
-    if (_glfw.win32.classAtom)
-    {
-        UnregisterClass(_GLFW_WNDCLASSNAME, GetModuleHandle(NULL));
-        _glfw.win32.classAtom = 0;
-    }
+	if (_glfw.win32.classAtom)
+	{
+		UnregisterClass(_GLFW_WNDCLASSNAME, GetModuleHandle(NULL));
+		_glfw.win32.classAtom = 0;
+	}
 
-    // Restore previous foreground lock timeout system setting
-    SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0,
-                         UIntToPtr(_glfw.win32.foregroundLockTimeout),
-                         SPIF_SENDCHANGE);
+	// Restore previous foreground lock timeout system setting
+	SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0,
+		UIntToPtr(_glfw.win32.foregroundLockTimeout),
+		SPIF_SENDCHANGE);
 
-    free(_glfw.win32.clipboardString);
+	free(_glfw.win32.clipboardString);
 
-    _glfwTerminateJoysticks();
-    _glfwTerminateContextAPI();
-    terminateLibraries();
+	_glfwTerminateJoysticks();
+	_glfwTerminateContextAPI();
+	terminateLibraries();
 }
 
 const char* _glfwPlatformGetVersionString(void)
 {
-    const char* version = _GLFW_VERSION_FULL " Win32"
+	const char* version = _GLFW_VERSION_FULL " Win32"
 #if defined(_GLFW_WGL)
-        " WGL"
+		" WGL"
 #elif defined(_GLFW_EGL)
-        " EGL"
+		" EGL"
 #endif
 #if defined(__MINGW32__)
-        " MinGW"
+		" MinGW"
 #elif defined(_MSC_VER)
-        " VisualC "
+		" VisualC "
 #elif defined(__BORLANDC__)
-        " BorlandC"
+		" BorlandC"
 #endif
 #if !defined(_GLFW_NO_DLOAD_WINMM)
-        " LoadLibrary(winmm)"
+		" LoadLibrary(winmm)"
 #endif
 #if defined(_GLFW_BUILD_DLL)
-        " DLL"
+		" DLL"
 #endif
-        ;
+		;
 
-    return version;
+	return version;
 }
-

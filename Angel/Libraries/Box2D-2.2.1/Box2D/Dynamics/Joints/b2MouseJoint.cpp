@@ -29,7 +29,7 @@
 // w k % (rx i + ry j) = w * (-ry i + rx j)
 
 b2MouseJoint::b2MouseJoint(const b2MouseJointDef* def)
-: b2Joint(def)
+	: b2Joint(def)
 {
 	b2Assert(def->target.IsValid());
 	b2Assert(b2IsValid(def->maxForce) && def->maxForce >= 0.0f);

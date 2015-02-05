@@ -27,7 +27,6 @@
 
 #include "internal.h"
 
-
 //////////////////////////////////////////////////////////////////////////
 //////                       GLFW internal API                      //////
 //////////////////////////////////////////////////////////////////////////
@@ -36,22 +35,21 @@
 //
 void _glfwInitTimer(void)
 {
-    __int64 freq;
+	__int64 freq;
 
-    if (QueryPerformanceFrequency((LARGE_INTEGER*) &freq))
-    {
-        _glfw.win32.timer.hasPC = GL_TRUE;
-        _glfw.win32.timer.resolution = 1.0 / (double) freq;
-        QueryPerformanceCounter((LARGE_INTEGER*) &_glfw.win32.timer.t0_64);
-    }
-    else
-    {
-        _glfw.win32.timer.hasPC = GL_FALSE;
-        _glfw.win32.timer.resolution = 0.001; // winmm resolution is 1 ms
-        _glfw.win32.timer.t0_32 = _glfw_timeGetTime();
-    }
+	if (QueryPerformanceFrequency((LARGE_INTEGER*)&freq))
+	{
+		_glfw.win32.timer.hasPC = GL_TRUE;
+		_glfw.win32.timer.resolution = 1.0 / (double)freq;
+		QueryPerformanceCounter((LARGE_INTEGER*)&_glfw.win32.timer.t0_64);
+	}
+	else
+	{
+		_glfw.win32.timer.hasPC = GL_FALSE;
+		_glfw.win32.timer.resolution = 0.001; // winmm resolution is 1 ms
+		_glfw.win32.timer.t0_32 = _glfw_timeGetTime();
+	}
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 //////                       GLFW platform API                      //////
@@ -59,30 +57,29 @@ void _glfwInitTimer(void)
 
 double _glfwPlatformGetTime(void)
 {
-    double t;
-    __int64 t_64;
+	double t;
+	__int64 t_64;
 
-    if (_glfw.win32.timer.hasPC)
-    {
-        QueryPerformanceCounter((LARGE_INTEGER*) &t_64);
-        t =  (double)(t_64 - _glfw.win32.timer.t0_64);
-    }
-    else
-        t = (double)(_glfw_timeGetTime() - _glfw.win32.timer.t0_32);
+	if (_glfw.win32.timer.hasPC)
+	{
+		QueryPerformanceCounter((LARGE_INTEGER*)&t_64);
+		t = (double)(t_64 - _glfw.win32.timer.t0_64);
+	}
+	else
+		t = (double)(_glfw_timeGetTime() - _glfw.win32.timer.t0_32);
 
-    return t * _glfw.win32.timer.resolution;
+	return t * _glfw.win32.timer.resolution;
 }
 
 void _glfwPlatformSetTime(double t)
 {
-    __int64 t_64;
+	__int64 t_64;
 
-    if (_glfw.win32.timer.hasPC)
-    {
-        QueryPerformanceCounter((LARGE_INTEGER*) &t_64);
-        _glfw.win32.timer.t0_64 = t_64 - (__int64) (t / _glfw.win32.timer.resolution);
-    }
-    else
-        _glfw.win32.timer.t0_32 = _glfw_timeGetTime() - (int)(t * 1000.0);
+	if (_glfw.win32.timer.hasPC)
+	{
+		QueryPerformanceCounter((LARGE_INTEGER*)&t_64);
+		_glfw.win32.timer.t0_64 = t_64 - (__int64)(t / _glfw.win32.timer.resolution);
+	}
+	else
+		_glfw.win32.timer.t0_32 = _glfw_timeGetTime() - (int)(t * 1000.0);
 }
-

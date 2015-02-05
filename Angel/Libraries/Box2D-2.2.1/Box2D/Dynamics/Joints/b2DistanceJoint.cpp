@@ -26,7 +26,7 @@
 // x2 = x1 + h * v2
 
 // 1-D mass-damper-spring system
-// m (v2 - v1) + h * d * v2 + h * k * 
+// m (v2 - v1) + h * d * v2 + h * k *
 
 // C = norm(p2 - p1) - L
 // u = (p2 - p1) / norm(p2 - p1)
@@ -36,7 +36,7 @@
 //   = invMass1 + invI1 * cross(r1, u)^2 + invMass2 + invI2 * cross(r2, u)^2
 
 void b2DistanceJointDef::Initialize(b2Body* b1, b2Body* b2,
-									const b2Vec2& anchor1, const b2Vec2& anchor2)
+	const b2Vec2& anchor1, const b2Vec2& anchor2)
 {
 	bodyA = b1;
 	bodyB = b2;
@@ -47,7 +47,7 @@ void b2DistanceJointDef::Initialize(b2Body* b1, b2Body* b2,
 }
 
 b2DistanceJoint::b2DistanceJoint(const b2DistanceJointDef* def)
-: b2Joint(def)
+	: b2Joint(def)
 {
 	m_localAnchorA = def->localAnchorA;
 	m_localAnchorB = def->localAnchorB;

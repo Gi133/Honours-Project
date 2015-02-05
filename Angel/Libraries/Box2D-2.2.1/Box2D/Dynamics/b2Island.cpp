@@ -126,13 +126,13 @@ stored in a single array since multiple arrays lead to multiple misses.
 2D Rotation
 
 R = [cos(theta) -sin(theta)]
-    [sin(theta) cos(theta) ]
+[sin(theta) cos(theta) ]
 
 thetaDot = omega
 
 Let q1 = cos(theta), q2 = sin(theta).
 R = [q1 -q2]
-    [q2  q1]
+[q2  q1]
 
 q1Dot = -thetaDot * q2
 q2Dot = thetaDot * q1
@@ -154,7 +154,7 @@ b2Island::b2Island(
 {
 	m_bodyCapacity = bodyCapacity;
 	m_contactCapacity = contactCapacity;
-	m_jointCapacity	 = jointCapacity;
+	m_jointCapacity = jointCapacity;
 	m_bodyCount = 0;
 	m_contactCount = 0;
 	m_jointCount = 0;
@@ -247,7 +247,7 @@ void b2Island::Solve(b2Profile* profile, const b2TimeStep& step, const b2Vec2& g
 	{
 		contactSolver.WarmStart();
 	}
-	
+
 	for (int32 i = 0; i < m_jointCount; ++i)
 	{
 		m_joints[i]->InitVelocityConstraints(solverData);
@@ -525,7 +525,7 @@ void b2Island::Report(const b2ContactVelocityConstraint* constraints)
 		b2Contact* c = m_contacts[i];
 
 		const b2ContactVelocityConstraint* vc = constraints + i;
-		
+
 		b2ContactImpulse impulse;
 		impulse.count = vc->pointCount;
 		for (int32 j = 0; j < vc->pointCount; ++j)

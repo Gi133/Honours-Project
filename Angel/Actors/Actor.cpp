@@ -1,29 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2008-2014, Shane Liesegang
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without 
+//
+// Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimer in the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the copyright holder nor the names of any 
-//       contributors may be used to endorse or promote products derived from 
+//     * Neither the name of the copyright holder nor the names of any
+//       contributors may be used to endorse or promote products derived from
 //       this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
@@ -44,14 +44,14 @@
 #include <sstream>
 
 const float Actor::_squareVertices[] = {
-	-0.5f,  0.5f,
+	-0.5f, 0.5f,
 	-0.5f, -0.5f,
-	 0.5f,  0.5f,
-	 0.5f, -0.5f,
+	0.5f, 0.5f,
+	0.5f, -0.5f,
 };
 
-float Actor::_circleVertices[(CIRCLE_DRAW_SECTIONS+2)*2];
-float Actor::_circleTextureCoords[(CIRCLE_DRAW_SECTIONS+2)*2];
+float Actor::_circleVertices[(CIRCLE_DRAW_SECTIONS + 2) * 2];
+float Actor::_circleTextureCoords[(CIRCLE_DRAW_SECTIONS + 2) * 2];
 Actor* Actor::_scriptCreatedActor = NULL;
 bool __inittedActorCirclePoints = false;
 
@@ -65,12 +65,12 @@ Actor::Actor()
 		Actor::_circleVertices[1] = 0.0f;
 		Actor::_circleTextureCoords[0] = 0.5f;
 		Actor::_circleTextureCoords[1] = 0.5f;
-		for (int i=1; i < CIRCLE_DRAW_SECTIONS+2; i++)
+		for (int i = 1; i < CIRCLE_DRAW_SECTIONS + 2; i++)
 		{
-			Actor::_circleVertices[i*2]     = 0.5f * cos((float) MathUtil::TwoPi * i / CIRCLE_DRAW_SECTIONS);
-			Actor::_circleVertices[(i*2)+1] = 0.5f * sin((float) MathUtil::TwoPi * i / CIRCLE_DRAW_SECTIONS);
-			Actor::_circleTextureCoords[i*2]     = Actor::_circleVertices[i*2]     + 0.5f;
-			Actor::_circleTextureCoords[(i*2)+1] = Actor::_circleVertices[(i*2)+1] + 0.5f;
+			Actor::_circleVertices[i * 2] = 0.5f * cos((float)MathUtil::TwoPi * i / CIRCLE_DRAW_SECTIONS);
+			Actor::_circleVertices[(i * 2) + 1] = 0.5f * sin((float)MathUtil::TwoPi * i / CIRCLE_DRAW_SECTIONS);
+			Actor::_circleTextureCoords[i * 2] = Actor::_circleVertices[i * 2] + 0.5f;
+			Actor::_circleTextureCoords[(i * 2) + 1] = Actor::_circleVertices[(i * 2) + 1] + 0.5f;
 		}
 		__inittedActorCirclePoints = true;
 	}
@@ -85,7 +85,7 @@ Actor::Actor()
 
 	_spriteNumFrames = 0;
 	_spriteCurrentFrame = 0;
-	_spriteTextureReferences[0] = -1; 
+	_spriteTextureReferences[0] = -1;
 	_spriteFrameDelay = 0.0f;
 	_displayListIndex = -1;
 
@@ -110,7 +110,7 @@ Actor::~Actor()
 void Actor::Update(float dt)
 {
 	UpdateSpriteAnimation(dt);
-	
+
 	if (_positionInterval.ShouldStep())
 	{
 		SetPosition(_positionInterval.Step(dt));
@@ -186,7 +186,6 @@ void Actor::UpdateSpriteAnimation(float dt)
 						}
 						else
 							++_spriteCurrentFrame;
-
 					}
 					else
 					{
@@ -195,9 +194,9 @@ void Actor::UpdateSpriteAnimation(float dt)
 							_spriteAnimDirection = 1;
 							_spriteCurrentFrame = _spriteAnimStartFrame + 1;
 						}
-						else 
+						else
 						{
-							--_spriteCurrentFrame; 
+							--_spriteCurrentFrame;
 						}
 					}
 				}
@@ -209,7 +208,7 @@ void Actor::UpdateSpriteAnimation(float dt)
 						// Needs to get called before callback, in case they start a new animation.
 						_spriteAnimType = SAT_None;
 
-						if (_currentAnimName.length() > 0) 
+						if (_currentAnimName.length() > 0)
 						{
 							AnimCallback(_currentAnimName);
 						}
@@ -226,7 +225,7 @@ void Actor::UpdateSpriteAnimation(float dt)
 	}
 }
 
-void Actor::SetDrawShape( actorDrawShape drawShape )
+void Actor::SetDrawShape(actorDrawShape drawShape)
 {
 	_drawShape = drawShape;
 }
@@ -279,39 +278,39 @@ void Actor::Render()
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, textureReference);
 	}
-	
-	switch( _drawShape )
+
+	switch (_drawShape)
 	{
-		default:
-		case ADS_Square:
-			glEnableClientState(GL_VERTEX_ARRAY);
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glVertexPointer(2, GL_FLOAT, 0, _squareVertices);
-			glTexCoordPointer(2, GL_FLOAT, 0, _UV);
-			glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-		break;
-		
-		case ADS_Circle:
-			glEnableClientState(GL_VERTEX_ARRAY);
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glVertexPointer(2, GL_FLOAT, 0, _circleVertices);
-			glTexCoordPointer(2, GL_FLOAT, 0, _circleTextureCoords);
-			glDrawArrays(GL_TRIANGLE_FAN, 0, CIRCLE_DRAW_SECTIONS+2);
+	default:
+	case ADS_Square:
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glVertexPointer(2, GL_FLOAT, 0, _squareVertices);
+		glTexCoordPointer(2, GL_FLOAT, 0, _UV);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 		break;
 
-		case ADS_CustomList:
-			#if ANGEL_MOBILE
-				sysLog.Printf("glCallList is unsupported in OpenGL|ES.");
-			#else
-				if (_displayListIndex < 0)
-				{
-					sysLog.Printf("Invalid display list index: %i.", _displayListIndex);
-				}
-				else
-				{
-					glCallList(_displayListIndex);
-				}
-			#endif
+	case ADS_Circle:
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glVertexPointer(2, GL_FLOAT, 0, _circleVertices);
+		glTexCoordPointer(2, GL_FLOAT, 0, _circleTextureCoords);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, CIRCLE_DRAW_SECTIONS + 2);
+		break;
+
+	case ADS_CustomList:
+#if ANGEL_MOBILE
+		sysLog.Printf("glCallList is unsupported in OpenGL|ES.");
+#else
+		if (_displayListIndex < 0)
+		{
+			sysLog.Printf("Invalid display list index: %i.", _displayListIndex);
+		}
+		else
+		{
+			glCallList(_displayListIndex);
+		}
+#endif
 		break;
 	}
 
@@ -434,7 +433,6 @@ int Actor::GetSpriteTexture(int frame) const
 	return _spriteTextureReferences[frame];
 }
 
-
 // Will load the sprite if it doesn't find it in the texture cache.
 // The texture cache caches textures by filename.
 bool Actor::SetSprite(const String& filename, int frame, GLint clampmode, GLint filtermode, bool optional)
@@ -449,7 +447,7 @@ bool Actor::SetSprite(const String& filename, int frame, GLint clampmode, GLint 
 
 void Actor::ClearSpriteInfo()
 {
-	for (int i=0; i<_spriteNumFrames; ++i)
+	for (int i = 0; i < _spriteNumFrames; ++i)
 	{
 		_spriteTextureReferences[i] = -1;
 	}
@@ -472,13 +470,13 @@ void Actor::SetSpriteFrame(int frame)
 
 void Actor::PlaySpriteAnimation(float delay, spriteAnimationType animType, int startFrame, int endFrame, const char* _animName)
 {
-	startFrame = MathUtil::Clamp(startFrame, 0, _spriteNumFrames-1);
-	endFrame = MathUtil::Clamp(endFrame, 0, _spriteNumFrames-1);
+	startFrame = MathUtil::Clamp(startFrame, 0, _spriteNumFrames - 1);
+	endFrame = MathUtil::Clamp(endFrame, 0, _spriteNumFrames - 1);
 
 	_spriteAnimDirection = startFrame > endFrame ? -1 : 1;
 
 	_spriteCurrentFrameDelay = _spriteFrameDelay = delay;
-	_spriteAnimType= animType;
+	_spriteAnimType = animType;
 	_spriteAnimStartFrame = _spriteCurrentFrame = startFrame;
 	_spriteAnimEndFrame = endFrame;
 	if (_animName)
@@ -499,9 +497,9 @@ void Actor::LoadSpriteFrames(const String& firstFilename, GLint clampmode, GLint
 	if (numberSeparator > 0 && numDigits > 0)
 	{
 		// Now see if all of the digits between _ and . are numbers (i.e. test_001.jpg).
-		for (int i=1; i<=numDigits; ++i)
+		for (int i = 1; i <= numDigits; ++i)
 		{
-			char digit = firstFilename[numberSeparator+i];
+			char digit = firstFilename[numberSeparator + i];
 			if (digit < '0' || digit > '9')
 			{
 				bValidNumber = false;
@@ -523,14 +521,14 @@ void Actor::LoadSpriteFrames(const String& firstFilename, GLint clampmode, GLint
 	// If we got this far, the filename format is correct.
 	String numberString;
 	// The number string is just the digits between the '_' and the file extension (i.e. 001).
-	numberString.append(firstFilename.c_str(), numberSeparator+1, numDigits);
+	numberString.append(firstFilename.c_str(), numberSeparator + 1, numDigits);
 
 	// Get our starting numberical value.
 	int number = atoi(numberString.c_str());
 
 	String baseFilename;
 	// The base name is everything up to the '_' before the number (i.e. somefile_).
-	baseFilename.append( firstFilename.c_str(), numberSeparator+1);
+	baseFilename.append(firstFilename.c_str(), numberSeparator + 1);
 
 	String extension;
 	// The extension is everything after the number (i.e. .jpg).
@@ -541,7 +539,7 @@ void Actor::LoadSpriteFrames(const String& firstFilename, GLint clampmode, GLint
 	{
 		// Build up the filename of the current image in the sequence.
 		String newFilename = baseFilename + numberString + extension;
-		
+
 		// Were we able to load the file for this sprite?
 		if (!SetSprite(newFilename, _spriteNumFrames, clampmode, filtermode, true /*optional*/))
 		{
@@ -569,7 +567,7 @@ void Actor::LoadSpriteFrames(const String& firstFilename, GLint clampmode, GLint
 		int numLeadingZeros = numDigits - (int)newNumberString.length();
 
 		// Do the leading zero padding.
-		for (int i=0; i<numLeadingZeros; ++i)
+		for (int i = 0; i < numLeadingZeros; ++i)
 		{
 			newNumberString = '0' + newNumberString;
 		}
@@ -616,7 +614,7 @@ const bool Actor::IsTagged(const String& tag)
 void Actor::Tag(const String& newTag)
 {
 	StringList tags = SplitString(newTag, ", ");
-	for(unsigned int i=0; i < tags.size(); i++)
+	for (unsigned int i = 0; i < tags.size(); i++)
 	{
 		tags[i] = ToLower(tags[i]);
 		_tags.insert(tags[i]);
@@ -640,14 +638,14 @@ const String& Actor::SetName(String newName)
 {
 	//overkill for sure, but who knows how many unique actors we'll need
 	static unsigned long long nameIndex = 0;
-	
-	if(newName.length() == 0)
+
+	if (newName.length() == 0)
 	{
 		newName = GetClassName();
 	}
-	
+
 	newName[0] = toupper(newName[0]);
-	
+
 	const Actor* preNamed = Actor::GetNamed(newName);
 	if ((preNamed == NULL) || (preNamed == this))
 	{
@@ -657,9 +655,9 @@ const String& Actor::SetName(String newName)
 	{
 		_name = newName + ULLIntToString(++nameIndex);
 	}
-	
+
 	Actor::_nameList[_name] = this;
-	
+
 	return _name;
 }
 
@@ -670,7 +668,7 @@ const String& Actor::GetName() const
 
 Actor* const Actor::GetNamed(const String& nameLookup)
 {
-	std::map<String,Actor*>::iterator it = _nameList.find(nameLookup);
+	std::map<String, Actor*>::iterator it = _nameList.find(nameLookup);
 	if (it == _nameList.end())
 	{
 		return NULL;

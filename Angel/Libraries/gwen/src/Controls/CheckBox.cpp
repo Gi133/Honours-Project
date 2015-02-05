@@ -2,36 +2,32 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
-
+	*/
 
 #include "Gwen/Controls/CheckBox.h"
 
 using namespace Gwen;
 using namespace Gwen::Controls;
 
-
-
-GWEN_CONTROL_CONSTRUCTOR( CheckBox )
+GWEN_CONTROL_CONSTRUCTOR(CheckBox)
 {
-	SetSize( 15, 15 );
+	SetSize(15, 15);
 
 	m_bChecked = true;
 	Toggle();
 }
 
-
-void CheckBox::Render( Skin::Base* skin )
+void CheckBox::Render(Skin::Base* skin)
 {
-	skin->DrawCheckBox( this, m_bChecked, IsDepressed() );
+	skin->DrawCheckBox(this, m_bChecked, IsDepressed());
 }
 
 void CheckBox::OnPress()
 {
-	if ( IsDisabled())
-			return;
+	if (IsDisabled())
+		return;
 
-	if ( IsChecked() && !AllowUncheck() )
+	if (IsChecked() && !AllowUncheck())
 		return;
 
 	Toggle();
@@ -39,22 +35,22 @@ void CheckBox::OnPress()
 
 void CheckBox::OnCheckStatusChanged()
 {
-	if ( IsChecked() )
+	if (IsChecked())
 	{
-		onChecked.Call( this );
+		onChecked.Call(this);
 	}
 	else
 	{
-		onUnChecked.Call( this );
+		onUnChecked.Call(this);
 	}
 
-	onCheckChanged.Call( this );
+	onCheckChanged.Call(this);
 }
 
-void CheckBox::SetChecked( bool bChecked ) 
-{ 
-	if ( m_bChecked == bChecked ) return;
+void CheckBox::SetChecked(bool bChecked)
+{
+	if (m_bChecked == bChecked) return;
 
-	m_bChecked = bChecked; 
-	OnCheckStatusChanged(); 
+	m_bChecked = bChecked;
+	OnCheckStatusChanged();
 }

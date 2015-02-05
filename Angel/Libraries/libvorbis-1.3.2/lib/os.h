@@ -79,7 +79,6 @@ void *_alloca(size_t size);
 #  define max(x,y)  ((x)<(y)?(y):(x))
 #endif
 
-
 /* Special i386 GCC implementation */
 #if defined(__i386__) && defined(__GNUC__) && !defined(__BEOS__)
 #  define VORBIS_FPU_CONTROL
@@ -93,30 +92,29 @@ void *_alloca(size_t size);
 typedef ogg_int16_t vorbis_fpu_control;
 
 static inline void vorbis_fpu_setround(vorbis_fpu_control *fpu){
-  ogg_int16_t ret;
-  ogg_int16_t temp;
-  __asm__ __volatile__("fnstcw %0\n\t"
-          "movw %0,%%dx\n\t"
-          "andw $62463,%%dx\n\t"
-          "movw %%dx,%1\n\t"
-          "fldcw %1\n\t":"=m"(ret):"m"(temp): "dx");
-  *fpu=ret;
+	ogg_int16_t ret;
+	ogg_int16_t temp;
+	__asm__ __volatile__("fnstcw %0\n\t"
+		"movw %0,%%dx\n\t"
+		"andw $62463,%%dx\n\t"
+		"movw %%dx,%1\n\t"
+		"fldcw %1\n\t":"=m"(ret) : "m"(temp) : "dx");
+	*fpu = ret;
 }
 
 static inline void vorbis_fpu_restore(vorbis_fpu_control fpu){
-  __asm__ __volatile__("fldcw %0":: "m"(fpu));
+	__asm__ __volatile__("fldcw %0":: "m"(fpu));
 }
 
 /* assumes the FPU is in round mode! */
 static inline int vorbis_ftoi(double f){  /* yes, double!  Otherwise,
-                                             we get extra fst/fld to
-                                             truncate precision */
-  int i;
-  __asm__("fistl %0": "=m"(i) : "t"(f));
-  return(i);
+											 we get extra fst/fld to
+											 truncate precision */
+	int i;
+	__asm__("fistl %0": "=m"(i) : "t"(f));
+	return(i);
 }
 #endif /* Special i386 GCC implementation */
-
 
 /* MSVC inline assembly. 32 bit only; inline ASM isn't implemented in the
  * 64 bit compiler */
@@ -126,12 +124,12 @@ static inline int vorbis_ftoi(double f){  /* yes, double!  Otherwise,
 typedef ogg_int16_t vorbis_fpu_control;
 
 static __inline int vorbis_ftoi(double f){
-        int i;
-        __asm{
-                fld f
-                fistp i
-        }
-        return i;
+	int i;
+	__asm{
+		fld f
+			fistp i
+	}
+	return i;
 }
 
 static __inline void vorbis_fpu_setround(vorbis_fpu_control *fpu){
@@ -142,7 +140,6 @@ static __inline void vorbis_fpu_restore(vorbis_fpu_control fpu){
 
 #endif /* Special MSVC 32 bit implementation */
 
-
 /* Optimized code path for x86_64 builds. Uses SSE2 intrinsics. This can be
    done safely because all x86_64 CPUs supports SSE2. */
 #if (defined(_MSC_VER) && defined(_WIN64)) || (defined(__GNUC__) && defined (__x86_64__))
@@ -152,7 +149,7 @@ typedef ogg_int16_t vorbis_fpu_control;
 
 #include <emmintrin.h>
 static __inline int vorbis_ftoi(double f){
-        return _mm_cvtsd_si32(_mm_load_sd(&f));
+	return _mm_cvtsd_si32(_mm_load_sd(&f));
 }
 
 static __inline void vorbis_fpu_setround(vorbis_fpu_control *fpu){
@@ -163,7 +160,6 @@ static __inline void vorbis_fpu_restore(vorbis_fpu_control fpu){
 
 #endif /* Special MSVC x64 implementation */
 
-
 /* If no special implementation was found for the current compiler / platform,
    use the default implementation here: */
 #ifndef VORBIS_FPU_CONTROL
@@ -171,10 +167,10 @@ static __inline void vorbis_fpu_restore(vorbis_fpu_control fpu){
 typedef int vorbis_fpu_control;
 
 static int vorbis_ftoi(double f){
-        /* Note: MSVC and GCC (at least on some systems) round towards zero, thus,
-           the floor() call is required to ensure correct roudning of
-           negative numbers */
-        return (int)floor(f+.5);
+	/* Note: MSVC and GCC (at least on some systems) round towards zero, thus,
+	   the floor() call is required to ensure correct roudning of
+	   negative numbers */
+	return (int)floor(f + .5);
 }
 
 /* We don't have special code for this compiler/arch, so do it the slow way */

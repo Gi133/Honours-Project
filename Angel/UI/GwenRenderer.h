@@ -45,28 +45,28 @@ public:
 	virtual void Begin();
 	virtual void End();
 
-	virtual void SetDrawColor( Gwen::Color color );
+	virtual void SetDrawColor(Gwen::Color color);
 
-	virtual void DrawFilledRect( Gwen::Rect rect );
+	virtual void DrawFilledRect(Gwen::Rect rect);
 
 	virtual void StartClip();
 	virtual void EndClip();
 
-	virtual void LoadTexture( Gwen::Texture* pTexture );
-	virtual void FreeTexture( Gwen::Texture* pTexture );
-	virtual void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f );
+	virtual void LoadTexture(Gwen::Texture* pTexture);
+	virtual void FreeTexture(Gwen::Texture* pTexture);
+	virtual void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f);
 	//virtual void DrawMissingImage( Gwen::Rect pTargetRect );
-	virtual Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default = Gwen::Color( 255, 255, 255, 255 ) );
+	virtual Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default = Gwen::Color(255, 255, 255, 255));
 
 	//virtual Gwen::Renderer::ICacheToTexture* GetCTT();
 
-	virtual void LoadFont( Gwen::Font* pFont );
-	virtual void FreeFont( Gwen::Font* pFont );
-	virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text );
-	virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text );
+	virtual void LoadFont(Gwen::Font* pFont);
+	virtual void FreeFont(Gwen::Font* pFont);
+	virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text);
+	virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text);
 
 	//
-	// No need to implement these functions in your derived class, but if 
+	// No need to implement these functions in your derived class, but if
 	// you can do them faster than the default implementation it's a good idea to.
 	//
 	// virtual void DrawLinedRect( Gwen::Rect rect );
@@ -86,15 +86,14 @@ private:
 	static const int	s_maxVerts = 1024;
 
 	void Flush();
-	void AddVertex(int x, int y, float u = 0.0f , float v = 0.0f);
+	void AddVertex(int x, int y, float u = 0.0f, float v = 0.0f);
 
 	Gwen::Color			_color;
 	int					_vertNum;
-	Vertex				_vertices[ s_maxVerts ];
-    
-    unsigned int        _windowWidth, _windowHeight;
+	Vertex				_vertices[s_maxVerts];
+
+	unsigned int        _windowWidth, _windowHeight;
 
 	std::map<Gwen::UnicodeString, String> _unicodeCache;
-    std::vector<Color> _skinTexture;
+	std::vector<Color> _skinTexture;
 };
-

@@ -33,11 +33,9 @@
 // extensions and not all operating systems come with an up-to-date version
 #include "../deps/GL/wglext.h"
 
-
 #define _GLFW_PLATFORM_FBCONFIG             int             wgl
 #define _GLFW_PLATFORM_CONTEXT_STATE        _GLFWcontextWGL wgl
 #define _GLFW_PLATFORM_LIBRARY_OPENGL_STATE _GLFWlibraryWGL wgl
-
 
 //========================================================================
 // GLFW platform specific types
@@ -48,41 +46,38 @@
 //------------------------------------------------------------------------
 typedef struct _GLFWcontextWGL
 {
-    // Platform specific window resources
-    HDC       dc;              // Private GDI device context
-    HGLRC     context;         // Permanent rendering context
+	// Platform specific window resources
+	HDC       dc;              // Private GDI device context
+	HGLRC     context;         // Permanent rendering context
 
-    // Platform specific extensions (context specific)
-    PFNWGLSWAPINTERVALEXTPROC           SwapIntervalEXT;
-    PFNWGLGETPIXELFORMATATTRIBIVARBPROC GetPixelFormatAttribivARB;
-    PFNWGLGETEXTENSIONSSTRINGEXTPROC    GetExtensionsStringEXT;
-    PFNWGLGETEXTENSIONSSTRINGARBPROC    GetExtensionsStringARB;
-    PFNWGLCREATECONTEXTATTRIBSARBPROC   CreateContextAttribsARB;
-    GLboolean                           EXT_swap_control;
-    GLboolean                           ARB_multisample;
-    GLboolean                           ARB_framebuffer_sRGB;
-    GLboolean                           ARB_pixel_format;
-    GLboolean                           ARB_create_context;
-    GLboolean                           ARB_create_context_profile;
-    GLboolean                           EXT_create_context_es2_profile;
-    GLboolean                           ARB_create_context_robustness;
+	// Platform specific extensions (context specific)
+	PFNWGLSWAPINTERVALEXTPROC           SwapIntervalEXT;
+	PFNWGLGETPIXELFORMATATTRIBIVARBPROC GetPixelFormatAttribivARB;
+	PFNWGLGETEXTENSIONSSTRINGEXTPROC    GetExtensionsStringEXT;
+	PFNWGLGETEXTENSIONSSTRINGARBPROC    GetExtensionsStringARB;
+	PFNWGLCREATECONTEXTATTRIBSARBPROC   CreateContextAttribsARB;
+	GLboolean                           EXT_swap_control;
+	GLboolean                           ARB_multisample;
+	GLboolean                           ARB_framebuffer_sRGB;
+	GLboolean                           ARB_pixel_format;
+	GLboolean                           ARB_create_context;
+	GLboolean                           ARB_create_context_profile;
+	GLboolean                           EXT_create_context_es2_profile;
+	GLboolean                           ARB_create_context_robustness;
 } _GLFWcontextWGL;
-
 
 //------------------------------------------------------------------------
 // Platform-specific library global data for WGL
 //------------------------------------------------------------------------
 typedef struct _GLFWlibraryWGL
 {
-    GLboolean       hasTLS;
-    DWORD           current;
+	GLboolean       hasTLS;
+	DWORD           current;
 
-    // opengl32.dll
-    struct {
-        HINSTANCE   instance;
-    } opengl32;
-
+	// opengl32.dll
+	struct {
+		HINSTANCE   instance;
+	} opengl32;
 } _GLFWlibraryWGL;
-
 
 #endif // _wgl_platform_h_

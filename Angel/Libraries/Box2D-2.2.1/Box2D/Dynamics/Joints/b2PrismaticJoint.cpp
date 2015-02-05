@@ -40,7 +40,6 @@
 // s1 = cross(d + r1, a) = cross(p2 - x1, a)
 // s2 = cross(r2, a) = cross(p2 - x2, a)
 
-
 // Motor/Limit linear constraint
 // C = dot(ax1, d)
 // Cdot = = -dot(ax1, v1) - dot(cross(d + r1, ax1), w1) + dot(ax1, v2) + dot(cross(r2, ax1), v2)
@@ -98,7 +97,7 @@ void b2PrismaticJointDef::Initialize(b2Body* bA, b2Body* bB, const b2Vec2& ancho
 }
 
 b2PrismaticJoint::b2PrismaticJoint(const b2PrismaticJointDef* def)
-: b2Joint(def)
+	: b2Joint(def)
 {
 	m_localAnchorA = def->localAnchorA;
 	m_localAnchorB = def->localAnchorB;
@@ -303,7 +302,7 @@ void b2PrismaticJoint::SolveVelocityConstraints(const b2SolverData& data)
 		b2Vec3 Cdot(Cdot1.x, Cdot1.y, Cdot2);
 
 		b2Vec3 f1 = m_impulse;
-		b2Vec3 df =  m_K.Solve33(-Cdot);
+		b2Vec3 df = m_K.Solve33(-Cdot);
 		m_impulse += df;
 
 		if (m_limitState == e_atLowerLimit)

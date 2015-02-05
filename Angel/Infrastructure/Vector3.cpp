@@ -1,29 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2008-2014, Shane Liesegang
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without 
+//
+// Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimer in the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the copyright holder nor the names of any 
-//       contributors may be used to endorse or promote products derived from 
+//     * Neither the name of the copyright holder nor the names of any
+//       contributors may be used to endorse or promote products derived from
 //       this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
@@ -41,21 +41,21 @@ Vector3 Vector3::UnitY(0.0f, 1.0f, 0.0f);
 Vector3 Vector3::UnitZ(0.0f, 0.0f, 1.0f);
 
 Vector3::Vector3(float x, float y, float z)
-: X(x)
-, Y(y)
-, Z(z)
+	: X(x)
+	, Y(y)
+	, Z(z)
 {}
 
 Vector3::Vector3(float value)
-: X(value)
-, Y(value)
-, Z(value)
+	: X(value)
+	, Y(value)
+	, Z(value)
 {}
 
 Vector3::Vector3()
-: X(0)
-, Y(0)
-, Z(0)
+	: X(0)
+	, Y(0)
+	, Z(0)
 {}
 
 float Vector3::Length()
@@ -76,7 +76,6 @@ float Vector3::LengthSquared()
 /*static*/ float Vector3::DistanceSquared(const Vector3& value1, const Vector3& value2)
 {
 	return Vector3(value1 - value2).LengthSquared();
-
 }
 
 /*static*/ float Vector3::Dot(const Vector3& value1, const Vector3& value2)
@@ -88,10 +87,9 @@ void Vector3::Normalize()
 {
 	float len = Length();
 
-
-	if( len < MathUtil::Epsilon )
+	if (len < MathUtil::Epsilon)
 	{
-		if( Y > X )
+		if (Y > X)
 			*this = UnitY;
 		else if (X > Z) //favoring the 2d components first
 			*this = UnitX;
@@ -133,7 +131,7 @@ void Vector3::Normalize()
 
 /*static*/ Vector3 Vector3::Lerp(const Vector3& value1, const Vector3& value2, float amount)
 {
-	return Vector3( MathUtil::Lerp( value1.X, value2.X, amount ), MathUtil::Lerp( value1.Y, value2.Y, amount ), MathUtil::Lerp(value1.Z, value2.Z, amount));
+	return Vector3(MathUtil::Lerp(value1.X, value2.X, amount), MathUtil::Lerp(value1.Y, value2.Y, amount), MathUtil::Lerp(value1.Z, value2.Z, amount));
 }
 /*static*/ Vector3 Vector3::Negate(const Vector3& value)
 {
@@ -206,7 +204,6 @@ Vector3& Vector3::operator/=(float scaleFactor)
 	Z /= scaleFactor;
 	return *this;
 }
-
 
 #include <iostream>
 using namespace std;

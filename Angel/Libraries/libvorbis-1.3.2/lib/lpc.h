@@ -10,8 +10,8 @@
  *                                                                  *
  ********************************************************************
 
-  function: LPC low level routines
-  last mod: $Id: lpc.h 16037 2009-05-26 21:10:58Z xiphmont $
+ function: LPC low level routines
+ last mod: $Id: lpc.h 16037 2009-05-26 21:10:58Z xiphmont $
 
  ********************************************************************/
 
@@ -21,9 +21,9 @@
 #include "vorbis/codec.h"
 
 /* simple linear scale LPC code */
-extern float vorbis_lpc_from_data(float *data,float *lpc,int n,int m);
+extern float vorbis_lpc_from_data(float *data, float *lpc, int n, int m);
 
-extern void vorbis_lpc_predict(float *coeff,float *prime,int m,
-                               float *data,long n);
+extern void vorbis_lpc_predict(float *coeff, float *prime, int m,
+	float *data, long n);
 
 #endif

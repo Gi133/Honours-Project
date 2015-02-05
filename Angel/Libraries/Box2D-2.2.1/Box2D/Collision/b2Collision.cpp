@@ -20,8 +20,8 @@
 #include <Box2D/Collision/b2Distance.h>
 
 void b2WorldManifold::Initialize(const b2Manifold* manifold,
-						  const b2Transform& xfA, float32 radiusA,
-						  const b2Transform& xfB, float32 radiusB)
+	const b2Transform& xfA, float32 radiusA,
+	const b2Transform& xfB, float32 radiusB)
 {
 	if (manifold->pointCount == 0)
 	{
@@ -31,59 +31,59 @@ void b2WorldManifold::Initialize(const b2Manifold* manifold,
 	switch (manifold->type)
 	{
 	case b2Manifold::e_circles:
+	{
+		normal.Set(1.0f, 0.0f);
+		b2Vec2 pointA = b2Mul(xfA, manifold->localPoint);
+		b2Vec2 pointB = b2Mul(xfB, manifold->points[0].localPoint);
+		if (b2DistanceSquared(pointA, pointB) > b2_epsilon * b2_epsilon)
 		{
-			normal.Set(1.0f, 0.0f);
-			b2Vec2 pointA = b2Mul(xfA, manifold->localPoint);
-			b2Vec2 pointB = b2Mul(xfB, manifold->points[0].localPoint);
-			if (b2DistanceSquared(pointA, pointB) > b2_epsilon * b2_epsilon)
-			{
-				normal = pointB - pointA;
-				normal.Normalize();
-			}
-
-			b2Vec2 cA = pointA + radiusA * normal;
-			b2Vec2 cB = pointB - radiusB * normal;
-			points[0] = 0.5f * (cA + cB);
+			normal = pointB - pointA;
+			normal.Normalize();
 		}
-		break;
+
+		b2Vec2 cA = pointA + radiusA * normal;
+		b2Vec2 cB = pointB - radiusB * normal;
+		points[0] = 0.5f * (cA + cB);
+	}
+	break;
 
 	case b2Manifold::e_faceA:
+	{
+		normal = b2Mul(xfA.q, manifold->localNormal);
+		b2Vec2 planePoint = b2Mul(xfA, manifold->localPoint);
+
+		for (int32 i = 0; i < manifold->pointCount; ++i)
 		{
-			normal = b2Mul(xfA.q, manifold->localNormal);
-			b2Vec2 planePoint = b2Mul(xfA, manifold->localPoint);
-			
-			for (int32 i = 0; i < manifold->pointCount; ++i)
-			{
-				b2Vec2 clipPoint = b2Mul(xfB, manifold->points[i].localPoint);
-				b2Vec2 cA = clipPoint + (radiusA - b2Dot(clipPoint - planePoint, normal)) * normal;
-				b2Vec2 cB = clipPoint - radiusB * normal;
-				points[i] = 0.5f * (cA + cB);
-			}
+			b2Vec2 clipPoint = b2Mul(xfB, manifold->points[i].localPoint);
+			b2Vec2 cA = clipPoint + (radiusA - b2Dot(clipPoint - planePoint, normal)) * normal;
+			b2Vec2 cB = clipPoint - radiusB * normal;
+			points[i] = 0.5f * (cA + cB);
 		}
-		break;
+	}
+	break;
 
 	case b2Manifold::e_faceB:
+	{
+		normal = b2Mul(xfB.q, manifold->localNormal);
+		b2Vec2 planePoint = b2Mul(xfB, manifold->localPoint);
+
+		for (int32 i = 0; i < manifold->pointCount; ++i)
 		{
-			normal = b2Mul(xfB.q, manifold->localNormal);
-			b2Vec2 planePoint = b2Mul(xfB, manifold->localPoint);
-
-			for (int32 i = 0; i < manifold->pointCount; ++i)
-			{
-				b2Vec2 clipPoint = b2Mul(xfA, manifold->points[i].localPoint);
-				b2Vec2 cB = clipPoint + (radiusB - b2Dot(clipPoint - planePoint, normal)) * normal;
-				b2Vec2 cA = clipPoint - radiusA * normal;
-				points[i] = 0.5f * (cA + cB);
-			}
-
-			// Ensure normal points from A to B.
-			normal = -normal;
+			b2Vec2 clipPoint = b2Mul(xfA, manifold->points[i].localPoint);
+			b2Vec2 cB = clipPoint + (radiusB - b2Dot(clipPoint - planePoint, normal)) * normal;
+			b2Vec2 cA = clipPoint - radiusA * normal;
+			points[i] = 0.5f * (cA + cB);
 		}
-		break;
+
+		// Ensure normal points from A to B.
+		normal = -normal;
+	}
+	break;
 	}
 }
 
 void b2GetPointStates(b2PointState state1[b2_maxManifoldPoints], b2PointState state2[b2_maxManifoldPoints],
-					  const b2Manifold* manifold1, const b2Manifold* manifold2)
+	const b2Manifold* manifold1, const b2Manifold* manifold2)
 {
 	for (int32 i = 0; i < b2_maxManifoldPoints; ++i)
 	{
@@ -196,7 +196,7 @@ bool b2AABB::RayCast(b2RayCastOutput* output, const b2RayCastInput& input) const
 
 // Sutherland-Hodgman clipping.
 int32 b2ClipSegmentToLine(b2ClipVertex vOut[2], const b2ClipVertex vIn[2],
-						const b2Vec2& normal, float32 offset, int32 vertexIndexA)
+	const b2Vec2& normal, float32 offset, int32 vertexIndexA)
 {
 	// Start with no output points
 	int32 numOut = 0;
@@ -227,9 +227,9 @@ int32 b2ClipSegmentToLine(b2ClipVertex vOut[2], const b2ClipVertex vIn[2],
 	return numOut;
 }
 
-bool b2TestOverlap(	const b2Shape* shapeA, int32 indexA,
-					const b2Shape* shapeB, int32 indexB,
-					const b2Transform& xfA, const b2Transform& xfB)
+bool b2TestOverlap(const b2Shape* shapeA, int32 indexA,
+	const b2Shape* shapeB, int32 indexB,
+	const b2Transform& xfA, const b2Transform& xfB)
 {
 	b2DistanceInput input;
 	input.proxyA.Set(shapeA, indexA);

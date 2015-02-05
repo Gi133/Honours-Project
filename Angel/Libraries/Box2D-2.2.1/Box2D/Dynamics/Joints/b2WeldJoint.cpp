@@ -44,7 +44,7 @@ void b2WeldJointDef::Initialize(b2Body* bA, b2Body* bB, const b2Vec2& anchor)
 }
 
 b2WeldJoint::b2WeldJoint(const b2WeldJointDef* def)
-: b2Joint(def)
+	: b2Joint(def)
 {
 	m_localAnchorA = def->localAnchorA;
 	m_localAnchorB = def->localAnchorB;
@@ -250,7 +250,7 @@ bool b2WeldJoint::SolvePositionConstraints(const b2SolverData& data)
 
 	if (m_frequencyHz > 0.0f)
 	{
-		b2Vec2 C1 =  cB + rB - cA - rA;
+		b2Vec2 C1 = cB + rB - cA - rA;
 
 		positionError = C1.Length();
 		angularError = 0.0f;
@@ -265,14 +265,14 @@ bool b2WeldJoint::SolvePositionConstraints(const b2SolverData& data)
 	}
 	else
 	{
-		b2Vec2 C1 =  cB + rB - cA - rA;
+		b2Vec2 C1 = cB + rB - cA - rA;
 		float32 C2 = aB - aA - m_referenceAngle;
 
 		positionError = C1.Length();
 		angularError = b2Abs(C2);
 
 		b2Vec3 C(C1.x, C1.y, C2);
-	
+
 		b2Vec3 impulse = -K.Solve33(C);
 		b2Vec2 P(impulse.x, impulse.y);
 

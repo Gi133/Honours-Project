@@ -46,7 +46,7 @@ void b2WheelJointDef::Initialize(b2Body* bA, b2Body* bB, const b2Vec2& anchor, c
 }
 
 b2WheelJoint::b2WheelJoint(const b2WheelJointDef* def)
-: b2Joint(def)
+	: b2Joint(def)
 {
 	m_localAnchorA = def->localAnchorA;
 	m_localAnchorB = def->localAnchorB;
@@ -302,7 +302,7 @@ bool b2WheelJoint::SolvePositionConstraints(const b2SolverData& data)
 	float32 impulse;
 	if (k != 0.0f)
 	{
-		impulse = - C / k;
+		impulse = -C / k;
 	}
 	else
 	{

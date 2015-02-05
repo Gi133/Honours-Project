@@ -1,29 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2008-2014, Shane Liesegang
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without 
+//
+// Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimer in the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the copyright holder nor the names of any 
-//       contributors may be used to endorse or promote products derived from 
+//     * Neither the name of the copyright holder nor the names of any
+//       contributors may be used to endorse or promote products derived from
 //       this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
@@ -41,55 +41,54 @@
 
 void SpatialGraphKDNode::Render()
 {
-	if( HasChildren() )
+	if (HasChildren())
 	{
 		LHC->Render();
 		RHC->Render();
 		return;
 	}
 
-	if( theSpatialGraph.GetDrawBlocked() )
+	if (theSpatialGraph.GetDrawBlocked())
 	{
-		if( bBlocked )
+		if (bBlocked)
 		{
-			glColor4f(1,0,0,0.25f);
+			glColor4f(1, 0, 0, 0.25f);
 			BBox.RenderBox();
 		}
 	}
 
-	if( theSpatialGraph.GetDrawBounds() )
+	if (theSpatialGraph.GetDrawBounds())
 	{
-		glColor4f(0,0,0,1.f);
+		glColor4f(0, 0, 0, 1.f);
 		BBox.RenderOutline();
 	}
 
-
 	Vector2 centroid = BBox.Centroid();
 
-	if( theSpatialGraph.GetDrawNodeIndex() )
+	if (theSpatialGraph.GetDrawNodeIndex())
 	{
-		Vector2 screenCenter = MathUtil::WorldToScreen( centroid.X, centroid.Y );
+		Vector2 screenCenter = MathUtil::WorldToScreen(centroid.X, centroid.Y);
 		//Print some vals
-		glColor3f(0,1.f,1.f);
-		DrawGameText( IntToString(Index), "ConsoleSmall", (int)screenCenter.X, (int)screenCenter.Y );
+		glColor3f(0, 1.f, 1.f);
+		DrawGameText(IntToString(Index), "ConsoleSmall", (int)screenCenter.X, (int)screenCenter.Y);
 	}
 
-	if( theSpatialGraph.GetDrawGraph() && !bBlocked )
+	if (theSpatialGraph.GetDrawGraph() && !bBlocked)
 	{
-		glColor3f(1.f,0.f,0.f);
-		
+		glColor3f(1.f, 0.f, 0.f);
+
 		float linePoints[4];
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(2, GL_FLOAT, 0, linePoints);
-		for( unsigned int i = 0; i < Neighbors.size(); i++ )
+		for (unsigned int i = 0; i < Neighbors.size(); i++)
 		{
-			if( Neighbors[i]->bBlocked || !NeighborLOS[i] )
+			if (Neighbors[i]->bBlocked || !NeighborLOS[i])
 				continue;
 
 			//draw centroid to centroid half way point
 			Vector2 neighbor = Neighbors[i]->BBox.Centroid();
 			neighbor = centroid + ((neighbor - centroid) * 0.6f);
-			
+
 			linePoints[0] = centroid.X;
 			linePoints[1] = centroid.Y;
 			linePoints[2] = neighbor.X;
@@ -98,22 +97,21 @@ void SpatialGraphKDNode::Render()
 		}
 	}
 
-	if( theSpatialGraph.GetDrawGridPoints() )
+	if (theSpatialGraph.GetDrawGridPoints())
 	{
-		glColor3f(1.f,0.f,0.f);
+		glColor3f(1.f, 0.f, 0.f);
 		Vector2List gridPoints;
 		int xPoints, yPoints;
-		GetGridPoints(gridPoints, xPoints, yPoints );
+		GetGridPoints(gridPoints, xPoints, yPoints);
 
-		for( unsigned int i = 0; i < gridPoints.size(); i++ )
+		for (unsigned int i = 0; i < gridPoints.size(); i++)
 		{
-			DrawPoint( gridPoints[i], Tree->GetSmallestDimensions().X * 0.15f );
+			DrawPoint(gridPoints[i], Tree->GetSmallestDimensions().X * 0.15f);
 		}
-
 	}
 }
 
-void SpatialGraphKDNode::GetGridPoints( Vector2List& points, int& xPoints, int& yPoints )
+void SpatialGraphKDNode::GetGridPoints(Vector2List& points, int& xPoints, int& yPoints)
 {
 	xPoints = 0;
 	yPoints = 0;
@@ -124,10 +122,10 @@ void SpatialGraphKDNode::GetGridPoints( Vector2List& points, int& xPoints, int& 
 	/*
 	if( vSmallestDimensions == vMyBoxDimensions )
 	{
-		xPoints = 1;
-		yPoints = 1;
-		points.push_back( BBox.Centroid() );
-		return;
+	xPoints = 1;
+	yPoints = 1;
+	points.push_back( BBox.Centroid() );
+	return;
 	}
 	*/
 
@@ -135,17 +133,17 @@ void SpatialGraphKDNode::GetGridPoints( Vector2List& points, int& xPoints, int& 
 	yPoints = static_cast<int>(vMyBoxDimensions.Y / vSmallestDimensions.Y);
 	points.reserve(xPoints*yPoints);
 
-	Vector2 vBottomLeftStartBox( BBox.Min.X, BBox.Max.Y - vSmallestDimensions.Y );
+	Vector2 vBottomLeftStartBox(BBox.Min.X, BBox.Max.Y - vSmallestDimensions.Y);
 
-	BoundingBox startBox( vBottomLeftStartBox, vBottomLeftStartBox + vSmallestDimensions);
+	BoundingBox startBox(vBottomLeftStartBox, vBottomLeftStartBox + vSmallestDimensions);
 
-	BoundingBox checkBox( startBox );
+	BoundingBox checkBox(startBox);
 
-	for( int yDim = 0; yDim < yPoints; yDim++ )
+	for (int yDim = 0; yDim < yPoints; yDim++)
 	{
-		for( int xDim = 0; xDim < xPoints; xDim++ )
+		for (int xDim = 0; xDim < xPoints; xDim++)
 		{
-			points.push_back( checkBox.Centroid() );
+			points.push_back(checkBox.Centroid());
 
 			checkBox.Min.X += vSmallestDimensions.X;
 			checkBox.Max.X += vSmallestDimensions.X;
@@ -157,22 +155,20 @@ void SpatialGraphKDNode::GetGridPoints( Vector2List& points, int& xPoints, int& 
 		checkBox.Min.Y -= vSmallestDimensions.Y;
 		checkBox.Max.Y -= vSmallestDimensions.Y;
 	}
-
 }
 
-
-SpatialGraph::SpatialGraph(float entityWidth, const BoundingBox& startBox )
+SpatialGraph::SpatialGraph(float entityWidth, const BoundingBox& startBox)
 {
 	_entityWidth = entityWidth;
-	float maxDimension = MathUtil::Max( startBox.Max.Y - startBox.Min.Y, startBox.Max.X - startBox.Min.X );
+	float maxDimension = MathUtil::Max(startBox.Max.Y - startBox.Min.Y, startBox.Max.X - startBox.Min.X);
 	int depth = 0;
-	while( maxDimension > _entityWidth )
+	while (maxDimension > _entityWidth)
 	{
 		maxDimension /= 2.0f;
 		depth += 2;
 	}
-	_depth = MathUtil::Max(depth,1);
-	if( _depth > 24 )
+	_depth = MathUtil::Max(depth, 1);
+	if (_depth > 24)
 		_depth = 24;
 
 	int depthMask = ~(0xFFFFFFFF << _depth);
@@ -182,39 +178,37 @@ SpatialGraph::SpatialGraph(float entityWidth, const BoundingBox& startBox )
 	_dirMasks[2] = 0xaaaaaaaa & depthMask;
 	_dirMasks[3] = _dirMasks[2] >> 1;
 
-	_root = CreateTree(_depth+1, startBox, NULL);
+	_root = CreateTree(_depth + 1, startBox, NULL);
 
 	//Get smallest dimension
 	_smallestDimensions = startBox.Max - startBox.Min;
-	for( int i = 0; i < _depth; i++ )
+	for (int i = 0; i < _depth; i++)
 	{
-		if( i % 2 )
+		if (i % 2)
 			_smallestDimensions.Y *= 0.5f;
 		else
 			_smallestDimensions.X *= 0.5f;
 	}
 
-	ComputeNeighbors( _root );
-	ValidateNeighbors( _root );
+	ComputeNeighbors(_root);
+	ValidateNeighbors(_root);
 }
 
 SpatialGraph::~SpatialGraph()
 {
-	DeleteNode( _root );
+	DeleteNode(_root);
 }
 
-void SpatialGraph::DeleteNode( SpatialGraphKDNode* pNode )
+void SpatialGraph::DeleteNode(SpatialGraphKDNode* pNode)
 {
-	if( pNode == NULL )
+	if (pNode == NULL)
 		return;
 
-	DeleteNode( pNode->LHC );
-	DeleteNode( pNode->RHC );
+	DeleteNode(pNode->LHC);
+	DeleteNode(pNode->RHC);
 
 	delete pNode;
 }
-
-
 
 SpatialGraphKDNode* SpatialGraph::FindNode(SpatialGraphKDNode* node, const BoundingBox& bbox)
 {
@@ -224,16 +218,15 @@ SpatialGraphKDNode* SpatialGraph::FindNode(SpatialGraphKDNode* node, const Bound
 	if (node->BBox.Contains(bbox) == Within)
 	{
 		//Check our children
-		SpatialGraphKDNode* retVal = FindNode(node->LHC, bbox );
+		SpatialGraphKDNode* retVal = FindNode(node->LHC, bbox);
 		if (retVal != NULL)
 			return retVal;
 		retVal = FindNode(node->RHC, bbox);
-		if( retVal != NULL )
+		if (retVal != NULL)
 			return retVal;
 
 		//otherwise, return ourselves
 		return node;
-
 	}
 	return NULL;
 }
@@ -246,20 +239,18 @@ SpatialGraphKDNode* SpatialGraph::FindNode(SpatialGraphKDNode* node, const Vecto
 	if (node->BBox.Contains(point))
 	{
 		//Check our children
-		SpatialGraphKDNode* retVal = FindNode(node->LHC, point );
+		SpatialGraphKDNode* retVal = FindNode(node->LHC, point);
 		if (retVal != NULL)
 			return retVal;
 		retVal = FindNode(node->RHC, point);
-		if( retVal != NULL )
+		if (retVal != NULL)
 			return retVal;
 
 		//otherwise, return ourselves
 		return node;
-
 	}
 	return NULL;
 }
-
 
 SpatialGraphKDNode* SpatialGraph::FindNode(const BoundingBox& bbox)
 {
@@ -275,7 +266,7 @@ void SpatialGraph::Render()
 {
 	bool bDrawAny = theSpatialGraph.GetDrawBounds() || theSpatialGraph.GetDrawGridPoints() || theSpatialGraph.GetDrawGraph() || theSpatialGraph.GetDrawBlocked();
 
-	if( bDrawAny && _root)
+	if (bDrawAny && _root)
 	{
 		_root->Render();
 	}
@@ -295,61 +286,60 @@ bool SpatialGraphManager::ReportFixture(b2Fixture* fixture)
 	return true;
 }
 
-bool IsBlocked( const BoundingBox& bbox )
+bool IsBlocked(const BoundingBox& bbox)
 {
-	
 	b2AABB physBounds;
-	physBounds.lowerBound = b2Vec2( bbox.Min.X, bbox.Min.Y ); 
-	physBounds.upperBound = b2Vec2( bbox.Max.X, bbox.Max.Y );
-	
+	physBounds.lowerBound = b2Vec2(bbox.Min.X, bbox.Min.Y);
+	physBounds.upperBound = b2Vec2(bbox.Max.X, bbox.Max.Y);
+
 	__spatialGraphNumFixtures = 0;
 	theWorld.GetPhysicsWorld().QueryAABB(&theSpatialGraph, physBounds);
 
 	//No bodies here
-	if( __spatialGraphNumFixtures == 0 )
+	if (__spatialGraphNumFixtures == 0)
 		return false;
 
 	b2PolygonShape shapeBoundsPoly;
 	b2Vec2 vertices[4];
-	vertices[0].Set( physBounds.lowerBound.x, physBounds.lowerBound.y );
-	vertices[1].Set( physBounds.upperBound.x, physBounds.lowerBound.y );
-	vertices[2].Set( physBounds.upperBound.x, physBounds.upperBound.y );
-	vertices[3].Set( physBounds.lowerBound.x, physBounds.upperBound.y );
+	vertices[0].Set(physBounds.lowerBound.x, physBounds.lowerBound.y);
+	vertices[1].Set(physBounds.upperBound.x, physBounds.lowerBound.y);
+	vertices[2].Set(physBounds.upperBound.x, physBounds.upperBound.y);
+	vertices[3].Set(physBounds.lowerBound.x, physBounds.upperBound.y);
 	shapeBoundsPoly.Set(vertices, 4);
 
 	b2BodyDef fakeBodyDef;
 	//b2Vec2 center = physBounds.lowerBound + (0.5f * shapeBoundsDef.extents);
-	fakeBodyDef.position.Set(0.0f, 0.0f );
+	fakeBodyDef.position.Set(0.0f, 0.0f);
 	b2Body* fakeBody = theWorld.GetPhysicsWorld().CreateBody(&fakeBodyDef);
 	b2FixtureDef fakeFixtureDef;
 	fakeFixtureDef.shape = &shapeBoundsPoly;
 	b2Fixture* shapeBounds = fakeBody->CreateFixture(&fakeFixtureDef);
-	
-	for( int i = 0; i < __spatialGraphNumFixtures; i++ )
+
+	for (int i = 0; i < __spatialGraphNumFixtures; i++)
 	{
 		b2Fixture* pFix = __spatialGraphTempFixtures[i];
-		if( pFix->GetType() == b2Shape::e_polygon  )
+		if (pFix->GetType() == b2Shape::e_polygon)
 		{
 			b2PolygonShape* pPolyShape = (b2PolygonShape*)pFix->GetShape();
 
 			b2Manifold m0;
 			b2CollidePolygons(&m0, (b2PolygonShape*)shapeBounds->GetShape(), fakeBody->GetTransform(), pPolyShape, pFix->GetBody()->GetTransform());
 
-			if( m0.pointCount > 0 )
+			if (m0.pointCount > 0)
 			{
 				theWorld.GetPhysicsWorld().DestroyBody(fakeBody);
-				return true;	
+				return true;
 			}
 		}
-		else if( pFix->GetType() == b2Shape::e_circle )
+		else if (pFix->GetType() == b2Shape::e_circle)
 		{
 			b2CircleShape* pCircleShape = (b2CircleShape*)pFix->GetShape();
 			b2Manifold m0;
-			b2CollidePolygonAndCircle( &m0, (b2PolygonShape*)shapeBounds->GetShape(), fakeBody->GetTransform(), pCircleShape, pFix->GetBody()->GetTransform());
-			if( m0.pointCount > 0 )
+			b2CollidePolygonAndCircle(&m0, (b2PolygonShape*)shapeBounds->GetShape(), fakeBody->GetTransform(), pCircleShape, pFix->GetBody()->GetTransform());
+			if (m0.pointCount > 0)
 			{
 				theWorld.GetPhysicsWorld().DestroyBody(fakeBody);
-				return true;				
+				return true;
 			}
 		}
 	}
@@ -357,7 +347,6 @@ bool IsBlocked( const BoundingBox& bbox )
 	theWorld.GetPhysicsWorld().DestroyBody(fakeBody);
 
 	return false;
-
 }
 
 SpatialGraphKDNode* SpatialGraph::CreateTree(int depth, const BoundingBox& bbox, SpatialGraphKDNode* parent, int index)
@@ -367,10 +356,10 @@ SpatialGraphKDNode* SpatialGraph::CreateTree(int depth, const BoundingBox& bbox,
 	node->bBlocked = false;
 
 	//query physics to see if we're blocked
-	node->bBlocked = IsBlocked( bbox );
+	node->bBlocked = IsBlocked(bbox);
 
 	//Calculate my index
-	if( parent )
+	if (parent)
 	{
 		node->Index = index;
 	}
@@ -382,23 +371,23 @@ SpatialGraphKDNode* SpatialGraph::CreateTree(int depth, const BoundingBox& bbox,
 	//Bail out if we reach max depth
 	depth--;
 	node->Depth = _depth - depth;
-	if (depth > 0 && node->bBlocked )
+	if (depth > 0 && node->bBlocked)
 	{
 		BoundingBox LHSbbox, RHSbbox;
-		MathUtil::SplitBoundingBox( bbox, depth % 2 ? MathUtil::AA_X : MathUtil::AA_Y, LHSbbox, RHSbbox );
+		MathUtil::SplitBoundingBox(bbox, depth % 2 ? MathUtil::AA_X : MathUtil::AA_Y, LHSbbox, RHSbbox);
 		node->LHC = CreateTree(depth, LHSbbox, node, node->Index << 1);
 		node->RHC = CreateTree(depth, RHSbbox, node, (node->Index << 1) + 1);
 
-		int iMask = ~(0xFFFFFFFF << depth );
+		int iMask = ~(0xFFFFFFFF << depth);
 		//If I have children, pad my index
 		node->Index = (node->Index << depth) | iMask;
 
 		//If all my children are blocked, then destroy my children
-		if( IsFullyBlocked(node) )
+		if (IsFullyBlocked(node))
 		{
-			DeleteNode( node->LHC );
+			DeleteNode(node->LHC);
 			node->LHC = NULL;
-			DeleteNode( node->RHC );
+			DeleteNode(node->RHC);
 			node->RHC = NULL;
 		}
 	}
@@ -406,95 +395,93 @@ SpatialGraphKDNode* SpatialGraph::CreateTree(int depth, const BoundingBox& bbox,
 	return node;
 }
 
-bool SpatialGraph::IsFullyBlocked( SpatialGraphKDNode* node )
+bool SpatialGraph::IsFullyBlocked(SpatialGraphKDNode* node)
 {
-	if( node == NULL )
+	if (node == NULL)
 		return true;
 
 	return node->bBlocked && IsFullyBlocked(node->LHC) && IsFullyBlocked(node->RHC);
 }
 
-bool QuickContainsNode( hashmap_ns::hash_map<SpatialGraphKDNode*, int>& NodeList, SpatialGraphKDNode* pNode )
+bool QuickContainsNode(hashmap_ns::hash_map<SpatialGraphKDNode*, int>& NodeList, SpatialGraphKDNode* pNode)
 {
-	hashmap_ns::hash_map<SpatialGraphKDNode*, int>::iterator itr = NodeList.find( pNode );
+	hashmap_ns::hash_map<SpatialGraphKDNode*, int>::iterator itr = NodeList.find(pNode);
 	return itr != NodeList.end();
 }
 
-void NudgePointOnPlane( const BoundingBox& BBox, Vector2& vPointOnPlane )
+void NudgePointOnPlane(const BoundingBox& BBox, Vector2& vPointOnPlane)
 {
 	//Get off the x planes
-	if( vPointOnPlane.X == BBox.Min.X )
+	if (vPointOnPlane.X == BBox.Min.X)
 	{
 		vPointOnPlane.X += MathUtil::Epsilon;
 	}
-	else if( vPointOnPlane.X == BBox.Max.X )
+	else if (vPointOnPlane.X == BBox.Max.X)
 	{
 		vPointOnPlane.X -= MathUtil::Epsilon;
 	}
 
 	//Get off the Y planes
-	if( vPointOnPlane.Y == BBox.Min.Y )
+	if (vPointOnPlane.Y == BBox.Min.Y)
 	{
 		vPointOnPlane.Y += MathUtil::Epsilon;
 	}
-	else if( vPointOnPlane.Y == BBox.Max.Y )
+	else if (vPointOnPlane.Y == BBox.Max.Y)
 	{
 		vPointOnPlane.Y -= MathUtil::Epsilon;
 	}
 }
 
-
-bool SpatialGraph::CanGo( const Vector2& vFrom, const Vector2 vTo )
+bool SpatialGraph::CanGo(const Vector2& vFrom, const Vector2 vTo)
 {
-
 	//Get source cell
-	SpatialGraphKDNode* pSourceNode = FindNode( vFrom );
-	if( pSourceNode == NULL || pSourceNode->bBlocked)
+	SpatialGraphKDNode* pSourceNode = FindNode(vFrom);
+	if (pSourceNode == NULL || pSourceNode->bBlocked)
 		return false;
 
-	SpatialGraphKDNode* pDestNode = FindNode( vTo );
-	if( pDestNode == NULL || pDestNode->bBlocked)
+	SpatialGraphKDNode* pDestNode = FindNode(vTo);
+	if (pDestNode == NULL || pDestNode->bBlocked)
 		return false;
 
-	return CanGoInternal( vFrom, vTo, pSourceNode, pDestNode );
+	return CanGoInternal(vFrom, vTo, pSourceNode, pDestNode);
 }
 
-bool SpatialGraph::CanGoInternal( const Vector2& vFrom, const Vector2 vTo, SpatialGraphKDNode* pSourceNode, SpatialGraphKDNode* pDestNode )
+bool SpatialGraph::CanGoInternal(const Vector2& vFrom, const Vector2 vTo, SpatialGraphKDNode* pSourceNode, SpatialGraphKDNode* pDestNode)
 {
 	//If source is dest, we definitely can go (we're both within bounding box)
-	if( pSourceNode == pDestNode )
+	if (pSourceNode == pDestNode)
 		return true;
 
 	Vector2 vUseFrom = vFrom;
 	Vector2 vUseTo = vTo;
 
-	NudgePointOnPlane( pSourceNode->BBox, vUseFrom );
-	NudgePointOnPlane( pDestNode->BBox, vUseTo );
+	NudgePointOnPlane(pSourceNode->BBox, vUseFrom);
+	NudgePointOnPlane(pDestNode->BBox, vUseTo);
 
-	Ray2 ray = Ray2::CreateRayFromTo( vUseFrom, vUseTo );
+	Ray2 ray = Ray2::CreateRayFromTo(vUseFrom, vUseTo);
 
 	hashmap_ns::hash_map<SpatialGraphKDNode*, int> NodeList;
 	SpatialGraphKDNode* pCurrent = pSourceNode;
 
-	while( true )
+	while (true)
 	{
 		//Mark current as visited
 		NodeList[pCurrent] = 1;
 		SpatialGraphKDNode* pNearestNeighbor = NULL;
 		float fNearestNeighborDistance = MathUtil::MaxFloat;
 		//iterate over currents neighbors to see if they intersect the ray
-		for( unsigned int i = 0; i < pCurrent->Neighbors.size(); i++ )
+		for (unsigned int i = 0; i < pCurrent->Neighbors.size(); i++)
 		{
 			SpatialGraphKDNode* pNeighbor = pCurrent->Neighbors[i];
 
 			//Ignore neighbors we've already visited
-			if( QuickContainsNode( NodeList, pNeighbor) )
+			if (QuickContainsNode(NodeList, pNeighbor))
 				continue;
 
 			float fDistanceAlongRay;
-			if( pNeighbor->BBox.Intersects( ray, fDistanceAlongRay ) )
+			if (pNeighbor->BBox.Intersects(ray, fDistanceAlongRay))
 			{
-				if( fDistanceAlongRay < fNearestNeighborDistance )
+				if (fDistanceAlongRay < fNearestNeighborDistance)
 				{
 					fNearestNeighborDistance = fDistanceAlongRay;
 					pNearestNeighbor = pNeighbor;
@@ -503,11 +490,11 @@ bool SpatialGraph::CanGoInternal( const Vector2& vFrom, const Vector2 vTo, Spati
 		}
 
 		//If we couldn't find a nearest neighbor, or the neighbor is blocked bail out
-		if( pNearestNeighbor == NULL || pNearestNeighbor->bBlocked )
+		if (pNearestNeighbor == NULL || pNearestNeighbor->bBlocked)
 			break;
 
 		//If the nearest neighbor is our destination, we found it!
-		if( pNearestNeighbor == pDestNode )
+		if (pNearestNeighbor == pDestNode)
 			return true;
 
 		//otherwise, check our neighbor
@@ -517,39 +504,37 @@ bool SpatialGraph::CanGoInternal( const Vector2& vFrom, const Vector2 vTo, Spati
 	return false;
 }
 
-bool SpatialGraph::CanGoNodeToNode( SpatialGraphKDNode* pSourceNode, SpatialGraphKDNode* pDestNode )
+bool SpatialGraph::CanGoNodeToNode(SpatialGraphKDNode* pSourceNode, SpatialGraphKDNode* pDestNode)
 {
-	return CanGoInternal( pSourceNode->BBox.Centroid(), pDestNode->BBox.Centroid(), pSourceNode, pDestNode );
+	return CanGoInternal(pSourceNode->BBox.Centroid(), pDestNode->BBox.Centroid(), pSourceNode, pDestNode);
 }
 
-
-void SpatialGraph::AddNeighbor( SpatialGraphKDNode* node, const Vector2& pos )
+void SpatialGraph::AddNeighbor(SpatialGraphKDNode* node, const Vector2& pos)
 {
-	SpatialGraphKDNode* pNeighbor = node->Tree->FindNode( pos );
-	if( pNeighbor )
+	SpatialGraphKDNode* pNeighbor = node->Tree->FindNode(pos);
+	if (pNeighbor)
 	{
 		//Add unique
-		for( unsigned int i = 0; i < node->Neighbors.size(); i++ )
+		for (unsigned int i = 0; i < node->Neighbors.size(); i++)
 		{
-			if( node->Neighbors[i] == pNeighbor )
+			if (node->Neighbors[i] == pNeighbor)
 				return;
 		}
 
-		node->Neighbors.push_back( pNeighbor );
+		node->Neighbors.push_back(pNeighbor);
 		node->NeighborLOS.push_back(true);
 	}
-
 }
 
-int GetColumnMajorIndex( int wantX, int wantY, int maxX )
+int GetColumnMajorIndex(int wantX, int wantY, int maxX)
 {
 	//Get column
 	return (wantY * maxX) + wantX;
 }
 
-void SpatialGraph::ComputeNeighbors( SpatialGraphKDNode* node )
+void SpatialGraph::ComputeNeighbors(SpatialGraphKDNode* node)
 {
-	if( node->HasChildren() )
+	if (node->HasChildren())
 	{
 		ComputeNeighbors(node->LHC);
 		ComputeNeighbors(node->RHC);
@@ -565,58 +550,56 @@ void SpatialGraph::ComputeNeighbors( SpatialGraphKDNode* node )
 
 	Vector2List gridPoints;
 	int xPoints, yPoints;
-	node->GetGridPoints(gridPoints, xPoints, yPoints );
+	node->GetGridPoints(gridPoints, xPoints, yPoints);
 
 	//Check north neighbors
-	for( int i = 0; i < xPoints; i++ )
+	for (int i = 0; i < xPoints; i++)
 	{
-		AddNeighbor( node, gridPoints[GetColumnMajorIndex(i,0,xPoints)] + checkN );
+		AddNeighbor(node, gridPoints[GetColumnMajorIndex(i, 0, xPoints)] + checkN);
 	}
 
 	//Check south neighbors
-	for( int i = 0; i < xPoints; i++ )
+	for (int i = 0; i < xPoints; i++)
 	{
-		AddNeighbor( node, gridPoints[GetColumnMajorIndex(i,yPoints-1,xPoints)] + checkS );
+		AddNeighbor(node, gridPoints[GetColumnMajorIndex(i, yPoints - 1, xPoints)] + checkS);
 	}
 
 	//Check east neighbors
-	for( int i = 0; i < yPoints; i++ )
+	for (int i = 0; i < yPoints; i++)
 	{
-		AddNeighbor( node, gridPoints[GetColumnMajorIndex(xPoints-1,i,xPoints)] + checkE );
+		AddNeighbor(node, gridPoints[GetColumnMajorIndex(xPoints - 1, i, xPoints)] + checkE);
 	}
 
 	//Check west neighbors
-	for( int i = 0; i < yPoints; i++ )
+	for (int i = 0; i < yPoints; i++)
 	{
-		AddNeighbor( node, gridPoints[GetColumnMajorIndex(0,i,xPoints)] + checkW );
+		AddNeighbor(node, gridPoints[GetColumnMajorIndex(0, i, xPoints)] + checkW);
 	}
-
 }
 
-void SpatialGraph::ValidateNeighbors( SpatialGraphKDNode* node )
+void SpatialGraph::ValidateNeighbors(SpatialGraphKDNode* node)
 {
-	if( node->HasChildren() )
+	if (node->HasChildren())
 	{
 		ValidateNeighbors(node->LHC);
 		ValidateNeighbors(node->RHC);
 		return;
 	}
 	//Validate neighbors
-	for (unsigned int i = 0; i < node->Neighbors.size(); i++ )
+	for (unsigned int i = 0; i < node->Neighbors.size(); i++)
 	{
 		//Todo, incorporate entity width
-		if( !CanGoNodeToNode( node, node->Neighbors[i]) )
+		if (!CanGoNodeToNode(node, node->Neighbors[i]))
 		{
 			node->NeighborLOS[i] = false;
 		}
 	}
 }
 
-
 SpatialGraphManager* SpatialGraphManager::s_SpatialGraphManager = NULL;
 SpatialGraphManager & SpatialGraphManager::GetInstance()
 {
-	if( s_SpatialGraphManager == NULL)
+	if (s_SpatialGraphManager == NULL)
 	{
 		s_SpatialGraphManager = new SpatialGraphManager();
 		s_SpatialGraphManager->Initialize();
@@ -624,7 +607,7 @@ SpatialGraphManager & SpatialGraphManager::GetInstance()
 	return *s_SpatialGraphManager;
 }
 
-SpatialGraphManager::SpatialGraphManager():
+SpatialGraphManager::SpatialGraphManager() :
 _spatialGraph(NULL),
 _drawBounds(false),
 _drawBlocked(false),
@@ -632,34 +615,32 @@ _drawGridPoints(false),
 _drawGraph(false),
 _drawNodeIndex(false)
 {
-
 }
 
 SpatialGraphManager::~SpatialGraphManager()
 {
-
 }
 
-void SpatialGraphManager::CreateGraph( float entityWidth, const BoundingBox& bounds )
+void SpatialGraphManager::CreateGraph(float entityWidth, const BoundingBox& bounds)
 {
-	if( _spatialGraph != NULL )
+	if (_spatialGraph != NULL)
 		delete _spatialGraph;
 
-	_spatialGraph = new SpatialGraph( entityWidth, bounds );
+	_spatialGraph = new SpatialGraph(entityWidth, bounds);
 }
 
 //Vector2List s_tempPath;
 void SpatialGraphManager::Render()
 {
-	if( _spatialGraph  )
+	if (_spatialGraph)
 		_spatialGraph->Render();
 }
 
-bool ContainsNode( SpatialGraphNeighborList& path, const SpatialGraphKDNode* node)
+bool ContainsNode(SpatialGraphNeighborList& path, const SpatialGraphKDNode* node)
 {
-	for( SpatialGraphNeighborList::iterator itr = path.begin(); itr != path.end(); itr++ )
+	for (SpatialGraphNeighborList::iterator itr = path.begin(); itr != path.end(); itr++)
 	{
-		if( (*itr) == node )
+		if ((*itr) == node)
 			return true;
 	}
 
@@ -672,7 +653,7 @@ struct SearchInterface
 {
 	SpatialGraphKDNode* pNode;
 
-	SearchInterface( SpatialGraphKDNode* node )
+	SearchInterface(SpatialGraphKDNode* node)
 	{
 		pNode = node;
 	}
@@ -686,62 +667,61 @@ struct SearchInterface
 	{
 	}
 
-	float GoalDistanceEstimate( const SearchInterface& goal )
+	float GoalDistanceEstimate(const SearchInterface& goal)
 	{
-		return GetCost( goal );
+		return GetCost(goal);
 	}
 
-	bool IsGoal( const SearchInterface& goal )
+	bool IsGoal(const SearchInterface& goal)
 	{
 		return IsSameState(goal);
 	}
 
-	bool IsSameState( const SearchInterface& goal )
+	bool IsSameState(const SearchInterface& goal)
 	{
 		return pNode == goal.pNode;
 	}
 
-	bool GetSuccessors( AStarSearch<SearchInterface>* pSearch, SearchInterface* pParent )
+	bool GetSuccessors(AStarSearch<SearchInterface>* pSearch, SearchInterface* pParent)
 	{
-		for( unsigned int i = 0; i < pNode->Neighbors.size(); i++ )
+		for (unsigned int i = 0; i < pNode->Neighbors.size(); i++)
 		{
 			SpatialGraphKDNode* successor = pNode->Neighbors[i];
-			if( (!pParent || pParent->pNode != successor) && !successor->bBlocked && pNode->NeighborLOS[i])
+			if ((!pParent || pParent->pNode != successor) && !successor->bBlocked && pNode->NeighborLOS[i])
 			{
 				SearchInterface si(successor);
-				if( !pSearch->AddSuccessor(si) )
+				if (!pSearch->AddSuccessor(si))
 					return false;
 			}
 		}
 		return true;
 	}
 
-	float GetCost( const SearchInterface& successor )
+	float GetCost(const SearchInterface& successor)
 	{
-		return Vector2::Distance( pNode->BBox.Centroid(), successor.pNode->BBox.Centroid() );
+		return Vector2::Distance(pNode->BBox.Centroid(), successor.pNode->BBox.Centroid());
 	}
 };
 
-bool ComputeAStar( SpatialGraphKDNode* pSourceNode, SpatialGraphKDNode* pDestNode, Vector2List& path )
+bool ComputeAStar(SpatialGraphKDNode* pSourceNode, SpatialGraphKDNode* pDestNode, Vector2List& path)
 {
 	AStarSearch<SearchInterface> search;
 	SearchInterface pStart(pSourceNode);
 	SearchInterface pEnd(pDestNode);
-	
-	search.SetStartAndGoalStates( pStart, pEnd );
 
-	while( AStarSearch<SearchInterface>::SEARCH_STATE_SEARCHING == search.SearchStep() )
+	search.SetStartAndGoalStates(pStart, pEnd);
+
+	while (AStarSearch<SearchInterface>::SEARCH_STATE_SEARCHING == search.SearchStep())
 	{
-
 	}
 
 	int curState = search.GetState();
-	if( curState == AStarSearch<SearchInterface>::SEARCH_STATE_SUCCEEDED )
+	if (curState == AStarSearch<SearchInterface>::SEARCH_STATE_SUCCEEDED)
 	{
 		//Get path
-		for( SearchInterface* pCur = search.GetSolutionStart(); pCur != NULL; pCur = search.GetSolutionNext() )
+		for (SearchInterface* pCur = search.GetSolutionStart(); pCur != NULL; pCur = search.GetSolutionNext())
 		{
-			path.push_back( pCur->pNode->BBox.Centroid() );
+			path.push_back(pCur->pNode->BBox.Centroid());
 		}
 		search.FreeSolutionNodes();
 		return true;
@@ -750,22 +730,22 @@ bool ComputeAStar( SpatialGraphKDNode* pSourceNode, SpatialGraphKDNode* pDestNod
 	return false;
 }
 
-bool SpatialGraphManager::GetPath( const Vector2& source, const Vector2& dest, Vector2List& path )
+bool SpatialGraphManager::GetPath(const Vector2& source, const Vector2& dest, Vector2List& path)
 {
-	if( _spatialGraph == NULL )
+	if (_spatialGraph == NULL)
 		return false;
 
 	//Get source cell
-	SpatialGraphKDNode* pSourceNode = _spatialGraph->FindNode( source );
-	if( pSourceNode == NULL )
+	SpatialGraphKDNode* pSourceNode = _spatialGraph->FindNode(source);
+	if (pSourceNode == NULL)
 		return false;
 
-	SpatialGraphKDNode* pDestNode = _spatialGraph->FindNode( dest );
-	if( pDestNode == NULL )
+	SpatialGraphKDNode* pDestNode = _spatialGraph->FindNode(dest);
+	if (pDestNode == NULL)
 		return false;
 
 	path.push_back(source);
-	if( pSourceNode == pDestNode )
+	if (pSourceNode == pDestNode)
 	{
 		path.push_back(dest);
 		return true;
@@ -773,7 +753,7 @@ bool SpatialGraphManager::GetPath( const Vector2& source, const Vector2& dest, V
 
 	//Compute A*
 	bool retVal = ComputeAStar(pSourceNode, pDestNode, path);
-	if( retVal == false )
+	if (retVal == false)
 	{
 		path.clear();
 		return false;
@@ -785,46 +765,44 @@ bool SpatialGraphManager::GetPath( const Vector2& source, const Vector2& dest, V
 	return true;
 }
 
-bool SpatialGraphManager::CanGo( const Vector2& from, const Vector2 to )
+bool SpatialGraphManager::CanGo(const Vector2& from, const Vector2 to)
 {
-
-	if( _spatialGraph == NULL )
+	if (_spatialGraph == NULL)
 		return false;
 
-	return _spatialGraph->CanGo( from, to );
-
+	return _spatialGraph->CanGo(from, to);
 }
 
-bool SpatialGraphManager::IsInPathableSpace( const Vector2& point )
+bool SpatialGraphManager::IsInPathableSpace(const Vector2& point)
 {
-	return CanGo(point,point);
+	return CanGo(point, point);
 }
 
-bool SpatialGraphManager::FindNearestNonBlocked( const Vector2& fromPoint, Vector2& goTo )
+bool SpatialGraphManager::FindNearestNonBlocked(const Vector2& fromPoint, Vector2& goTo)
 {
-	if( _spatialGraph == NULL )
+	if (_spatialGraph == NULL)
 		return false;
 
-	SpatialGraphKDNode* pCurrentNode = _spatialGraph->FindNode( fromPoint );
-	if( pCurrentNode == NULL )
+	SpatialGraphKDNode* pCurrentNode = _spatialGraph->FindNode(fromPoint);
+	if (pCurrentNode == NULL)
 		return false;
 
 	float fMinDistance = MathUtil::MaxFloat;
 	SpatialGraphKDNode* pNearestNeighbor = NULL;
 	//otherwise, iterate over neighbors to find a non-blocked
-	for( unsigned int i = 0; i < pCurrentNode->Neighbors.size(); i++ )
+	for (unsigned int i = 0; i < pCurrentNode->Neighbors.size(); i++)
 	{
 		SpatialGraphKDNode* pNeighbor = pCurrentNode->Neighbors[i];
-		if( pNeighbor->bBlocked )
+		if (pNeighbor->bBlocked)
 			continue;
 
 		Vector2 vDir = pNeighbor->BBox.Centroid() - fromPoint;
-		Ray2 ray( fromPoint, Vector2::Normalize(vDir) );
+		Ray2 ray(fromPoint, Vector2::Normalize(vDir));
 
 		float distanceToBBox;
-		if( pNeighbor->BBox.Intersects(ray, distanceToBBox) )
+		if (pNeighbor->BBox.Intersects(ray, distanceToBBox))
 		{
-			if( distanceToBBox < fMinDistance )
+			if (distanceToBBox < fMinDistance)
 			{
 				fMinDistance = distanceToBBox;
 				pNearestNeighbor = pNeighbor;
@@ -832,7 +810,7 @@ bool SpatialGraphManager::FindNearestNonBlocked( const Vector2& fromPoint, Vecto
 		}
 	}
 
-	if( pNearestNeighbor != NULL )
+	if (pNearestNeighbor != NULL)
 	{
 		goTo = pNearestNeighbor->BBox.Centroid();
 		return true;
@@ -841,11 +819,9 @@ bool SpatialGraphManager::FindNearestNonBlocked( const Vector2& fromPoint, Vecto
 	return false;
 }
 
-
 void SpatialGraphManager::Initialize()
 {
 }
-
 
 void SpatialGraphManager::EnableDrawBounds(bool enable)
 {
@@ -854,7 +830,7 @@ void SpatialGraphManager::EnableDrawBounds(bool enable)
 
 const bool SpatialGraphManager::ToggleDrawBounds()
 {
-	EnableDrawBounds( !GetDrawBounds() );
+	EnableDrawBounds(!GetDrawBounds());
 	return GetDrawBounds();
 }
 
@@ -870,7 +846,7 @@ void SpatialGraphManager::EnableDrawBlocked(bool enable)
 
 const bool SpatialGraphManager::ToggleDrawBlocked()
 {
-	EnableDrawBlocked( !GetDrawBlocked() );
+	EnableDrawBlocked(!GetDrawBlocked());
 	return GetDrawBlocked();
 }
 
@@ -886,7 +862,7 @@ void SpatialGraphManager::EnableDrawGridPoints(bool enable)
 
 const bool SpatialGraphManager::ToggleDrawGridPoints()
 {
-	EnableDrawGridPoints( !GetDrawGridPoints() );
+	EnableDrawGridPoints(!GetDrawGridPoints());
 	return GetDrawGridPoints();
 }
 
@@ -902,7 +878,7 @@ void SpatialGraphManager::EnableDrawGraph(bool enable)
 
 const bool SpatialGraphManager::ToggleDrawGraph()
 {
-	EnableDrawGraph( !GetDrawGraph() );
+	EnableDrawGraph(!GetDrawGraph());
 	return GetDrawGraph();
 }
 
@@ -918,7 +894,7 @@ void SpatialGraphManager::EnableDrawNodeIndex(bool enable)
 
 const bool SpatialGraphManager::ToggleDrawNodeIndex()
 {
-	EnableDrawNodeIndex( !GetDrawNodeIndex() );
+	EnableDrawNodeIndex(!GetDrawNodeIndex());
 	return GetDrawNodeIndex();
 }
 

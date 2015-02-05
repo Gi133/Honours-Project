@@ -3,8 +3,6 @@
 // are changed infrequently
 //
 
-
 #include "Angel.h"
-
 
 // TODO: reference additional headers your program requires here

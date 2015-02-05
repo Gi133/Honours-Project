@@ -77,7 +77,7 @@ struct b2Vec2
 
 	/// Negate this vector.
 	b2Vec2 operator -() const { b2Vec2 v; v.Set(-x, -y); return v; }
-	
+
 	/// Read from and indexed element.
 	float32 operator () (int32 i) const
 	{
@@ -95,7 +95,7 @@ struct b2Vec2
 	{
 		x += v.x; y += v.y;
 	}
-	
+
 	/// Subtract a vector from this vector.
 	void operator -= (const b2Vec2& v)
 	{
@@ -240,8 +240,8 @@ struct b2Mat22
 		{
 			det = 1.0f / det;
 		}
-		B.ex.x =  det * d;	B.ey.x = -det * b;
-		B.ex.y = -det * c;	B.ey.y =  det * a;
+		B.ex.x = det * d;	B.ey.x = -det * b;
+		B.ex.y = -det * c;	B.ey.y = det * a;
 		return B;
 	}
 
@@ -723,7 +723,7 @@ inline void b2Sweep::Advance(float32 alpha)
 inline void b2Sweep::Normalize()
 {
 	float32 twoPi = 2.0f * b2_pi;
-	float32 d =  twoPi * floorf(a0 / twoPi);
+	float32 d = twoPi * floorf(a0 / twoPi);
 	a0 -= d;
 	a -= d;
 }

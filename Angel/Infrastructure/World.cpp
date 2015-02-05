@@ -1,29 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2008-2014, Shane Liesegang
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without 
+//
+// Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimer in the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the copyright holder nor the names of any 
-//       contributors may be used to endorse or promote products derived from 
+//     * Neither the name of the copyright holder nor the names of any
+//       contributors may be used to endorse or promote products derived from
 //       this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
@@ -34,13 +34,13 @@
 #include "../Infrastructure/Log.h"
 #include "../AI/SpatialGraph.h"
 #if !ANGEL_MOBILE
-	#include "../Infrastructure/Console.h"
-	#include "../Input/Input.h"
-	#include "../Input/MouseInput.h"
-	#include "../Input/Controller.h"
-	#include "../Input/InputManager.h"
+#include "../Infrastructure/Console.h"
+#include "../Input/Input.h"
+#include "../Input/MouseInput.h"
+#include "../Input/Controller.h"
+#include "../Input/InputManager.h"
 #else
-	#include "../Infrastructure/TextRendering.h"
+#include "../Infrastructure/TextRendering.h"
 #endif
 #include "../Infrastructure/Textures.h"
 #include "../Actors/PhysicsActor.h"
@@ -52,7 +52,7 @@
 #include "../Util/DrawUtil.h"
 
 #if defined(WIN32) && defined(ANGEL_RELEASE)
-	#include <comdef.h>
+#include <comdef.h>
 #endif
 #include <algorithm>
 
@@ -74,7 +74,7 @@ World::World()
 	_gameManager = NULL;
 	_elementsLocked = false;
 	_highResScreen = false;
-	
+
 	_processingDeferredAdds = false;
 }
 
@@ -87,23 +87,22 @@ World& World::GetInstance()
 	return *s_World;
 }
 
-void ReloadLevel( const String& levelName )
+void ReloadLevel(const String& levelName)
 {
 	theWorld.UnloadAll();
-	theWorld.LoadLevel( levelName );
+	theWorld.LoadLevel(levelName);
 }
 
-
-void UnloadAllStatic( const String& /*input*/ )
+void UnloadAllStatic(const String& /*input*/)
 {
 	theWorld.UnloadAll();
 }
 
 #if !ANGEL_MOBILE
-	void windowClosed(GLFWwindow* window)
-	{
-		theWorld.StopGame();
-	}
+void windowClosed(GLFWwindow* window)
+{
+	theWorld.StopGame();
+}
 #endif
 
 bool World::Initialize(unsigned int windowWidth, unsigned int windowHeight, String windowName, bool antiAliasing, bool fullScreen, bool resizable)
@@ -112,97 +111,97 @@ bool World::Initialize(unsigned int windowWidth, unsigned int windowHeight, Stri
 	{
 		return false;
 	}
-	
+
 	_running = true;
 
 	// Windows DLL locations
-	#if defined(WIN32) && defined(ANGEL_RELEASE)
-		String bitsPath = "bits";
-		char currentDir[MAX_PATH];
-		_getcwd(currentDir, MAX_PATH);
-		String currDir(currentDir);
+#if defined(WIN32) && defined(ANGEL_RELEASE)
+	String bitsPath = "bits";
+	char currentDir[MAX_PATH];
+	_getcwd(currentDir, MAX_PATH);
+	String currDir(currentDir);
 
-		StringList libs;
-		#if !ANGEL_DISABLE_DEVIL
-			libs.push_back("DevIL.dll");
-			libs.push_back("ILU.dll");
-			libs.push_back("ILUT.dll");
-		#endif
-		#if ANGEL_DISABLE_FMOD
-			libs.push_back("OpenAL32.dll");
-		#else
-			libs.push_back("fmodex.dll");
-		#endif
+	StringList libs;
+#if !ANGEL_DISABLE_DEVIL
+	libs.push_back("DevIL.dll");
+	libs.push_back("ILU.dll");
+	libs.push_back("ILUT.dll");
+#endif
+#if ANGEL_DISABLE_FMOD
+	libs.push_back("OpenAL32.dll");
+#else
+	libs.push_back("fmodex.dll");
+#endif
 
-		for	(int i=0; i < libs.size(); i++)
+	for (int i = 0; i < libs.size(); i++)
+	{
+		String libstring = currDir + "\\" + bitsPath + "\\" + libs[i];
+		HMODULE work = LoadLibrary(libstring.c_str());
+		if (work == 0)
 		{
-			String libstring = currDir + "\\" + bitsPath + "\\" + libs[i];
-			HMODULE work = LoadLibrary(libstring.c_str());
-			if (work == 0)
-			{
-				DWORD err = GetLastError();
-				_com_error error(err);
-				LPCSTR errorText = error.ErrorMessage();
-				sysLog.Printf("ERROR: Couldn't load DLL (%s); %s", libs[i].c_str(), errorText);
-			}
+			DWORD err = GetLastError();
+			_com_error error(err);
+			LPCSTR errorText = error.ErrorMessage();
+			sysLog.Printf("ERROR: Couldn't load DLL (%s); %s", libs[i].c_str(), errorText);
 		}
+	}
 
-		// does bits directory exist?
-		DWORD dwAttrib = GetFileAttributes(bitsPath.c_str());
-		if (dwAttrib != INVALID_FILE_ATTRIBUTES && dwAttrib & FILE_ATTRIBUTE_DIRECTORY)
-		{
-			_chdir(bitsPath.c_str());
-		}
-	#endif
-	
+	// does bits directory exist?
+	DWORD dwAttrib = GetFileAttributes(bitsPath.c_str());
+	if (dwAttrib != INVALID_FILE_ATTRIBUTES && dwAttrib & FILE_ATTRIBUTE_DIRECTORY)
+	{
+		_chdir(bitsPath.c_str());
+	}
+#endif
+
 	// General windowing initialization
-	#if !ANGEL_MOBILE
-		glfwInit();
-	#endif
-	
-	#if defined(__APPLE__)
-		// Set up paths correctly in the .app bundle
-		#if !ANGEL_MOBILE
-			CFBundleRef mainBundle = CFBundleGetMainBundle();
-			CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
-			char path[PATH_MAX];
-			if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path, PATH_MAX))
-			{
-				sysLog.Log("ERROR: Problem setting up working directory! Probably nothing will work!");
-			}
-			CFRelease(resourcesURL);
-			chdir(path);
-			chdir("..");
-			#if defined(ANGEL_DEBUG)
-				// set paths to the local resources rather than the copied ones
-				String fileName = __FILE__;
-				String dirPath = fileName.substr(0, fileName.size() - String("Angel/Infrastructure/World.cpp").size());
-				CFURLRef exeURL = CFBundleCopyExecutableURL(mainBundle);
-				char exePath[PATH_MAX];
-				if (!CFURLGetFileSystemRepresentation(exeURL, TRUE, (UInt8 *)exePath, PATH_MAX))
-				{
-					sysLog.Log("ERROR: Problem setting up working directory! Probably nothing will work!");
-				}
-				CFRelease(exeURL);
-				chdir(dirPath.c_str());
-				StringList pathElements = SplitString(exePath, "/");
-				String exeName = pathElements[pathElements.size()-1];
-				chdir(exeName.c_str());
-			#endif
-		#else
-			CFBundleRef mainBundle = CFBundleGetMainBundle();
-			CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
-			char path[PATH_MAX];
-			if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path, PATH_MAX))
-			{
-				std::cout << "Problem setting up working directory! Probably nothing will work!" << std::endl;
-			}
-			CFRelease(resourcesURL);
-			chdir(path);
-			chdir("Angel"); // the iPhone doesn't like having a "Resources" directory in the root of the .app bundle
-		#endif
-	#endif
-	
+#if !ANGEL_MOBILE
+	glfwInit();
+#endif
+
+#if defined(__APPLE__)
+	// Set up paths correctly in the .app bundle
+#if !ANGEL_MOBILE
+	CFBundleRef mainBundle = CFBundleGetMainBundle();
+	CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
+	char path[PATH_MAX];
+	if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path, PATH_MAX))
+	{
+		sysLog.Log("ERROR: Problem setting up working directory! Probably nothing will work!");
+	}
+	CFRelease(resourcesURL);
+	chdir(path);
+	chdir("..");
+#if defined(ANGEL_DEBUG)
+	// set paths to the local resources rather than the copied ones
+	String fileName = __FILE__;
+	String dirPath = fileName.substr(0, fileName.size() - String("Angel/Infrastructure/World.cpp").size());
+	CFURLRef exeURL = CFBundleCopyExecutableURL(mainBundle);
+	char exePath[PATH_MAX];
+	if (!CFURLGetFileSystemRepresentation(exeURL, TRUE, (UInt8 *)exePath, PATH_MAX))
+	{
+		sysLog.Log("ERROR: Problem setting up working directory! Probably nothing will work!");
+	}
+	CFRelease(exeURL);
+	chdir(dirPath.c_str());
+	StringList pathElements = SplitString(exePath, "/");
+	String exeName = pathElements[pathElements.size() - 1];
+	chdir(exeName.c_str());
+#endif
+#else
+	CFBundleRef mainBundle = CFBundleGetMainBundle();
+	CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
+	char path[PATH_MAX];
+	if (!CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)path, PATH_MAX))
+	{
+		std::cout << "Problem setting up working directory! Probably nothing will work!" << std::endl;
+	}
+	CFRelease(resourcesURL);
+	chdir(path);
+	chdir("Angel"); // the iPhone doesn't like having a "Resources" directory in the root of the .app bundle
+#endif
+#endif
+
 	//Start scripting
 	LuaScriptingModule::Prep();
 
@@ -213,72 +212,72 @@ bool World::Initialize(unsigned int windowWidth, unsigned int windowHeight, Stri
 	windowHeight = thePrefs.OverrideInt("WindowSettings", "height", windowHeight);
 	windowWidth = thePrefs.OverrideInt("WindowSettings", "width", windowWidth);
 	windowName = thePrefs.OverrideString("WindowSettings", "name", windowName);
-	
+
 	//Windowing system setup
-	#if !ANGEL_MOBILE
-		if (antiAliasing)
-		{
-			glfwWindowHint(GLFW_SAMPLES, 4); //4x looks pretty good
-			_antiAliased = true;
-		}
-		else
-		{
-			_antiAliased = false;
-		}
-		
-		GLFWmonitor* openOn = NULL; // windowed
-		if (fullScreen)
-		{
-			openOn = glfwGetPrimaryMonitor();
-		}
-		if (resizable)
-		{
-			glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-		}
-		else
-		{
-			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-		}
-		
-		_mainWindow = glfwCreateWindow(windowWidth, windowHeight, windowName.c_str(), openOn, NULL);
-		glfwMakeContextCurrent(_mainWindow);
-	
-		int fbw, fbh;
-		glfwGetFramebufferSize(_mainWindow, &fbw, &fbh);
-		if (fbw == windowWidth * 2)
-		{
-			SetHighResolutionScreen(true);
-		}
-	
-		#if defined(WIN32)
-			glfwSwapInterval(0); // because double-buffering and Windows don't get along apparently
-		#else
-			glfwSwapInterval(1);
-		#endif
-		glfwSetWindowSizeCallback(_mainWindow, Camera::ResizeCallback);
-		glfwSetKeyCallback(_mainWindow, keyboardInput);
-		glfwSetCharCallback(_mainWindow, charInput);
-		glfwSetCursorPosCallback(_mainWindow, MouseMotion);
-		glfwSetMouseButtonCallback(_mainWindow, MouseButton);
-		glfwSetScrollCallback(_mainWindow, MouseWheel);
-		glfwSetWindowCloseCallback(_mainWindow, windowClosed);
-		_prevTime = glfwGetTime();
-	
-		Camera::ResizeCallback(_mainWindow, fbw, fbh);
-	#else
-		struct timeval tv;
-		gettimeofday(&tv, NULL);
-		_currTime = _startTime = tv.tv_sec + (double) tv.tv_usec / 1000000.0;
-	#endif
-	
+#if !ANGEL_MOBILE
+	if (antiAliasing)
+	{
+		glfwWindowHint(GLFW_SAMPLES, 4); //4x looks pretty good
+		_antiAliased = true;
+	}
+	else
+	{
+		_antiAliased = false;
+	}
+
+	GLFWmonitor* openOn = NULL; // windowed
+	if (fullScreen)
+	{
+		openOn = glfwGetPrimaryMonitor();
+	}
+	if (resizable)
+	{
+		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+	}
+	else
+	{
+		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	}
+
+	_mainWindow = glfwCreateWindow(windowWidth, windowHeight, windowName.c_str(), openOn, NULL);
+	glfwMakeContextCurrent(_mainWindow);
+
+	int fbw, fbh;
+	glfwGetFramebufferSize(_mainWindow, &fbw, &fbh);
+	if (fbw == windowWidth * 2)
+	{
+		SetHighResolutionScreen(true);
+	}
+
+#if defined(WIN32)
+	glfwSwapInterval(0); // because double-buffering and Windows don't get along apparently
+#else
+	glfwSwapInterval(1);
+#endif
+	glfwSetWindowSizeCallback(_mainWindow, Camera::ResizeCallback);
+	glfwSetKeyCallback(_mainWindow, keyboardInput);
+	glfwSetCharCallback(_mainWindow, charInput);
+	glfwSetCursorPosCallback(_mainWindow, MouseMotion);
+	glfwSetMouseButtonCallback(_mainWindow, MouseButton);
+	glfwSetScrollCallback(_mainWindow, MouseWheel);
+	glfwSetWindowCloseCallback(_mainWindow, windowClosed);
+	_prevTime = glfwGetTime();
+
+	Camera::ResizeCallback(_mainWindow, fbw, fbh);
+#else
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	_currTime = _startTime = tv.tv_sec + (double)tv.tv_usec / 1000000.0;
+#endif
+
 	//OpenGL state setup
-	#if !ANGEL_MOBILE
-		glClearDepth(1.0f);
-		glPolygonMode(GL_FRONT, GL_FILL);
-	#else
-		glEnable(GL_POLYGON_OFFSET_FILL);
-		glPolygonOffset(1.0f, -1.0f);
-	#endif
+#if !ANGEL_MOBILE
+	glClearDepth(1.0f);
+	glPolygonMode(GL_FRONT, GL_FILL);
+#else
+	glEnable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(1.0f, -1.0f);
+#endif
 	glShadeModel(GL_FLAT);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glEnable(GL_CULL_FACE);
@@ -293,81 +292,80 @@ bool World::Initialize(unsigned int windowWidth, unsigned int windowHeight, Stri
 
 	//Get textures going
 	InitializeTextureLoading();
-	
+
 	//Subscribe to camera changes
 	theSwitchboard.SubscribeTo(this, "CameraChange");
-	
+
 	//initialize singletons
-	#if !ANGEL_MOBILE
-		theInput;
-		theControllerManager.Setup();
-	#endif
+#if !ANGEL_MOBILE
+	theInput;
+	theControllerManager.Setup();
+#endif
 	theSound;
 	theSpatialGraph;
 
-	#if !ANGEL_MOBILE
-		RegisterConsole(new TestConsole());
-	#else
-		// register fonts, since we don't have the console doing it for us on the phone
-		RegisterFont("Resources/Fonts/Inconsolata.otf", 24, "Console");
-		RegisterFont("Resources/Fonts/Inconsolata.otf", 18, "ConsoleSmall");
-	#endif
-	
+#if !ANGEL_MOBILE
+	RegisterConsole(new TestConsole());
+#else
+	// register fonts, since we don't have the console doing it for us on the phone
+	RegisterFont("Resources/Fonts/Inconsolata.otf", 24, "Console");
+	RegisterFont("Resources/Fonts/Inconsolata.otf", 18, "ConsoleSmall");
+#endif
+
 	LuaScriptingModule::Initialize();
 
 	return _initialized = true;
 }
 
 #if !ANGEL_MOBILE
-	GLFWwindow* World::GetMainWindow()
-	{
-		return _mainWindow;
-	}
+GLFWwindow* World::GetMainWindow()
+{
+	return _mainWindow;
+}
 #endif
 
 std::vector<Vec3ui> World::GetVideoModes()
 {
 	std::vector<Vec3ui> forReturn;
-	#if !ANGEL_MOBILE
-		int numModes = 0;
-		const GLFWvidmode* vidModes = glfwGetVideoModes(glfwGetPrimaryMonitor(), &numModes);
+#if !ANGEL_MOBILE
+	int numModes = 0;
+	const GLFWvidmode* vidModes = glfwGetVideoModes(glfwGetPrimaryMonitor(), &numModes);
 
-		for (int i=0; i < numModes; i++)
-		{
-			Vec3ui avm;
-			avm.X = vidModes[i].width;
-			avm.Y = vidModes[i].height;
-			avm.Z = vidModes[i].redBits + vidModes[i].greenBits + vidModes[i].blueBits;
-			forReturn.push_back(avm);
-		}
-	#else
-		//TODO: return the device's native resolution?
-	#endif
+	for (int i = 0; i < numModes; i++)
+	{
+		Vec3ui avm;
+		avm.X = vidModes[i].width;
+		avm.Y = vidModes[i].height;
+		avm.Z = vidModes[i].redBits + vidModes[i].greenBits + vidModes[i].blueBits;
+		forReturn.push_back(avm);
+	}
+#else
+	//TODO: return the device's native resolution?
+#endif
 
 	return forReturn;
 }
 
 void World::AdjustWindow(int windowWidth, int windowHeight, const String& windowName)
 {
-	#if !ANGEL_MOBILE
-		glfwSetWindowTitle(_mainWindow, windowName.c_str());
+#if !ANGEL_MOBILE
+	glfwSetWindowTitle(_mainWindow, windowName.c_str());
 
-		int width, height;
-		glfwGetWindowSize(_mainWindow, &width, &height);
-		if ( (width != windowWidth) || (height != windowHeight) )
-		{
-			glfwSetWindowSize(_mainWindow, windowWidth, windowHeight);
-		}
-	#endif
+	int width, height;
+	glfwGetWindowSize(_mainWindow, &width, &height);
+	if ((width != windowWidth) || (height != windowHeight))
+	{
+		glfwSetWindowSize(_mainWindow, windowWidth, windowHeight);
+	}
+#endif
 }
 
 void World::MoveWindow(int xPosition, int yPosition)
 {
-	#if !ANGEL_MOBILE
-		glfwSetWindowPos(_mainWindow, xPosition, yPosition);
-	#endif
+#if !ANGEL_MOBILE
+	glfwSetWindowPos(_mainWindow, xPosition, yPosition);
+#endif
 }
-
 
 bool World::SetupPhysics(const Vector2& gravity, const Vector2& maxVertex, const Vector2& minVertex)
 {
@@ -384,22 +382,21 @@ bool World::SetupPhysics(const Vector2& gravity, const Vector2& maxVertex, const
 	_physicsWorld = new b2World(gravityVector);
 
 	_physicsWorld->SetContactListener(this);
-	
+
 	return _physicsSetUp = _physicsRunning = true;
 }
 
-
 void World::Destroy()
 {
-	#if !ANGEL_MOBILE
-		theInput.Destroy();
-	#endif
+#if !ANGEL_MOBILE
+	theInput.Destroy();
+#endif
 	theSound.Shutdown();
-	
+
 	FinalizeTextureLoading();
 	LuaScriptingModule::Finalize();
-    
-    theUI.Shutdown();
+
+	theUI.Shutdown();
 
 	if (_gameManager != NULL)
 	{
@@ -418,7 +415,7 @@ void World::StartGame()
 	theSwitchboard.Broadcast(new Message("GameStart"));
 
 	//enter main loop
-	while(_running)
+	while (_running)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glMatrixMode(GL_MODELVIEW);
@@ -428,16 +425,16 @@ void World::StartGame()
 
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
-		#if !ANGEL_MOBILE
-			glfwSwapBuffers(_mainWindow);
-			glfwPollEvents();
-		#endif
+#if !ANGEL_MOBILE
+		glfwSwapBuffers(_mainWindow);
+		glfwPollEvents();
+#endif
 	}
-	
-	#if !ANGEL_MOBILE
-		glfwDestroyWindow(_mainWindow);
-		glfwTerminate();
-	#endif
+
+#if !ANGEL_MOBILE
+	glfwDestroyWindow(_mainWindow);
+	glfwTerminate();
+#endif
 }
 
 void World::StopGame()
@@ -455,7 +452,7 @@ void World::LoadLevel(const String& levelName)
 	lua_State* L = LuaScriptingModule::GetLuaState();
 	lua_getglobal(L, "LoadLevel");
 	lua_pushstring(L, levelName.c_str());
-	if (lua_pcall(L, 1, 0, 0 ))
+	if (lua_pcall(L, 1, 0, 0))
 	{
 		const char* errs = lua_tostring(L, -1);
 		sysLog.Printf("ERROR: %s\n", errs);
@@ -466,21 +463,21 @@ void World::LoadLevel(const String& levelName)
 
 float World::CalculateNewDT()
 {
-	#if ANGEL_MOBILE
-		// SJML - We're now using the iOS GLKit to handle the timing of the update
-		//   functions, so there's no need to compare against time of day anymore.
-		//   This code is being left here (commented) in case we decide to someday
-		//   port to other mobile platforms, stop using GLKit, etc. 
-		// struct timeval tv;
-		// gettimeofday(&tv, NULL);
-		// _currTime = tv.tv_sec + (double) tv.tv_usec / 1000000.0 - _startTime;
-		return _systemEstimatedDT;
-	#else
-		_currTime = glfwGetTime();
-	#endif
+#if ANGEL_MOBILE
+	// SJML - We're now using the iOS GLKit to handle the timing of the update
+	//   functions, so there's no need to compare against time of day anymore.
+	//   This code is being left here (commented) in case we decide to someday
+	//   port to other mobile platforms, stop using GLKit, etc.
+	// struct timeval tv;
+	// gettimeofday(&tv, NULL);
+	// _currTime = tv.tv_sec + (double) tv.tv_usec / 1000000.0 - _startTime;
+	return _systemEstimatedDT;
+#else
+	_currTime = glfwGetTime();
+#endif
 	_dt = MathUtil::Clamp((_currTime - _prevTime), 0.0f, MAX_TIMESTEP);
 	_prevTime = _currTime;
-	return _dt;		
+	return _dt;
 }
 
 void World::Simulate(bool simRunning)
@@ -488,10 +485,10 @@ void World::Simulate(bool simRunning)
 	float frame_dt = CalculateNewDT();
 
 	//system updates
-	#if !ANGEL_MOBILE
-		theControllerManager.UpdateState();
-		_console->Update( (float)frame_dt );
-	#endif
+#if !ANGEL_MOBILE
+	theControllerManager.UpdateState();
+	_console->Update((float)frame_dt);
+#endif
 
 	// Must be called once per frame.
 	theSound.Update();
@@ -504,43 +501,43 @@ void World::Simulate(bool simRunning)
 
 	if (simRunning)
 	{
-		// Deliver any messages that have been queued from the last frame. 
+		// Deliver any messages that have been queued from the last frame.
 		theSwitchboard.SendAllMessages();
 
 		RunPhysics(frame_dt);
-		
+
 		//Flag that the _elements array is locked so we don't try to add any
 		// new actors during the update.
 		_elementsLocked = true;
-			UpdateRenderables(frame_dt);
-			CleanupRenderables();
-		_elementsLocked = false; 
+		UpdateRenderables(frame_dt);
+		CleanupRenderables();
+		_elementsLocked = false;
 
 		// Now that we're done updating the list, allow any deferred Adds to be processed.
 		ProcessDeferredAdds();
 		ProcessDeferredLayerChanges();
 		ProcessDeferredRemoves();
-		
+
 		theSwitchboard.Update(frame_dt);
 
 		UpdateDebugItems(frame_dt);
 		//if there are any system updates that still need to be run, put them here
 	}
-	
+
 	//making this the last update so we can accurately lock on position for rendering
 	theCamera.Update(frame_dt);
 }
 
 void World::RunPhysics(float frame_dt)
 {
-	if (!_physicsSetUp || !_physicsRunning) 
+	if (!_physicsSetUp || !_physicsRunning)
 		return;
 
 	_currentTouches.clear();
-	
+
 	// fixed time step
-	const float physicsDT = 1.0f/60.f;
-	
+	const float physicsDT = 1.0f / 60.f;
+
 	float total_step = _physicsRemainderDT + frame_dt;
 	while (total_step >= physicsDT)
 	{
@@ -574,10 +571,10 @@ void World::SendCollisionNotifications(b2Contact* contact, bool beginning)
 	{
 		messageStart = "CollisionEndWith";
 	}
-	
+
 	PhysicsActor* pa1 = (PhysicsActor*)contact->GetFixtureA()->GetBody()->GetUserData();
 	PhysicsActor* pa2 = (PhysicsActor*)contact->GetFixtureB()->GetBody()->GetUserData();
-	
+
 	if (pa1 != NULL)
 	{
 		String pa1Message = messageStart + pa1->GetName();
@@ -591,7 +588,7 @@ void World::SendCollisionNotifications(b2Contact* contact, bool beginning)
 			_currentTouches[pa1].insert(pa2);
 		}
 	}
-	
+
 	if (pa2 != NULL)
 	{
 		String pa2Message = messageStart + pa2->GetName();
@@ -646,10 +643,10 @@ void World::Render()
 
 	DrawDebugItems();
 
-	#if !ANGEL_MOBILE
-		//Draw developer console
-		_console->Render();
-	#endif
+#if !ANGEL_MOBILE
+	//Draw developer console
+	_console->Render();
+#endif
 
 	HandleGLErrors();
 }
@@ -753,15 +750,15 @@ void World::Add(Renderable *newElement, int layer)
 		sysLog.Log("WARNING: Can't add a null element to the World.");
 		return;
 	}
-	
+
 	//Check to see if it's an Actor; give it a name if it doesn't have one
 	Actor *a = dynamic_cast<Actor*> (newElement);
 	if (a != NULL && !_processingDeferredAdds)
 	{
-		// Ensures that the actor has a unique, non-empty name. 
+		// Ensures that the actor has a unique, non-empty name.
 		a->SetName(a->GetName());
 	}
-	
+
 	// If we're not locked, add directly to _elements.
 	if (!_elementsLocked)
 	{
@@ -775,7 +772,7 @@ void World::Add(Renderable *newElement, int layer)
 		RenderableLayerPair addMe;
 		addMe._layer = layer;
 		addMe._renderable = newElement;
-		_deferredAdds.push_back( addMe );
+		_deferredAdds.push_back(addMe);
 	}
 }
 
@@ -814,15 +811,15 @@ void World::Remove(Renderable *oldElement)
 	// Find the layer that matches the elements layer.
 	RenderLayers::iterator layer = _layers.find(oldElement->_layer);
 	// Found the layer (list of renderables).
-	if ( layer != _layers.end() )
+	if (layer != _layers.end())
 	{
 		// Now that we have the list of elements for this layer, let's remove the requested element.
 		//rb - TODO - Cache off vector.
 		std::vector<Renderable*>::iterator element = (*layer).second.begin();
-		for ( ; element != (*layer).second.end(); ++element )
+		for (; element != (*layer).second.end(); ++element)
 		{
 			// Found it.
-			if ( (*element) == oldElement )
+			if ((*element) == oldElement)
 			{
 				// Remove the element.
 				element = (*layer).second.erase(element);
@@ -845,10 +842,10 @@ void World::UpdateLayer(Renderable* element, int newLayer)
 		return;
 	}
 
-    RenderableLayerPair layerChange;
-    layerChange._layer = newLayer;
-    layerChange._renderable = element;
-    _deferredLayerChanges.push_back( layerChange );
+	RenderableLayerPair layerChange;
+	layerChange._layer = newLayer;
+	layerChange._renderable = element;
+	_deferredLayerChanges.push_back(layerChange);
 }
 
 void World::UpdateLayer(Renderable* element, const String& newLayerName)
@@ -863,7 +860,7 @@ void World::NameLayer(const String& name, int number)
 
 const int World::GetLayerByName(const String& name)
 {
-	std::map<String,int>::iterator it = _layerNames.find(name);
+	std::map<String, int>::iterator it = _layerNames.find(name);
 	if (it != _layerNames.end())
 	{
 		return it->second;
@@ -938,8 +935,8 @@ void World::SetSideBlockers(bool turnOn, float restitution)
 
 	float thickness = 5.0f; //just so it's thick enough to avoid tunnelling
 	Vector2 screenOrigin(((topRight.X - botLeft.X) * 0.5f) + botLeft.X,
-						 ((topRight.Y - botLeft.Y) * 0.5f) + botLeft.Y);
-	
+		((topRight.Y - botLeft.Y) * 0.5f) + botLeft.Y);
+
 	//right blocker
 	_blockers[0] = new PhysicsActor();
 	_blockers[0]->SetPosition(topRight.X + (thickness * 0.5f), screenOrigin.Y);
@@ -959,7 +956,7 @@ void World::SetSideBlockers(bool turnOn, float restitution)
 	_blockers[1]->SetFriction(0.1f);
 	_blockers[1]->SetRestitution(_blockerRestitution);
 	_blockers[1]->InitPhysics();
-	
+
 	//top blocker
 	_blockers[2] = new PhysicsActor();
 	_blockers[2]->SetPosition(screenOrigin.X, topRight.Y + (thickness * 0.5f));
@@ -969,7 +966,7 @@ void World::SetSideBlockers(bool turnOn, float restitution)
 	_blockers[2]->SetFriction(0.1f);
 	_blockers[2]->SetRestitution(_blockerRestitution);
 	_blockers[2]->InitPhysics();
-	
+
 	//bottom blocker
 	_blockers[3] = new PhysicsActor();
 	_blockers[3]->SetPosition(screenOrigin.X, botLeft.Y - (thickness * 0.5f));
@@ -979,13 +976,13 @@ void World::SetSideBlockers(bool turnOn, float restitution)
 	_blockers[3]->SetFriction(0.1f);
 	_blockers[3]->SetRestitution(_blockerRestitution);
 	_blockers[3]->InitPhysics();
-	
+
 	// We don't want these removed when we call ReloadLevel.
-	for (int i=0; i<4; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
 		_blockers[i]->Tag("NoDelete");
 	}
-	
+
 	theWorld.Add(_blockers[0]);
 	theWorld.Add(_blockers[1]);
 	theWorld.Add(_blockers[2]);
@@ -1007,9 +1004,9 @@ void World::ProcessDeferredAdds()
 {
 	_processingDeferredAdds = true;
 	std::vector<RenderableLayerPair>::iterator it = _deferredAdds.begin();
-	while(it != _deferredAdds.end())
+	while (it != _deferredAdds.end())
 	{
-		Add( (*it)._renderable, (*it)._layer );
+		Add((*it)._renderable, (*it)._layer);
 		++it;
 	}
 
@@ -1021,10 +1018,10 @@ void World::ProcessDeferredLayerChanges()
 {
 	//TODO: use appropriate layer
 	std::vector<RenderableLayerPair>::iterator it = _deferredLayerChanges.begin();
-	while(it != _deferredLayerChanges.end())
+	while (it != _deferredLayerChanges.end())
 	{
 		Remove((*it)._renderable);
-		Add( (*it)._renderable, (*it)._layer );
+		Add((*it)._renderable, (*it)._layer);
 		++it;
 	}
 	_deferredLayerChanges.clear();
@@ -1033,7 +1030,7 @@ void World::ProcessDeferredLayerChanges()
 void World::ProcessDeferredRemoves()
 {
 	RenderList::iterator it = _deferredRemoves.begin();
-	while(it != _deferredRemoves.end())
+	while (it != _deferredRemoves.end())
 	{
 		Remove(*it);
 		++it;
@@ -1046,7 +1043,7 @@ void World::UpdateDebugItems(float frame_dt)
 	DebugDrawIterator itdd = _debugDrawItems.begin();
 	while (itdd != _debugDrawItems.end())
 	{
-		if ( !(*itdd)->_bPermanent )
+		if (!(*itdd)->_bPermanent)
 		{
 			(*itdd)->_timeRemaining -= _dt;
 			if ((*itdd)->_timeRemaining <= 0.f)
@@ -1088,7 +1085,7 @@ void World::DrawDebugItems()
 // This should only be done once. (at least for now)
 void World::SetGameManager(GameManager* gameManager)
 {
-	if ( (_gameManager != NULL) || (gameManager == NULL) )
+	if ((_gameManager != NULL) || (gameManager == NULL))
 	{
 		sysLog.Log("ERROR: Can only have one game manager!");
 		return;
@@ -1103,7 +1100,7 @@ void World::UnloadAll()
 	while (it != GetLastRenderable())
 	{
 		Renderable* renderable = (*it);
-		if( _gameManager != NULL && _gameManager->IsProtectedFromUnloadAll(renderable))
+		if (_gameManager != NULL && _gameManager->IsProtectedFromUnloadAll(renderable))
 		{
 			// Let the persistent actors know that we're unloading the level.
 			Actor* actor = dynamic_cast<Actor*>(renderable);
@@ -1113,7 +1110,7 @@ void World::UnloadAll()
 			continue;
 		}
 
-		it = it.erase( it );
+		it = it.erase(it);
 		renderable->Destroy();
 		delete renderable;
 	}

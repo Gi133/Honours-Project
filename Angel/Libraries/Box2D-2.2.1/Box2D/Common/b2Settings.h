@@ -78,7 +78,6 @@ typedef double float64;
 /// Maximum number of sub-steps per contact in continuous physics simulation.
 #define b2_maxSubSteps			8
 
-
 // Dynamics
 
 /// Maximum number of contacts to be handled to solve a TOI impact.
@@ -111,7 +110,6 @@ typedef double float64;
 /// to overshoot.
 #define b2_baumgarte				0.2f
 #define b2_toiBaugarte				0.75f
-
 
 // Sleep
 

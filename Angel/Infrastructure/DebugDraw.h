@@ -9,7 +9,7 @@ protected:
 
 	void SetupDraw()
 	{
-		glColor4f( _color.R, _color.G, _color.B, _color.A );
+		glColor4f(_color.R, _color.G, _color.B, _color.A);
 	}
 
 	float _timeRemaining;
@@ -33,4 +33,3 @@ protected:
 };
 
 typedef std::vector< DebugDrawBase* >::iterator		DebugDrawIterator;
-

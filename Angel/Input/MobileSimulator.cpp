@@ -1,29 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2008-2014, Shane Liesegang
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without 
+//
+// Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimer in the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the copyright holder nor the names of any 
-//       contributors may be used to endorse or promote products derived from 
+//     * Neither the name of the copyright holder nor the names of any
+//       contributors may be used to endorse or promote products derived from
 //       this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
@@ -66,14 +66,12 @@ MobileSimulator::MobileSimulator()
 	_fingerGhost2->SetDrawShape(ADS_Circle);
 	_fingerGhost2->SetColor(0.8f, 0.8f, 0.8f, 0.0f);
 
-
 	theWorld.Add(_fingerGhost1, 1000);
 	theWorld.Add(_fingerGhost2, 1000);
 }
 
 MobileSimulator::~MobileSimulator()
 {
-	
 }
 
 void MobileSimulator::Update(float dt)
@@ -90,7 +88,6 @@ void MobileSimulator::Update(float dt)
 	}
 }
 
-
 void MobileSimulator::MouseMotionEvent(Vec2i screenCoordinates)
 {
 	Vector2 pos = MathUtil::ScreenToWorld(screenCoordinates);
@@ -104,7 +101,7 @@ void MobileSimulator::MouseMotionEvent(Vec2i screenCoordinates)
 		if (tl->size() > 0)
 		{
 			(*tl)[0]->CurrentPoint = screenCoordinates;
-			if ( (*tl)[0]->MotionStartTime < 0.0f )
+			if ((*tl)[0]->MotionStartTime < 0.0f)
 			{
 				(*tl)[0]->MotionStartTime = theWorld.GetCurrentTimeSeconds();
 			}
@@ -114,7 +111,7 @@ void MobileSimulator::MouseMotionEvent(Vec2i screenCoordinates)
 			Vector2 negCoordsVec = MathUtil::WorldToScreen(-pos);
 			Vec2i negCoords(negCoordsVec.X, negCoordsVec.Y);
 			(*tl)[1]->CurrentPoint = negCoords;
-			if ( (*tl)[1]->MotionStartTime < 0.0f )
+			if ((*tl)[1]->MotionStartTime < 0.0f)
 			{
 				(*tl)[1]->MotionStartTime = theWorld.GetCurrentTimeSeconds();
 			}
@@ -135,13 +132,13 @@ void MobileSimulator::MouseMotionEvent(Vec2i screenCoordinates)
 			float radiansRotated = acos(Vector2::Dot(initNorm, currentNorm));
 
 			if (!_multiGestureOngoing)
-			{					
+			{
 				Vector2 motion = current1 - start1;
 
-				if (motion.LengthSquared() >= (MULTI_MIN_DISTANCE * MULTI_MIN_DISTANCE) )
+				if (motion.LengthSquared() >= (MULTI_MIN_DISTANCE * MULTI_MIN_DISTANCE))
 				{
 					_multiGestureOngoing = true;
-					
+
 					// figure out if it's a rotate or a pinch
 					if (radiansRotated > MULTI_ROTATE_ANGLE)
 					{
@@ -158,9 +155,9 @@ void MobileSimulator::MouseMotionEvent(Vec2i screenCoordinates)
 			{
 				GestureData gd;
 				gd.Velocity = 0.0f; // don't want to store all the extra datums
-									//  needed to actually calculate this
+				//  needed to actually calculate this
 
-				if      (_gestureType == ROTATE)
+				if (_gestureType == ROTATE)
 				{
 					float cross = Vector2::Cross(initNorm, currentNorm);
 					if (cross > 0.0f)
@@ -173,7 +170,7 @@ void MobileSimulator::MouseMotionEvent(Vec2i screenCoordinates)
 				else if (_gestureType == PINCH)
 				{
 					gd.GestureMagnitude = currentVector.Length() / initialVector.Length();
-					theSwitchboard.Broadcast(new TypedMessage<GestureData>("MultiTouchPinch", gd));	
+					theSwitchboard.Broadcast(new TypedMessage<GestureData>("MultiTouchPinch", gd));
 				}
 			}
 		}
@@ -223,7 +220,7 @@ void MobileSimulator::MouseUpEvent(Vec2i screenCoordinates, MouseButtonInput but
 	_mouseDown = false;
 
 	TouchList* tl = &TouchListener::GetTouchList();
-	
+
 	if (theInput.IsKeyDown(ANGEL_KEY_LEFTCONTROL) || theInput.IsKeyDown(ANGEL_KEY_RIGHTCONTROL))
 	{
 		TouchList::iterator it = tl->begin();
@@ -240,7 +237,7 @@ void MobileSimulator::MouseUpEvent(Vec2i screenCoordinates, MouseButtonInput but
 		TouchList::iterator it = tl->begin();
 		while (it != tl->end())
 		{
-			if ( (theWorld.GetCurrentTimeSeconds() - (*it)->MotionStartTime) < SWIPE_MAX_DURATION)
+			if ((theWorld.GetCurrentTimeSeconds() - (*it)->MotionStartTime) < SWIPE_MAX_DURATION)
 			{
 				Vector2 start((*it)->StartingPoint.X, (*it)->StartingPoint.Y);
 				Vector2 end((*it)->CurrentPoint.X, (*it)->CurrentPoint.Y);
@@ -253,17 +250,17 @@ void MobileSimulator::MouseUpEvent(Vec2i screenCoordinates, MouseButtonInput but
 						angle = 360.0f - angle;
 					}
 
-					if      ( (angle > 45.0f) && (angle <= 135.0f) )
+					if ((angle > 45.0f) && (angle <= 135.0f))
 					{
 						// swipe up
 						theSwitchboard.Broadcast(new Message("MultiTouchSwipeUp"));
 					}
-					else if ( (angle > 135.0f) && (angle <= 225.0f) )
+					else if ((angle > 135.0f) && (angle <= 225.0f))
 					{
 						// swipe left
 						theSwitchboard.Broadcast(new Message("MultiTouchSwipeLeft"));
 					}
-					else if ( (angle > 225.0f) && (angle <= 315.0f) )
+					else if ((angle > 225.0f) && (angle <= 315.0f))
 					{
 						// swipe down
 						theSwitchboard.Broadcast(new Message("MultiTouchSwipeDown"));

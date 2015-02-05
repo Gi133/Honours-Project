@@ -32,13 +32,11 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-
 // Global state shared between compilation units of GLFW
 // These are documented in internal.h
 //
 GLboolean _glfwInitialized = GL_FALSE;
 _GLFWlibrary _glfw;
-
 
 // The current error callback
 // This is outside of _glfw so it can be initialized and usable before
@@ -46,36 +44,34 @@ _GLFWlibrary _glfw;
 //
 static GLFWerrorfun _glfwErrorCallback = NULL;
 
-
 // Returns a generic string representation of the specified error
 //
 static const char* getErrorString(int error)
 {
-    switch (error)
-    {
-        case GLFW_NOT_INITIALIZED:
-            return "The GLFW library is not initialized";
-        case GLFW_NO_CURRENT_CONTEXT:
-            return "There is no current context";
-        case GLFW_INVALID_ENUM:
-            return "Invalid argument for enum parameter";
-        case GLFW_INVALID_VALUE:
-            return "Invalid value for parameter";
-        case GLFW_OUT_OF_MEMORY:
-            return "Out of memory";
-        case GLFW_API_UNAVAILABLE:
-            return "The requested client API is unavailable";
-        case GLFW_VERSION_UNAVAILABLE:
-            return "The requested client API version is unavailable";
-        case GLFW_PLATFORM_ERROR:
-            return "A platform-specific error occurred";
-        case GLFW_FORMAT_UNAVAILABLE:
-            return "The requested format is unavailable";
-    }
+	switch (error)
+	{
+	case GLFW_NOT_INITIALIZED:
+		return "The GLFW library is not initialized";
+	case GLFW_NO_CURRENT_CONTEXT:
+		return "There is no current context";
+	case GLFW_INVALID_ENUM:
+		return "Invalid argument for enum parameter";
+	case GLFW_INVALID_VALUE:
+		return "Invalid value for parameter";
+	case GLFW_OUT_OF_MEMORY:
+		return "Out of memory";
+	case GLFW_API_UNAVAILABLE:
+		return "The requested client API is unavailable";
+	case GLFW_VERSION_UNAVAILABLE:
+		return "The requested client API version is unavailable";
+	case GLFW_PLATFORM_ERROR:
+		return "A platform-specific error occurred";
+	case GLFW_FORMAT_UNAVAILABLE:
+		return "The requested format is unavailable";
+	}
 
-    return "ERROR: UNKNOWN ERROR TOKEN PASSED TO glfwErrorString";
+	return "ERROR: UNKNOWN ERROR TOKEN PASSED TO glfwErrorString";
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 //////                         GLFW event API                       //////
@@ -83,32 +79,31 @@ static const char* getErrorString(int error)
 
 void _glfwInputError(int error, const char* format, ...)
 {
-    if (_glfwErrorCallback)
-    {
-        char buffer[16384];
-        const char* description;
+	if (_glfwErrorCallback)
+	{
+		char buffer[16384];
+		const char* description;
 
-        if (format)
-        {
-            int count;
-            va_list vl;
+		if (format)
+		{
+			int count;
+			va_list vl;
 
-            va_start(vl, format);
-            count = vsnprintf(buffer, sizeof(buffer), format, vl);
-            va_end(vl);
+			va_start(vl, format);
+			count = vsnprintf(buffer, sizeof(buffer), format, vl);
+			va_end(vl);
 
-            if (count < 0)
-                buffer[sizeof(buffer) - 1] = '\0';
+			if (count < 0)
+				buffer[sizeof(buffer) - 1] = '\0';
 
-            description = buffer;
-        }
-        else
-            description = getErrorString(error);
+			description = buffer;
+		}
+		else
+			description = getErrorString(error);
 
-        _glfwErrorCallback(error, description);
-    }
+		_glfwErrorCallback(error, description);
+	}
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 //////                        GLFW public API                       //////
@@ -116,82 +111,81 @@ void _glfwInputError(int error, const char* format, ...)
 
 GLFWAPI int glfwInit(void)
 {
-    if (_glfwInitialized)
-        return GL_TRUE;
+	if (_glfwInitialized)
+		return GL_TRUE;
 
-    memset(&_glfw, 0, sizeof(_glfw));
+	memset(&_glfw, 0, sizeof(_glfw));
 
-    if (!_glfwPlatformInit())
-    {
-        _glfwPlatformTerminate();
-        return GL_FALSE;
-    }
+	if (!_glfwPlatformInit())
+	{
+		_glfwPlatformTerminate();
+		return GL_FALSE;
+	}
 
-    _glfw.monitors = _glfwPlatformGetMonitors(&_glfw.monitorCount);
-    if (_glfw.monitors == NULL)
-    {
-        _glfwInputError(GLFW_PLATFORM_ERROR, "No monitors found");
-        _glfwPlatformTerminate();
-        return GL_FALSE;
-    }
+	_glfw.monitors = _glfwPlatformGetMonitors(&_glfw.monitorCount);
+	if (_glfw.monitors == NULL)
+	{
+		_glfwInputError(GLFW_PLATFORM_ERROR, "No monitors found");
+		_glfwPlatformTerminate();
+		return GL_FALSE;
+	}
 
-    _glfwInitialized = GL_TRUE;
+	_glfwInitialized = GL_TRUE;
 
-    // Not all window hints have zero as their default value
-    glfwDefaultWindowHints();
+	// Not all window hints have zero as their default value
+	glfwDefaultWindowHints();
 
-    return GL_TRUE;
+	return GL_TRUE;
 }
 
 GLFWAPI void glfwTerminate(void)
 {
-    int i;
+	int i;
 
-    if (!_glfwInitialized)
-        return;
+	if (!_glfwInitialized)
+		return;
 
-    memset(&_glfw.callbacks, 0, sizeof(_glfw.callbacks));
+	memset(&_glfw.callbacks, 0, sizeof(_glfw.callbacks));
 
-    // Close all remaining windows
-    while (_glfw.windowListHead)
-        glfwDestroyWindow((GLFWwindow*) _glfw.windowListHead);
+	// Close all remaining windows
+	while (_glfw.windowListHead)
+		glfwDestroyWindow((GLFWwindow*)_glfw.windowListHead);
 
-    for (i = 0;  i < _glfw.monitorCount;  i++)
-    {
-        _GLFWmonitor* monitor = _glfw.monitors[i];
-        if (monitor->originalRamp.size)
-            _glfwPlatformSetGammaRamp(monitor, &monitor->originalRamp);
-    }
+	for (i = 0; i < _glfw.monitorCount; i++)
+	{
+		_GLFWmonitor* monitor = _glfw.monitors[i];
+		if (monitor->originalRamp.size)
+			_glfwPlatformSetGammaRamp(monitor, &monitor->originalRamp);
+	}
 
-    _glfwDestroyMonitors(_glfw.monitors, _glfw.monitorCount);
-    _glfw.monitors = NULL;
-    _glfw.monitorCount = 0;
+	_glfwDestroyMonitors(_glfw.monitors, _glfw.monitorCount);
+	_glfw.monitors = NULL;
+	_glfw.monitorCount = 0;
 
-    _glfwPlatformTerminate();
+	_glfwPlatformTerminate();
 
-    _glfwInitialized = GL_FALSE;
+	_glfwInitialized = GL_FALSE;
 }
 
 GLFWAPI void glfwGetVersion(int* major, int* minor, int* rev)
 {
-    if (major != NULL)
-        *major = GLFW_VERSION_MAJOR;
+	if (major != NULL)
+		*major = GLFW_VERSION_MAJOR;
 
-    if (minor != NULL)
-        *minor = GLFW_VERSION_MINOR;
+	if (minor != NULL)
+		*minor = GLFW_VERSION_MINOR;
 
-    if (rev != NULL)
-        *rev = GLFW_VERSION_REVISION;
+	if (rev != NULL)
+		*rev = GLFW_VERSION_REVISION;
 }
 
 GLFWAPI const char* glfwGetVersionString(void)
 {
-    return _glfwPlatformGetVersionString();
+	return _glfwPlatformGetVersionString();
 }
 
 GLFWAPI GLFWerrorfun glfwSetErrorCallback(GLFWerrorfun cbfun)
 {
-    _GLFW_SWAP_POINTERS(_glfwErrorCallback, cbfun);
-    return cbfun;
+	_GLFW_SWAP_POINTERS(_glfwErrorCallback, cbfun);
+	return cbfun;
 }
-

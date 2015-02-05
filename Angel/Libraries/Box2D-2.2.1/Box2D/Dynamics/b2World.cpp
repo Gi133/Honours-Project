@@ -113,7 +113,7 @@ b2Body* b2World::CreateBody(const b2BodyDef* def)
 	}
 
 	void* mem = m_blockAllocator.Allocate(sizeof(b2Body));
-	b2Body* b = new (mem) b2Body(def, this);
+	b2Body* b = new (mem)b2Body(def, this);
 
 	// Add to world doubly linked list.
 	b->m_prev = NULL;
@@ -391,10 +391,10 @@ void b2World::Solve(const b2TimeStep& step)
 
 	// Size the island for the worst case.
 	b2Island island(m_bodyCount,
-					m_contactManager.m_contactCount,
-					m_jointCount,
-					&m_stackAllocator,
-					m_contactManager.m_contactListener);
+		m_contactManager.m_contactCount,
+		m_jointCount,
+		&m_stackAllocator,
+		m_contactManager.m_contactListener);
 
 	// Clear all the island flags.
 	for (b2Body* b = m_bodyList; b; b = b->m_next)
@@ -762,7 +762,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 		minContact->m_flags |= b2Contact::e_islandFlag;
 
 		// Get contacts on bodyA and bodyB.
-		b2Body* bodies[2] = {bA, bB};
+		b2Body* bodies[2] = { bA, bB };
 		for (int32 i = 0; i < 2; ++i)
 		{
 			b2Body* body = bodies[i];
@@ -839,7 +839,7 @@ void b2World::SolveTOI(const b2TimeStep& step)
 					{
 						continue;
 					}
-					
+
 					// Add the other body to the island.
 					other->m_flags |= b2Body::e_islandFlag;
 
@@ -909,7 +909,7 @@ void b2World::Step(float32 dt, int32 velocityIterations, int32 positionIteration
 
 	b2TimeStep step;
 	step.dt = dt;
-	step.velocityIterations	= velocityIterations;
+	step.velocityIterations = velocityIterations;
 	step.positionIterations = positionIterations;
 	if (dt > 0.0f)
 	{
@@ -923,7 +923,7 @@ void b2World::Step(float32 dt, int32 velocityIterations, int32 positionIteration
 	step.dtRatio = m_inv_dt0 * dt;
 
 	step.warmStarting = m_warmStarting;
-	
+
 	// Update contacts. This is where some contacts are destroyed.
 	{
 		b2Timer timer;
@@ -1033,61 +1033,61 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 	switch (fixture->GetType())
 	{
 	case b2Shape::e_circle:
-		{
-			b2CircleShape* circle = (b2CircleShape*)fixture->GetShape();
+	{
+		b2CircleShape* circle = (b2CircleShape*)fixture->GetShape();
 
-			b2Vec2 center = b2Mul(xf, circle->m_p);
-			float32 radius = circle->m_radius;
-			b2Vec2 axis = b2Mul(xf.q, b2Vec2(1.0f, 0.0f));
+		b2Vec2 center = b2Mul(xf, circle->m_p);
+		float32 radius = circle->m_radius;
+		b2Vec2 axis = b2Mul(xf.q, b2Vec2(1.0f, 0.0f));
 
-			m_debugDraw->DrawSolidCircle(center, radius, axis, color);
-		}
-		break;
+		m_debugDraw->DrawSolidCircle(center, radius, axis, color);
+	}
+	break;
 
 	case b2Shape::e_edge:
-		{
-			b2EdgeShape* edge = (b2EdgeShape*)fixture->GetShape();
-			b2Vec2 v1 = b2Mul(xf, edge->m_vertex1);
-			b2Vec2 v2 = b2Mul(xf, edge->m_vertex2);
-			m_debugDraw->DrawSegment(v1, v2, color);
-		}
-		break;
+	{
+		b2EdgeShape* edge = (b2EdgeShape*)fixture->GetShape();
+		b2Vec2 v1 = b2Mul(xf, edge->m_vertex1);
+		b2Vec2 v2 = b2Mul(xf, edge->m_vertex2);
+		m_debugDraw->DrawSegment(v1, v2, color);
+	}
+	break;
 
 	case b2Shape::e_chain:
-		{
-			b2ChainShape* chain = (b2ChainShape*)fixture->GetShape();
-			int32 count = chain->m_count;
-			const b2Vec2* vertices = chain->m_vertices;
+	{
+		b2ChainShape* chain = (b2ChainShape*)fixture->GetShape();
+		int32 count = chain->m_count;
+		const b2Vec2* vertices = chain->m_vertices;
 
-			b2Vec2 v1 = b2Mul(xf, vertices[0]);
-			for (int32 i = 1; i < count; ++i)
-			{
-				b2Vec2 v2 = b2Mul(xf, vertices[i]);
-				m_debugDraw->DrawSegment(v1, v2, color);
-				m_debugDraw->DrawCircle(v1, 0.05f, color);
-				v1 = v2;
-			}
+		b2Vec2 v1 = b2Mul(xf, vertices[0]);
+		for (int32 i = 1; i < count; ++i)
+		{
+			b2Vec2 v2 = b2Mul(xf, vertices[i]);
+			m_debugDraw->DrawSegment(v1, v2, color);
+			m_debugDraw->DrawCircle(v1, 0.05f, color);
+			v1 = v2;
 		}
-		break;
+	}
+	break;
 
 	case b2Shape::e_polygon:
+	{
+		b2PolygonShape* poly = (b2PolygonShape*)fixture->GetShape();
+		int32 vertexCount = poly->m_vertexCount;
+		b2Assert(vertexCount <= b2_maxPolygonVertices);
+		b2Vec2 vertices[b2_maxPolygonVertices];
+
+		for (int32 i = 0; i < vertexCount; ++i)
 		{
-			b2PolygonShape* poly = (b2PolygonShape*)fixture->GetShape();
-			int32 vertexCount = poly->m_vertexCount;
-			b2Assert(vertexCount <= b2_maxPolygonVertices);
-			b2Vec2 vertices[b2_maxPolygonVertices];
-
-			for (int32 i = 0; i < vertexCount; ++i)
-			{
-				vertices[i] = b2Mul(xf, poly->m_vertices[i]);
-			}
-
-			m_debugDraw->DrawSolidPolygon(vertices, vertexCount, color);
+			vertices[i] = b2Mul(xf, poly->m_vertices[i]);
 		}
+
+		m_debugDraw->DrawSolidPolygon(vertices, vertexCount, color);
+	}
+	break;
+
+	default:
 		break;
-            
-    default:
-        break;
 	}
 }
 
@@ -1111,15 +1111,15 @@ void b2World::DrawJoint(b2Joint* joint)
 		break;
 
 	case e_pulleyJoint:
-		{
-			b2PulleyJoint* pulley = (b2PulleyJoint*)joint;
-			b2Vec2 s1 = pulley->GetGroundAnchorA();
-			b2Vec2 s2 = pulley->GetGroundAnchorB();
-			m_debugDraw->DrawSegment(s1, p1, color);
-			m_debugDraw->DrawSegment(s2, p2, color);
-			m_debugDraw->DrawSegment(s1, s2, color);
-		}
-		break;
+	{
+		b2PulleyJoint* pulley = (b2PulleyJoint*)joint;
+		b2Vec2 s1 = pulley->GetGroundAnchorA();
+		b2Vec2 s2 = pulley->GetGroundAnchorB();
+		m_debugDraw->DrawSegment(s1, p1, color);
+		m_debugDraw->DrawSegment(s2, p2, color);
+		m_debugDraw->DrawSegment(s1, s2, color);
+	}
+	break;
 
 	case e_mouseJoint:
 		// don't draw this

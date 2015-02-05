@@ -29,7 +29,6 @@
 
 #include <stdlib.h>
 
-
 //////////////////////////////////////////////////////////////////////////
 //////                       GLFW internal API                      //////
 //////////////////////////////////////////////////////////////////////////
@@ -38,13 +37,12 @@
 //
 static float calcJoystickPos(DWORD pos, DWORD min, DWORD max)
 {
-    float fpos = (float) pos;
-    float fmin = (float) min;
-    float fmax = (float) max;
+	float fpos = (float)pos;
+	float fmin = (float)min;
+	float fmax = (float)max;
 
-    return (2.f * (fpos - fmin) / (fmax - fmin)) - 1.f;
+	return (2.f * (fpos - fmin) / (fmax - fmin)) - 1.f;
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 //////                       GLFW internal API                      //////
@@ -60,12 +58,11 @@ void _glfwInitJoysticks(void)
 //
 void _glfwTerminateJoysticks(void)
 {
-    int i;
+	int i;
 
-    for (i = 0;  i < GLFW_JOYSTICK_LAST;  i++)
-        free(_glfw.win32.joystick[i].name);
+	for (i = 0; i < GLFW_JOYSTICK_LAST; i++)
+		free(_glfw.win32.joystick[i].name);
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 //////                       GLFW platform API                      //////
@@ -73,105 +70,104 @@ void _glfwTerminateJoysticks(void)
 
 int _glfwPlatformJoystickPresent(int joy)
 {
-    JOYINFO ji;
+	JOYINFO ji;
 
-    if (_glfw_joyGetPos(joy, &ji) != JOYERR_NOERROR)
-        return GL_FALSE;
+	if (_glfw_joyGetPos(joy, &ji) != JOYERR_NOERROR)
+		return GL_FALSE;
 
-    return GL_TRUE;
+	return GL_TRUE;
 }
 
 const float* _glfwPlatformGetJoystickAxes(int joy, int* count)
 {
-    JOYCAPS jc;
-    JOYINFOEX ji;
-    float* axes = _glfw.win32.joystick[joy].axes;
+	JOYCAPS jc;
+	JOYINFOEX ji;
+	float* axes = _glfw.win32.joystick[joy].axes;
 
-    if (_glfw_joyGetDevCaps(joy, &jc, sizeof(JOYCAPS)) != JOYERR_NOERROR)
-        return NULL;
+	if (_glfw_joyGetDevCaps(joy, &jc, sizeof(JOYCAPS)) != JOYERR_NOERROR)
+		return NULL;
 
-    ji.dwSize = sizeof(JOYINFOEX);
-    ji.dwFlags = JOY_RETURNX | JOY_RETURNY | JOY_RETURNZ |
-                 JOY_RETURNR | JOY_RETURNU | JOY_RETURNV;
-    if (_glfw_joyGetPosEx(joy, &ji) != JOYERR_NOERROR)
-        return NULL;
+	ji.dwSize = sizeof(JOYINFOEX);
+	ji.dwFlags = JOY_RETURNX | JOY_RETURNY | JOY_RETURNZ |
+		JOY_RETURNR | JOY_RETURNU | JOY_RETURNV;
+	if (_glfw_joyGetPosEx(joy, &ji) != JOYERR_NOERROR)
+		return NULL;
 
-    axes[(*count)++] = calcJoystickPos(ji.dwXpos, jc.wXmin, jc.wXmax);
-    axes[(*count)++] = -calcJoystickPos(ji.dwYpos, jc.wYmin, jc.wYmax);
+	axes[(*count)++] = calcJoystickPos(ji.dwXpos, jc.wXmin, jc.wXmax);
+	axes[(*count)++] = -calcJoystickPos(ji.dwYpos, jc.wYmin, jc.wYmax);
 
-    if (jc.wCaps & JOYCAPS_HASZ)
-        axes[(*count)++] = calcJoystickPos(ji.dwZpos, jc.wZmin, jc.wZmax);
+	if (jc.wCaps & JOYCAPS_HASZ)
+		axes[(*count)++] = calcJoystickPos(ji.dwZpos, jc.wZmin, jc.wZmax);
 
-    if (jc.wCaps & JOYCAPS_HASR)
-        axes[(*count)++] = calcJoystickPos(ji.dwRpos, jc.wRmin, jc.wRmax);
+	if (jc.wCaps & JOYCAPS_HASR)
+		axes[(*count)++] = calcJoystickPos(ji.dwRpos, jc.wRmin, jc.wRmax);
 
-    if (jc.wCaps & JOYCAPS_HASU)
-        axes[(*count)++] = calcJoystickPos(ji.dwUpos, jc.wUmin, jc.wUmax);
+	if (jc.wCaps & JOYCAPS_HASU)
+		axes[(*count)++] = calcJoystickPos(ji.dwUpos, jc.wUmin, jc.wUmax);
 
-    if (jc.wCaps & JOYCAPS_HASV)
-        axes[(*count)++] = -calcJoystickPos(ji.dwVpos, jc.wVmin, jc.wVmax);
+	if (jc.wCaps & JOYCAPS_HASV)
+		axes[(*count)++] = -calcJoystickPos(ji.dwVpos, jc.wVmin, jc.wVmax);
 
-    return axes;
+	return axes;
 }
 
 const unsigned char* _glfwPlatformGetJoystickButtons(int joy, int* count)
 {
-    JOYCAPS jc;
-    JOYINFOEX ji;
-    unsigned char* buttons = _glfw.win32.joystick[joy].buttons;
+	JOYCAPS jc;
+	JOYINFOEX ji;
+	unsigned char* buttons = _glfw.win32.joystick[joy].buttons;
 
-    if (_glfw_joyGetDevCaps(joy, &jc, sizeof(JOYCAPS)) != JOYERR_NOERROR)
-        return NULL;
+	if (_glfw_joyGetDevCaps(joy, &jc, sizeof(JOYCAPS)) != JOYERR_NOERROR)
+		return NULL;
 
-    ji.dwSize = sizeof(JOYINFOEX);
-    ji.dwFlags = JOY_RETURNBUTTONS | JOY_RETURNPOV;
-    if (_glfw_joyGetPosEx(joy, &ji) != JOYERR_NOERROR)
-        return NULL;
+	ji.dwSize = sizeof(JOYINFOEX);
+	ji.dwFlags = JOY_RETURNBUTTONS | JOY_RETURNPOV;
+	if (_glfw_joyGetPosEx(joy, &ji) != JOYERR_NOERROR)
+		return NULL;
 
-    while (*count < (int) jc.wNumButtons)
-    {
-        buttons[*count] = (unsigned char)
-            (ji.dwButtons & (1UL << *count) ? GLFW_PRESS : GLFW_RELEASE);
-        (*count)++;
-    }
+	while (*count < (int)jc.wNumButtons)
+	{
+		buttons[*count] = (unsigned char)
+			(ji.dwButtons & (1UL << *count) ? GLFW_PRESS : GLFW_RELEASE);
+		(*count)++;
+	}
 
-    // Virtual buttons - Inject data from hats
-    // Each hat is exposed as 4 buttons which exposes 8 directions with
-    // concurrent button presses
-    // NOTE: this API exposes only one hat
+	// Virtual buttons - Inject data from hats
+	// Each hat is exposed as 4 buttons which exposes 8 directions with
+	// concurrent button presses
+	// NOTE: this API exposes only one hat
 
-    if ((jc.wCaps & JOYCAPS_HASPOV) && (jc.wCaps & JOYCAPS_POV4DIR))
-    {
-        int i, value = ji.dwPOV / 100 / 45;
+	if ((jc.wCaps & JOYCAPS_HASPOV) && (jc.wCaps & JOYCAPS_POV4DIR))
+	{
+		int i, value = ji.dwPOV / 100 / 45;
 
-        // Bit fields of button presses for each direction, including nil
-        const int directions[9] = { 1, 3, 2, 6, 4, 12, 8, 9, 0 };
+		// Bit fields of button presses for each direction, including nil
+		const int directions[9] = { 1, 3, 2, 6, 4, 12, 8, 9, 0 };
 
-        if (value < 0 || value > 8)
-            value = 8;
+		if (value < 0 || value > 8)
+			value = 8;
 
-        for (i = 0;  i < 4;  i++)
-        {
-            if (directions[value] & (1 << i))
-                buttons[(*count)++] = GLFW_PRESS;
-            else
-                buttons[(*count)++] = GLFW_RELEASE;
-        }
-    }
+		for (i = 0; i < 4; i++)
+		{
+			if (directions[value] & (1 << i))
+				buttons[(*count)++] = GLFW_PRESS;
+			else
+				buttons[(*count)++] = GLFW_RELEASE;
+		}
+	}
 
-    return buttons;
+	return buttons;
 }
 
 const char* _glfwPlatformGetJoystickName(int joy)
 {
-    JOYCAPS jc;
+	JOYCAPS jc;
 
-    if (_glfw_joyGetDevCaps(joy, &jc, sizeof(JOYCAPS)) != JOYERR_NOERROR)
-        return NULL;
+	if (_glfw_joyGetDevCaps(joy, &jc, sizeof(JOYCAPS)) != JOYERR_NOERROR)
+		return NULL;
 
-    free(_glfw.win32.joystick[joy].name);
-    _glfw.win32.joystick[joy].name = _glfwCreateUTF8FromWideString(jc.szPname);
+	free(_glfw.win32.joystick[joy].name);
+	_glfw.win32.joystick[joy].name = _glfwCreateUTF8FromWideString(jc.szPname);
 
-    return _glfw.win32.joystick[joy].name;
+	return _glfw.win32.joystick[joy].name;
 }
-

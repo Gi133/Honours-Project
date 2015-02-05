@@ -20,7 +20,6 @@
 #include <Box2D/Dynamics/b2Body.h>
 #include <Box2D/Dynamics/b2TimeStep.h>
 
-
 // Limit:
 // C = norm(pB - pA) - L
 // u = (pB - pA) / norm(pB - pA)
@@ -30,7 +29,7 @@
 //   = invMassA + invIA * cross(rA, u)^2 + invMassB + invIB * cross(rB, u)^2
 
 b2RopeJoint::b2RopeJoint(const b2RopeJointDef* def)
-: b2Joint(def)
+	: b2Joint(def)
 {
 	m_localAnchorA = def->localAnchorA;
 	m_localAnchorB = def->localAnchorB;

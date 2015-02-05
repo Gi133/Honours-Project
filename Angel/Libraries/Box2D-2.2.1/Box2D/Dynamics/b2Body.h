@@ -385,7 +385,7 @@ private:
 	friend class b2ContactManager;
 	friend class b2ContactSolver;
 	friend class b2Contact;
-	
+
 	friend class b2DistanceJoint;
 	friend class b2GearJoint;
 	friend class b2WheelJoint;
@@ -400,13 +400,13 @@ private:
 	// m_flags
 	enum
 	{
-		e_islandFlag		= 0x0001,
-		e_awakeFlag			= 0x0002,
-		e_autoSleepFlag		= 0x0004,
-		e_bulletFlag		= 0x0008,
-		e_fixedRotationFlag	= 0x0010,
-		e_activeFlag		= 0x0020,
-		e_toiFlag			= 0x0040
+		e_islandFlag = 0x0001,
+		e_awakeFlag = 0x0002,
+		e_autoSleepFlag = 0x0004,
+		e_bulletFlag = 0x0008,
+		e_fixedRotationFlag = 0x0010,
+		e_activeFlag = 0x0020,
+		e_toiFlag = 0x0040
 	};
 
 	b2Body(const b2BodyDef* bd, b2World* world);
@@ -497,7 +497,7 @@ inline void b2Body::SetLinearVelocity(const b2Vec2& v)
 		return;
 	}
 
-	if (b2Dot(v,v) > 0.0f)
+	if (b2Dot(v, v) > 0.0f)
 	{
 		SetAwake(true);
 	}

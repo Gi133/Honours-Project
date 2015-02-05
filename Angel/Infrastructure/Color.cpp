@@ -1,29 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2008-2014, Shane Liesegang
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without 
+//
+// Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimer in the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the copyright holder nor the names of any 
-//       contributors may be used to endorse or promote products derived from 
+//     * Neither the name of the copyright holder nor the names of any
+//       contributors may be used to endorse or promote products derived from
 //       this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
@@ -45,10 +45,10 @@ Color::Color(float r, float g, float b, float a, bool clamp)
 	G = g;
 	B = b;
 	A = a;  // (Very Ayn Rand of us)
-	
+
 	if (clamp)
 	{
-		ClampMe();		
+		ClampMe();
 	}
 }
 
@@ -59,10 +59,10 @@ Color Color::FromInts(int r, int g, int b, int a, bool clamp)
 	forReturn.G = (float)g / 255.0f;
 	forReturn.B = (float)b / 255.0f;
 	forReturn.A = (float)a / 255.0f;
-	
+
 	if (clamp)
 	{
-		forReturn.ClampMe();		
+		forReturn.ClampMe();
 	}
 
 	return forReturn;
@@ -77,43 +77,43 @@ Color Color::FromHexString(String hexString)
 		hexString = hexString.substr(1);
 		isHex = true;
 	}
-	if ( (hexString.substr(0, 2) == "0x") || (hexString.substr(0, 2) == "0X") )
+	if ((hexString.substr(0, 2) == "0x") || (hexString.substr(0, 2) == "0X"))
 	{
 		hexString = hexString.substr(2);
 		isHex = true;
 	}
-	
+
 	if (isHex)
 	{
-		if ( (hexString.length() != 3) && (hexString.length() != 6) )
+		if ((hexString.length() != 3) && (hexString.length() != 6))
 		{
 			//invalid length, set to white
 			return Color();
 		}
-		
+
 		if (hexString.length() == 3)
 		{
 			//expand to 6
 			String newString = "";
-			newString += hexString.substr(0,1) + hexString.substr(0,1);
-			newString += hexString.substr(1,1) + hexString.substr(1,1);
-			newString += hexString.substr(2,1) + hexString.substr(2,1);
+			newString += hexString.substr(0, 1) + hexString.substr(0, 1);
+			newString += hexString.substr(1, 1) + hexString.substr(1, 1);
+			newString += hexString.substr(2, 1) + hexString.substr(2, 1);
 			hexString = newString;
 		}
-		
-		String rString = hexString.substr(0,2);
-		String gString = hexString.substr(2,2);
-		String bString = hexString.substr(4,2);
-		
+
+		String rString = hexString.substr(0, 2);
+		String gString = hexString.substr(2, 2);
+		String bString = hexString.substr(4, 2);
+
 		int rInt = HexToInteger(rString);
 		int gInt = HexToInteger(gString);
 		int bInt = HexToInteger(bString);
-		
+
 		forReturn.R = (float)rInt / 255.0f;
 		forReturn.G = (float)gInt / 255.0f;
 		forReturn.B = (float)bInt / 255.0f;
 		forReturn.A = 1.0f;
-		
+
 		forReturn.ClampMe();
 		return forReturn;
 	}

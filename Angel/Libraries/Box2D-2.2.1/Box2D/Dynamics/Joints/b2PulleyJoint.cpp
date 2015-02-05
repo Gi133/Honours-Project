@@ -33,9 +33,9 @@
 //   = invMass1 + invI1 * cross(r1, u1)^2 + ratio^2 * (invMass2 + invI2 * cross(r2, u2)^2)
 
 void b2PulleyJointDef::Initialize(b2Body* bA, b2Body* bB,
-				const b2Vec2& groundA, const b2Vec2& groundB,
-				const b2Vec2& anchorA, const b2Vec2& anchorB,
-				float32 r)
+	const b2Vec2& groundA, const b2Vec2& groundB,
+	const b2Vec2& anchorA, const b2Vec2& anchorB,
+	float32 r)
 {
 	bodyA = bA;
 	bodyB = bB;
@@ -52,7 +52,7 @@ void b2PulleyJointDef::Initialize(b2Body* bA, b2Body* bB,
 }
 
 b2PulleyJoint::b2PulleyJoint(const b2PulleyJointDef* def)
-: b2Joint(def)
+	: b2Joint(def)
 {
 	m_groundAnchorA = def->groundAnchorA;
 	m_groundAnchorB = def->groundAnchorB;
@@ -141,7 +141,7 @@ void b2PulleyJoint::InitVelocityConstraints(const b2SolverData& data)
 		m_impulse *= data.step.dtRatio;
 
 		// Warm starting.
-		b2Vec2 PA = -(m_impulse) * m_uA;
+		b2Vec2 PA = -(m_impulse)* m_uA;
 		b2Vec2 PB = (-m_ratio * m_impulse) * m_uB;
 
 		vA += m_invMassA * PA;

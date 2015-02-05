@@ -1,29 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2008-2014, Shane Liesegang
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without 
+//
+// Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimer in the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the copyright holder nor the names of any 
-//       contributors may be used to endorse or promote products derived from 
+//     * Neither the name of the copyright holder nor the names of any
+//       contributors may be used to endorse or promote products derived from
 //       this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
@@ -37,18 +37,16 @@
 #include "../Util/MathUtil.h"
 #include "../Util/StringUtil.h"
 
-
 #define MAX_AUTO_COMPLETE 7
 
-
 Console::Console()
-: _enabled(false),
-_currentInput(""),
-_inputHistoryPos(0),
-_cursorPos(0),
-_cursorDispTime(0.0f),
-_bCursorDisp(true),
-_tabWidth(8)
+	: _enabled(false),
+	_currentInput(""),
+	_inputHistoryPos(0),
+	_cursorPos(0),
+	_cursorDispTime(0.0f),
+	_bCursorDisp(true),
+	_tabWidth(8)
 {
 	if (!IsFontRegistered("Console") || !IsFontRegistered("ConsoleSmall"))
 	{
@@ -59,10 +57,9 @@ _tabWidth(8)
 
 Console::~Console()
 {
-
 }
 
-void DrawTile( int xPos, int yPos, int width, int height )
+void DrawTile(int xPos, int yPos, int width, int height)
 {
 	Vec2i winDimensions;
 	winDimensions.X = theCamera.GetWindowWidth();
@@ -110,110 +107,109 @@ void Console::Enable(bool bEnable /* = true  */)
 	_enabled = bEnable;
 }
 
-bool Console::GetInput( int key )
+bool Console::GetInput(int key)
 {
-	if( !IsEnabled() )
+	if (!IsEnabled())
 		return false;
 
 	if (key == GetToggleConsoleKey())
 	{
 		Enable(false);
 	}
-	else if( IsTextKey(key) )
+	else if (IsTextKey(key))
 	{
 		String oldInput = _currentInput;
 		_currentInput = oldInput.substr(0, _cursorPos);
 		_currentInput += key;
-		
+
 		if (_cursorPos < oldInput.length())
 		{
 			_currentInput += oldInput.substr(_cursorPos, oldInput.length());
 		}
-		
+
 		++_cursorPos;
-		
+
 		RefreshAutoCompletes();
 	}
 
 	return true;
 }
 
-bool Console::GetSpecialInputDown( int key )
+bool Console::GetSpecialInputDown(int key)
 {
-	if( !IsEnabled() )
+	if (!IsEnabled())
 		return false;
 
-	if( key == GLFW_KEY_ESCAPE || key == GetToggleConsoleKey() )
+	if (key == GLFW_KEY_ESCAPE || key == GetToggleConsoleKey())
 	{
 		Enable(false);
 	}
-	else if( key == GLFW_KEY_ENTER )
+	else if (key == GLFW_KEY_ENTER)
 	{
 		AcceptCurrentInput();
 		_autoCompleteList.clear();
 	}
-	else if( key == GLFW_KEY_TAB )
+	else if (key == GLFW_KEY_TAB)
 	{
 		AcceptAutocomplete();
 	}
-	else if( key == GLFW_KEY_DELETE )
+	else if (key == GLFW_KEY_DELETE)
 	{
 		if (_cursorPos < _currentInput.length())
 		{
 			String oldInput = _currentInput;
-			
-			_currentInput = oldInput.substr( 0, _cursorPos );
-			_currentInput += oldInput.substr(_cursorPos+1, oldInput.length());
-			
+
+			_currentInput = oldInput.substr(0, _cursorPos);
+			_currentInput += oldInput.substr(_cursorPos + 1, oldInput.length());
+
 			RefreshAutoCompletes();
 		}
-		
 	}
-	else if( key == GLFW_KEY_BACKSPACE )
+	else if (key == GLFW_KEY_BACKSPACE)
 	{
-		if( _cursorPos > 0 )
+		if (_cursorPos > 0)
 		{
 			String oldInput = _currentInput;
-			
-			_currentInput = oldInput.substr( 0, _cursorPos-1 );
-			
+
+			_currentInput = oldInput.substr(0, _cursorPos - 1);
+
 			if (_cursorPos < oldInput.length())
 			{
 				_currentInput += oldInput.substr(_cursorPos, oldInput.length());
 			}
-			
+
 			--_cursorPos;
-			
+
 			RefreshAutoCompletes();
 		}
 	}
-	else if( key == GLFW_KEY_UP ) 
+	else if (key == GLFW_KEY_UP)
 	{
-		AdvanceInputHistory( -1 );
+		AdvanceInputHistory(-1);
 	}
-	else if( key == GLFW_KEY_DOWN )
+	else if (key == GLFW_KEY_DOWN)
 	{
-		AdvanceInputHistory( 1 );
+		AdvanceInputHistory(1);
 	}
-	else if( key == GLFW_KEY_RIGHT ) 
+	else if (key == GLFW_KEY_RIGHT)
 	{
 		if (_cursorPos < _currentInput.length())
 		{
 			++_cursorPos;
 		}
 	}
-	else if( key == GLFW_KEY_LEFT )
+	else if (key == GLFW_KEY_LEFT)
 	{
 		if (_cursorPos > 0)
 		{
 			--_cursorPos;
 		}
 	}
-	else if( key == GLFW_KEY_END )
+	else if (key == GLFW_KEY_END)
 	{
 		_cursorPos = _currentInput.length();
 	}
-	else if( key == GLFW_KEY_HOME )
+	else if (key == GLFW_KEY_HOME)
 	{
 		_cursorPos = 0;
 	}
@@ -228,7 +224,6 @@ bool Console::GetSpecialInputDown( int key )
 	//}
 
 	return true;
-
 }
 
 void Console::RefreshAutoCompletes()
@@ -251,7 +246,7 @@ void Console::WriteToOutput(String output)
 	{
 		int numSpaces = _tabWidth - (tabIndex % _tabWidth);
 		String replacement = "";
-		for(int i=0; i < numSpaces; i++)
+		for (int i = 0; i < numSpaces; i++)
 		{
 			replacement += " ";
 		}
@@ -259,21 +254,20 @@ void Console::WriteToOutput(String output)
 		tabIndex = output.find_first_of('\t');
 	}
 
-	
 	_unsplitBuffer += output;
 	_buffer = SplitString(_unsplitBuffer, "\n", false);
-	
+
 	float largest = 0.0f;
 	StringList::iterator it = _buffer.begin();
 	Vector2 extents = Vector2::Zero;
-	while(it != _buffer.end())
+	while (it != _buffer.end())
 	{
 		extents = GetTextExtents((*it), "ConsoleSmall");
 		if (extents.Y > largest)
 		{
 			largest = extents.Y;
 		}
-		
+
 		it++;
 	}
 	_lineHeight = largest;
@@ -281,7 +275,7 @@ void Console::WriteToOutput(String output)
 
 bool Console::IsTextKey(unsigned char key)
 {
-	if( key >= ' ' && key <= '}' )
+	if (key >= ' ' && key <= '}')
 		return true;
 
 	return false;
@@ -301,12 +295,12 @@ void Console::AcceptCurrentInput()
 
 void Console::AcceptAutocomplete()
 {
-	if( _autoCompleteList.size() == 0 )
+	if (_autoCompleteList.size() == 0)
 		return;
-	
+
 	//cycle through the available completions with tab
 	int found = -1;
-	for (int i=0; i < _autoCompleteList.size(); i++)
+	for (int i = 0; i < _autoCompleteList.size(); i++)
 	{
 		if (i > MAX_AUTO_COMPLETE)
 		{
@@ -315,17 +309,17 @@ void Console::AcceptAutocomplete()
 		if (_currentInput == _autoCompleteList[i])
 		{
 			//found our existing match, try to cycle to the next one
-			if ( (i == _autoCompleteList.size() - 1) || (i == MAX_AUTO_COMPLETE - 2) )
+			if ((i == _autoCompleteList.size() - 1) || (i == MAX_AUTO_COMPLETE - 2))
 			{
 				//found it, but at the end of the list, so cycle to top
 				break;
 			}
 			//set the found index to the next line
-			found = i+1;
+			found = i + 1;
 			break;
 		}
 	}
-	
+
 	if (-1 == found)
 	{
 		found = 0;
@@ -338,26 +332,25 @@ void Console::AcceptAutocomplete()
 void Console::AdvanceInputHistory(int byVal)
 {
 	//If we have no input history, ignore this
-	if( _inputHistory.size() == 0 )
+	if (_inputHistory.size() == 0)
 		return;
-	
+
 	//If we're at the bottom of our input history, do nothing
 	int lastInputIndex = _inputHistory.size();
-	if( byVal >= 0 && (_inputHistoryPos + byVal) >= lastInputIndex )
+	if (byVal >= 0 && (_inputHistoryPos + byVal) >= lastInputIndex)
 	{
 		_currentInput = "";
 		_cursorPos = 0;
 		_inputHistoryPos = lastInputIndex;
 		return;
 	}
-	
-	
+
 	_inputHistoryPos += byVal;
-	if( _inputHistoryPos > lastInputIndex )
+	if (_inputHistoryPos > lastInputIndex)
 		_inputHistoryPos = lastInputIndex;
-	else if( _inputHistoryPos < 0 )
+	else if (_inputHistoryPos < 0)
 		_inputHistoryPos = 0;
-	
+
 	//otherwise, write over our current input
 	_currentInput = _inputHistory[_inputHistoryPos];
 	_cursorPos = _currentInput.length();
@@ -365,7 +358,7 @@ void Console::AdvanceInputHistory(int byVal)
 
 void Console::ToggleConsole()
 {
-	Enable( !IsEnabled() );
+	Enable(!IsEnabled());
 }
 
 void Console::SetPrompt(const String& prompt)
@@ -383,12 +376,12 @@ const unsigned int Console::GetTabWidth()
 	return _tabWidth;
 }
 
-void Console::Update( float dt )
+void Console::Update(float dt)
 {
 	static const float CURSOR_DISPLAY_TIME = 0.5f;
-	
+
 	_cursorDispTime += dt;
-	
+
 	if (_cursorDispTime > CURSOR_DISPLAY_TIME)
 	{
 		_cursorDispTime = 0.0f;
@@ -398,7 +391,7 @@ void Console::Update( float dt )
 
 void Console::Render()
 {
-	if( !IsEnabled() )
+	if (!IsEnabled())
 		return;
 
 	//TODO: Clean up this nonsense
@@ -409,15 +402,15 @@ void Console::Render()
 	winDimensions.Y = theCamera.GetWindowHeight();
 
 	static float fScreenHeightPct = 0.5f;
-	static int sTextBoxBorder = winDimensions.Y/192;
-	static int sTextBoxHeight = winDimensions.Y/32 + sTextBoxBorder;
+	static int sTextBoxBorder = winDimensions.Y / 192;
+	static int sTextBoxHeight = winDimensions.Y / 32 + sTextBoxBorder;
 
 	int consoleBGHeight = (int)(fScreenHeightPct * (float)winDimensions.Y);
 
 	int consoleBGBottomY = consoleBGHeight;
 
-	glColor4f(0.0f,0.0f,0.0f,sTestAlpha);
-	DrawTile(0, consoleBGBottomY, winDimensions.X, consoleBGHeight );
+	glColor4f(0.0f, 0.0f, 0.0f, sTestAlpha);
+	DrawTile(0, consoleBGBottomY, winDimensions.X, consoleBGHeight);
 
 	//Draw log
 	static int sLogXPos = sTextBoxBorder;
@@ -429,34 +422,34 @@ void Console::Render()
 		while (it != _buffer.begin())
 		{
 			it--;
-			/* Vector2 textSize = */ DrawGameText( *it, "ConsoleSmall", sLogXPos, logYPos );
+			/* Vector2 textSize = */ DrawGameText(*it, "ConsoleSmall", sLogXPos, logYPos);
 			logYPos -= (int)_lineHeight + sTextBoxBorder;
 		}
 	}
 
 	//Draw text box border
-	glColor4f(0.0f,1.0f,0.0f,sTestAlpha/2.0f);
+	glColor4f(0.0f, 1.0f, 0.0f, sTestAlpha / 2.0f);
 	int textBoxBottomY = consoleBGBottomY + sTextBoxHeight;
-	DrawTile(0, textBoxBottomY, winDimensions.X, sTextBoxHeight );
+	DrawTile(0, textBoxBottomY, winDimensions.X, sTextBoxHeight);
 
 	//Draw text box
 
 	int textBoxHeight = sTextBoxHeight - sTextBoxBorder;
 	int textBoxWidth = winDimensions.X - sTextBoxBorder;
-	int textBoxXPos = (winDimensions.X - textBoxWidth)/2;
-	int textBoxYPos = textBoxBottomY - (sTextBoxHeight-textBoxHeight)/2;
+	int textBoxXPos = (winDimensions.X - textBoxWidth) / 2;
+	int textBoxYPos = textBoxBottomY - (sTextBoxHeight - textBoxHeight) / 2;
 
-	glColor4f(0.0f,0.0f,0.0f,sTestAlpha);
+	glColor4f(0.0f, 0.0f, 0.0f, sTestAlpha);
 	DrawTile(textBoxXPos, textBoxYPos, textBoxWidth, textBoxHeight);
 
 	textBoxXPos += sTextBoxBorder;
-	textBoxYPos -= sTextBoxBorder + (sTextBoxBorder/2);
+	textBoxYPos -= sTextBoxBorder + (sTextBoxBorder / 2);
 
-	glColor4f(0.0f,1.0f,0.0f,1.0f);
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 	String printInput = _prompt;
 	printInput += _currentInput.substr(0, _cursorPos);
-	
-	if(_bCursorDisp)
+
+	if (_bCursorDisp)
 	{
 		printInput += "|";
 	}
@@ -464,37 +457,34 @@ void Console::Render()
 	{
 		printInput += " ";
 	}
-	
+
 	if (_cursorPos < _currentInput.length())
 	{
 		printInput += _currentInput.substr(_cursorPos, _currentInput.length());
 	}
-	
+
 	DrawGameText(printInput.c_str(), "ConsoleSmall", textBoxXPos, textBoxYPos);
 
 	//Draw autocomplete
 	static int sMaxAutoCompleteLines = MAX_AUTO_COMPLETE;
-	int numAutoCompleteLines = MathUtil::Min(sMaxAutoCompleteLines, (int)_autoCompleteList.size() );
+	int numAutoCompleteLines = MathUtil::Min(sMaxAutoCompleteLines, (int)_autoCompleteList.size());
 	int autoCompleteBottomY = textBoxBottomY + (numAutoCompleteLines * sTextBoxHeight);
-	int autoCompleteStartY = textBoxBottomY + 2*sTextBoxHeight/3;
+	int autoCompleteStartY = textBoxBottomY + 2 * sTextBoxHeight / 3;
 
 	int autoCompleteXPos = textBoxXPos + winDimensions.Y / 24;
 	int autoCompleteBoxXPos = autoCompleteXPos - sTextBoxBorder;
 
-	glColor4f(0.0f,0.0f,0.0f,sTestAlpha);
-	DrawTile(autoCompleteBoxXPos, autoCompleteBottomY, winDimensions.X-autoCompleteBoxXPos, numAutoCompleteLines * sTextBoxHeight);
+	glColor4f(0.0f, 0.0f, 0.0f, sTestAlpha);
+	DrawTile(autoCompleteBoxXPos, autoCompleteBottomY, winDimensions.X - autoCompleteBoxXPos, numAutoCompleteLines * sTextBoxHeight);
 
-	glColor4f(0.0f,1.0f,0.0f,1.0f);
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 	Vector2 outPos((float)autoCompleteXPos, (float)autoCompleteStartY);
-	for( int i = 0; i < numAutoCompleteLines; i++ )
+	for (int i = 0; i < numAutoCompleteLines; i++)
 	{
-		if( (int)_autoCompleteList.size() > sMaxAutoCompleteLines-1 && i == sMaxAutoCompleteLines-1 )
-			DrawGameText( "...", "ConsoleSmall", autoCompleteXPos, (int)outPos.Y );
+		if ((int)_autoCompleteList.size() > sMaxAutoCompleteLines - 1 && i == sMaxAutoCompleteLines - 1)
+			DrawGameText("...", "ConsoleSmall", autoCompleteXPos, (int)outPos.Y);
 		else
-			DrawGameText( _autoCompleteList[i].c_str(), "ConsoleSmall", autoCompleteXPos, (int)outPos.Y );
+			DrawGameText(_autoCompleteList[i].c_str(), "ConsoleSmall", autoCompleteXPos, (int)outPos.Y);
 		outPos.Y += sTextBoxHeight;
 	}
-
-
 }
-

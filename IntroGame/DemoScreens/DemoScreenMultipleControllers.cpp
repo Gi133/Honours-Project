@@ -1,29 +1,29 @@
 //////////////////////////////////////////////////////////////////////////////
 // Copyright (C) 2008-2014, Shane Liesegang
 // All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without 
+//
+// Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright 
+//
+//     * Redistributions of source code must retain the above copyright
 //       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright 
-//       notice, this list of conditions and the following disclaimer in the 
+//     * Redistributions in binary form must reproduce the above copyright
+//       notice, this list of conditions and the following disclaimer in the
 //       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the copyright holder nor the names of any 
-//       contributors may be used to endorse or promote products derived from 
+//     * Neither the name of the copyright holder nor the names of any
+//       contributors may be used to endorse or promote products derived from
 //       this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //////////////////////////////////////////////////////////////////////////////
 
@@ -36,25 +36,22 @@ DemoScreenMultipleControllers::DemoScreenMultipleControllers()
 
 void DemoScreenMultipleControllers::Start()
 {
-	//Create two Actors that we're going to manipulate with the two 
+	//Create two Actors that we're going to manipulate with the two
 	// controllers. All the actual interesting stuff happens in the
-	// DemoScreenMultipleControllers::Update function. 
+	// DemoScreenMultipleControllers::Update function.
 	a = new Actor();
 	a->SetSize(4.0f);
 	a->SetPosition(-4.0f, 0.0f);
 	a->SetColor(1.0f, 1.0f, 0.0f, 0.5f);
 	theWorld.Add(a);
-	
+
 	a2 = new Actor();
 	a2->SetSize(4.0f);
 	a2->SetPosition(4.0f, 0.0f);
 	a2->SetColor(1.0f, 1.0f, 0.0f, 0.5f);
 	theWorld.Add(a2);
-	
-	
-	
-	
-	//Demo housekeeping below this point. 
+
+	//Demo housekeeping below this point.
 #pragma region Demo Housekeeping
 	t = new TextActor("Console", "These two actors are connected to different controllers.");
 	t->SetPosition(0, 3.5);
@@ -88,12 +85,12 @@ void DemoScreenMultipleControllers::Update(float dt)
 	//                 nomenclature better in a one-player setting)
 	//  controllerTwo (exactly what you think it is)
 	//
-	//The movements we're applying here are the same as the ones in 
+	//The movements we're applying here are the same as the ones in
 	// DemoScreenMovingActor.cpp
-	
+
 	//We always want to do the IsConnected check before reading input, since
-	// you may get junk values otherwise. 
-	if (controllerOne.IsConnected()) 
+	// you may get junk values otherwise.
+	if (controllerOne.IsConnected())
 	{
 		Vec2i movementL = controllerOne.GetLeftThumbstick();
 
@@ -114,23 +111,23 @@ void DemoScreenMultipleControllers::Update(float dt)
 		{
 			position.Y = 0.0f;
 		}
-		
+
 		a->SetPosition(position);
-		
+
 		if (controllerOne.IsBButtonDown())
 		{
-			a->SetRotation(a->GetRotation() + (90.0f * dt)); 
+			a->SetRotation(a->GetRotation() + (90.0f * dt));
 			if (a->GetRotation() > 360.0f)
 			{
 				a->SetRotation(a->GetRotation() - 360.0f);
 			}
 		}
 	}
-	
+
 	if (controllerTwo.IsConnected())
 	{
-		Vec2i movementL = controllerTwo.GetLeftThumbstick(); 
-		
+		Vec2i movementL = controllerTwo.GetLeftThumbstick();
+
 		Vector2 position;
 		if (movementL.X)
 		{
@@ -148,12 +145,12 @@ void DemoScreenMultipleControllers::Update(float dt)
 		{
 			position.Y = 0.0f;
 		}
-		
+
 		a2->SetPosition(position);
-		
+
 		if (controllerTwo.IsBButtonDown())
 		{
-			a2->SetRotation(a2->GetRotation() + (90.0f * dt)); 
+			a2->SetRotation(a2->GetRotation() + (90.0f * dt));
 			if (a2->GetRotation() > 360.0f)
 			{
 				a2->SetRotation(a2->GetRotation() - 360.0f);

@@ -30,58 +30,57 @@ void b2DistanceProxy::Set(const b2Shape* shape, int32 index)
 	switch (shape->GetType())
 	{
 	case b2Shape::e_circle:
-		{
-			const b2CircleShape* circle = (b2CircleShape*)shape;
-			m_vertices = &circle->m_p;
-			m_count = 1;
-			m_radius = circle->m_radius;
-		}
-		break;
+	{
+		const b2CircleShape* circle = (b2CircleShape*)shape;
+		m_vertices = &circle->m_p;
+		m_count = 1;
+		m_radius = circle->m_radius;
+	}
+	break;
 
 	case b2Shape::e_polygon:
-		{
-			const b2PolygonShape* polygon = (b2PolygonShape*)shape;
-			m_vertices = polygon->m_vertices;
-			m_count = polygon->m_vertexCount;
-			m_radius = polygon->m_radius;
-		}
-		break;
+	{
+		const b2PolygonShape* polygon = (b2PolygonShape*)shape;
+		m_vertices = polygon->m_vertices;
+		m_count = polygon->m_vertexCount;
+		m_radius = polygon->m_radius;
+	}
+	break;
 
 	case b2Shape::e_chain:
+	{
+		const b2ChainShape* chain = (b2ChainShape*)shape;
+		b2Assert(0 <= index && index < chain->m_count);
+
+		m_buffer[0] = chain->m_vertices[index];
+		if (index + 1 < chain->m_count)
 		{
-			const b2ChainShape* chain = (b2ChainShape*)shape;
-			b2Assert(0 <= index && index < chain->m_count);
-
-			m_buffer[0] = chain->m_vertices[index];
-			if (index + 1 < chain->m_count)
-			{
-				m_buffer[1] = chain->m_vertices[index + 1];
-			}
-			else
-			{
-				m_buffer[1] = chain->m_vertices[0];
-			}
-
-			m_vertices = m_buffer;
-			m_count = 2;
-			m_radius = chain->m_radius;
+			m_buffer[1] = chain->m_vertices[index + 1];
 		}
-		break;
+		else
+		{
+			m_buffer[1] = chain->m_vertices[0];
+		}
+
+		m_vertices = m_buffer;
+		m_count = 2;
+		m_radius = chain->m_radius;
+	}
+	break;
 
 	case b2Shape::e_edge:
-		{
-			const b2EdgeShape* edge = (b2EdgeShape*)shape;
-			m_vertices = &edge->m_vertex1;
-			m_count = 2;
-			m_radius = edge->m_radius;
-		}
-		break;
+	{
+		const b2EdgeShape* edge = (b2EdgeShape*)shape;
+		m_vertices = &edge->m_vertex1;
+		m_count = 2;
+		m_radius = edge->m_radius;
+	}
+	break;
 
 	default:
 		b2Assert(false);
 	}
 }
-
 
 struct b2SimplexVertex
 {
@@ -95,12 +94,12 @@ struct b2SimplexVertex
 
 struct b2Simplex
 {
-	void ReadCache(	const b2SimplexCache* cache,
-					const b2DistanceProxy* proxyA, const b2Transform& transformA,
-					const b2DistanceProxy* proxyB, const b2Transform& transformB)
+	void ReadCache(const b2SimplexCache* cache,
+		const b2DistanceProxy* proxyA, const b2Transform& transformA,
+		const b2DistanceProxy* proxyB, const b2Transform& transformB)
 	{
 		b2Assert(cache->count <= 3);
-		
+
 		// Copy data from cache.
 		m_count = cache->count;
 		b2SimplexVertex* vertices = &m_v1;
@@ -165,20 +164,20 @@ struct b2Simplex
 			return -m_v1.w;
 
 		case 2:
+		{
+			b2Vec2 e12 = m_v2.w - m_v1.w;
+			float32 sgn = b2Cross(e12, -m_v1.w);
+			if (sgn > 0.0f)
 			{
-				b2Vec2 e12 = m_v2.w - m_v1.w;
-				float32 sgn = b2Cross(e12, -m_v1.w);
-				if (sgn > 0.0f)
-				{
-					// Origin is left of e12.
-					return b2Cross(1.0f, e12);
-				}
-				else
-				{
-					// Origin is right of e12.
-					return b2Cross(e12, 1.0f);
-				}
+				// Origin is left of e12.
+				return b2Cross(1.0f, e12);
 			}
+			else
+			{
+				// Origin is right of e12.
+				return b2Cross(e12, 1.0f);
+			}
+		}
 
 		default:
 			b2Assert(false);
@@ -267,7 +266,6 @@ struct b2Simplex
 	b2SimplexVertex m_v1, m_v2, m_v3;
 	int32 m_count;
 };
-
 
 // Solve a line segment using barycentric coordinates.
 //
@@ -366,7 +364,7 @@ void b2Simplex::Solve3()
 	float32 w3e23 = b2Dot(w3, e23);
 	float32 d23_1 = w3e23;
 	float32 d23_2 = -w2e23;
-	
+
 	// Triangle123
 	float32 n123 = b2Cross(e12, e13);
 
@@ -441,8 +439,8 @@ void b2Simplex::Solve3()
 }
 
 void b2Distance(b2DistanceOutput* output,
-				b2SimplexCache* cache,
-				const b2DistanceInput* input)
+	b2SimplexCache* cache,
+	const b2DistanceInput* input)
 {
 	++b2_gjkCalls;
 
