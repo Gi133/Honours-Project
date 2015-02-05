@@ -22,6 +22,18 @@ MapGeneratorSettings =
 	locations = 10,
 }
 
+CityGeneratorSettings =
+{
+	maxAttempts = 10,
+	radius = 100.0,
+}
+
+LocationGeneratorSettings =
+{
+	maxAttempts = 10,
+	radius = 50.0,
+}
+
 -- The data below is in percentages.
 UINPCInfoSettings = 
 {

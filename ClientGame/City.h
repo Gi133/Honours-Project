@@ -3,6 +3,8 @@
 class City :
 	public MapPOI
 {
+private:
+
 public:
 	City();
 	~City();

@@ -24,9 +24,9 @@ private:
 	std::vector<std::unique_ptr<City>> cityContainer;
 	std::vector<std::unique_ptr<Location>> locationContainer;
 
-	Vector2 mapSize;
+	Vector2 mapSize, halfMapSize;
 
 	void GenerateMap();
 	void GenerateCities(int cityNumber); // Function that generates cities.
-	void GenerateLocations(); // Function that generate locations.
+	void GenerateLocations(int locationNumber); // Function that generate locations.
 };
