@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "NameManager.h"
 #include "UIManager.h"
+#include "LocationGenerator.h"
 #include "City.h"
 #include "Location.h"
 
@@ -22,6 +23,7 @@ protected:
 
 private:
 	std::unique_ptr<UIManager> uiManager;
+	std::unique_ptr<LocationGenerator> locationGenerator;
 	std::vector<std::unique_ptr<City>> cityContainer;
 	std::vector<std::unique_ptr<Location>> locationContainer;
 

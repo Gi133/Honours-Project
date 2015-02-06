@@ -179,6 +179,7 @@ cd ..\Tools\BuildScripts\
     </ClCompile>
     <ClCompile Include="City.cpp" />
     <ClCompile Include="Location.cpp" />
+    <ClCompile Include="LocationGenerator.cpp" />
     <ClCompile Include="MapPOI.cpp" />
     <ClCompile Include="NameManager.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -199,6 +200,7 @@ cd ..\Tools\BuildScripts\
   <ItemGroup>
     <ClInclude Include="City.h" />
     <ClInclude Include="Location.h" />
+    <ClInclude Include="LocationGenerator.h" />
     <ClInclude Include="MapPOI.h" />
     <ClInclude Include="NameManager.h" />
     <ClInclude Include="platforms\win\resource.h" />

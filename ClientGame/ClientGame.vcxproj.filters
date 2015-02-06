@@ -93,6 +93,9 @@
     <ClCompile Include="NameManager.cpp">
       <Filter>SourceCode\Code\Core</Filter>
     </ClCompile>
+    <ClCompile Include="LocationGenerator.cpp">
+      <Filter>SourceCode\Code\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -134,6 +137,9 @@
       <Filter>SourceCode\Headers\Map Entities</Filter>
     </ClInclude>
     <ClInclude Include="NameManager.h">
+      <Filter>SourceCode\Headers\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="LocationGenerator.h">
       <Filter>SourceCode\Headers\Core</Filter>
     </ClInclude>
   </ItemGroup>

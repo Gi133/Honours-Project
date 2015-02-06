@@ -16,6 +16,32 @@ LayerNames =
 	UIText = "UITextLayer",
 }
 
+NameGeneratorSettings = 
+{
+	cityNameLocation = "Resources/Files/city_names.txt",
+	npcNameLocation = "Resources/Files/npc_names.txt",
+	npcSurnameLocation = "Resources/Files/npc_surnames.txt",
+	dungeonNameLocation = "Resources/Files/dungeon_names.txt",
+}
+
+MapGeneratorSettings = 
+{
+	cities = 10,
+	locations = 10,
+}
+
+CityGeneratorSettings =
+{
+	maxAttempts = 10,
+	radius = 100.0,
+}
+
+LocationGeneratorSettings =
+{
+	maxAttempts = 10,
+	radius = 50.0,
+}
+
 -- The data below is in percentages.
 UINPCInfoSettings = 
 {

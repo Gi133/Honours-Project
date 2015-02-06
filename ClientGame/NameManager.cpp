@@ -9,11 +9,11 @@ namespace
 	std::string dungeonNameLocationFallBack = "Resources/Files/dungeon_names.txt";
 }
 
-NameManager* NameManager::_instance = NULL;
+NameManager* NameManager::_instance = nullptr;
 
 NameManager& NameManager::getInstance()
 {
-	if (_instance == NULL)
+	if (_instance == nullptr)
 		_instance = new NameManager();
 	return *_instance;
 }
