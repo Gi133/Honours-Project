@@ -16,6 +16,14 @@ LayerNames =
 	UIText = "UITextLayer",
 }
 
+NameGeneratorSettings = 
+{
+	cityNameLocation = "Resources/Files/city_names.txt",
+	npcNameLocation = "Resources/Files/npc_names.txt",
+	npcSurnameLocation = "Resources/Files/npc_surnames.txt",
+	dungeonNameLocation = "Resources/Files/dungeon_names.txt",
+}
+
 MapGeneratorSettings = 
 {
 	cities = 10,

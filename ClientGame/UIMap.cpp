@@ -62,7 +62,6 @@ void UIMap::Setup()
 void UIMap::SetupTextActors()
 {
 	// Setup the various text actors.
-
 }
 
 void UIMap::Update()

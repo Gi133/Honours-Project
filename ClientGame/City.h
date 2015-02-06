@@ -9,4 +9,3 @@ public:
 	City();
 	~City();
 };
-

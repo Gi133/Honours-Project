@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stdafx.h"
+#include "NameManager.h"
 #include "UIManager.h"
 #include "City.h"
 #include "Location.h"

@@ -117,5 +117,4 @@ void UIWorldInfo::SetupTextActors()
 
 void UIWorldInfo::Update()
 {
-
 }

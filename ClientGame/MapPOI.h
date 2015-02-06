@@ -24,4 +24,3 @@ public:
 	void SetName(std::string newName){ name = newName; }
 	std::string GetName(){ return name; }
 };
-

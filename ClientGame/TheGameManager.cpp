@@ -111,6 +111,7 @@ void TheGameManager::GenerateCities(int cityNumber)
 		}
 
 		newCity->SetPosition(cityPosition);
+		newCity->SetName(theNameManger.GenerateName(3, true));
 
 		// Move the city into the container.
 		cityContainer.push_back(std::move(newCity));
