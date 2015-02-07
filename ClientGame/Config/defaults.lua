@@ -34,6 +34,18 @@ CityGeneratorSettings =
 {
 	maxAttempts = 10,
 	radius = 100.0,
+	minStartPop = 80,
+	maxStartPop = 2500,
+}
+
+-- The maximum population for each stage before advancing.
+-- Other setting variables required for cities.
+CitySettings = 
+{
+	maxPopVillage = 140,
+	maxPopTown = 500,
+	maxPopSmallCity = 1500,
+	maxPopLargeCity = 3000,
 }
 
 LocationGeneratorSettings =

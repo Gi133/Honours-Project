@@ -6,6 +6,7 @@
 #include "LocationGenerator.h"
 #include "City.h"
 #include "Location.h"
+#include "NPC.h"
 
 #define theGameManger TheGameManager::getInstance()
 
@@ -26,6 +27,7 @@ private:
 	std::unique_ptr<LocationGenerator> locationGenerator;
 	std::vector<std::unique_ptr<City>> cityContainer;
 	std::vector<std::unique_ptr<Location>> locationContainer;
+	std::vector<std::unique_ptr<NPC>> npcContainer;
 
 	Vector2 mapSize, halfMapSize;
 

@@ -182,6 +182,7 @@ cd ..\Tools\BuildScripts\
     <ClCompile Include="LocationGenerator.cpp" />
     <ClCompile Include="MapPOI.cpp" />
     <ClCompile Include="NameManager.cpp" />
+    <ClCompile Include="NPC.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -203,6 +204,7 @@ cd ..\Tools\BuildScripts\
     <ClInclude Include="LocationGenerator.h" />
     <ClInclude Include="MapPOI.h" />
     <ClInclude Include="NameManager.h" />
+    <ClInclude Include="NPC.h" />
     <ClInclude Include="platforms\win\resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TheGameManager.h" />

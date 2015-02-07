@@ -12,7 +12,7 @@ TheGameManager* TheGameManager::_instance = nullptr;
 TheGameManager& TheGameManager::getInstance()
 {
 	if (_instance == nullptr)
-		_instance = new TheGameManager();
+		_instance = new TheGameManager;
 	return *_instance;
 }
 
@@ -61,6 +61,7 @@ void TheGameManager::GenerateCities(int cityNumber)
 
 		newCity->SetPosition(locationGenerator->GeneratePosition(1, cityContainer, locationContainer));
 		newCity->SetName(theNameManger.GenerateName(3, true));
+		newCity->SetPopulation();
 
 		// Move the city into the container.
 		cityContainer.push_back(std::move(newCity));
@@ -76,6 +77,7 @@ void TheGameManager::GenerateLocations(int locationNum)
 		newLocation.reset(new Location());
 
 		newLocation->SetPosition(locationGenerator->GeneratePosition(2, cityContainer, locationContainer));
+		newLocation->SetName(theNameManger.GenerateName(4));
 
 		// Move the location into the container.
 		locationContainer.push_back(std::move(newLocation));

@@ -96,6 +96,9 @@
     <ClCompile Include="LocationGenerator.cpp">
       <Filter>SourceCode\Code\Core</Filter>
     </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>SourceCode\Code\NPC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -141,6 +144,9 @@
     </ClInclude>
     <ClInclude Include="LocationGenerator.h">
       <Filter>SourceCode\Headers\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>SourceCode\Headers\NPC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

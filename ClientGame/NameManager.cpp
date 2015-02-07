@@ -66,9 +66,6 @@ void NameManager::LoadNames(const std::string &fileLocation, std::vector<std::st
 
 std::string NameManager::GenerateName(const int mode, bool isUnique /* = true */)
 {
-	// Mode Cheat Sheet
-	// mode : 1 NPC Name, 2 NPC Surname, 3 City Name.
-
 	bool isUniqueFail = false;
 	int num = 0;
 
