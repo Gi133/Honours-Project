@@ -16,12 +16,13 @@ class City :
 private:
 	int population, minStartPop, maxStartPop; // Town Population.
 	int maxPopVillage, maxPopTown, maxPopSmallCity, maxPopLargeCity;
+	std::string nameVillage, nameTown, nameSmallCity, nameLargeCity;
 
 	CityType cityType;
 	std::string cityTypeName;
 	
 	void UpdateCityType();
-	void LoadDefinitions();
+	void LoadDefinitions() override;
 
 public:
 	City();

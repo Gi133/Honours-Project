@@ -12,6 +12,7 @@ protected:
 	std::string name;
 
 	Vector2 mapCoordinates;
+	virtual void LoadDefinitions() = 0;
 
 public:
 	MapPOI();

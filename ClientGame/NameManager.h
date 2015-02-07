@@ -7,8 +7,6 @@
 class NameManager
 {
 private:
-	std::ifstream file;
-	std::string fileLine;
 	std::string cityNameLocation, npcNameLocation, npcSurnameLocation, dungeonNameLocation;
 
 	std::vector<std::string> cityNameContainer, npcNameContainer, npcSurnameContainer, dungeonNameContainer;

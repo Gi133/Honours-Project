@@ -21,7 +21,7 @@ NameManager& NameManager::getInstance()
 NameManager::NameManager()
 {
 	nameContainer = nullptr;
-	cityNameLocation = npcNameLocation = npcSurnameLocation = fileLine = "";
+	cityNameLocation = npcNameLocation = npcSurnameLocation = "";
 
 	LoadFileLocations();
 
@@ -58,6 +58,9 @@ void NameManager::LoadFileLocations()
 
 void NameManager::LoadNames(const std::string &fileLocation, std::vector<std::string> &outVector)
 {
+	std::string fileLine;
+	std::ifstream file;
+
 	file.open(fileLocation);
 
 	for (fileLine; std::getline(file, fileLine);)

@@ -60,7 +60,7 @@ Vector2 LocationGenerator::RandomPosInMap()
 
 Vector2 LocationGenerator::GeneratePosition(int mode, std::vector<std::unique_ptr<City>>& refCityContainer, std::vector<std::unique_ptr<Location>>& refLocationContainer)
 {
-	Vector2 position = RandomPosInMap();
+	Vector2 position = Vector2(0.0f, 0.0f);
 
 	bool ruleFail = false; // Boolean value to show if any of the generation rules failed.
 	auto maxAttempts = 0;
@@ -87,6 +87,8 @@ Vector2 LocationGenerator::GeneratePosition(int mode, std::vector<std::unique_pt
 	// Generate city info.
 	for (auto i = 0; i < maxAttempts; i++)
 	{
+		position = RandomPosInMap();
+
 		// Check if location is valid.
 		for (std::vector<std::unique_ptr<City>>::iterator i = refCityContainer.begin(); i != refCityContainer.end(); ++i)
 		{

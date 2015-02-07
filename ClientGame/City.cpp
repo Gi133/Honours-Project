@@ -10,6 +10,11 @@ namespace
 	const auto maxPopTownFallBack = 500;
 	const auto maxPopSmallCityFallBack = 1500;
 	const auto maxPopLargeCityFallBack = 3000;
+
+	const auto nameVillageFallBack = "Village";
+	const auto nameTownFallBack = "Town";
+	const auto nameSmallCityFallBack = "Small City";
+	const auto nameLargeCityFallBack = "Large City";
 }
 
 City::City()
@@ -17,7 +22,7 @@ City::City()
 	population = minStartPop = maxStartPop = 0;
 
 	cityType = Village; // Initialize city as village.
-	cityTypeName = "Village";
+	cityTypeName = "";
 
 	LoadDefinitions();
 }
@@ -42,22 +47,22 @@ void City::UpdateCityType()
 	if (population <= maxPopVillage)
 	{
 		cityType = Village;
-		cityTypeName = "Village";
+		cityTypeName = nameVillage;
 	}
 	else if (population <= maxPopTown)
 	{
 		cityType = Town;
-		cityTypeName = "Town";
+		cityTypeName = nameTown;
 	}
 	else if (population <= maxPopSmallCity)
 	{
 		cityType = SmallCity;
-		cityTypeName = "Small City";
+		cityTypeName = nameSmallCity;
 	}
 	else if (population <= maxPopLargeCity)
 	{
 		cityType = LargeCity;
-		cityTypeName = "Large City";
+		cityTypeName = nameLargeCity;
 	}
 	else
 		sysLog.Log("Invalid City population");
@@ -88,4 +93,20 @@ void City::LoadDefinitions()
 	maxPopLargeCity = thePrefs.GetInt("CitySettings", "maxPopLargeCity");
 	if (!maxPopLargeCity)
 		maxPopLargeCity = maxPopLargeCityFallBack;
+
+	nameVillage = thePrefs.GetString("CitySettings", "nameVillage");
+	if (nameVillage.empty())
+		nameVillage = nameVillageFallBack;
+
+	nameTown = thePrefs.GetString("CitySettings", "nameTown");
+	if (nameTown.empty())
+		nameTown = nameTownFallBack;
+
+	nameSmallCity = thePrefs.GetString("CitySettings", "nameSmallCity");
+	if (nameSmallCity.empty())
+		nameSmallCity = nameSmallCityFallBack;
+
+	nameLargeCity = thePrefs.GetString("CitySettings", "nameLargeCity");
+	if (nameLargeCity.empty())
+		nameLargeCity = nameLargeCityFallBack;
 }

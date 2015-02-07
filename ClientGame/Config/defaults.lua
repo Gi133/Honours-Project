@@ -43,15 +43,32 @@ CityGeneratorSettings =
 CitySettings = 
 {
 	maxPopVillage = 140,
+	nameVillage = "Village",
 	maxPopTown = 500,
+	nameTown = "Town",
 	maxPopSmallCity = 1500,
+	nameSmallCity = "Small City",
 	maxPopLargeCity = 3000,
+	nameLargeCity = "Large City",
 }
 
 LocationGeneratorSettings =
 {
 	maxAttempts = 10,
 	radius = 50.0,
+}
+
+-- Dungeon Generation Settings
+LocationSettings = 
+{
+	minStartThreat = 0,
+	maxStartThreat = 100,
+	maxThreatLow = 33,
+	maxThreatLowName = "Weak",
+	maxThreatMed = 66,
+	maxThreatMedName = "Dangerous",
+	maxThreatHigh = 100,
+	maxThreatHighName = "Deadly",
 }
 
 -- The data below is in percentages.

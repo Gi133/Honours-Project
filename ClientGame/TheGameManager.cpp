@@ -78,6 +78,7 @@ void TheGameManager::GenerateLocations(int locationNum)
 
 		newLocation->SetPosition(locationGenerator->GeneratePosition(2, cityContainer, locationContainer));
 		newLocation->SetName(theNameManger.GenerateName(4));
+		newLocation->SetThreatLevel();
 
 		// Move the location into the container.
 		locationContainer.push_back(std::move(newLocation));
