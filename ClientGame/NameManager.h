@@ -8,7 +8,7 @@ class NameManager
 {
 private:
 	NameManager();
-	~NameManager(){ _instance = nullptr; }
+	~NameManager();
 	static NameManager* _instance;
 
 	std::string cityNameLocation, npcNameLocation, npcSurnameLocation, dungeonNameLocation;

@@ -921,14 +921,14 @@ extern "C" {
 	/* helper #defines */
 #define SWIG_fail {goto fail;}
 #define SWIG_fail_arg(func_name,argnum,type) \
-          {SWIG_Lua_pushferrstring(L,"Error in %s (arg %d), expected '%s' got '%s'",\
+            {SWIG_Lua_pushferrstring(L,"Error in %s (arg %d), expected '%s' got '%s'",\
   func_name,argnum,type,SWIG_Lua_typename(L,argnum));\
   goto fail;}
 #define SWIG_fail_ptr(func_name,argnum,type) \
   SWIG_fail_arg(func_name,argnum,(type && type->str)?type->str:"void*")
 #define SWIG_check_num_args(func_name,a,b) \
   if (lua_gettop(L)<a || lua_gettop(L)>b) \
-          {SWIG_Lua_pushferrstring(L,"Error in %s expected %d..%d args, got %d",func_name,a,b,lua_gettop(L));\
+            {SWIG_Lua_pushferrstring(L,"Error in %s expected %d..%d args, got %d",func_name,a,b,lua_gettop(L));\
   goto fail;}
 
 #define SWIG_Lua_get_table(L,n) \

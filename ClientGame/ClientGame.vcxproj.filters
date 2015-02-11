@@ -58,6 +58,15 @@
     <Filter Include="SourceCode\Headers\Parser">
       <UniqueIdentifier>{15da00f7-6bd7-4098-a722-94541a7af475}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\Code\Core\Inventory">
+      <UniqueIdentifier>{506aba35-8ab3-4bdf-950c-9493928dc1e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Headers\Core\Inventory">
+      <UniqueIdentifier>{adab0b8c-99f1-4026-afd1-9da08d565fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Config\Files">
+      <UniqueIdentifier>{ba41498a-7e47-4e40-833d-51d007f7dcfc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Angel\Scripting\Interfaces\AngelLuaWrapping.cpp">
@@ -110,6 +119,12 @@
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>SourceCode\Code\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryBag.cpp">
+      <Filter>SourceCode\Code\Core\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>SourceCode\Code\Core\Inventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +181,12 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>SourceCode\Headers\Core</Filter>
     </ClInclude>
+    <ClInclude Include="InventoryBag.h">
+      <Filter>SourceCode\Headers\Core\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>SourceCode\Headers\Core\Inventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\input_bindings.ini">
@@ -195,5 +216,25 @@
     <None Include="Config\defaults.lua">
       <Filter>Config</Filter>
     </None>
+    <None Include="Resources\Files\resource_base_price.config">
+      <Filter>Config\Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Files\city_names.txt">
+      <Filter>Config\Files</Filter>
+    </Text>
+    <Text Include="Resources\Files\credits.txt">
+      <Filter>Config\Files</Filter>
+    </Text>
+    <Text Include="Resources\Files\dungeon_names.txt">
+      <Filter>Config\Files</Filter>
+    </Text>
+    <Text Include="Resources\Files\npc_names.txt">
+      <Filter>Config\Files</Filter>
+    </Text>
+    <Text Include="Resources\Files\npc_surnames.txt">
+      <Filter>Config\Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -1,4 +1,6 @@
 -- Any tables that you put in here will be loaded into Preferences
+-- NOTE: Majority of these values have been hardcoded into the code incase this file
+-- is missing or values assigned are not valid.
 
 WindowSettings = 
 {
@@ -50,6 +52,8 @@ CitySettings =
 	nameSmallCity = "Small City",
 	maxPopLargeCity = 3000,
 	nameLargeCity = "Large City",
+	maxStartingResources = 100000,
+	minStartingResources = 10000,
 }
 
 LocationGeneratorSettings =
@@ -102,4 +106,25 @@ UIMapSettings =
 {
 	width = 0.80,
 	height = 0.85,
+}
+
+-- Bag and Inventory Settings
+BagSettings = 
+{
+	bagMaxSpaceBase = 100,
+	bagMaxUpgradeLevel = 10,
+	bagUpgradeBasePrice = 50,
+	bagUpgradeLevelSpace = 20,
+}
+
+-- City Inventory Settings
+CityInventorySettings =
+{
+	minResourceQuantity = 1000,
+}
+
+-- NPC Inventory Settings
+NPCInventorySettings = 
+{
+	
 }

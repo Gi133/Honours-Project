@@ -54,8 +54,6 @@ std::string &Utils::rtrim(std::string &content)
 
 void Utils::loadConfigFile(std::string path, std::map<std::string, int>& outMap)
 {
-	sysLog.Log(Utils::format("Loading Resource file from '%s'.", path.c_str()));
-
 	std::ifstream stream;
 	stream.open(path);
 

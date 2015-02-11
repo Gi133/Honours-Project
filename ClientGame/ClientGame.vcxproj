@@ -178,6 +178,8 @@ cd ..\Tools\BuildScripts\
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/wd4716 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="City.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="InventoryBag.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="LocationGenerator.cpp" />
     <ClCompile Include="MapPOI.cpp" />
@@ -202,6 +204,8 @@ cd ..\Tools\BuildScripts\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="City.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="InventoryBag.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="LocationGenerator.h" />
     <ClInclude Include="MapPOI.h" />
@@ -227,9 +231,17 @@ cd ..\Tools\BuildScripts\
     <None Include="platforms\win\angel.ico" />
     <None Include="platforms\win\angel_small.ico" />
     <None Include="build.lua" />
+    <None Include="Resources\Files\resource_base_price.config" />
     <None Include="Resources\Scripts\client_start.lua" />
     <None Include="script_interface.i" />
     <None Include="user_prefs.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Files\city_names.txt" />
+    <Text Include="Resources\Files\credits.txt" />
+    <Text Include="Resources\Files\dungeon_names.txt" />
+    <Text Include="Resources\Files\npc_names.txt" />
+    <Text Include="Resources\Files\npc_surnames.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

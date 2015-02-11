@@ -15,6 +15,9 @@ namespace
 	const auto nameTownFallBack = "Town";
 	const auto nameSmallCityFallBack = "Small City";
 	const auto nameLargeCityFallBack = "Large City";
+
+	const auto maxStartingResourcesFallBack = 100000;
+	const auto minStartingResourcesFallBack = 10000;
 }
 
 City::City()
@@ -25,6 +28,8 @@ City::City()
 	cityTypeName = "";
 
 	LoadDefinitions();
+
+	inventory.reset(new Inventory(true));
 }
 
 City::~City()
@@ -109,4 +114,23 @@ void City::LoadDefinitions()
 	nameLargeCity = thePrefs.GetString("CitySettings", "nameLargeCity");
 	if (nameLargeCity.empty())
 		nameLargeCity = nameLargeCityFallBack;
+
+	maxStartingResources = thePrefs.GetInt("CitySettings", "maxStartingResources");
+	if (!maxStartingResources)
+		maxStartingResources = maxStartingResourcesFallBack;
+
+	minStartingResources = thePrefs.GetInt("CitySettings", "minStartingResources");
+	if (!minStartingResources)
+		minStartingResources = minStartingResourcesFallBack;
+}
+
+void City::SetResources()
+{
+	for (auto i = 0; i < theResourceManager.GetTotalResources(); i++)
+		inventory->SetResource(0, i, MathUtil::RandomIntInRange(minStartingResources, maxStartingResources));
+}
+
+void City::SetResources(std::string resourceName, int quantity)
+{
+	inventory->SetResource(resourceName, quantity);
 }

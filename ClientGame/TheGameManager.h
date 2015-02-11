@@ -7,6 +7,7 @@
 #include "City.h"
 #include "Location.h"
 #include "NPC.h"
+#include "ResourceManager.h"
 
 #define theGameManger TheGameManager::getInstance()
 
