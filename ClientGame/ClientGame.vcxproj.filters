@@ -52,6 +52,12 @@
     <Filter Include="SourceCode\Headers\Map Entities">
       <UniqueIdentifier>{6eb05561-71c2-473e-bf6b-ce25b065bc5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\Code\Parser">
+      <UniqueIdentifier>{e496b749-c45a-4828-a52f-d5a63fd001ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Headers\Parser">
+      <UniqueIdentifier>{15da00f7-6bd7-4098-a722-94541a7af475}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Angel\Scripting\Interfaces\AngelLuaWrapping.cpp">
@@ -98,6 +104,12 @@
     </ClCompile>
     <ClCompile Include="NPC.cpp">
       <Filter>SourceCode\Code\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>SourceCode\Code\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>SourceCode\Code\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +159,12 @@
     </ClInclude>
     <ClInclude Include="NPC.h">
       <Filter>SourceCode\Headers\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>SourceCode\Headers\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>SourceCode\Headers\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

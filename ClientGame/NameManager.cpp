@@ -3,10 +3,10 @@
 
 namespace
 {
-	std::string cityNameLocationFallBack = "Resources/Files/city_names.txt";
-	std::string npcNameLocationFallBack = "Resources/Files/npc_names.txt";
-	std::string npcSurnameLocationFallBack = "Resources/Files/npc_surnames.txt";
-	std::string dungeonNameLocationFallBack = "Resources/Files/dungeon_names.txt";
+	const std::string cityNameLocationFallBack = "Resources/Files/city_names.txt";
+	const std::string npcNameLocationFallBack = "Resources/Files/npc_names.txt";
+	const std::string npcSurnameLocationFallBack = "Resources/Files/npc_surnames.txt";
+	const std::string dungeonNameLocationFallBack = "Resources/Files/dungeon_names.txt";
 }
 
 NameManager* NameManager::_instance = nullptr;

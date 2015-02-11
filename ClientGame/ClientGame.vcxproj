@@ -183,6 +183,7 @@ cd ..\Tools\BuildScripts\
     <ClCompile Include="MapPOI.cpp" />
     <ClCompile Include="NameManager.cpp" />
     <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -194,6 +195,7 @@ cd ..\Tools\BuildScripts\
     <ClCompile Include="UIMap.cpp" />
     <ClCompile Include="UINPCInfo.cpp" />
     <ClCompile Include="UIWorldInfo.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc" />
@@ -206,6 +208,7 @@ cd ..\Tools\BuildScripts\
     <ClInclude Include="NameManager.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="platforms\win\resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TheGameManager.h" />
     <ClInclude Include="UIBase.h" />
@@ -213,6 +216,7 @@ cd ..\Tools\BuildScripts\
     <ClInclude Include="UIMap.h" />
     <ClInclude Include="UINPCInfo.h" />
     <ClInclude Include="UIWorldInfo.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\defaults.lua" />

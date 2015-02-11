@@ -3,7 +3,7 @@
 
 namespace
 {
-	const int maxCityAttemptsFallBack = 10; 
+	const int maxCityAttemptsFallBack = 10;
 	const int maxLocationAttemptsFallBack = 10;
 	const float cityRadiusFallBack = 50.0f;
 	const float locationRadiusFallBack = 50.0f;
@@ -14,7 +14,6 @@ LocationGenerator::LocationGenerator()
 	GetMapSize();
 	GetPreferenceData();
 }
-
 
 LocationGenerator::~LocationGenerator()
 {

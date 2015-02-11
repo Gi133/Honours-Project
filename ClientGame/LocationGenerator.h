@@ -25,6 +25,4 @@ public:
 	//	* refCityContainer : Reference to the City Container.
 	//	* refLocationContainer : Reference to the Location Container.
 	Vector2 GeneratePosition(int mode, std::vector<std::unique_ptr<City>>& refCityContainer, std::vector<std::unique_ptr<Location>>& refLocationContainer);
-	
 };
-

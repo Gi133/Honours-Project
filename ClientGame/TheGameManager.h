@@ -20,6 +20,7 @@ public:
 
 protected:
 	TheGameManager();
+	~TheGameManager(){ _instance = nullptr; }
 	static TheGameManager* _instance;
 
 private:

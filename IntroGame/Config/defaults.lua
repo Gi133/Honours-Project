@@ -1,3 +1,0 @@
-WindowSettings = {
-	name = "Angel Demo",
-}

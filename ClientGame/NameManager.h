@@ -7,6 +7,10 @@
 class NameManager
 {
 private:
+	NameManager();
+	~NameManager(){ _instance = nullptr; }
+	static NameManager* _instance;
+
 	std::string cityNameLocation, npcNameLocation, npcSurnameLocation, dungeonNameLocation;
 
 	std::vector<std::string> cityNameContainer, npcNameContainer, npcSurnameContainer, dungeonNameContainer;
@@ -24,13 +28,7 @@ private:
 	// * outVector : Pass by reference the vector to output into.
 	void LoadNames(const std::string &fileLocation, std::vector<std::string> &outVector);
 
-protected:
-	NameManager();
-	~NameManager();
-	static NameManager* _instance;
-
 public:
-	void DoSomething(){/*something*/ }
 	static NameManager& getInstance();
 
 	// Functions to return names that have been loaded in.

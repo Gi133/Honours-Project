@@ -20,7 +20,7 @@ private:
 
 	CityType cityType;
 	std::string cityTypeName;
-	
+
 	void UpdateCityType();
 	void LoadDefinitions() override;
 

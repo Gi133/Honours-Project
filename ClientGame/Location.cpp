@@ -5,7 +5,7 @@ namespace
 {
 	const auto minStartThreatFallBack = 0;
 	const auto maxStartThreatFallBack = 100;
-	
+
 	const auto maxThreatLowFallBack = 33;
 	const auto maxThreatMedFallBack = 66;
 	const auto maxThreatHighFallBack = 100;

@@ -5,4 +5,3 @@ public:
 	NPC();
 	~NPC();
 };
-

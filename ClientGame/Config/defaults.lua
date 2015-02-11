@@ -71,6 +71,12 @@ LocationSettings =
 	maxThreatHighName = "Deadly",
 }
 
+-- Resource Settings
+ResourceFileSettings = 
+{
+	resourceBasePriceLocation = "Resources/Files/resource_base_price.config",
+}
+
 -- The data below is in percentages.
 UINPCInfoSettings = 
 {
