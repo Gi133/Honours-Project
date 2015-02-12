@@ -18,6 +18,15 @@ LayerNames =
 	UIText = "UITextLayer",
 }
 
+TimerSettings = 
+{
+	tickTime = 10,
+	tickMessageName = "Tick",
+	maxTicksDay = 1,
+	maxDays = 30,
+	maxMonths = 10,
+}
+
 NameGeneratorSettings = 
 {
 	cityNameLocation = "Resources/Files/city_names.txt",

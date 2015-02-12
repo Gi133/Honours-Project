@@ -8,6 +8,7 @@
 #include "Location.h"
 #include "NPC.h"
 #include "ResourceManager.h"
+#include "TimeManager.h"
 
 #define theGameManger TheGameManager::getInstance()
 
@@ -26,6 +27,7 @@ protected:
 
 private:
 	std::unique_ptr<UIManager> uiManager;
+	std::unique_ptr<TimeManager> timeManager;
 	std::unique_ptr<LocationGenerator> locationGenerator;
 	std::vector<std::unique_ptr<City>> cityContainer;
 	std::vector<std::unique_ptr<Location>> locationContainer;

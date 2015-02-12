@@ -67,6 +67,12 @@
     <Filter Include="Config\Files">
       <UniqueIdentifier>{ba41498a-7e47-4e40-833d-51d007f7dcfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\Code\Core\Time">
+      <UniqueIdentifier>{ee1e6670-0ad8-4855-8369-af6a94354819}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Headers\Core\Time">
+      <UniqueIdentifier>{e6dfdee2-e7a1-4bff-9ac3-4c978a12b55b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Angel\Scripting\Interfaces\AngelLuaWrapping.cpp">
@@ -125,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>SourceCode\Code\Core\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>SourceCode\Code\Core\Time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +195,9 @@
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>SourceCode\Headers\Core\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>SourceCode\Headers\Core\Time</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

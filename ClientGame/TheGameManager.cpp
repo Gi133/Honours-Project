@@ -21,6 +21,7 @@ TheGameManager::TheGameManager()
 	mapSize = halfMapSize = Vector2(0.0f, 0.0f);
 
 	uiManager.reset(new UIManager);
+	timeManager.reset(new TimeManager);
 	locationGenerator.reset(new LocationGenerator);
 
 	GenerateMap();
@@ -33,6 +34,7 @@ void TheGameManager::Render()
 void TheGameManager::Update(float dt)
 {
 	uiManager->Update();
+	timeManager->Update();
 }
 
 void TheGameManager::GenerateMap()
