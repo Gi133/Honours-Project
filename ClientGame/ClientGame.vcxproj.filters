@@ -73,6 +73,12 @@
     <Filter Include="SourceCode\Headers\Core\Time">
       <UniqueIdentifier>{e6dfdee2-e7a1-4bff-9ac3-4c978a12b55b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\Code\AI">
+      <UniqueIdentifier>{64454be9-0402-4ef0-a0b7-c5e5a18b7afb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Headers\AI">
+      <UniqueIdentifier>{c4933f99-05b9-4224-9993-65ef5c019c24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Angel\Scripting\Interfaces\AngelLuaWrapping.cpp">
@@ -134,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
       <Filter>SourceCode\Code\Core\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Brain.cpp">
+      <Filter>SourceCode\Code\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +207,9 @@
     </ClInclude>
     <ClInclude Include="TimeManager.h">
       <Filter>SourceCode\Headers\Core\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Brain.h">
+      <Filter>SourceCode\Headers\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

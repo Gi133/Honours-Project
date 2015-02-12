@@ -177,6 +177,7 @@ cd ..\Tools\BuildScripts\
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/wd4716 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/wd4716 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="Brain.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventoryBag.cpp" />
@@ -204,6 +205,7 @@ cd ..\Tools\BuildScripts\
     <ResourceCompile Include="platforms\win\ClientGame.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Brain.h" />
     <ClInclude Include="City.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryBag.h" />

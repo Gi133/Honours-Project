@@ -9,7 +9,7 @@ private:
 	int maxTicksDay, maxDays, maxMonths;
 
 	std::chrono::time_point<std::chrono::system_clock> timerStart; // Used to check time.
-	std::string tickMessageName;
+	std::string tickMessageName, dayMessageName, monthMessageName, yearMessageName;
 
 	void CheckTime();
 	void UpdateDate();

@@ -12,13 +12,14 @@ enum CityType
 };
 
 class City :
-	public MapPOI
+	public MapPOI , public MessageListener
 {
 private:
 	int population, minStartPop, maxStartPop; // Town Population.
 	int maxPopVillage, maxPopTown, maxPopSmallCity, maxPopLargeCity;
-	int minStartingResources, maxStartingResources;
-	std::string nameVillage, nameTown, nameSmallCity, nameLargeCity;
+	int minStartingResources, maxStartingResources, minConsumptionPerDay, 
+		maxConsumptionPerDay, minPopulationChange, maxPopulationChange, minResourceChange, maxResourceChange;
+	std::string nameVillage, nameTown, nameSmallCity, nameLargeCity, tickMessageName, dayMessageName, monthMessageName;
 
 	CityType cityType;
 	std::string cityTypeName;
@@ -26,6 +27,8 @@ private:
 
 	void UpdateCityType();
 	void LoadDefinitions() override;
+	
+	virtual void ReceiveMessage(Message *message) override;
 
 public:
 	City();

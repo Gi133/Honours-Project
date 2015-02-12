@@ -104,6 +104,19 @@ void InventoryBag::AddResource(const std::string resourceName, int quantity)
 		}
 }
 
+void InventoryBag::AddResource(const unsigned int iterator, int quantity)
+{
+	if (iterator <= bagContents.size())
+	{
+		// Convert the integer into an iterator position
+		auto it = bagContents.begin();
+		std::advance(it, iterator);
+		it->second += quantity;
+	}
+	else
+		sysLog.Log("ERROR: bag content iterator out of bounds!");
+}
+
 void InventoryBag::SubtractResource(const std::string resourceName, int quantity)
 {
 	for (auto i : bagContents)
@@ -112,6 +125,19 @@ void InventoryBag::SubtractResource(const std::string resourceName, int quantity
 			i.second -= quantity;
 			break;
 		}
+}
+
+void InventoryBag::SubtractResource(const unsigned int iterator, int quantity)
+{
+	if (iterator <= bagContents.size())
+	{
+		// Convert the integer into an iterator position
+		auto it = bagContents.begin();
+		std::advance(it, iterator);
+		it->second -= quantity;
+	}
+	else
+		sysLog.Log("ERROR: bag content iterator out of bounds!");
 }
 
 void InventoryBag::SetResource(const std::string resourceName, int quantity)
@@ -133,6 +159,8 @@ void InventoryBag::SetResource(const unsigned int iterator, int quantity)
 		std::advance(it, iterator);
 		it->second = quantity;
 	}
+	else
+		sysLog.Log("ERROR: bag content iterator out of bounds!");
 }
 
 std::string InventoryBag::OutputResourceQuantity(const std::string resourceName)
@@ -154,6 +182,21 @@ int InventoryBag::GetResourceQuantity(const std::string resourceName)
 		if (std::regex_search(i.first, std::regex(resourceName, std::regex_constants::ECMAScript | std::regex_constants::icase)))
 			return i.second;
 
+	return 0;
+}
+
+int InventoryBag::GetResourceQuantity(const int iterator)
+{
+	if (iterator <= bagContents.size())
+	{
+		// Convert the integer into an iterator position
+		auto it = bagContents.begin();
+		std::advance(it, iterator);
+		return it->second;
+	}
+	else
+		sysLog.Log("ERROR: bag content iterator out of bounds!");
+	
 	return 0;
 }
 

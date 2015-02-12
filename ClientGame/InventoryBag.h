@@ -33,10 +33,13 @@ public:
 
 	// Resource Quantity controls.
 	void AddResource(const std::string resourceName, int quantity);
+	void AddResource(const unsigned int iterator, int quantity);
 	void SubtractResource(const std::string resourceName, int quantity);
+	void SubtractResource(const unsigned int iterator, int quantity);
 	void SetResource(const std::string resourceName, int quantity);
 	void SetResource(const unsigned int iterator, int quantity);
 	int GetResourceQuantity(const std::string resourceName);
+	int GetResourceQuantity(const int iterator);
 
 	// Set Contents of the bag to 0.
 	void EmptyBag();

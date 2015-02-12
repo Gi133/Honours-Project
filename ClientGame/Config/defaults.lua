@@ -23,8 +23,11 @@ TimerSettings =
 	tickTime = 10,
 	tickMessageName = "Tick",
 	maxTicksDay = 1,
+	dayMessageName = "Day",
 	maxDays = 30,
+	monthMessageName = "Month",
 	maxMonths = 10,
+	yearNameMessage = "Year",
 }
 
 NameGeneratorSettings = 
@@ -51,6 +54,7 @@ CityGeneratorSettings =
 
 -- The maximum population for each stage before advancing.
 -- Other setting variables required for cities.
+-- Consuption, Population and Resource change values in percentages of current.
 CitySettings = 
 {
 	maxPopVillage = 140,
@@ -63,6 +67,12 @@ CitySettings =
 	nameLargeCity = "Large City",
 	maxStartingResources = 100000,
 	minStartingResources = 10000,
+	minConsuptionPerDay = 0,
+	maxConsuptionPerDay = 2,
+	minPopulationChange = 0,
+	maxPopulationChange = 5,
+	minResourceChange = 0,
+	maxResourceChange = 25,
 }
 
 LocationGeneratorSettings =

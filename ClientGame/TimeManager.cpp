@@ -4,7 +4,11 @@
 namespace
 {
 	const auto tickTimeFallBack = 10;
+
 	const auto tickMessageNameFallBack = "Tick";
+	const auto dayMessageNameFallBack = "Day";
+	const auto monthMessageNameFallBack = "Month";
+	const auto yearMessageNameFallBack = "Year";
 
 	const auto maxTicksDayFallBack = 1;
 	const auto maxDaysFallBack = 30;
@@ -15,7 +19,7 @@ TimeManager::TimeManager()
 {
 	ticks = 0;
 	day = month = year = 1;
-	tickMessageName = "";
+	tickMessageName = dayMessageName = monthMessageName = yearMessageName = "";
 
 	LoadConfig();
 	theSwitchboard.SubscribeTo(this, tickMessageName);
@@ -61,6 +65,18 @@ void TimeManager::LoadConfig()
 	maxMonths = thePrefs.GetInt("TimeManagerSettings", "maxMonths");
 	if (!maxMonths)
 		maxMonths = maxMonthsFallBack;
+
+	dayMessageName = thePrefs.GetString("TimeManagerSettings", "dayMessageName");
+	if (dayMessageName.empty())
+		dayMessageName = dayMessageNameFallBack;
+
+	monthMessageName = thePrefs.GetString("TimeManagerSettings", "monthMessageName");
+	if (monthMessageName.empty())
+		monthMessageName = monthMessageNameFallBack;
+
+	yearMessageName = thePrefs.GetString("TimeManagerSettings", "yearMessageName");
+	if (yearMessageName.empty())
+		yearMessageName = yearMessageNameFallBack;
 }
 
 void TimeManager::ReceiveMessage(Message *message)
@@ -80,17 +96,26 @@ void TimeManager::UpdateDate()
 	{
 		day++;
 		ticks = 0;
+
+		// Fire off a message.
+		theSwitchboard.Broadcast(new Message(dayMessageName));
 	}
 
 	if (day >= maxDays)
 	{
 		month++;
 		day = 1;
+
+		// Fire off a message.
+		theSwitchboard.Broadcast(new Message(monthMessageName));
 	}
 
 	if (month >= maxMonths)
 	{
 		year++;
 		month = 1;
+
+		// Fire off a message.
+		theSwitchboard.Broadcast(new Message(yearMessageName));
 	}
 }
