@@ -17,12 +17,6 @@ void UIWorldInfo::LoadUIWorldInfoPreferences()
 {
 }
 
-void UIWorldInfo::ReceiveMessage(Message *message)
-{
-	// Do any message Handling.
-	// CAUTION: TYPED MESSAGES CAUSE HANGUPS.
-}
-
 void UIWorldInfo::Update(std::weak_ptr<TimeManager> timeManager)
 {
 	elementContainer.at(0)->SetContentText(std::to_string(timeManager.lock()->getDay()));

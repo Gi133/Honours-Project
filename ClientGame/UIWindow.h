@@ -31,7 +31,7 @@ private:
 	bool windowElementOrientation; // True : Horizontal, False : Vertical
 	Vec2ui windowElementSize;
 
-	void ReceiveMessage(Message *message);
+	virtual void ReceiveMessage(Message *message);
 
 	void UpdateWindowData(); // Bad name for "Update all the position vectors related to this window".
 	void BackgroundUpdate(); // Update the background position and size.
@@ -47,16 +47,19 @@ public:
 	~UIWindow();
 
 	void AddElement(const int elementsToAdd = 1);
+	void AdjustCurrentElements();
 
-	void SetWindowSize(const Vector2 size){ windowSize = size; UpdateWindowData(); }
-	void SetWindowSize(const int width, const int height){ windowSize = Vector2(width, height); UpdateWindowData(); }
+	void SetWindowSize(const Vector2 size){ windowSize = size; }
+	void SetWindowSize(const int width, const int height){ windowSize = Vector2(width, height); }
 
-	void SetWindowWidth(const int width){ windowSize.X = width; UpdateWindowData(); }
-	void SetWindowHeight(const int height){ windowSize.Y = height; UpdateWindowData(); }
+	void SetWindowWidth(const int width){ windowSize.X = width; }
+	void SetWindowHeight(const int height){ windowSize.Y = height; }
 
 	void SetWindowAnchor(const UIWindowAnchors anchor);
 	void SetWindowAnchor(const std::string anchorName);
 
 	void SetWindowColorHex(const std::string colorHex){ background->SetColor(Color::FromHexString(colorHex)); }
 	void SetWindowColorRGBA(const float r, const float g, const float b, const float a = 1.0f){ background->SetColor(r, g, b, a); }
+
+	std::string GetWindowAnchor(){ return windowAnchorName; }
 };

@@ -132,13 +132,13 @@
     <ClCompile Include="UIWindow.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>SourceCode\Code\Core</Filter>
-    </ClCompile>
     <ClCompile Include="UIWorldInfo.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
     <ClCompile Include="UIElement.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -196,13 +196,13 @@
     <ClInclude Include="UIWindow.h">
       <Filter>SourceCode\Headers\UI</Filter>
     </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>SourceCode\Headers\Core</Filter>
-    </ClInclude>
     <ClInclude Include="UIWorldInfo.h">
       <Filter>SourceCode\Headers\UI</Filter>
     </ClInclude>
     <ClInclude Include="UIElement.h">
+      <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
       <Filter>SourceCode\Headers\UI</Filter>
     </ClInclude>
   </ItemGroup>

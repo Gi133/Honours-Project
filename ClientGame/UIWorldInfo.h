@@ -10,8 +10,6 @@ private:
 	std::string dayMessageName, monthMessageName, yearMessageName, tickMessageName;
 
 	void LoadUIWorldInfoPreferences();
-
-	virtual void ReceiveMessage(Message *message) override;
 public:
 	UIWorldInfo();
 	~UIWorldInfo();

@@ -164,7 +164,10 @@ void UIWindow::SetWindowAnchor(const std::string anchorName)
 void UIWindow::ReceiveMessage(Message *message)
 {
 	if (message->GetMessageName() == "CameraChange")
+	{
 		SetWindowAnchor(windowAnchor);
+		AdjustCurrentElements();
+	}
 }
 
 void UIWindow::BackgroundUpdate()
@@ -250,4 +253,45 @@ void UIWindow::AutoOrientation()
 		windowElementOrientation = true;
 	else
 		windowElementOrientation = false;
+}
+
+void UIWindow::AdjustCurrentElements()
+{
+	Vec2i topLeft, bottomRight;
+
+	if (windowElementOrientation) // If horizontal, divide width
+	{
+		windowElementSize.X = windowSize.X / elementContainer.size();
+		windowElementSize.Y = windowSize.Y;
+	}
+	else
+	{
+		windowElementSize.X = windowSize.X;
+		windowElementSize.Y = windowSize.Y / elementContainer.size();
+	}
+
+	for (unsigned int i = 0; i < elementContainer.size(); i++)
+	{
+		// Check orientation.
+		if (windowElementOrientation)
+		{
+			// Find the new top left and bottom right positions.
+			topLeft.X = (i * windowElementSize.X) + windowTopLeft.X;
+			topLeft.Y = windowTopLeft.Y;
+
+			bottomRight.X = ((i + 1)*windowElementSize.X) + windowTopLeft.X;
+			bottomRight.Y = windowBottomRight.Y;
+		}
+		else
+		{
+			// Find the new top left and bottom right positions.
+			topLeft.X = windowTopLeft.X;
+			topLeft.Y = (i * windowElementSize.Y) + windowTopLeft.Y;
+
+			bottomRight.X = windowBottomRight.X;
+			bottomRight.Y = ((i + 1)*windowElementSize.Y) + windowTopLeft.Y;
+		}
+
+		elementContainer.at(i)->AdjustPositionVectors(topLeft, bottomRight);
+	}
 }
