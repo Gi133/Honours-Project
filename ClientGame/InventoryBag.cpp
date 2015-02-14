@@ -196,7 +196,7 @@ int InventoryBag::GetResourceQuantity(const int iterator)
 	}
 	else
 		sysLog.Log("ERROR: bag content iterator out of bounds!");
-	
+
 	return 0;
 }
 

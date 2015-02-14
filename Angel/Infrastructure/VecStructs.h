@@ -43,6 +43,10 @@ struct Vec2i
 
 	bool operator==(const Vec2i &v) const { return ((X == v.X) && (Y == v.Y)); }
 	bool operator!=(const Vec2i &v) const { return !(*this == v); }
+	Vec2i operator-(const Vec2i &v) const { return Vec2i(X - v.X, Y - v.Y); }
+	Vec2i operator+(const Vec2i &v) const { return Vec2i(X + v.X, Y + v.Y); }
+	Vec2i operator/(const int &v) const { return Vec2i(X / v, Y / v); }
+	Vec2i operator*(const float &v) const { return Vec2i(X * v, Y * v); }
 };
 
 /**
@@ -56,6 +60,10 @@ struct Vec2ui
 
 	bool operator==(const Vec2ui &v) const { return ((X == v.X) && (Y == v.Y)); }
 	bool operator!=(const Vec2ui &v) const { return !(*this == v); }
+	Vec2ui operator-(const Vec2ui &v) const { return Vec2ui(X - v.X, Y - v.Y); }
+	Vec2ui operator+(const Vec2ui &v) const { return Vec2ui(X + v.X, Y + v.Y); }
+	Vec2ui operator/(const int &v) const { return Vec2ui(X / v, Y / v); }
+	Vec2ui operator*(const float &v) const { return Vec2ui(X * v, Y * v); }
 };
 
 /**

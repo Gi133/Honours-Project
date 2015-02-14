@@ -18,6 +18,15 @@ LayerNames =
 	UIText = "UITextLayer",
 }
 
+FontSettings =
+{
+	fontLocation = "Resources/Fonts/Inconsolata.otf",
+	fontTitleSize = 24,
+	fontContentSize = 14,
+	fontTitleName = "TitleFont",
+	fontContentName = "ContentFont",
+}
+
 TimerSettings = 
 {
 	tickTime = 10,
@@ -107,12 +116,20 @@ UIWindowSettings =
 	windowBackgroundAlpha = 1.0,
 }
 
+-- 1024,200
+-- 350, 768
 UIManagerSettings = 
 {
 	windowWorldInfoSizeX = 1024,
-	windowWorldInfoSizeY = 200,
+	windowWorldInfoSizeY = 120,
 	windowWorldInfoAnchor = "topright",
 	windowWorldInfoColor = "#7C4712",
+}
+
+UIElementSettings =
+{
+	textColor = "#000000",
+	textPadding = 5.0,
 }
 
 -- Bag and Inventory Settings

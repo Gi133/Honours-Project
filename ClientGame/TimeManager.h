@@ -16,6 +16,7 @@ private:
 	void LoadConfig();
 
 	virtual void ReceiveMessage(Message *message) override;
+	void BroadcastTime();
 
 public:
 	TimeManager();
@@ -29,4 +30,3 @@ public:
 	int getTicks(){ return ticks; }
 	int getTicksPerDay(){ return maxTicksDay; }
 };
-

@@ -24,6 +24,8 @@ TheGameManager::TheGameManager()
 	timeManager.reset(new TimeManager);
 	locationGenerator.reset(new LocationGenerator);
 
+	uiManager->AssignTimeManager(timeManager);
+
 	GenerateMap();
 }
 

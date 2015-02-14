@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "UIElement.h"
 #include <regex>
 
 enum UIWindowAnchors
@@ -15,18 +16,20 @@ enum UIWindowAnchors
 	BottomRight
 };
 
-class UIWindow:
+class UIWindow :
 	public MessageListener
 {
 private:
 	std::unique_ptr<HUDActor> background;
-	std::vector<std::shared_ptr<TextActor>> textContainer;
 
 	Vector2 windowSize, windowTopLeft, windowBottomRight, windowCenter;
 	UIWindowAnchors windowAnchor;
 
-	std::string UILayerName, UILayerTextName, windowBackgroundColor, windowAnchorName;
+	std::string UILayerName, windowBackgroundColor, windowAnchorName;
 	float windowBackgroundAlpha;
+
+	bool windowElementOrientation; // True : Horizontal, False : Vertical
+	Vec2ui windowElementSize;
 
 	void ReceiveMessage(Message *message);
 
@@ -34,9 +37,16 @@ private:
 	void BackgroundUpdate(); // Update the background position and size.
 	void LoadPreferences();
 
+	void AutoOrientation(); // Set the element orientation.
+
+protected:
+	std::vector<std::shared_ptr<UIElement>> elementContainer;
+
 public:
 	UIWindow();
 	~UIWindow();
+
+	void AddElement(const int elementsToAdd = 1);
 
 	void SetWindowSize(const Vector2 size){ windowSize = size; UpdateWindowData(); }
 	void SetWindowSize(const int width, const int height){ windowSize = Vector2(width, height); UpdateWindowData(); }
@@ -50,4 +60,3 @@ public:
 	void SetWindowColorHex(const std::string colorHex){ background->SetColor(Color::FromHexString(colorHex)); }
 	void SetWindowColorRGBA(const float r, const float g, const float b, const float a = 1.0f){ background->SetColor(r, g, b, a); }
 };
-

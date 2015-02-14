@@ -15,19 +15,9 @@
 class TheGameManager :
 	public GameManager
 {
-public:
-	static TheGameManager& getInstance();
-	virtual void Render() override;
-	virtual void Update(float dt) override;
-
-protected:
-	TheGameManager();
-	~TheGameManager(){ _instance = nullptr; }
-	static TheGameManager* _instance;
-
 private:
 	std::unique_ptr<UIManager> uiManager;
-	std::unique_ptr<TimeManager> timeManager;
+	std::shared_ptr<TimeManager> timeManager;
 	std::unique_ptr<LocationGenerator> locationGenerator;
 	std::vector<std::unique_ptr<City>> cityContainer;
 	std::vector<std::unique_ptr<Location>> locationContainer;
@@ -38,4 +28,14 @@ private:
 	void GenerateMap();
 	void GenerateCities(int cityNumber); // Function that generates cities.
 	void GenerateLocations(int locationNumber); // Function that generate locations.
+
+protected:
+	TheGameManager();
+	~TheGameManager(){ _instance = nullptr; }
+	static TheGameManager* _instance;
+
+public:
+	static TheGameManager& getInstance();
+	virtual void Render() override;
+	virtual void Update(float dt) override;
 };

@@ -4,7 +4,6 @@
 namespace
 {
 	const auto UILayerNameFallBack = "UILayer";
-	const auto UILayerTextNameFallBack = "UITextLayer";
 	const auto windowBackgroundColorFallBack = "0x000000";
 	const auto windowBackgroundAlphaFallBack = 1.0f;
 }
@@ -23,7 +22,6 @@ UIWindow::UIWindow()
 	background->SetAlpha(windowBackgroundAlpha);
 }
 
-
 UIWindow::~UIWindow()
 {
 }
@@ -35,6 +33,7 @@ void UIWindow::UpdateWindowData()
 	windowBottomRight = windowCenter + (windowSize / 2);
 
 	BackgroundUpdate();
+	AutoOrientation();
 }
 
 void UIWindow::SetWindowAnchor(const UIWindowAnchors anchor)
@@ -55,7 +54,7 @@ void UIWindow::SetWindowAnchor(const UIWindowAnchors anchor)
 		break;
 	case Left:
 		windowAnchorName = "Left";
-		windowCenter = Vector2(offsetCenterX, theCamera.GetWindowHeight()/2);
+		windowCenter = Vector2(offsetCenterX, theCamera.GetWindowHeight() / 2);
 		break;
 	case Right:
 		windowAnchorName = "Right";
@@ -95,7 +94,7 @@ void UIWindow::SetWindowAnchor(const UIWindowAnchors anchor)
 void UIWindow::SetWindowAnchor(const std::string anchorName)
 {
 	// Not pretty...
-	// Changes that can improve: Create a map to do lookups between enum and string. Adds a big function on initialisation though.
+	// Changes that can improve: Create a map to do lookups between enum and string. Adds a big function on initialization though.
 
 	// Convert string to enum value.
 	if (std::regex_match(anchorName, std::regex("center", std::regex_constants::ECMAScript | std::regex_constants::icase)))
@@ -181,10 +180,6 @@ void UIWindow::LoadPreferences()
 	if (UILayerName.empty())
 		UILayerName = UILayerNameFallBack;
 
-	UILayerTextName = thePrefs.GetString("Settings", "UILayerText");
-	if (UILayerTextName.empty())
-		UILayerTextName = UILayerTextNameFallBack;
-
 	windowBackgroundColor = thePrefs.GetString("UIWindowSettings", "windowBackgroundColor");
 	if (windowBackgroundColor.empty())
 		windowBackgroundColor = windowBackgroundColorFallBack;
@@ -194,3 +189,65 @@ void UIWindow::LoadPreferences()
 		windowBackgroundAlpha = windowBackgroundAlphaFallBack;
 }
 
+void UIWindow::AddElement(const int elementsToAdd /* = 1 */)
+{
+	Vec2i topLeft, bottomRight;
+
+	for (int i = 0; i < elementsToAdd; i++)
+	{
+		if (windowElementOrientation) // If horizontal, divide width
+		{
+			windowElementSize.X = windowSize.X / (elementContainer.size() + 1);
+			windowElementSize.Y = windowSize.Y;
+		}
+		else
+		{
+			windowElementSize.X = windowSize.X;
+			windowElementSize.Y = windowSize.Y / (elementContainer.size() + 1);
+		}
+
+		for (unsigned int i = 0; i <= elementContainer.size(); i++)
+		{
+			// Check orientation.
+			if (windowElementOrientation)
+			{
+				// Find the new top left and bottom right positions.
+				topLeft.X = (i * windowElementSize.X) + windowTopLeft.X;
+				topLeft.Y = windowTopLeft.Y;
+
+				bottomRight.X = ((i + 1)*windowElementSize.X) + windowTopLeft.X;
+				bottomRight.Y = windowBottomRight.Y;
+			}
+			else
+			{
+				// Find the new top left and bottom right positions.
+				topLeft.X = windowTopLeft.X;
+				topLeft.Y = (i * windowElementSize.Y) + windowTopLeft.Y;
+
+				bottomRight.X = windowBottomRight.X;
+				bottomRight.Y = ((i + 1)*windowElementSize.Y) + windowTopLeft.Y;
+			}
+
+			// Check if you reached the new element.
+			if (i == elementContainer.size())
+			{
+				// Use the calculated topleft and bottomright from above to create a new element
+				// and push it into the container.
+				std::unique_ptr<UIElement> newElement;
+				newElement.reset(new UIElement(topLeft, bottomRight));
+				elementContainer.push_back(std::move(newElement));
+				break;
+			}
+			else
+				elementContainer.at(i)->AdjustPositionVectors(topLeft, bottomRight);
+		}
+	}
+}
+
+void UIWindow::AutoOrientation()
+{
+	if (windowSize.X > windowSize.Y)
+		windowElementOrientation = true;
+	else
+		windowElementOrientation = false;
+}

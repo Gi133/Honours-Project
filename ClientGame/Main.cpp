@@ -5,6 +5,13 @@ namespace
 {
 	const auto UILayerNameFallBack = "UILayer";
 	const auto UILayerTextNameFallBack = "UITextLayer";
+
+	const auto fontLocationFallBack = "Resources/Fonts/Inconsolata.otf";
+	const auto fontTitleSizeFallBack = 25;
+	const auto fontContentSizeFallBack = 14;
+
+	const auto fontTitleNameFallBack = "TitleFont";
+	const auto fontContentNameFallBack = "ContentFont";
 }
 
 int main(int argc, char* argv[])
@@ -36,16 +43,36 @@ int main(int argc, char* argv[])
 	auto UILayerName = thePrefs.GetString("Settings", "UILayerName");
 	if (UILayerName.empty())
 		UILayerName = UILayerNameFallBack;
-	theWorld.NameLayer(UILayerName, 1);
+	theWorld.NameLayer(UILayerName, 0);
 
 	auto UILayerText = thePrefs.GetString("Settings", "UILayerText");
 	if (UILayerText.empty())
 		UILayerText = UILayerTextNameFallBack;
-	theWorld.NameLayer(UILayerTextNameFallBack, 2);
+	theWorld.NameLayer(UILayerTextNameFallBack, 1);
 
 	// Register Text Font
-	RegisterFont("Resources/Fonts/Inconsolata.otf", 25, "UITitleFont");
-	RegisterFont("Resources/Fonts/Inconsolata.otf", 16, "UIContentFont");
+	auto fontLocation = thePrefs.GetString("FontSettings", "fontLocation");
+	if (fontLocation.empty())
+		fontLocation = fontLocationFallBack;
+
+	auto fontTitleSize = thePrefs.GetInt("FontSettings", "fontTitleSize");
+	if (!fontTitleSize)
+		fontTitleSize = fontTitleSizeFallBack;
+
+	auto fontTitleName = thePrefs.GetString("FontSettings", "fontTitleName");
+	if (fontTitleName.empty())
+		fontTitleName = fontTitleNameFallBack;
+
+	auto fontContentSize = thePrefs.GetInt("FontSettings", "fontContentSize");
+	if (!fontContentSize)
+		fontContentSize = fontContentSizeFallBack;
+
+	auto fontContentName = thePrefs.GetString("FontSettings", "fontContentName");
+	if (fontContentName.empty())
+		fontContentName = fontContentNameFallBack;
+
+	RegisterFont(fontLocation, fontTitleSize, fontTitleName);
+	RegisterFont(fontLocation, fontContentSize, fontContentName);
 
 	//adds the default grid so you can more easily place Actors
 	theWorld.Add(new GridActor(), 0);

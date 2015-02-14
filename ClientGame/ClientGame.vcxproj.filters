@@ -138,6 +138,9 @@
     <ClCompile Include="UIWorldInfo.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
+    <ClCompile Include="UIElement.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -197,6 +200,9 @@
       <Filter>SourceCode\Headers\Core</Filter>
     </ClInclude>
     <ClInclude Include="UIWorldInfo.h">
+      <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
       <Filter>SourceCode\Headers\UI</Filter>
     </ClInclude>
   </ItemGroup>

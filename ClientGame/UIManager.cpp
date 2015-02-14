@@ -14,10 +14,10 @@ UIManager::UIManager()
 	LoadConfig();
 
 	windowWorldInfo.reset(new UIWorldInfo());
-
 	windowWorldInfo->SetWindowSize(windowWorldInfoSize);
 	windowWorldInfo->SetWindowAnchor(windowWorldInfoAnchor);
 	windowWorldInfo->SetWindowColorHex(windowWorldInfoColor);
+	windowWorldInfo->InitializeElements();
 }
 
 UIManager::~UIManager()
@@ -26,6 +26,7 @@ UIManager::~UIManager()
 
 void UIManager::Update()
 {
+	windowWorldInfo->Update(timeManager);
 }
 
 void UIManager::LoadConfig()

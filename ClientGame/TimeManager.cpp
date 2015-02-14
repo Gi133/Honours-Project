@@ -25,7 +25,6 @@ TimeManager::TimeManager()
 	theSwitchboard.SubscribeTo(this, tickMessageName);
 }
 
-
 TimeManager::~TimeManager()
 {
 }
@@ -50,10 +49,6 @@ void TimeManager::LoadConfig()
 	if (!tickTime)
 		tickTime = tickTimeFallBack;
 
-	tickMessageName = thePrefs.GetString("TimeManagerSettings", "tickMessageName");
-	if (tickMessageName.empty())
-		tickMessageName = tickMessageNameFallBack;
-
 	maxTicksDay = thePrefs.GetInt("TimeManagerSettings", "maxTicksDay");
 	if (!maxTicksDay)
 		maxTicksDay = maxTicksDayFallBack;
@@ -65,6 +60,10 @@ void TimeManager::LoadConfig()
 	maxMonths = thePrefs.GetInt("TimeManagerSettings", "maxMonths");
 	if (!maxMonths)
 		maxMonths = maxMonthsFallBack;
+
+	tickMessageName = thePrefs.GetString("TimeManagerSettings", "tickMessageName");
+	if (tickMessageName.empty())
+		tickMessageName = tickMessageNameFallBack;
 
 	dayMessageName = thePrefs.GetString("TimeManagerSettings", "dayMessageName");
 	if (dayMessageName.empty())
@@ -86,7 +85,7 @@ void TimeManager::ReceiveMessage(Message *message)
 		timerStart = std::chrono::steady_clock::now();
 		ticks++;
 		UpdateDate();
-	}		
+	}
 }
 
 void TimeManager::UpdateDate()
@@ -96,26 +95,27 @@ void TimeManager::UpdateDate()
 	{
 		day++;
 		ticks = 0;
-
-		// Fire off a message.
-		theSwitchboard.Broadcast(new Message(dayMessageName));
 	}
 
 	if (day >= maxDays)
 	{
 		month++;
 		day = 1;
-
-		// Fire off a message.
-		theSwitchboard.Broadcast(new Message(monthMessageName));
 	}
 
 	if (month >= maxMonths)
 	{
 		year++;
 		month = 1;
-
-		// Fire off a message.
-		theSwitchboard.Broadcast(new Message(yearMessageName));
 	}
+
+	//BroadcastTime(); Not required, sent through pointers from game manager.
+}
+
+void TimeManager::BroadcastTime()
+{
+	theSwitchboard.Broadcast(new Message(tickMessageName + std::to_string(ticks)));
+	theSwitchboard.Broadcast(new Message(dayMessageName + std::to_string(day)));
+	theSwitchboard.Broadcast(new Message(monthMessageName + std::to_string(month)));
+	theSwitchboard.Broadcast(new Message(yearMessageName + std::to_string(year)));
 }
