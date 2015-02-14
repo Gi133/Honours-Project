@@ -194,10 +194,8 @@ cd ..\Tools\BuildScripts\
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="TheGameManager.cpp" />
     <ClCompile Include="TimeManager.cpp" />
-    <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIManager.cpp" />
-    <ClCompile Include="UIMap.cpp" />
-    <ClCompile Include="UINPCInfo.cpp" />
+    <ClCompile Include="UIWindow.cpp" />
     <ClCompile Include="UIWorldInfo.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
@@ -219,10 +217,8 @@ cd ..\Tools\BuildScripts\
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TheGameManager.h" />
     <ClInclude Include="TimeManager.h" />
-    <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIManager.h" />
-    <ClInclude Include="UIMap.h" />
-    <ClInclude Include="UINPCInfo.h" />
+    <ClInclude Include="UIWindow.h" />
     <ClInclude Include="UIWorldInfo.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>

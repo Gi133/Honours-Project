@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "TheGameManager.h"
 
+namespace
+{
+	const auto UILayerNameFallBack = "UILayer";
+	const auto UILayerTextNameFallBack = "UITextLayer";
+}
+
 int main(int argc, char* argv[])
 {
 	// Initialize a new log file.
@@ -27,9 +33,15 @@ int main(int argc, char* argv[])
 	}
 
 	// Layer setup
-	// TODO: Add error detection.
-	theWorld.NameLayer(thePrefs.GetString("LayerNames", "UI"), 1);
-	theWorld.NameLayer(thePrefs.GetString("LayerNames", "UIText"), 2);
+	auto UILayerName = thePrefs.GetString("Settings", "UILayerName");
+	if (UILayerName.empty())
+		UILayerName = UILayerNameFallBack;
+	theWorld.NameLayer(UILayerName, 1);
+
+	auto UILayerText = thePrefs.GetString("Settings", "UILayerText");
+	if (UILayerText.empty())
+		UILayerText = UILayerTextNameFallBack;
+	theWorld.NameLayer(UILayerTextNameFallBack, 2);
 
 	// Register Text Font
 	RegisterFont("Resources/Fonts/Inconsolata.otf", 25, "UITitleFont");

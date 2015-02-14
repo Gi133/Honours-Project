@@ -1,15 +1,17 @@
 #pragma once
-
-#include "UIMap.h"
-#include "UINPCInfo.h"
+#include "stdafx.h"
 #include "UIWorldInfo.h"
 
 class UIManager
 {
 private:
-	std::unique_ptr<UIMap> uiMap;
-	std::unique_ptr<UINPCInfo> uiNPCInfo;
-	std::unique_ptr<UIWorldInfo> uiWorldInfo;
+	std::unique_ptr<UIWorldInfo> windowWorldInfo;
+
+	Vector2 windowWorldInfoSize;
+
+	std::string windowWorldInfoAnchor, windowWorldInfoColor;
+
+	void LoadConfig();
 
 public:
 	UIManager();

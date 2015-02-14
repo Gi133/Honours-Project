@@ -9,7 +9,7 @@ WindowSettings =
 	height = 768,
 	antiAliasing = 1,
 	fullScreen = 0,
-	resizable = 0,
+	resizable = 1,
 }
 
 LayerNames = 
@@ -100,31 +100,19 @@ ResourceFileSettings =
 	resourceBasePriceLocation = "Resources/Files/resource_base_price.config",
 }
 
--- The data below is in percentages.
-UINPCInfoSettings = 
+-- UI Settings
+UIWindowSettings = 
 {
-	width = 0.20,
-	height = 1.00,
-	textStartX = 0.1,
-	textStartY = 0.18,
-	textOffsetY = 0.8,
-	contentOffset = 0.1,
+	windowBackgroundColor = "0x666633",
+	windowBackgroundAlpha = 1.0,
 }
 
-UIWorldInfoSettings =
+UIManagerSettings = 
 {
-	width = 0.80,
-	height = 0.15,
-	textStartX = 0.15,
-	textStartY = 0.5,
-	textOffsetX = 1.2,
-	contentOffset = 0.1,
-}
-
-UIMapSettings = 
-{
-	width = 0.80,
-	height = 0.85,
+	windowWorldInfoSizeX = 1024,
+	windowWorldInfoSizeY = 200,
+	windowWorldInfoAnchor = "topright",
+	windowWorldInfoColor = "#7C4712",
 }
 
 -- Bag and Inventory Settings

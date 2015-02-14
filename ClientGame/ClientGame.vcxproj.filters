@@ -87,21 +87,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>sys</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>SourceCode\Code\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIBase.cpp">
-      <Filter>SourceCode\Code\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIMap.cpp">
-      <Filter>SourceCode\Code\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UINPCInfo.cpp">
-      <Filter>SourceCode\Code\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UIWorldInfo.cpp">
-      <Filter>SourceCode\Code\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>SourceCode\Code\Core</Filter>
     </ClCompile>
@@ -144,6 +129,15 @@
     <ClCompile Include="Brain.cpp">
       <Filter>SourceCode\Code\AI</Filter>
     </ClCompile>
+    <ClCompile Include="UIWindow.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>SourceCode\Code\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="UIWorldInfo.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -156,21 +150,6 @@
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>sys</Filter>
-    </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>SourceCode\Headers\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UIBase.h">
-      <Filter>SourceCode\Headers\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UIMap.h">
-      <Filter>SourceCode\Headers\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UINPCInfo.h">
-      <Filter>SourceCode\Headers\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UIWorldInfo.h">
-      <Filter>SourceCode\Headers\UI</Filter>
     </ClInclude>
     <ClInclude Include="TheGameManager.h">
       <Filter>SourceCode\Headers\Core</Filter>
@@ -210,6 +189,15 @@
     </ClInclude>
     <ClInclude Include="Brain.h">
       <Filter>SourceCode\Headers\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWindow.h">
+      <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>SourceCode\Headers\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWorldInfo.h">
+      <Filter>SourceCode\Headers\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

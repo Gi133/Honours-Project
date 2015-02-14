@@ -187,7 +187,7 @@ int InventoryBag::GetResourceQuantity(const std::string resourceName)
 
 int InventoryBag::GetResourceQuantity(const int iterator)
 {
-	if (iterator <= bagContents.size())
+	if (static_cast<unsigned int>(iterator) <= bagContents.size())
 	{
 		// Convert the integer into an iterator position
 		auto it = bagContents.begin();
