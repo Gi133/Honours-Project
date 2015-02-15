@@ -23,7 +23,7 @@ private:
 	std::unique_ptr<HUDActor> background;
 
 	Vector2 windowSize, windowTopLeft, windowBottomRight, windowCenter;
-	UIWindowAnchors windowAnchor;
+	
 
 	std::string UILayerName, windowBackgroundColor, windowAnchorName;
 	float windowBackgroundAlpha;
@@ -41,6 +41,7 @@ private:
 
 protected:
 	std::vector<std::shared_ptr<UIElement>> elementContainer;
+	UIWindowAnchors windowAnchor;
 
 public:
 	UIWindow();
@@ -61,5 +62,8 @@ public:
 	void SetWindowColorHex(const std::string colorHex){ background->SetColor(Color::FromHexString(colorHex)); }
 	void SetWindowColorRGBA(const float r, const float g, const float b, const float a = 1.0f){ background->SetColor(r, g, b, a); }
 
-	std::string GetWindowAnchor(){ return windowAnchorName; }
+	void SetLayer(const std::string layerName){ background->SetLayer(layerName); } // To change the layer name from the default (UILayer).
+	int GetLayer(){ return background->GetLayer(); }
+
+	std::string GetWindowAnchor(){ return windowAnchorName; } 
 };

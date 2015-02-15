@@ -7,14 +7,19 @@ class UIWorldInfo :
 	public UIWindow
 {
 private:
-	std::string dayMessageName, monthMessageName, yearMessageName, tickMessageName;
+	std::weak_ptr<TimeManager> timeManager;
+	std::string dayMessageName, monthMessageName, yearMessageName;
 
 	void LoadUIWorldInfoPreferences();
+	virtual void ReceiveMessage(Message *message);
 public:
 	UIWorldInfo();
 	~UIWorldInfo();
 
 	void InitializeElements();
+	void AssignTimeManager(std::weak_ptr<TimeManager> _timeManager){ timeManager = _timeManager; GrabTimeValues(); }
 
-	void Update(std::weak_ptr<TimeManager> timeManager);
+	void GrabTimeValues();
+
+	void Update();
 };

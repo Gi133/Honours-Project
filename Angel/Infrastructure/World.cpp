@@ -105,7 +105,7 @@ void windowClosed(GLFWwindow* window)
 }
 #endif
 
-bool World::Initialize(unsigned int windowWidth, unsigned int windowHeight, String windowName, bool antiAliasing, bool fullScreen, bool resizable)
+bool World::Initialize(unsigned int windowWidth, unsigned int windowHeight, String windowName, bool antiAliasing, bool fullScreen, bool resizable, bool vsync)
 {
 	if (_initialized)
 	{
@@ -212,6 +212,7 @@ bool World::Initialize(unsigned int windowWidth, unsigned int windowHeight, Stri
 	windowHeight = thePrefs.OverrideInt("WindowSettings", "height", windowHeight);
 	windowWidth = thePrefs.OverrideInt("WindowSettings", "width", windowWidth);
 	windowName = thePrefs.OverrideString("WindowSettings", "name", windowName);
+	vsync = thePrefs.OverrideInt("WindowSettings", "vsync", vsync);
 
 	//Windowing system setup
 #if !ANGEL_MOBILE
@@ -249,11 +250,32 @@ bool World::Initialize(unsigned int windowWidth, unsigned int windowHeight, Stri
 		SetHighResolutionScreen(true);
 	}
 
+	if (vsync)
+	{
 #if defined(WIN32)
-	glfwSwapInterval(0); // because double-buffering and Windows don't get along apparently
+
+		////////////////////////////////////////////////////////////////////////////////////////////
+		// Credit for this goes to the user "mwerschy" from stackoverflow.
+		// The relevant question regarding the issue with GLFW where vsync doesn't work was answered
+		// here: http://stackoverflow.com/questions/16285546/glfw-vsync-not-working
+		////////////////////////////////////////////////////////////////////////////////////////////
+
+		// Turn on vertical screen sync under Windows.
+		// (I.e. it uses the WGL_EXT_swap_control extension)
+		typedef BOOL(WINAPI *PFNWGLSWAPINTERVALEXTPROC)(int interval);
+		PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT = NULL;
+		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+		if (wglSwapIntervalEXT)
+			wglSwapIntervalEXT(1);
+
+		//glfwSwapInterval(0); // because double-buffering and Windows don't get along apparently
 #else
-	glfwSwapInterval(1);
+		glfwSwapInterval(1);
 #endif
+	}
+	else
+		glfwSwapInterval(0);
+
 	glfwSetWindowSizeCallback(_mainWindow, Camera::ResizeCallback);
 	glfwSetKeyCallback(_mainWindow, keyboardInput);
 	glfwSetCharCallback(_mainWindow, charInput);

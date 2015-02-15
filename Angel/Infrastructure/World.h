@@ -98,7 +98,7 @@ public:
 	 * @return Returns true if initialization worked (i.e. if world was not
 	 *   already initialized)
 	 */
-	bool Initialize(unsigned int windowWidth = 1024, unsigned int windowHeight = 768, String windowName = "Angel Engine", bool antiAliasing = false, bool fullScreen = false, bool resizable = false);
+	bool Initialize(unsigned int windowWidth = 1024, unsigned int windowHeight = 768, String windowName = "Angel Engine", bool antiAliasing = false, bool fullScreen = false, bool resizable = false, bool vsync = false);
 
 	/**
 	 * Queries the video drivers to get a list of supported video modes for

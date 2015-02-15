@@ -10,6 +10,11 @@
 #include "ResourceManager.h"
 #include "TimeManager.h"
 
+#include <thread>
+#include <mutex>
+
+// TODO: Add thread number check. There is a limit on how many you can run!
+
 #define theGameManger TheGameManager::getInstance()
 
 class TheGameManager :
@@ -25,9 +30,16 @@ private:
 
 	Vector2 mapSize, halfMapSize;
 
+	std::vector<std::shared_ptr<std::thread>> threadContainer;
+	std::mutex cityContainerMutex, locationContainerMutex, positionMutex;
+
 	void GenerateMap();
 	void GenerateCities(int cityNumber); // Function that generates cities.
 	void GenerateLocations(int locationNumber); // Function that generate locations.
+
+	// Thread functions.
+	void GenerateCity();
+	void GenerateLocation();
 
 protected:
 	TheGameManager();

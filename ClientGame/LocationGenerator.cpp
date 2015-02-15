@@ -3,16 +3,18 @@
 
 namespace
 {
-	const int maxCityAttemptsFallBack = 10;
-	const int maxLocationAttemptsFallBack = 10;
-	const float cityRadiusFallBack = 50.0f;
-	const float locationRadiusFallBack = 50.0f;
+	const auto maxCityAttemptsFallBack = 10;
+	const auto maxLocationAttemptsFallBack = 10;
+	const auto cityRadiusFallBack = 50.0f;
+	const auto locationRadiusFallBack = 50.0f;
+	const auto mapSizeXFallBack = 10000;
+	const auto mapSizeYFallBack = 10000;
 }
 
 LocationGenerator::LocationGenerator()
 {
-	GetMapSize();
 	GetPreferenceData();
+	GetMapSize();
 }
 
 LocationGenerator::~LocationGenerator()
@@ -22,7 +24,6 @@ LocationGenerator::~LocationGenerator()
 void LocationGenerator::GetMapSize()
 {
 	// Get Map Size.
-	mapSize = Vector2(thePrefs.GetFloat("Map", "width"), thePrefs.GetFloat("Map", "height"));
 	mapHalfSize = mapSize / 2;
 }
 
@@ -47,6 +48,16 @@ void LocationGenerator::GetPreferenceData()
 	locationRadius = thePrefs.GetFloat("LocationGeneratorSettings", "radius");
 	if (!locationRadius) // If 0 then use fallback value.
 		locationRadius = locationRadiusFallBack;
+
+	auto mapSizeX = thePrefs.GetInt("LocationGeneratorSettings", "mapSizeX");
+	if (!mapSizeX)
+		mapSizeX = mapSizeXFallBack;
+
+	auto mapSizeY = thePrefs.GetInt("LocationGeneratorSettings", "mapSizeY");
+	if (!mapSizeY)
+		mapSizeY = mapSizeYFallBack;
+
+	mapSize = Vec2i(mapSizeX, mapSizeY);
 }
 
 Vector2 LocationGenerator::RandomPosInMap()

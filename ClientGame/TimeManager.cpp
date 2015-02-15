@@ -95,27 +95,20 @@ void TimeManager::UpdateDate()
 	{
 		day++;
 		ticks = 0;
+		theSwitchboard.Broadcast(new Message(dayMessageName));
 	}
 
 	if (day >= maxDays)
 	{
 		month++;
 		day = 1;
+		theSwitchboard.Broadcast(new Message(monthMessageName));
 	}
 
 	if (month >= maxMonths)
 	{
 		year++;
 		month = 1;
+		theSwitchboard.Broadcast(new Message(yearMessageName));
 	}
-
-	//BroadcastTime(); Not required, sent through pointers from game manager.
-}
-
-void TimeManager::BroadcastTime()
-{
-	theSwitchboard.Broadcast(new Message(tickMessageName + std::to_string(ticks)));
-	theSwitchboard.Broadcast(new Message(dayMessageName + std::to_string(day)));
-	theSwitchboard.Broadcast(new Message(monthMessageName + std::to_string(month)));
-	theSwitchboard.Broadcast(new Message(yearMessageName + std::to_string(year)));
 }

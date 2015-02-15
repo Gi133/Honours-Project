@@ -7,7 +7,7 @@
 class LocationGenerator
 {
 private:
-	Vector2 mapSize, mapHalfSize;
+	Vec2i mapSize, mapHalfSize;
 	int maxCityAttempts, maxLocationAttempts;
 	float cityRadius, locationRadius;
 

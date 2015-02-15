@@ -196,6 +196,8 @@ cd ..\Tools\BuildScripts\
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="UIMap.cpp" />
+    <ClCompile Include="UIObjectInfo.cpp" />
     <ClCompile Include="UIWindow.cpp" />
     <ClCompile Include="UIWorldInfo.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -220,6 +222,8 @@ cd ..\Tools\BuildScripts\
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="UIMap.h" />
+    <ClInclude Include="UIObjectInfo.h" />
     <ClInclude Include="UIWindow.h" />
     <ClInclude Include="UIWorldInfo.h" />
     <ClInclude Include="Utils.h" />

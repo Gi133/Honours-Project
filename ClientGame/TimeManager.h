@@ -16,7 +16,6 @@ private:
 	void LoadConfig();
 
 	virtual void ReceiveMessage(Message *message) override;
-	void BroadcastTime();
 
 public:
 	TimeManager();

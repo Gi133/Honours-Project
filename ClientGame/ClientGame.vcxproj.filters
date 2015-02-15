@@ -87,9 +87,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>sys</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>SourceCode\Code\Core</Filter>
-    </ClCompile>
     <ClCompile Include="TheGameManager.cpp">
       <Filter>SourceCode\Code\Core</Filter>
     </ClCompile>
@@ -139,6 +136,15 @@
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>SourceCode</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMap.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObjectInfo.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -203,6 +209,12 @@
       <Filter>SourceCode\Headers\UI</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
+      <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMap.h">
+      <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIObjectInfo.h">
       <Filter>SourceCode\Headers\UI</Filter>
     </ClInclude>
   </ItemGroup>

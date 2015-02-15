@@ -9,13 +9,17 @@ WindowSettings =
 	height = 768,
 	antiAliasing = 1,
 	fullScreen = 0,
-	resizable = 1,
+	resizable = 0,
+	vsync = 1,
+	enableBackground = 1,
+	enableDebugGrid = 1,
 }
 
 LayerNames = 
 {
 	UI = "UILayer",
 	UIText = "UITextLayer",
+	UIMap = "UIMapLayer",
 }
 
 FontSettings =
@@ -49,8 +53,10 @@ NameGeneratorSettings =
 
 MapGeneratorSettings = 
 {
-	cities = 10,
+	cities = 5,
 	locations = 10,
+	mapSizeX = 100,
+	mapSizeY = 100,
 }
 
 CityGeneratorSettings =
@@ -116,14 +122,22 @@ UIWindowSettings =
 	windowBackgroundAlpha = 1.0,
 }
 
--- 1024,200
--- 350, 768
 UIManagerSettings = 
 {
-	windowWorldInfoSizeX = 1024,
+	windowWorldInfoSizeX = 800,
 	windowWorldInfoSizeY = 120,
 	windowWorldInfoAnchor = "topright",
 	windowWorldInfoColor = "#7C4712",
+
+	windowMapSizeX = 800,
+	windowMapSizeY = 648,
+	windowMapAnchor = "bottomright",
+	windowMapColor = "#33CC33",
+
+	windowObjectInfoSizeX = 224,
+	windowObjectInfoSizeY = 768,
+	windowObjectAnchor = "left",
+	windowObjectColor = "#7C4712",
 }
 
 UIElementSettings =
