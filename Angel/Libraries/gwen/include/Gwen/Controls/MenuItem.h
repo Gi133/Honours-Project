@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_MENUITEM_H
@@ -13,7 +13,7 @@
 #include "Gwen/Controls/Button.h"
 #include "Gwen/Controls/Menu.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
@@ -21,61 +21,59 @@ namespace Gwen
 
 		class GWEN_EXPORT MenuItem : public Button
 		{
-			public:
+		public:
 
-				GWEN_CONTROL( MenuItem, Button );
+			GWEN_CONTROL(MenuItem, Button);
 
-				virtual ~MenuItem();
+			virtual ~MenuItem();
 
-				virtual void Render( Skin::Base* skin );
-				virtual void Layout( Skin::Base* skin );
+			virtual void Render(Skin::Base* skin);
+			virtual void Layout(Skin::Base* skin);
 
-				virtual void SizeToContents();
+			virtual void SizeToContents();
 
-				virtual void OnPress();
+			virtual void OnPress();
 
-				Menu* GetMenu();
+			Menu* GetMenu();
 
-				bool IsMenuOpen();
-				void OpenMenu();
-				void CloseMenu();
-				void ToggleMenu();
+			bool IsMenuOpen();
+			void OpenMenu();
+			void CloseMenu();
+			void ToggleMenu();
 
-				void SetOnStrip( bool b ){ m_bOnStrip = b;}
-				bool OnStrip(){ return m_bOnStrip; }
+			void SetOnStrip(bool b){ m_bOnStrip = b; }
+			bool OnStrip(){ return m_bOnStrip; }
 
-				virtual void SetCheckable( bool bCheck ) { m_bCheckable = bCheck; }
-				virtual void SetChecked( bool bCheck );
-				virtual bool GetChecked() { return m_bChecked; }
+			virtual void SetCheckable(bool bCheck) { m_bCheckable = bCheck; }
+			virtual void SetChecked(bool bCheck);
+			virtual bool GetChecked() { return m_bChecked; }
 
-				template <typename T>
-				MenuItem* SetAction( Gwen::Event::Handler* pHandler, T fn )
-				{
-					if ( m_Accelerator ) AddAccelerator( m_Accelerator->GetText(), fn, pHandler );
-					onMenuItemSelected.Add( pHandler, fn );
-					return this;
-				}
+			template <typename T>
+			MenuItem* SetAction(Gwen::Event::Handler* pHandler, T fn)
+			{
+				if (m_Accelerator) AddAccelerator(m_Accelerator->GetText(), fn, pHandler);
+				onMenuItemSelected.Add(pHandler, fn);
+				return this;
+			}
 
-				void SetAccelerator( const TextObject& strAccelerator );
+			void SetAccelerator(const TextObject& strAccelerator);
 
-				Gwen::Event::Caller	onMenuItemSelected;
-				Gwen::Event::Caller	onChecked;
-				Gwen::Event::Caller	onUnChecked;
-				Gwen::Event::Caller	onCheckChange;
+			Gwen::Event::Caller	onMenuItemSelected;
+			Gwen::Event::Caller	onChecked;
+			Gwen::Event::Caller	onUnChecked;
+			Gwen::Event::Caller	onCheckChange;
 
-			private:
+		private:
 
-				Menu*	m_Menu;
-				bool	m_bOnStrip;
-				bool	m_bCheckable;
-				bool	m_bChecked;
+			Menu*	m_Menu;
+			bool	m_bOnStrip;
+			bool	m_bCheckable;
+			bool	m_bChecked;
 
-				Label*	m_Accelerator;
-				
+			Label*	m_Accelerator;
 
-				Controls::Base	*	m_SubmenuArrow;
+			Controls::Base	*	m_SubmenuArrow;
 		};
 	}
-
 }
 #endif

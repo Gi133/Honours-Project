@@ -33,6 +33,10 @@
 #include "../Infrastructure/Vector2.h"
 #include "../Infrastructure/VecStructs.h"
 
+#include <random>
+#include <thread>
+#include <mutex>
+
 ///A set of static functions that handle typical math needed for games
 /**
  * This class is just a wrapper around a whole bunch of otherwise-loose
@@ -42,6 +46,7 @@
  * It also contains a set of constants so you don't have to look them up
  *  or declare them yourself.
  */
+
 class MathUtil
 {
 public:

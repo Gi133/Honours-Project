@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_MENU_H
@@ -13,7 +13,7 @@
 #include "Gwen/Controls/MenuItem.h"
 #include "Gwen/Controls/ScrollControl.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
@@ -21,58 +21,56 @@ namespace Gwen
 
 		class GWEN_EXPORT Menu : public ScrollControl
 		{
-			public:
+		public:
 
-				GWEN_CONTROL( Menu, ScrollControl );
+			GWEN_CONTROL(Menu, ScrollControl);
 
-				virtual void Render( Skin::Base* skin );
-				virtual void RenderUnder( Skin::Base* skin );
+			virtual void Render(Skin::Base* skin);
+			virtual void RenderUnder(Skin::Base* skin);
 
-				virtual void Layout( Skin::Base* skin );
+			virtual void Layout(Skin::Base* skin);
 
-				virtual MenuItem* AddItem( const TextObject& strName, const TextObject& strIconName = L"", const TextObject& strAccelerator = L"" );
+			virtual MenuItem* AddItem(const TextObject& strName, const TextObject& strIconName = L"", const TextObject& strAccelerator = L"");
 
-				virtual void AddDivider();
+			virtual void AddDivider();
 
-				void OnHoverItem( Gwen::Controls::Base* pControl );
-				void CloseAll();
-				bool IsMenuOpen();
-				void ClearItems();
+			void OnHoverItem(Gwen::Controls::Base* pControl);
+			void CloseAll();
+			bool IsMenuOpen();
+			void ClearItems();
 
-				virtual void Open( unsigned int iPos );
-				virtual void Close();
+			virtual void Open(unsigned int iPos);
+			virtual void Close();
 
-				virtual bool IsMenuComponent(){ return true; }
-				virtual void CloseMenus();
+			virtual bool IsMenuComponent(){ return true; }
+			virtual void CloseMenus();
 
-				bool IconMarginDisabled() { return m_bDisableIconMargin; }
-				void SetDisableIconMargin( bool bDisable ) { m_bDisableIconMargin = bDisable; }
+			bool IconMarginDisabled() { return m_bDisableIconMargin; }
+			void SetDisableIconMargin(bool bDisable) { m_bDisableIconMargin = bDisable; }
 
-				bool DeleteOnClose() { return m_bDeleteOnClose; }
-				void SetDeleteOnClose( bool b ) { m_bDeleteOnClose = b; }
+			bool DeleteOnClose() { return m_bDeleteOnClose; }
+			void SetDeleteOnClose(bool b) { m_bDeleteOnClose = b; }
 
+		protected:
 
-			protected:
+			virtual bool ShouldHoverOpenMenu(){ return true; }
+			virtual void OnAddItem(MenuItem* item);
 
-				virtual bool ShouldHoverOpenMenu(){ return true; }
-				virtual void OnAddItem( MenuItem* item );
-			
-				bool m_bDisableIconMargin;
-				bool m_bDeleteOnClose;
+			bool m_bDisableIconMargin;
+			bool m_bDeleteOnClose;
 		};
 
 		class GWEN_EXPORT MenuDivider : public Base
 		{
-			public:
+		public:
 
-				GWEN_CONTROL_INLINE( MenuDivider, Base )
-				{
-					SetHeight( 1 );
-				}
+			GWEN_CONTROL_INLINE(MenuDivider, Base)
+			{
+				SetHeight(1);
+			}
 
-				void Render( Gwen::Skin::Base* skin );
+			void Render(Gwen::Skin::Base* skin);
 		};
 	}
-
 }
 #endif

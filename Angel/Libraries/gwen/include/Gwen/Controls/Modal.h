@@ -6,30 +6,29 @@
 #include "Gwen/Gwen.h"
 #include "Gwen/Skin.h"
 
-
-namespace Gwen 
+namespace Gwen
 {
 	namespace ControlsInternal
 	{
 		class Modal : public Controls::Base
 		{
-			GWEN_CONTROL_INLINE( Modal, Controls::Base )
+			GWEN_CONTROL_INLINE(Modal, Controls::Base)
 			{
-				SetKeyboardInputEnabled( true );
-				SetMouseInputEnabled( true );
-				SetShouldDrawBackground( true );
+				SetKeyboardInputEnabled(true);
+				SetMouseInputEnabled(true);
+				SetShouldDrawBackground(true);
 
-				SetBounds( 0, 0, GetParent()->Width(), GetParent()->Height() );
-			}
-			
-			virtual void Layout( Skin::Base* /*skin*/ )
-			{
-				SetBounds( 0, 0, GetCanvas()->Width(), GetCanvas()->Height() );
+				SetBounds(0, 0, GetParent()->Width(), GetParent()->Height());
 			}
 
-			virtual void Render( Skin::Base* skin )
+			virtual void Layout(Skin::Base* /*skin*/)
 			{
-				skin->DrawModalControl( this );
+				SetBounds(0, 0, GetCanvas()->Width(), GetCanvas()->Height());
+			}
+
+			virtual void Render(Skin::Base* skin)
+			{
+				skin->DrawModalControl(this);
 			}
 		};
 	}

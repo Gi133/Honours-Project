@@ -6,7 +6,7 @@
 class MapPOI
 {
 protected:
-	std::unique_ptr<Actor> iconActor;
+	std::unique_ptr<HUDActor> iconActor;
 	std::unique_ptr<TextActor> nameActor;
 
 	std::string name;
@@ -17,6 +17,8 @@ protected:
 public:
 	MapPOI();
 	~MapPOI();
+
+	void SetActorPosition(Vec2i positionCenter);
 
 	void SetPosition(Vector2 newPosition){ mapCoordinates = newPosition; }
 	void SetPosition(int posX, int posY){ mapCoordinates.X = posX; mapCoordinates.Y = posY; }

@@ -2,8 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
-
+	*/
 
 #include "Gwen/Controls/TreeNode.h"
 #include "Gwen/Controls/TreeControl.h"
@@ -12,63 +11,62 @@
 using namespace Gwen;
 using namespace Gwen::Controls;
 
-class OpenToggleButton : public Button 
+class OpenToggleButton : public Button
 {
-	GWEN_CONTROL_INLINE ( OpenToggleButton, Button )
+	GWEN_CONTROL_INLINE(OpenToggleButton, Button)
 	{
-		SetIsToggle( true );
-		SetTabable( false );
-
+		SetIsToggle(true);
+		SetTabable(false);
 	}
 
-	virtual void RenderFocus( Skin::Base* /*skin*/ ) {}
+	virtual void RenderFocus(Skin::Base* /*skin*/) {}
 
-	virtual void Render( Skin::Base* skin )
+	virtual void Render(Skin::Base* skin)
 	{
-		skin->DrawTreeButton( this, GetToggleState() );
+		skin->DrawTreeButton(this, GetToggleState());
 	}
 };
 
-class TreeNodeText : public Button 
+class TreeNodeText : public Button
 {
-	GWEN_CONTROL_INLINE ( TreeNodeText, Button )
+	GWEN_CONTROL_INLINE(TreeNodeText, Button)
 	{
-		SetAlignment( Pos::Left | Pos::CenterV );
-		SetShouldDrawBackground( false );
-		SetHeight( 16 );
+		SetAlignment(Pos::Left | Pos::CenterV);
+		SetShouldDrawBackground(false);
+		SetHeight(16);
 	}
 
 	void UpdateColours()
 	{
-		if ( IsDisabled() )							return SetTextColor( GetSkin()->Colors.Button.Disabled );
-		if ( IsDepressed() || GetToggleState() )	return SetTextColor( GetSkin()->Colors.Tree.Selected );
-		if ( IsHovered() )							return SetTextColor( GetSkin()->Colors.Tree.Hover );
+		if (IsDisabled())							return SetTextColor(GetSkin()->Colors.Button.Disabled);
+		if (IsDepressed() || GetToggleState())	return SetTextColor(GetSkin()->Colors.Tree.Selected);
+		if (IsHovered())							return SetTextColor(GetSkin()->Colors.Tree.Hover);
 
-		SetTextColor( GetSkin()->Colors.Tree.Normal );
+		SetTextColor(GetSkin()->Colors.Tree.Normal);
 	}
 };
 
 const int TreeIndentation = 14;
 
-GWEN_CONTROL_CONSTRUCTOR( TreeNode )
+GWEN_CONTROL_CONSTRUCTOR(TreeNode)
 {
 	m_TreeControl = NULL;
 
-	m_ToggleButton = new OpenToggleButton( this );
-	m_ToggleButton->SetBounds( 0, 0, 15, 15 );
-	m_ToggleButton->onToggle.Add( this, &TreeNode::OnToggleButtonPress );
+	m_ToggleButton = new OpenToggleButton(this);
+	m_ToggleButton->SetBounds(0, 0, 15, 15);
+	m_ToggleButton->onToggle.Add(this, &TreeNode::OnToggleButtonPress);
 
-	m_Title = new TreeNodeText( this );
-	m_Title->Dock( Pos::Top );
-	m_Title->SetMargin( Margin( 16, 0, 0, 0 ) );
-	m_Title->onDoubleClick.Add( this, &TreeNode::OnDoubleClickName );
-	m_Title->onDown.Add( this, &TreeNode::OnClickName );
-	m_Title->onRightPress.Add( this, &TreeNode::OnRightPress );
+	m_Title = new TreeNodeText(this);
+	m_Title->Dock(Pos::Top);
+	m_Title->SetMargin(Margin(16, 0, 0, 0));
+	m_Title->onDoubleClick.Add(this, &TreeNode::OnDoubleClickName);
+	m_Title->onDown.Add(this, &TreeNode::OnClickName);
+	m_Title->onRightPress.Add(this, &TreeNode::OnRightPress);
 
-	m_InnerPanel = new Base( this );
-	m_InnerPanel->Dock( Pos::Top );
-	m_InnerPanel->SetHeight( 100 );
-	m_InnerPanel->SetMargin( Margin( TreeIndentation, 1, 0, 0 ) );
+	m_InnerPanel = new Base(this);
+	m_InnerPanel->Dock(Pos::Top);
+	m_InnerPanel->SetHeight(100);
+	m_InnerPanel->SetMargin(Margin(TreeIndentation, 1, 0, 0));
 	m_InnerPanel->Hide();
 
 	m_bRoot = false;
@@ -76,71 +74,69 @@ GWEN_CONTROL_CONSTRUCTOR( TreeNode )
 	m_bSelectable = true;
 }
 
-void TreeNode::Render( Skin::Base* skin )
+void TreeNode::Render(Skin::Base* skin)
 {
 	int iBottom = 0;
-	if ( m_InnerPanel->Children.size() > 0 )
+	if (m_InnerPanel->Children.size() > 0)
 	{
 		iBottom = m_InnerPanel->Children.back()->Y() + m_InnerPanel->Y();
 	}
-	
-	skin->DrawTreeNode( this, m_InnerPanel->Visible(), IsSelected(), m_Title->Height(), m_Title->TextRight(), m_ToggleButton->Y() + m_ToggleButton->Height() * 0.5, iBottom, GetParent() == m_TreeControl );
+
+	skin->DrawTreeNode(this, m_InnerPanel->Visible(), IsSelected(), m_Title->Height(), m_Title->TextRight(), m_ToggleButton->Y() + m_ToggleButton->Height() * 0.5, iBottom, GetParent() == m_TreeControl);
 }
 
-TreeNode* TreeNode::AddNode( const TextObject& strLabel )
+TreeNode* TreeNode::AddNode(const TextObject& strLabel)
 {
-	TreeNode* node = new TreeNode( this );
-	node->SetText( strLabel );
-	node->Dock( Pos::Top );
-	node->SetRoot( gwen_cast<TreeControl>( this ) != NULL );
-	node->SetTreeControl( m_TreeControl );
+	TreeNode* node = new TreeNode(this);
+	node->SetText(strLabel);
+	node->Dock(Pos::Top);
+	node->SetRoot(gwen_cast<TreeControl>(this) != NULL);
+	node->SetTreeControl(m_TreeControl);
 
-	if ( m_TreeControl )
+	if (m_TreeControl)
 	{
-		m_TreeControl->OnNodeAdded( node );
+		m_TreeControl->OnNodeAdded(node);
 	}
 
 	return node;
 }
 
-
-
-void TreeNode::Layout( Skin::Base* skin )
+void TreeNode::Layout(Skin::Base* skin)
 {
-	if ( m_ToggleButton )
+	if (m_ToggleButton)
 	{
-		if ( m_Title )
+		if (m_Title)
 		{
-			m_ToggleButton->SetPos( 0, (m_Title->Height() - m_ToggleButton->Height()) * 0.5 );
+			m_ToggleButton->SetPos(0, (m_Title->Height() - m_ToggleButton->Height()) * 0.5);
 		}
 
-		if ( m_InnerPanel->NumChildren() == 0 )
+		if (m_InnerPanel->NumChildren() == 0)
 		{
 			m_ToggleButton->Hide();
-			m_ToggleButton->SetToggleState( false );
+			m_ToggleButton->SetToggleState(false);
 			m_InnerPanel->Hide();
 		}
 		else
 		{
 			m_ToggleButton->Show();
-			m_InnerPanel->SizeToChildren( false, true );
+			m_InnerPanel->SizeToChildren(false, true);
 		}
 	}
 
-	BaseClass::Layout( skin );
+	BaseClass::Layout(skin);
 }
 
-void TreeNode::PostLayout( Skin::Base* /*skin*/ )
+void TreeNode::PostLayout(Skin::Base* /*skin*/)
 {
-	if ( SizeToChildren( false, true ) )
+	if (SizeToChildren(false, true))
 	{
 		InvalidateParent();
 	}
 }
 
-void TreeNode::SetText( const TextObject& text )
-{ 
-	m_Title->SetText( text ); 
+void TreeNode::SetText(const TextObject& text)
+{
+	m_Title->SetText(text);
 }
 
 const TextObject& TreeNode::GetText()
@@ -148,22 +144,22 @@ const TextObject& TreeNode::GetText()
 	return m_Title->GetText();
 }
 
-void TreeNode::SetImage( const TextObject& text )
-{ 
-	m_Title->SetImage( text ); 
+void TreeNode::SetImage(const TextObject& text)
+{
+	m_Title->SetImage(text);
 }
 
 void TreeNode::Open()
 {
 	m_InnerPanel->Show();
-	if ( m_ToggleButton ) m_ToggleButton->SetToggleState( true );
+	if (m_ToggleButton) m_ToggleButton->SetToggleState(true);
 	Invalidate();
 }
 
 void TreeNode::Close()
 {
 	m_InnerPanel->Hide();
-	if ( m_ToggleButton ) m_ToggleButton->SetToggleState( false );
+	if (m_ToggleButton) m_ToggleButton->SetToggleState(false);
 	Invalidate();
 }
 
@@ -172,10 +168,10 @@ void TreeNode::ExpandAll()
 	Open();
 
 	Base::List& children = GetChildNodes();
-	for ( Base::List::iterator iter = children.begin(); iter != children.end(); ++iter )
+	for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
 	{
 		TreeNode* pChild = gwen_cast<TreeNode>(*iter);
-		if ( !pChild ) continue;
+		if (!pChild) continue;
 
 		pChild->ExpandAll();
 	}
@@ -183,10 +179,9 @@ void TreeNode::ExpandAll()
 
 Button* TreeNode::GetButton(){ return m_Title; }
 
-
-void TreeNode::OnToggleButtonPress( Base* /*control*/ )
+void TreeNode::OnToggleButtonPress(Base* /*control*/)
 {
-	if ( m_ToggleButton->GetToggleState() )
+	if (m_ToggleButton->GetToggleState())
 	{
 		Open();
 	}
@@ -196,46 +191,46 @@ void TreeNode::OnToggleButtonPress( Base* /*control*/ )
 	}
 }
 
-void TreeNode::OnDoubleClickName( Base* /*control*/ )
+void TreeNode::OnDoubleClickName(Base* /*control*/)
 {
-	if ( !m_ToggleButton->Visible() ) return;
+	if (!m_ToggleButton->Visible()) return;
 
 	m_ToggleButton->Toggle();
 }
 
-void TreeNode::OnClickName( Base* /*control*/ )
+void TreeNode::OnClickName(Base* /*control*/)
 {
-	onNamePress.Call( this );
+	onNamePress.Call(this);
 
-	SetSelected( !IsSelected() );
+	SetSelected(!IsSelected());
 }
 
-void TreeNode::OnRightPress( Base* control )
+void TreeNode::OnRightPress(Base* control)
 {
-	onRightPress.Call( this );
+	onRightPress.Call(this);
 }
 
-void TreeNode::SetSelected( bool b, bool FireEvents )
-{ 
-	if ( !m_bSelectable ) return;
-	if ( m_bSelected == b ) return;
+void TreeNode::SetSelected(bool b, bool FireEvents)
+{
+	if (!m_bSelectable) return;
+	if (m_bSelected == b) return;
 
-	m_bSelected = b; 
+	m_bSelected = b;
 
-	if ( m_Title )
-		m_Title->SetToggleState( m_bSelected );
+	if (m_Title)
+		m_Title->SetToggleState(m_bSelected);
 
-	if ( FireEvents )
+	if (FireEvents)
 	{
-		onSelectChange.Call( this );
+		onSelectChange.Call(this);
 
-		if ( m_bSelected )
+		if (m_bSelected)
 		{
-			onSelect.Call( this );
+			onSelect.Call(this);
 		}
 		else
 		{
-			onUnselect.Call( this );
+			onUnselect.Call(this);
 		}
 	}
 
@@ -245,17 +240,17 @@ void TreeNode::SetSelected( bool b, bool FireEvents )
 void TreeNode::DeselectAll()
 {
 	m_bSelected = false;
-	
-	if ( m_Title )
-		m_Title->SetToggleState( m_bSelected );
+
+	if (m_Title)
+		m_Title->SetToggleState(m_bSelected);
 
 	Base::List& children = GetChildNodes();
-	for ( Base::List::iterator iter = children.begin(); iter != children.end(); ++iter )
+	for (Base::List::iterator iter = children.begin(); iter != children.end(); ++iter)
 	{
 		TreeNode* pChild = gwen_cast<TreeNode>(*iter);
-		if ( !pChild ) continue;
+		if (!pChild) continue;
 
-		pChild->DeselectAll( );
+		pChild->DeselectAll();
 	}
 }
 

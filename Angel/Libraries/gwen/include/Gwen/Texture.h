@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_TEXTURE_H
@@ -39,16 +39,16 @@ namespace Gwen
 		{
 		}
 
-		void Load( const TextObject& str, Gwen::Renderer::Base* render )
+		void Load(const TextObject& str, Gwen::Renderer::Base* render)
 		{
 			name = str;
-			Gwen::Debug::AssertCheck( render != NULL, "No renderer!" );
-			render->LoadTexture( this );
+			Gwen::Debug::AssertCheck(render != NULL, "No renderer!");
+			render->LoadTexture(this);
 		}
 
-		void Release( Gwen::Renderer::Base* render )
+		void Release(Gwen::Renderer::Base* render)
 		{
-			render->FreeTexture( this );
+			render->FreeTexture(this);
 		}
 
 		bool FailedToLoad() const
@@ -56,6 +56,5 @@ namespace Gwen
 			return failed;
 		}
 	};
-
 }
 #endif

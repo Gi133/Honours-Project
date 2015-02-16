@@ -110,3 +110,8 @@ void UIManager::LoadConfig()
 	windowMapSize = Vector2(windowMapSizeX, windowMapSizeY);
 	windowObjectInfoSize = Vector2(windowObjectInfoSizeX, windowObjectInfoSizeY);
 }
+
+void UIManager::SetupMapActors(std::reference_wrapper<std::vector<std::shared_ptr<City>>> refCityContainer, std::reference_wrapper<std::vector<std::shared_ptr<Location>>> refLocationContainer)
+{
+	windowMap->SetupMapActors(refCityContainer, refLocationContainer);
+}

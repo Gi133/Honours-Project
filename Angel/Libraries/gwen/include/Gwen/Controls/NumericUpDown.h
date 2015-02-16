@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_NUMERICUPDOWN_H
@@ -12,69 +12,66 @@
 #include "Gwen/Controls/Button.h"
 #include "Gwen/Controls/TextBox.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
 		class GWEN_EXPORT NumericUpDownButton_Up : public Button
 		{
-			GWEN_CONTROL_INLINE( NumericUpDownButton_Up, Button )
+			GWEN_CONTROL_INLINE(NumericUpDownButton_Up, Button)
 			{
-				SetSize( 7, 7 );
+				SetSize(7, 7);
 			}
 
-			virtual void Render( Skin::Base* skin )
+			virtual void Render(Skin::Base* skin)
 			{
-				skin->DrawNumericUpDownButton( this, IsDepressed(), true );
+				skin->DrawNumericUpDownButton(this, IsDepressed(), true);
 			}
 		};
 
 		class GWEN_EXPORT NumericUpDownButton_Down : public Button
 		{
-			GWEN_CONTROL_INLINE( NumericUpDownButton_Down, Button )
+			GWEN_CONTROL_INLINE(NumericUpDownButton_Down, Button)
 			{
-				SetSize( 7, 7 );
+				SetSize(7, 7);
 			}
 
-			virtual void Render( Skin::Base* skin )
+			virtual void Render(Skin::Base* skin)
 			{
-				skin->DrawNumericUpDownButton( this, IsDepressed(), false );
+				skin->DrawNumericUpDownButton(this, IsDepressed(), false);
 			}
 		};
 
 		class GWEN_EXPORT NumericUpDown : public TextBoxNumeric
 		{
-			public:
+		public:
 
-				GWEN_CONTROL( NumericUpDown, TextBoxNumeric );
+			GWEN_CONTROL(NumericUpDown, TextBoxNumeric);
 
-				virtual void SetMin( int i );
-				virtual void SetMax( int i );
-				virtual void SetValue( int i );
+			virtual void SetMin(int i);
+			virtual void SetMax(int i);
+			virtual void SetValue(int i);
 
-				Event::Caller	onChanged;
+			Event::Caller	onChanged;
 
-			private:
+		private:
 
-				virtual void OnEnter();
-				virtual void OnChange();
-				virtual void OnTextChanged();
+			virtual void OnEnter();
+			virtual void OnChange();
+			virtual void OnTextChanged();
 
-				virtual void OnButtonUp( Base* control );
-				virtual void OnButtonDown( Base* control );
+			virtual void OnButtonUp(Base* control);
+			virtual void OnButtonDown(Base* control);
 
-				virtual bool OnKeyUp( bool bDown )	{	if ( bDown ) OnButtonUp( NULL ); return true;   }
-				virtual bool OnKeyDown( bool bDown ){	if ( bDown ) OnButtonDown( NULL ); return true; }
+			virtual bool OnKeyUp(bool bDown)	{ if (bDown) OnButtonUp(NULL); return true; }
+			virtual bool OnKeyDown(bool bDown){ if (bDown) OnButtonDown(NULL); return true; }
 
-				virtual void SyncTextFromNumber();
-				virtual void SyncNumberFromText();
+			virtual void SyncTextFromNumber();
+			virtual void SyncNumberFromText();
 
-				
-
-				int m_iNumber;
-				int m_iMax;
-				int m_iMin;
-
+			int m_iNumber;
+			int m_iMax;
+			int m_iMin;
 		};
 	}
 }

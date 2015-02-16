@@ -103,16 +103,16 @@ typedef struct _GLFWmonitor     _GLFWmonitor;
 // Checks for whether the library has been intitalized
 #define _GLFW_REQUIRE_INIT()                         \
     if (!_glfwInitialized)                           \
-	    {                                                \
+		    {                                                \
         _glfwInputError(GLFW_NOT_INITIALIZED, NULL); \
         return;                                      \
-	    }
+		    }
 #define _GLFW_REQUIRE_INIT_OR_RETURN(x)              \
     if (!_glfwInitialized)                           \
-	    {                                                \
+		    {                                                \
         _glfwInputError(GLFW_NOT_INITIALIZED, NULL); \
         return x;                                    \
-	    }
+		    }
 
 // Swaps the provided pointers
 #define _GLFW_SWAP_POINTERS(x, y) \

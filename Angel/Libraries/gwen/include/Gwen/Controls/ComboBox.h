@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_COMBOBOX_H
@@ -15,56 +15,53 @@
 #include "Gwen/Controls/TextBox.h"
 #include "Gwen/Controls/Menu.h"
 
-
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
 		class GWEN_EXPORT ComboBox : public Button
 		{
-			public:
+		public:
 
-				GWEN_CONTROL( ComboBox, Button );
+			GWEN_CONTROL(ComboBox, Button);
 
-				virtual void Render( Skin::Base* skin );
-				virtual void Layout( Skin::Base* skin );
-				virtual void UpdateColours();
+			virtual void Render(Skin::Base* skin);
+			virtual void Layout(Skin::Base* skin);
+			virtual void UpdateColours();
 
-				virtual void SelectItemByName( const Gwen::String& name, bool bFireChangeEvents = true );
-				virtual Gwen::Controls::Label* GetSelectedItem();
+			virtual void SelectItemByName(const Gwen::String& name, bool bFireChangeEvents = true);
+			virtual Gwen::Controls::Label* GetSelectedItem();
 
-				virtual void OnPress();
-				virtual void OnItemSelected( Controls::Base* pControl );
-				virtual void OpenList();
-				virtual void CloseList();
+			virtual void OnPress();
+			virtual void OnItemSelected(Controls::Base* pControl);
+			virtual void OpenList();
+			virtual void CloseList();
 
-				virtual void ClearItems();
+			virtual void ClearItems();
 
-				virtual MenuItem* AddItem( const UnicodeString& strLabel, const String& strName = "" );
-				virtual bool OnKeyUp( bool bDown );
-				virtual bool OnKeyDown( bool bDown );
+			virtual MenuItem* AddItem(const UnicodeString& strLabel, const String& strName = "");
+			virtual bool OnKeyUp(bool bDown);
+			virtual bool OnKeyDown(bool bDown);
 
-				virtual void RenderFocus( Gwen::Skin::Base* skin );
-				virtual void OnLostKeyboardFocus();
-				virtual void OnKeyboardFocus();
+			virtual void RenderFocus(Gwen::Skin::Base* skin);
+			virtual void OnLostKeyboardFocus();
+			virtual void OnKeyboardFocus();
 
-				virtual bool IsMenuOpen();
+			virtual bool IsMenuOpen();
 
-				virtual bool IsMenuComponent(){ return true; }
+			virtual bool IsMenuComponent(){ return true; }
 
-				Gwen::Event::Caller	onSelection;
+			Gwen::Event::Caller	onSelection;
 
-			protected:
+		protected:
 
-				void SelectItem( MenuItem* pItem );
+			void SelectItem(MenuItem* pItem);
 
-				Menu* m_Menu;
-				MenuItem* m_SelectedItem;
+			Menu* m_Menu;
+			MenuItem* m_SelectedItem;
 
-				Controls::Base*	m_Button;
-
+			Controls::Base*	m_Button;
 		};
-		
 	}
 }
 #endif

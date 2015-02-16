@@ -42,10 +42,10 @@
 
 #if !ANGEL_DISABLE_FMOD
 #define ANGEL_SOUND_CHECKED( call ) \
-		{ \
+				{ \
 		FMOD_RESULT result = call; \
 		ERRCHECK(result); \
-		}
+				}
 
 // Helper function for FMOD errors.
 void ERRCHECK(FMOD_RESULT result)
@@ -57,10 +57,10 @@ void ERRCHECK(FMOD_RESULT result)
 }
 #else
 #define ANGEL_SOUND_CHECKED( call ) \
-		{ \
+				{ \
 		call;\
 		ERRCHECK(__LINE__);\
-		}
+				}
 
 const char * OpenAL_ErrorString(ALenum errCode)
 {

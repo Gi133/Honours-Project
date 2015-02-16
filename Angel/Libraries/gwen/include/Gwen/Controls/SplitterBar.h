@@ -6,17 +6,17 @@
 #include "Gwen/Controls/Base.h"
 #include "Gwen/Controls/Dragger.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
 		class GWEN_EXPORT SplitterBar : public ControlsInternal::Dragger
 		{
-			public:
+		public:
 
-				GWEN_CONTROL( SplitterBar, ControlsInternal::Dragger );
+			GWEN_CONTROL(SplitterBar, ControlsInternal::Dragger);
 
-				void Layout( Skin::Base* skin );
+			void Layout(Skin::Base* skin);
 		};
 	}
 }

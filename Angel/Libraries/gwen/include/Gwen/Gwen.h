@@ -22,7 +22,7 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 	THE SOFTWARE.
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_GWEN_H
@@ -59,27 +59,24 @@ namespace Gwen
 		class Base;
 	}
 
-	namespace Debug 
+	namespace Debug
 	{
-		void GWEN_EXPORT Msg( const wchar_t* str, ... );
-		void GWEN_EXPORT Msg( const char* str, ... );
-		void GWEN_EXPORT AssertCheck( bool b, const char* strMsg );
+		void GWEN_EXPORT Msg(const wchar_t* str, ...);
+		void GWEN_EXPORT Msg(const char* str, ...);
+		void GWEN_EXPORT AssertCheck(bool b, const char* strMsg);
 	}
-
 
 	namespace Colors
 	{
-		static const Color Black	( 0, 0, 0, 255 );
-		static const Color Red		( 255, 0, 0, 255 );
-		static const Color Yellow	( 255, 255, 0, 255 );
-		static const Color White	( 255, 255, 255, 255 );
-		static const Color Blue		( 0, 0, 255, 255 );
-		static const Color Green	( 0, 255, 0, 255 );
-		static const Color Grey		( 200, 200, 200, 255 );
-		static const Color GreyLight( 230, 230, 230, 255 );
-		static const Color GwenPink	( 255, 65, 199, 255 );
-		
-		
+		static const Color Black(0, 0, 0, 255);
+		static const Color Red(255, 0, 0, 255);
+		static const Color Yellow(255, 255, 0, 255);
+		static const Color White(255, 255, 255, 255);
+		static const Color Blue(0, 0, 255, 255);
+		static const Color Green(0, 255, 0, 255);
+		static const Color Grey(200, 200, 200, 255);
+		static const Color GreyLight(230, 230, 230, 255);
+		static const Color GwenPink(255, 65, 199, 255);
 	};
 
 	extern GWEN_EXPORT Controls::Base*	HoveredControl;
@@ -90,11 +87,10 @@ namespace Gwen
 	{
 		inline void Blur()
 		{
-			if ( KeyboardFocus )
+			if (KeyboardFocus)
 				KeyboardFocus->Blur();
 		}
 	}
-
 } //namespace Gwen
 
 #endif

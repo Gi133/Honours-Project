@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_IMAGEPANEL_H
@@ -13,97 +13,96 @@
 #include "Gwen/BaseRender.h"
 #include "Gwen/Texture.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
 		class GWEN_EXPORT ImagePanel : public Controls::Base
 		{
-			public:
+		public:
 
-				GWEN_CONTROL_INLINE( ImagePanel, Controls::Base )
-				{
-					SetUV( 0, 0, 1, 1 );
-					SetMouseInputEnabled( false );
-					m_DrawColor = Colors::White;
+			GWEN_CONTROL_INLINE(ImagePanel, Controls::Base)
+			{
+				SetUV(0, 0, 1, 1);
+				SetMouseInputEnabled(false);
+				m_DrawColor = Colors::White;
 
-					SetStretch( true );
-				}
+				SetStretch(true);
+			}
 
-				virtual ~ImagePanel()
-				{
-					m_Texture.Release( GetSkin()->GetRender() );
-				}
-				
-				virtual void SetUV( float u1, float v1, float u2, float v2 )
-				{
-					m_uv[0] = u1;
-					m_uv[1] = v1;
-					m_uv[2] = u2;
-					m_uv[3] = v2;
-				}
+			virtual ~ImagePanel()
+			{
+				m_Texture.Release(GetSkin()->GetRender());
+			}
 
-				virtual void SetImage( const TextObject& imageName )
-				{ 
-					m_Texture.Load( imageName, GetSkin()->GetRender() );
-				}
+			virtual void SetUV(float u1, float v1, float u2, float v2)
+			{
+				m_uv[0] = u1;
+				m_uv[1] = v1;
+				m_uv[2] = u2;
+				m_uv[3] = v2;
+			}
 
-				virtual TextObject& GetImage()
-				{ 
-					return m_Texture.name;
-				}
+			virtual void SetImage(const TextObject& imageName)
+			{
+				m_Texture.Load(imageName, GetSkin()->GetRender());
+			}
 
-				virtual int TextureWidth()
-				{
-					return m_Texture.width;
-				}
+			virtual TextObject& GetImage()
+			{
+				return m_Texture.name;
+			}
 
-				virtual int TextureHeight()
-				{
-					return m_Texture.height;
-				}
+			virtual int TextureWidth()
+			{
+				return m_Texture.width;
+			}
 
-				virtual const TextObject& GetImageName()
-				{
-					return m_Texture.name;
-				}
+			virtual int TextureHeight()
+			{
+				return m_Texture.height;
+			}
 
-				virtual void Render( Skin::Base* skin )
-				{
-					skin->GetRender()->SetDrawColor( m_DrawColor );
+			virtual const TextObject& GetImageName()
+			{
+				return m_Texture.name;
+			}
 
-					if ( m_bStretch )
-						skin->GetRender()->DrawTexturedRect( &m_Texture, GetRenderBounds(), m_uv[0], m_uv[1], m_uv[2], m_uv[3] );
-					else 
-						skin->GetRender()->DrawTexturedRect( &m_Texture, Gwen::Rect( 0, 0, m_Texture.width, m_Texture.height ), m_uv[0], m_uv[1], m_uv[2], m_uv[3] );
-				}
+			virtual void Render(Skin::Base* skin)
+			{
+				skin->GetRender()->SetDrawColor(m_DrawColor);
 
-				virtual void SizeToContents()
-				{
-					SetSize( m_Texture.width, m_Texture.height );
-				}
+				if (m_bStretch)
+					skin->GetRender()->DrawTexturedRect(&m_Texture, GetRenderBounds(), m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
+				else
+					skin->GetRender()->DrawTexturedRect(&m_Texture, Gwen::Rect(0, 0, m_Texture.width, m_Texture.height), m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
+			}
 
-				virtual void SetDrawColor( Gwen::Color color )
-				{
-					m_DrawColor = color;
-				}
+			virtual void SizeToContents()
+			{
+				SetSize(m_Texture.width, m_Texture.height);
+			}
 
-				virtual bool FailedToLoad()
-				{
-					return m_Texture.FailedToLoad();
-				}
+			virtual void SetDrawColor(Gwen::Color color)
+			{
+				m_DrawColor = color;
+			}
 
-				virtual bool GetStretch(){ return m_bStretch; }
-				virtual void SetStretch( bool b ){ m_bStretch = b; }
+			virtual bool FailedToLoad()
+			{
+				return m_Texture.FailedToLoad();
+			}
 
-			protected:
+			virtual bool GetStretch(){ return m_bStretch; }
+			virtual void SetStretch(bool b){ m_bStretch = b; }
 
-				Texture			m_Texture;
-				float			m_uv[4];
-				Gwen::Color		m_DrawColor;
+		protected:
 
-				bool			m_bStretch;
+			Texture			m_Texture;
+			float			m_uv[4];
+			Gwen::Color		m_DrawColor;
 
+			bool			m_bStretch;
 		};
 	}
 }

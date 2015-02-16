@@ -9,7 +9,7 @@ WindowSettings =
 	height = 768,
 	antiAliasing = 1,
 	fullScreen = 0,
-	resizable = 0,
+	resizable = 1,
 	vsync = 1,
 	enableBackground = 1,
 	enableDebugGrid = 1,
@@ -33,7 +33,7 @@ FontSettings =
 
 TimerSettings = 
 {
-	tickTime = 10,
+	tickTime = 2,
 	tickMessageName = "Tick",
 	maxTicksDay = 1,
 	dayMessageName = "Day",
@@ -53,16 +53,14 @@ NameGeneratorSettings =
 
 MapGeneratorSettings = 
 {
-	cities = 5,
-	locations = 10,
-	mapSizeX = 100,
-	mapSizeY = 100,
+	cities = 20,
+	locations = 22,
 }
 
 CityGeneratorSettings =
 {
 	maxAttempts = 10,
-	radius = 100.0,
+	radius = 50.0,
 	minStartPop = 80,
 	maxStartPop = 2500,
 }
@@ -88,12 +86,19 @@ CitySettings =
 	maxPopulationChange = 5,
 	minResourceChange = 0,
 	maxResourceChange = 25,
+	radiusVillage = 10.0,
+	radiusTown = 12.0,
+	radiusSmallCity = 14.0,
+	radiusLargeCity = 16.0,
 }
 
 LocationGeneratorSettings =
 {
 	maxAttempts = 10,
-	radius = 50.0,
+	cityRadius = 60.0,
+	locationRadius = 180.0,
+	mapSizeX = 1000,
+	mapSizeY = 1000,
 }
 
 -- Dungeon Generation Settings
@@ -103,10 +108,13 @@ LocationSettings =
 	maxStartThreat = 100,
 	maxThreatLow = 33,
 	maxThreatLowName = "Weak",
+	colorThreatLow = "#C68C8C",
 	maxThreatMed = 66,
 	maxThreatMedName = "Dangerous",
+	colorThreadMed = "#851818",
 	maxThreatHigh = 100,
 	maxThreatHighName = "Deadly",
+	colorThreatHigh = "#EE2C2C",
 }
 
 -- Resource Settings

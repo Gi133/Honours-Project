@@ -8,9 +8,9 @@
 class UIManager
 {
 private:
- 	std::unique_ptr<UIWorldInfo> windowWorldInfo;
- 	std::unique_ptr<UIMap> windowMap;
- 	std::unique_ptr<UIObjectInfo> windowObjectInfo;
+	std::unique_ptr<UIWorldInfo> windowWorldInfo;
+	std::unique_ptr<UIMap> windowMap;
+	std::unique_ptr<UIObjectInfo> windowObjectInfo;
 
 	Vector2 windowWorldInfoSize, windowMapSize, windowObjectInfoSize;
 
@@ -26,4 +26,5 @@ public:
 	void Update();
 
 	void AssignTimeManager(std::weak_ptr<TimeManager> _timeManager){ if (windowWorldInfo.get()){ windowWorldInfo->AssignTimeManager(_timeManager); } }
+	void SetupMapActors(std::reference_wrapper<std::vector<std::shared_ptr<City>>> refCityContainer, std::reference_wrapper<std::vector<std::shared_ptr<Location>>> refLocationContainer);
 };

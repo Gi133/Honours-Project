@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_INPUTHANDLER_H
@@ -11,7 +11,7 @@
 #include <queue>
 #include "Gwen/Gwen.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
@@ -40,7 +40,7 @@ namespace Gwen
 		const unsigned char Count = 16;
 	}
 
-	namespace Input 
+	namespace Input
 	{
 		namespace Message
 		{
@@ -55,28 +55,24 @@ namespace Gwen
 			};
 		};
 
-	
-
 		// For use in panels
-		bool GWEN_EXPORT IsKeyDown( int iKey );
+		bool GWEN_EXPORT IsKeyDown(int iKey);
 		bool GWEN_EXPORT IsLeftMouseDown();
 		bool GWEN_EXPORT IsRightMouseDown();
 		Gwen::Point GWEN_EXPORT GetMousePosition();
 
-		inline bool IsShiftDown(){ return IsKeyDown( Gwen::Key::Shift ); }
-		inline bool IsControlDown(){ return IsKeyDown( Gwen::Key::Control ); }
+		inline bool IsShiftDown(){ return IsKeyDown(Gwen::Key::Shift); }
+		inline bool IsControlDown(){ return IsKeyDown(Gwen::Key::Control); }
 
 		// Does copy, paste etc
-		bool GWEN_EXPORT DoSpecialKeys( Controls::Base* pCanvas, Gwen::UnicodeChar chr );
-		bool GWEN_EXPORT HandleAccelerator( Controls::Base* pCanvas, Gwen::UnicodeChar chr );
+		bool GWEN_EXPORT DoSpecialKeys(Controls::Base* pCanvas, Gwen::UnicodeChar chr);
+		bool GWEN_EXPORT HandleAccelerator(Controls::Base* pCanvas, Gwen::UnicodeChar chr);
 
-		// Send input to canvas for study		
-		void GWEN_EXPORT OnMouseMoved( Controls::Base* pCanvas, int x, int y, int deltaX, int deltaY );
-		bool GWEN_EXPORT OnMouseClicked( Controls::Base* pCanvas, int iButton, bool bDown );
-		bool GWEN_EXPORT OnKeyEvent( Controls::Base* pCanvas, int iKey, bool bDown );
-		void GWEN_EXPORT OnCanvasThink( Controls::Base* pControl );
-
-		
+		// Send input to canvas for study
+		void GWEN_EXPORT OnMouseMoved(Controls::Base* pCanvas, int x, int y, int deltaX, int deltaY);
+		bool GWEN_EXPORT OnMouseClicked(Controls::Base* pCanvas, int iButton, bool bDown);
+		bool GWEN_EXPORT OnKeyEvent(Controls::Base* pCanvas, int iKey, bool bDown);
+		void GWEN_EXPORT OnCanvasThink(Controls::Base* pControl);
 	};
 }
 #endif

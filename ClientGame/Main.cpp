@@ -42,17 +42,17 @@ int main(int argc, char* argv[])
 	auto UIMapLayerName = thePrefs.GetString("Settings", "UIMapLayer");
 	if (UIMapLayerName.empty())
 		UIMapLayerName = UIMapLayerNameFallBack;
-	theWorld.NameLayer(UIMapLayerName, 0);
+	theWorld.NameLayer(UIMapLayerName, 1);
 
 	auto UILayerName = thePrefs.GetString("Settings", "UILayerName");
 	if (UILayerName.empty())
 		UILayerName = UILayerNameFallBack;
-	theWorld.NameLayer(UILayerName, 1);
+	theWorld.NameLayer(UILayerName, 6);
 
 	auto UILayerText = thePrefs.GetString("Settings", "UILayerText");
 	if (UILayerText.empty())
 		UILayerText = UILayerTextNameFallBack;
-	theWorld.NameLayer(UILayerTextNameFallBack, 2);
+	theWorld.NameLayer(UILayerTextNameFallBack, 7);
 
 	// Register Text Font
 	auto fontLocation = thePrefs.GetString("FontSettings", "fontLocation");

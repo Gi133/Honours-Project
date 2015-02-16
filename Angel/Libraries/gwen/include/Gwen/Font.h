@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_FONT_H
@@ -15,7 +15,6 @@
 
 namespace Gwen
 {
-
 	struct Font
 	{
 		typedef std::list<Font*>	List;
@@ -41,8 +40,6 @@ namespace Gwen
 		// This is the real font size, after it's
 		// been scaled by Render->Scale()
 		float realsize;
-		
 	};
-
 } //namespace Gwen
 #endif

@@ -2,8 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
-
+	*/
 
 #include "Gwen/Gwen.h"
 #include "Gwen/Controls/TextBox.h"
@@ -20,73 +19,72 @@ using namespace Gwen::Controls;
 #ifndef GWEN_NO_ANIMATION
 class ChangeCaretColor : public Gwen::Anim::Animation
 {
-	public:
+public:
 
-		virtual void Think()
-		{
-			gwen_cast<TextBox>(m_Control)->UpdateCaretColor();
-		}
+	virtual void Think()
+	{
+		gwen_cast<TextBox>(m_Control)->UpdateCaretColor();
+	}
 };
 #endif
 
-
-GWEN_CONTROL_CONSTRUCTOR( TextBox )
+GWEN_CONTROL_CONSTRUCTOR(TextBox)
 {
-	SetSize( 200, 20 );
+	SetSize(200, 20);
 
-	SetMouseInputEnabled( true );
-	SetKeyboardInputEnabled( true );
+	SetMouseInputEnabled(true);
+	SetKeyboardInputEnabled(true);
 
-	SetAlignment( Pos::Left | Pos::CenterV );
-	SetPadding( Padding( 4, 2, 4, 2 ) );
+	SetAlignment(Pos::Left | Pos::CenterV);
+	SetPadding(Padding(4, 2, 4, 2));
 
 	m_iCursorPos = 0;
 	m_iCursorEnd = 0;
 	m_iCursorLine = 0;
 	m_bSelectAll = false;
 
-	SetTextColor( Gwen::Color( 50, 50, 50, 255 ) ); // TODO: From Skin
+	SetTextColor(Gwen::Color(50, 50, 50, 255)); // TODO: From Skin
 
-	SetTabable( true );
+	SetTabable(true);
 
-	AddAccelerator( L"Ctrl + C", &TextBox::OnCopy );
-	AddAccelerator( L"Ctrl + X", &TextBox::OnCut );
-	AddAccelerator( L"Ctrl + V", &TextBox::OnPaste );
-	AddAccelerator( L"Ctrl + A", &TextBox::OnSelectAll );
+	AddAccelerator(L"Ctrl + C", &TextBox::OnCopy);
+	AddAccelerator(L"Ctrl + X", &TextBox::OnCut);
+	AddAccelerator(L"Ctrl + V", &TextBox::OnPaste);
+	AddAccelerator(L"Ctrl + A", &TextBox::OnSelectAll);
 
-	Gwen::Anim::Add( this, new ChangeCaretColor() );
+	Gwen::Anim::Add(this, new ChangeCaretColor());
 }
 
-bool TextBox::OnChar( Gwen::UnicodeChar c )
+bool TextBox::OnChar(Gwen::UnicodeChar c)
 {
-	if ( c == '\t' ) return false;
+	if (c == '\t') return false;
 
 	Gwen::UnicodeString str;
 	str += c;
 
-	InsertText( str );	
+	InsertText(str);
 	return true;
 }
 
-void TextBox::InsertText( const Gwen::UnicodeString& strInsert )
+void TextBox::InsertText(const Gwen::UnicodeString& strInsert)
 {
 	// TODO: Make sure fits (implement maxlength)
 
-	if ( HasSelection() )
+	if (HasSelection())
 	{
 		EraseSelection();
 	}
 
-	if ( m_iCursorPos > TextLength() ) m_iCursorPos = TextLength();
+	if (m_iCursorPos > TextLength()) m_iCursorPos = TextLength();
 
-	if ( !IsTextAllowed( strInsert, m_iCursorPos )  )
+	if (!IsTextAllowed(strInsert, m_iCursorPos))
 		return;
 
 	UnicodeString str = GetText().GetUnicode();
-	str.insert( m_iCursorPos, strInsert );
-	SetText( str );
+	str.insert(m_iCursorPos, strInsert);
+	SetText(str);
 
-	m_iCursorPos += (int) strInsert.size();
+	m_iCursorPos += (int)strInsert.size();
 	m_iCursorEnd = m_iCursorPos;
 	m_iCursorLine = 0;
 
@@ -96,13 +94,13 @@ void TextBox::InsertText( const Gwen::UnicodeString& strInsert )
 #ifndef GWEN_NO_ANIMATION
 void TextBox::UpdateCaretColor()
 {
-	if ( m_fNextCaretColorChange > Gwen::Platform::GetTimeInSeconds() ) return;
-	if ( !HasFocus() ) { m_fNextCaretColorChange = Gwen::Platform::GetTimeInSeconds() + 0.5f; return; }
+	if (m_fNextCaretColorChange > Gwen::Platform::GetTimeInSeconds()) return;
+	if (!HasFocus()) { m_fNextCaretColorChange = Gwen::Platform::GetTimeInSeconds() + 0.5f; return; }
 
-	Gwen::Color targetcolor = Gwen::Color( 230, 230, 230, 255 );
+	Gwen::Color targetcolor = Gwen::Color(230, 230, 230, 255);
 
-	if ( m_CaretColor == targetcolor ) 
-		targetcolor = Gwen::Color( 20, 20, 20, 255 );
+	if (m_CaretColor == targetcolor)
+		targetcolor = Gwen::Color(20, 20, 20, 255);
 
 	m_fNextCaretColorChange = Gwen::Platform::GetTimeInSeconds() + 0.5;
 	m_CaretColor = targetcolor;
@@ -110,70 +108,69 @@ void TextBox::UpdateCaretColor()
 }
 #endif
 
-void TextBox::Render( Skin::Base* skin )
+void TextBox::Render(Skin::Base* skin)
 {
-	if ( ShouldDrawBackground() )
-		skin->DrawTextBox( this );
-	
-	if ( !HasFocus() ) return;
+	if (ShouldDrawBackground())
+		skin->DrawTextBox(this);
+
+	if (!HasFocus()) return;
 
 	// Draw selection.. if selected..
-	if ( m_iCursorPos != m_iCursorEnd )
+	if (m_iCursorPos != m_iCursorEnd)
 	{
-		skin->GetRender()->SetDrawColor( Gwen::Color( 50, 170, 255, 200 ) );
-		skin->GetRender()->DrawFilledRect( m_rectSelectionBounds );	
+		skin->GetRender()->SetDrawColor(Gwen::Color(50, 170, 255, 200));
+		skin->GetRender()->DrawFilledRect(m_rectSelectionBounds);
 	}
 
 	// Draw caret
-	skin->GetRender()->SetDrawColor( m_CaretColor );
-	skin->GetRender()->DrawFilledRect( m_rectCaretBounds );	
+	skin->GetRender()->SetDrawColor(m_CaretColor);
+	skin->GetRender()->DrawFilledRect(m_rectCaretBounds);
 }
 
 void TextBox::RefreshCursorBounds()
 {
 	m_fNextCaretColorChange = Gwen::Platform::GetTimeInSeconds() + 1.5f;
-	m_CaretColor = Gwen::Color( 30, 30, 30, 255 );
+	m_CaretColor = Gwen::Color(30, 30, 30, 255);
 
 	MakeCaratVisible();
 
-	Gwen::Rect pA = GetCharacterPosition( m_iCursorPos );
-	Gwen::Rect pB = GetCharacterPosition( m_iCursorEnd );
+	Gwen::Rect pA = GetCharacterPosition(m_iCursorPos);
+	Gwen::Rect pB = GetCharacterPosition(m_iCursorEnd);
 
-	m_rectSelectionBounds.x = Utility::Min( pA.x, pB.x );
+	m_rectSelectionBounds.x = Utility::Min(pA.x, pB.x);
 	m_rectSelectionBounds.y = m_Text->Y() - 1;
-	m_rectSelectionBounds.w = Utility::Max( pA.x, pB.x ) - m_rectSelectionBounds.x;
+	m_rectSelectionBounds.w = Utility::Max(pA.x, pB.x) - m_rectSelectionBounds.x;
 	m_rectSelectionBounds.h = m_Text->Height() + 2;
 
 	m_rectCaretBounds.x = pA.x;
 	m_rectCaretBounds.y = pA.y;
 	m_rectCaretBounds.w = 1;
 	m_rectCaretBounds.h = pA.h;
-	
+
 	Redraw();
 }
 
-
-void TextBox::OnPaste( Gwen::Controls::Base* /*pCtrl*/ )
+void TextBox::OnPaste(Gwen::Controls::Base* /*pCtrl*/)
 {
-	InsertText( Platform::GetClipboardText() );
+	InsertText(Platform::GetClipboardText());
 }
 
-void TextBox::OnCopy( Gwen::Controls::Base* /*pCtrl*/ )
+void TextBox::OnCopy(Gwen::Controls::Base* /*pCtrl*/)
 {
-	if ( !HasSelection() ) return;
+	if (!HasSelection()) return;
 
-	Platform::SetClipboardText( GetSelection() );
+	Platform::SetClipboardText(GetSelection());
 }
 
-void TextBox::OnCut( Gwen::Controls::Base* /*pCtrl*/ )
+void TextBox::OnCut(Gwen::Controls::Base* /*pCtrl*/)
 {
-	if ( !HasSelection() ) return;
+	if (!HasSelection()) return;
 
-	Platform::SetClipboardText( GetSelection() );
+	Platform::SetClipboardText(GetSelection());
 	EraseSelection();
 }
 
-void TextBox::OnSelectAll( Gwen::Controls::Base* /*pCtrl*/ )
+void TextBox::OnSelectAll(Gwen::Controls::Base* /*pCtrl*/)
 {
 	m_iCursorEnd = 0;
 	m_iCursorPos = TextLength();
@@ -182,31 +179,31 @@ void TextBox::OnSelectAll( Gwen::Controls::Base* /*pCtrl*/ )
 	RefreshCursorBounds();
 }
 
-void TextBox::OnMouseDoubleClickLeft( int /*x*/, int /*y*/ )
-{ 
-	OnSelectAll( this );
+void TextBox::OnMouseDoubleClickLeft(int /*x*/, int /*y*/)
+{
+	OnSelectAll(this);
 }
 
 UnicodeString TextBox::GetSelection()
 {
-	if ( !HasSelection() ) return L"";
+	if (!HasSelection()) return L"";
 
-	int iStart = Utility::Min( m_iCursorPos, m_iCursorEnd );
-	int iEnd = Utility::Max( m_iCursorPos, m_iCursorEnd );
+	int iStart = Utility::Min(m_iCursorPos, m_iCursorEnd);
+	int iEnd = Utility::Max(m_iCursorPos, m_iCursorEnd);
 
 	const UnicodeString& str = GetText().GetUnicode();
-	return str.substr( iStart, iEnd - iStart );
+	return str.substr(iStart, iEnd - iStart);
 }
 
-bool TextBox::OnKeyReturn( bool bDown )
+bool TextBox::OnKeyReturn(bool bDown)
 {
-	if ( bDown ) return true;
+	if (bDown) return true;
 
 	// Try to move to the next control, as if tab had been pressed
-	OnKeyTab( true );
+	OnKeyTab(true);
 
 	// If we still have focus, blur it.
-	if ( HasFocus() )
+	if (HasFocus())
 	{
 		Blur();
 	}
@@ -218,46 +215,46 @@ bool TextBox::OnKeyReturn( bool bDown )
 	return true;
 }
 
-bool TextBox::OnKeyBackspace( bool bDown )
+bool TextBox::OnKeyBackspace(bool bDown)
 {
-	if ( !bDown ) return true;
-	if ( HasSelection() )
+	if (!bDown) return true;
+	if (HasSelection())
 	{
 		EraseSelection();
 		return true;
 	}
 
-	if ( m_iCursorPos == 0 ) return true;
+	if (m_iCursorPos == 0) return true;
 
-	DeleteText( m_iCursorPos-1, 1 );
+	DeleteText(m_iCursorPos - 1, 1);
 
 	return true;
 }
 
-bool TextBox::OnKeyDelete( bool bDown )
+bool TextBox::OnKeyDelete(bool bDown)
 {
-	if ( !bDown ) return true;
-	if ( HasSelection() )
+	if (!bDown) return true;
+	if (HasSelection())
 	{
 		EraseSelection();
 		return true;
 	}
 
-	if ( m_iCursorPos >= TextLength() ) return true;
+	if (m_iCursorPos >= TextLength()) return true;
 
-	DeleteText( m_iCursorPos, 1 );
+	DeleteText(m_iCursorPos, 1);
 
 	return true;
 }
 
-bool TextBox::OnKeyLeft( bool bDown )
+bool TextBox::OnKeyLeft(bool bDown)
 {
-	if ( !bDown ) return true;
+	if (!bDown) return true;
 
-	if ( m_iCursorPos > 0 )
+	if (m_iCursorPos > 0)
 		m_iCursorPos--;
 
-	if ( !Gwen::Input::IsShiftDown() )
+	if (!Gwen::Input::IsShiftDown())
 	{
 		m_iCursorEnd = m_iCursorPos;
 	}
@@ -266,14 +263,14 @@ bool TextBox::OnKeyLeft( bool bDown )
 	return true;
 }
 
-bool TextBox::OnKeyRight( bool bDown )
+bool TextBox::OnKeyRight(bool bDown)
 {
-	if ( !bDown ) return true;
+	if (!bDown) return true;
 
-	if ( m_iCursorPos < TextLength() )
+	if (m_iCursorPos < TextLength())
 		m_iCursorPos++;
 
-	if ( !Gwen::Input::IsShiftDown() )
+	if (!Gwen::Input::IsShiftDown())
 	{
 		m_iCursorEnd = m_iCursorPos;
 	}
@@ -282,12 +279,12 @@ bool TextBox::OnKeyRight( bool bDown )
 	return true;
 }
 
-bool TextBox::OnKeyHome( bool bDown )
+bool TextBox::OnKeyHome(bool bDown)
 {
-	if ( !bDown ) return true;
+	if (!bDown) return true;
 	m_iCursorPos = 0;
 
-	if ( !Gwen::Input::IsShiftDown() )
+	if (!Gwen::Input::IsShiftDown())
 	{
 		m_iCursorEnd = m_iCursorPos;
 	}
@@ -296,11 +293,11 @@ bool TextBox::OnKeyHome( bool bDown )
 	return true;
 }
 
-bool TextBox::OnKeyEnd( bool /*bDown*/ )
+bool TextBox::OnKeyEnd(bool /*bDown*/)
 {
 	m_iCursorPos = TextLength();
 
-	if ( !Gwen::Input::IsShiftDown() )
+	if (!Gwen::Input::IsShiftDown())
 	{
 		m_iCursorEnd = m_iCursorPos;
 	}
@@ -309,36 +306,35 @@ bool TextBox::OnKeyEnd( bool /*bDown*/ )
 	return true;
 }
 
-void TextBox::SetCursorPos( int i )
+void TextBox::SetCursorPos(int i)
 {
-	if ( m_iCursorPos == i ) return;
+	if (m_iCursorPos == i) return;
 
 	m_iCursorPos = i;
 	m_iCursorLine = 0;
 	RefreshCursorBounds();
 }
 
-void TextBox::SetCursorEnd( int i )
+void TextBox::SetCursorEnd(int i)
 {
-	if ( m_iCursorEnd == i ) return;
+	if (m_iCursorEnd == i) return;
 
 	m_iCursorEnd = i;
 	RefreshCursorBounds();
 }
 
-
-void TextBox::DeleteText( int iStartPos, int iLength )
+void TextBox::DeleteText(int iStartPos, int iLength)
 {
 	UnicodeString str = GetText().GetUnicode();
-	str.erase( iStartPos, iLength );
-	SetText( str );
+	str.erase(iStartPos, iLength);
+	SetText(str);
 
-	if ( m_iCursorPos > iStartPos )
+	if (m_iCursorPos > iStartPos)
 	{
-		SetCursorPos( m_iCursorPos - iLength );
+		SetCursorPos(m_iCursorPos - iLength);
 	}
 
-	SetCursorEnd( m_iCursorPos );
+	SetCursorEnd(m_iCursorPos);
 }
 
 bool TextBox::HasSelection()
@@ -348,64 +344,64 @@ bool TextBox::HasSelection()
 
 void TextBox::EraseSelection()
 {
-	int iStart = Utility::Min( m_iCursorPos, m_iCursorEnd );
-	int iEnd = Utility::Max( m_iCursorPos, m_iCursorEnd );
+	int iStart = Utility::Min(m_iCursorPos, m_iCursorEnd);
+	int iEnd = Utility::Max(m_iCursorPos, m_iCursorEnd);
 
-	DeleteText( iStart, iEnd - iStart );
+	DeleteText(iStart, iEnd - iStart);
 
-	// Move the cursor to the start of the selection, 
+	// Move the cursor to the start of the selection,
 	// since the end is probably outside of the string now.
 	m_iCursorPos = iStart;
 	m_iCursorEnd = iStart;
 }
 
-void TextBox::OnMouseClickLeft( int x, int y, bool bDown )
+void TextBox::OnMouseClickLeft(int x, int y, bool bDown)
 {
-	if ( m_bSelectAll )
+	if (m_bSelectAll)
 	{
-		OnSelectAll( this );
+		OnSelectAll(this);
 		m_bSelectAll = false;
 		return;
 	}
 
-	int iChar = m_Text->GetClosestCharacter( m_Text->CanvasPosToLocal( Gwen::Point( x, y ) ) );
+	int iChar = m_Text->GetClosestCharacter(m_Text->CanvasPosToLocal(Gwen::Point(x, y)));
 
-	if ( bDown )
+	if (bDown)
 	{
-		SetCursorPos( iChar );
+		SetCursorPos(iChar);
 
-		if ( !Gwen::Input::IsShiftDown() )
-			SetCursorEnd( iChar );
+		if (!Gwen::Input::IsShiftDown())
+			SetCursorEnd(iChar);
 
 		Gwen::MouseFocus = this;
 	}
 	else
 	{
-		if ( Gwen::MouseFocus == this )
+		if (Gwen::MouseFocus == this)
 		{
-			SetCursorPos( iChar );
+			SetCursorPos(iChar);
 			Gwen::MouseFocus = NULL;
 		}
 	}
 }
 
-void TextBox::OnMouseMoved( int x, int y, int /*deltaX*/, int /*deltaY*/ )
+void TextBox::OnMouseMoved(int x, int y, int /*deltaX*/, int /*deltaY*/)
 {
-	if ( Gwen::MouseFocus != this ) return;
+	if (Gwen::MouseFocus != this) return;
 
-	int iChar = m_Text->GetClosestCharacter( m_Text->CanvasPosToLocal( Gwen::Point( x, y ) ) );
+	int iChar = m_Text->GetClosestCharacter(m_Text->CanvasPosToLocal(Gwen::Point(x, y)));
 
-	SetCursorPos( iChar );
+	SetCursorPos(iChar);
 }
 
 void TextBox::MakeCaratVisible()
 {
-	int iCaratPos = m_Text->GetCharacterPosition( m_iCursorPos ).x;
+	int iCaratPos = m_Text->GetCharacterPosition(m_iCursorPos).x;
 
 	// If the carat is already in a semi-good position, leave it.
 	{
 		int iRealCaratPos = iCaratPos + m_Text->X();
-		if ( iRealCaratPos > Width() * 0.1f && iRealCaratPos < Width() * 0.9f )
+		if (iRealCaratPos > Width() * 0.1f && iRealCaratPos < Width() * 0.9f)
 			return;
 	}
 
@@ -413,35 +409,34 @@ void TextBox::MakeCaratVisible()
 	int idealx = -iCaratPos + Width() * 0.5f;;
 
 	// Don't show too much whitespace to the right
-	if ( idealx + m_Text->Width() < Width() - GetPadding().right )
-		idealx = -m_Text->Width() + (Width() - GetPadding().right );
+	if (idealx + m_Text->Width() < Width() - GetPadding().right)
+		idealx = -m_Text->Width() + (Width() - GetPadding().right);
 
 	// Or the left
-	if ( idealx > GetPadding().left )
+	if (idealx > GetPadding().left)
 		idealx = GetPadding().left;
 
-	m_Text->SetPos( idealx, m_Text->Y() );
-
+	m_Text->SetPos(idealx, m_Text->Y());
 }
 
-void TextBox::Layout( Skin::Base* skin )
+void TextBox::Layout(Skin::Base* skin)
 {
-	BaseClass::Layout( skin );
+	BaseClass::Layout(skin);
 
 	RefreshCursorBounds();
 }
 
 void TextBox::OnTextChanged()
 {
-	if ( m_iCursorPos > TextLength() ) m_iCursorPos = TextLength();
-	if ( m_iCursorEnd > TextLength() ) m_iCursorEnd = TextLength();
+	if (m_iCursorPos > TextLength()) m_iCursorPos = TextLength();
+	if (m_iCursorEnd > TextLength()) m_iCursorEnd = TextLength();
 
-	onTextChanged.Call( this );
+	onTextChanged.Call(this);
 }
 
 void TextBox::OnEnter()
 {
-	onReturnPressed.Call( this );
+	onReturnPressed.Call(this);
 }
 
 void TextBox::MoveCaretToEnd()
@@ -458,18 +453,17 @@ void TextBox::MoveCaretToStart()
 	RefreshCursorBounds();
 }
 
-
-GWEN_CONTROL_CONSTRUCTOR( TextBoxMultiline )
+GWEN_CONTROL_CONSTRUCTOR(TextBoxMultiline)
 {
-	SetWrap( true );
-	SetAlignment( Pos::Left | Pos::Top );
+	SetWrap(true);
+	SetAlignment(Pos::Left | Pos::Top);
 }
 
-bool TextBoxMultiline::OnKeyReturn( bool bDown )
+bool TextBoxMultiline::OnKeyReturn(bool bDown)
 {
-	if ( bDown )
+	if (bDown)
 	{
-		InsertText( L"\n" );
+		InsertText(L"\n");
 	}
 
 	return true;
@@ -482,20 +476,20 @@ void TextBoxMultiline::MakeCaratVisible()
 
 int TextBoxMultiline::GetCurrentLine()
 {
-	return m_Text->GetLineFromChar( m_iCursorPos );
+	return m_Text->GetLineFromChar(m_iCursorPos);
 }
 
-bool TextBoxMultiline::OnKeyHome( bool bDown )
+bool TextBoxMultiline::OnKeyHome(bool bDown)
 {
-	if ( !bDown ) return true;
+	if (!bDown) return true;
 
-	int iCurrentLine = GetCurrentLine();	
-	int iChar = m_Text->GetStartCharFromLine( iCurrentLine );
+	int iCurrentLine = GetCurrentLine();
+	int iChar = m_Text->GetStartCharFromLine(iCurrentLine);
 
 	m_iCursorLine = 0;
 	m_iCursorPos = iChar;
 
-	if ( !Gwen::Input::IsShiftDown() )
+	if (!Gwen::Input::IsShiftDown())
 	{
 		m_iCursorEnd = m_iCursorPos;
 	}
@@ -504,17 +498,17 @@ bool TextBoxMultiline::OnKeyHome( bool bDown )
 	return true;
 }
 
-bool TextBoxMultiline::OnKeyEnd( bool bDown )
+bool TextBoxMultiline::OnKeyEnd(bool bDown)
 {
-	if ( !bDown ) return true;
+	if (!bDown) return true;
 
-	int iCurrentLine = GetCurrentLine();	
-	int iChar = m_Text->GetEndCharFromLine( iCurrentLine );
+	int iCurrentLine = GetCurrentLine();
+	int iChar = m_Text->GetEndCharFromLine(iCurrentLine);
 
 	m_iCursorLine = 0;
-	m_iCursorPos = iChar-1; // NAUGHTY
+	m_iCursorPos = iChar - 1; // NAUGHTY
 
-	if ( !Gwen::Input::IsShiftDown() )
+	if (!Gwen::Input::IsShiftDown())
 	{
 		m_iCursorEnd = m_iCursorPos;
 	}
@@ -523,20 +517,20 @@ bool TextBoxMultiline::OnKeyEnd( bool bDown )
 	return true;
 }
 
-bool TextBoxMultiline::OnKeyUp( bool bDown )
+bool TextBoxMultiline::OnKeyUp(bool bDown)
 {
-	if ( !bDown ) return true;
+	if (!bDown) return true;
 
-	if ( m_iCursorLine == 0 ) m_iCursorLine = m_Text->GetCharPosOnLine( m_iCursorPos );
+	if (m_iCursorLine == 0) m_iCursorLine = m_Text->GetCharPosOnLine(m_iCursorPos);
 
-	int iLine = m_Text->GetLineFromChar( m_iCursorPos );
-	if ( iLine == 0 ) return true;
+	int iLine = m_Text->GetLineFromChar(m_iCursorPos);
+	if (iLine == 0) return true;
 
-	m_iCursorPos = m_Text->GetStartCharFromLine( iLine - 1 );
-	m_iCursorPos += Clamp( m_iCursorLine, 0, m_Text->GetLine( iLine - 1)->Length() );
-	m_iCursorPos = Clamp( m_iCursorPos, 0, m_Text->Length() );
+	m_iCursorPos = m_Text->GetStartCharFromLine(iLine - 1);
+	m_iCursorPos += Clamp(m_iCursorLine, 0, m_Text->GetLine(iLine - 1)->Length());
+	m_iCursorPos = Clamp(m_iCursorPos, 0, m_Text->Length());
 
-	if ( !Gwen::Input::IsShiftDown() )
+	if (!Gwen::Input::IsShiftDown())
 	{
 		m_iCursorEnd = m_iCursorPos;
 	}
@@ -545,20 +539,20 @@ bool TextBoxMultiline::OnKeyUp( bool bDown )
 	return true;
 }
 
-bool TextBoxMultiline::OnKeyDown( bool bDown )
+bool TextBoxMultiline::OnKeyDown(bool bDown)
 {
-	if ( !bDown ) return true;
+	if (!bDown) return true;
 
-	if ( m_iCursorLine == 0 ) m_iCursorLine = m_Text->GetCharPosOnLine( m_iCursorPos );
+	if (m_iCursorLine == 0) m_iCursorLine = m_Text->GetCharPosOnLine(m_iCursorPos);
 
-	int iLine = m_Text->GetLineFromChar( m_iCursorPos );
-	if ( iLine >= m_Text->NumLines()-1 ) return true;
+	int iLine = m_Text->GetLineFromChar(m_iCursorPos);
+	if (iLine >= m_Text->NumLines() - 1) return true;
 
-	m_iCursorPos = m_Text->GetStartCharFromLine( iLine + 1 );
-	m_iCursorPos += Clamp( m_iCursorLine, 0, m_Text->GetLine( iLine + 1)->Length() );
-	m_iCursorPos = Clamp( m_iCursorPos, 0, m_Text->Length() );
+	m_iCursorPos = m_Text->GetStartCharFromLine(iLine + 1);
+	m_iCursorPos += Clamp(m_iCursorLine, 0, m_Text->GetLine(iLine + 1)->Length());
+	m_iCursorPos = Clamp(m_iCursorPos, 0, m_Text->Length());
 
-	if ( !Gwen::Input::IsShiftDown() )
+	if (!Gwen::Input::IsShiftDown())
 	{
 		m_iCursorEnd = m_iCursorPos;
 	}

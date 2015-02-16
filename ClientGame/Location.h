@@ -5,7 +5,8 @@ class Location :
 	public MapPOI
 {
 private:
-	std::string threatLevelName, maxThreatLowName, maxThreatMedName, maxThreatHighName;
+	std::string threatLevelName, maxThreatLowName, maxThreatMedName, maxThreatHighName,
+		colorThreatLow, colorThreatMed, colorThreatHigh;
 	int threatLevel, maxThreatLow, maxThreatMed, maxThreatHigh, minStartThreat, maxStartThreat;
 
 	void LoadDefinitions() override;

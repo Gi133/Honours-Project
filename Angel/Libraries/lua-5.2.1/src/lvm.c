@@ -496,8 +496,8 @@ void luaV_finishOp(lua_State *L) {
         if (ttisnumber(rb) && ttisnumber(rc)) { \
           lua_Number nb = nvalue(rb), nc = nvalue(rc); \
           setnvalue(ra, op(L, nb, nc)); \
-		        } \
-		        else { Protect(luaV_arith(L, ra, rb, rc, tm)); } }
+				        } \
+						        else { Protect(luaV_arith(L, ra, rb, rc, tm)); } }
 
 #define vmdispatch(o)	switch(o)
 #define vmcase(l,b)	case l: {b}  break;

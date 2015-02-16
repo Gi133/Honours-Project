@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_RADIOBOTTONCONTROLLER_H
@@ -12,36 +12,34 @@
 #include "Gwen/Controls/Label.h"
 #include "Gwen/Controls/RadioButton.h"
 
-
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
-
 		class GWEN_EXPORT RadioButtonController : public Base
 		{
-			public:
+		public:
 
-				GWEN_CONTROL( RadioButtonController, Base );
+			GWEN_CONTROL(RadioButtonController, Base);
 
-				virtual void Render( Skin::Base* /*skin*/ ){};
-				virtual void OnRadioClicked( Base* pFromPanel );
+			virtual void Render(Skin::Base* /*skin*/){};
+			virtual void OnRadioClicked(Base* pFromPanel);
 
-				virtual void OnChange();
+			virtual void OnChange();
 
-				virtual LabeledRadioButton* AddOption( const Gwen::String& strText, const Gwen::String& strOptionName = "" );
-				virtual LabeledRadioButton* AddOption( const Gwen::UnicodeString& strText, const Gwen::String& strOptionName = "" );
+			virtual LabeledRadioButton* AddOption(const Gwen::String& strText, const Gwen::String& strOptionName = "");
+			virtual LabeledRadioButton* AddOption(const Gwen::UnicodeString& strText, const Gwen::String& strOptionName = "");
 
-				virtual LabeledRadioButton*	GetSelected(){ return m_Selected; }
+			virtual LabeledRadioButton*	GetSelected(){ return m_Selected; }
 
-				virtual const Gwen::String& GetSelectedName(){ return m_Selected->GetName(); }
-				virtual const TextObject& GetSelectedLabel(){ return m_Selected->GetLabel()->GetText(); }
+			virtual const Gwen::String& GetSelectedName(){ return m_Selected->GetName(); }
+			virtual const TextObject& GetSelectedLabel(){ return m_Selected->GetLabel()->GetText(); }
 
-				Event::Caller		onSelectionChange;
+			Event::Caller		onSelectionChange;
 
-			private:
+		private:
 
-				LabeledRadioButton* m_Selected;
+			LabeledRadioButton* m_Selected;
 		};
 	}
 }

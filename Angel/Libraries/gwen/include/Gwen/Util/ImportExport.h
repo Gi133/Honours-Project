@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "Gwen/Gwen.h"
@@ -9,36 +8,35 @@ using namespace Gwen;
 
 namespace Gwen
 {
-	namespace ImportExport 
+	namespace ImportExport
 	{
 		class Base
 		{
-			public:
+		public:
 
-				Base();
+			Base();
 
-				virtual Gwen::String Name() = 0;
+			virtual Gwen::String Name() = 0;
 
-				virtual bool CanImport() = 0;
-				virtual void Import( Gwen::Controls::Base* pRoot, const Gwen::String& strFilename ) = 0;
+			virtual bool CanImport() = 0;
+			virtual void Import(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename) = 0;
 
-				virtual bool CanExport() = 0;
-				virtual void Export( Gwen::Controls::Base* pRoot, const Gwen::String& strFilename ) = 0;
+			virtual bool CanExport() = 0;
+			virtual void Export(Gwen::Controls::Base* pRoot, const Gwen::String& strFilename) = 0;
 
-			public:
-				
-				typedef std::list<ImportExport::Base*> List;
+		public:
 
-			protected:
+			typedef std::list<ImportExport::Base*> List;
 
+		protected:
 		};
 
 		ImportExport::Base::List& GetList();
-		ImportExport::Base* Find( Gwen::String strName );
+		ImportExport::Base* Find(Gwen::String strName);
 
 		namespace Tools
 		{
-			ControlList GetExportableChildren( Gwen::Controls::Base* pRoot );
+			ControlList GetExportableChildren(Gwen::Controls::Base* pRoot);
 		}
 	}
 }

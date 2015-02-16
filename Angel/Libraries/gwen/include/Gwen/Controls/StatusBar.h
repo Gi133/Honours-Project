@@ -5,33 +5,33 @@
 #include "Gwen/Gwen.h"
 #include "Gwen/Controls/Label.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
 		class StatusBar : public Controls::Label
 		{
-			public:
+		public:
 
-				GWEN_CONTROL_INLINE( StatusBar, Controls::Label )
-				{
-					SetHeight( 22 );
-					Dock( Pos::Bottom );
-					SetPadding( Padding( 2, 2, 2, 2 ) );
-					SetText( "" );
-					SetAlignment( Pos::Left | Pos::CenterV );
-				}
+			GWEN_CONTROL_INLINE(StatusBar, Controls::Label)
+			{
+				SetHeight(22);
+				Dock(Pos::Bottom);
+				SetPadding(Padding(2, 2, 2, 2));
+				SetText("");
+				SetAlignment(Pos::Left | Pos::CenterV);
+			}
 
-				virtual void AddControl( Controls::Base* pCtrl, bool bRight )
-				{
-					pCtrl->SetParent( this );
-					pCtrl->Dock( bRight ? Pos::Right : Pos::Left );
-				}
+			virtual void AddControl(Controls::Base* pCtrl, bool bRight)
+			{
+				pCtrl->SetParent(this);
+				pCtrl->Dock(bRight ? Pos::Right : Pos::Left);
+			}
 
-				virtual void Render( Skin::Base* skin )
-				{
-					skin->DrawStatusBar( this );
-				}
+			virtual void Render(Skin::Base* skin)
+			{
+				skin->DrawStatusBar(this);
+			}
 		};
 	}
 }

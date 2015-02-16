@@ -27,7 +27,7 @@
 #define LUA_STRFTIMEOPTIONS	{ "aAbBcdHIjmMpSUwWxXyYz%", "" }
 #else
 #define LUA_STRFTIMEOPTIONS \
-		{ "aAbBcCdDeFgGhHIjmMnprRStTuUVwWxXyYzZ%", "" \
+				{ "aAbBcCdDeFgGhHIjmMnprRStTuUVwWxXyYzZ%", "" \
 	  "", "E", "cCxXyY",  \
 	  "O", "deHImMSuUVwWy" }
 #endif

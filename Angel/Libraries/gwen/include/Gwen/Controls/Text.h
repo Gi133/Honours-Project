@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_TEXT_H
@@ -11,69 +11,68 @@
 #include "Gwen/BaseRender.h"
 #include "Gwen/Controls/Base.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace ControlsInternal
 	{
 		class GWEN_EXPORT Text : public Controls::Base
 		{
-			public:
+		public:
 
-				GWEN_CONTROL( Text, Controls::Base );
+			GWEN_CONTROL(Text, Controls::Base);
 
-				virtual ~Text();
-				Gwen::Font* GetFont();
+			virtual ~Text();
+			Gwen::Font* GetFont();
 
-				void SetString( const TextObject& str );
-				
-				void Render( Skin::Base* skin );
-				void Layout( Skin::Base* skin );
+			void SetString(const TextObject& str);
 
-				void RefreshSize();
+			void Render(Skin::Base* skin);
+			void Layout(Skin::Base* skin);
 
-				void SetFont( Gwen::Font* pFont );
+			void RefreshSize();
 
-				const TextObject& GetText() const { return m_String; }
+			void SetFont(Gwen::Font* pFont);
 
-				Gwen::Rect GetCharacterPosition( int iChar );
-				int GetClosestCharacter( Gwen::Point p );
+			const TextObject& GetText() const { return m_String; }
 
-				int Length() const { return (int)m_String.GetUnicode().size(); }
+			Gwen::Rect GetCharacterPosition(int iChar);
+			int GetClosestCharacter(Gwen::Point p);
 
-				virtual void SetTextColor( const Gwen::Color& col ){ m_Color = col; }
-				virtual void SetTextColorOverride( const Gwen::Color& col ){ m_ColorOverride = col; }
+			int Length() const { return (int)m_String.GetUnicode().size(); }
 
-				virtual void OnScaleChanged();
+			virtual void SetTextColor(const Gwen::Color& col){ m_Color = col; }
+			virtual void SetTextColorOverride(const Gwen::Color& col){ m_ColorOverride = col; }
 
-				inline const Gwen::Color &TextColor() const { return m_Color; }
+			virtual void OnScaleChanged();
 
-				virtual void TextChanged(){ m_bTextChanged = true; }
-				virtual bool Wrap(){ return m_bWrap; }
-				virtual void SetWrap( bool b ){ if ( m_bWrap == b ) return; m_bWrap = b; m_bTextChanged = true; Invalidate(); }
+			inline const Gwen::Color &TextColor() const { return m_Color; }
 
-				virtual Text* GetLine( int i );
-				virtual int GetLineFromChar( int i );
-				virtual int GetStartCharFromLine( int i );
-				virtual int GetEndCharFromLine( int i );
-				virtual int GetCharPosOnLine( int i );
-				virtual int NumLines();
+			virtual void TextChanged(){ m_bTextChanged = true; }
+			virtual bool Wrap(){ return m_bWrap; }
+			virtual void SetWrap(bool b){ if (m_bWrap == b) return; m_bWrap = b; m_bTextChanged = true; Invalidate(); }
 
-			private:
+			virtual Text* GetLine(int i);
+			virtual int GetLineFromChar(int i);
+			virtual int GetStartCharFromLine(int i);
+			virtual int GetEndCharFromLine(int i);
+			virtual int GetCharPosOnLine(int i);
+			virtual int NumLines();
 
-				virtual void RefreshSizeWrap();
+		private:
 
-				Gwen::TextObject	m_String;
-				Gwen::Font*			m_Font;
-				Gwen::Color			m_Color;
-				Gwen::Color			m_ColorOverride;
+			virtual void RefreshSizeWrap();
 
-				bool				m_bWrap;
-				bool				m_bTextChanged;
+			Gwen::TextObject	m_String;
+			Gwen::Font*			m_Font;
+			Gwen::Color			m_Color;
+			Gwen::Color			m_ColorOverride;
 
-				typedef std::list<Text*> TextLines;
-				TextLines		m_Lines;
+			bool				m_bWrap;
+			bool				m_bTextChanged;
+
+			typedef std::list<Text*> TextLines;
+			TextLines		m_Lines;
 		};
 	}
-
 }
 #endif

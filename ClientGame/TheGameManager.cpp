@@ -27,11 +27,8 @@ TheGameManager::TheGameManager()
 	uiManager->AssignTimeManager(timeManager);
 
 	GenerateMap();
-	if (!threadContainer.empty())
-	{
-		for (auto i : threadContainer)
-			i->join();
-	}
+
+	uiManager->SetupMapActors(cityContainer, locationContainer);
 }
 
 void TheGameManager::Render()
@@ -62,33 +59,46 @@ void TheGameManager::GenerateMap()
 
 void TheGameManager::GenerateCities(int cityNumber)
 {
-	std::shared_ptr<std::thread> newThread;
-
 	for (auto i = 0; i < cityNumber; i++)
 	{
-		newThread.reset(new std::thread(&TheGameManager::GenerateCity, this));
-		threadContainer.push_back(newThread);
+		GenerateCity();
+		// 		std::unique_ptr<std::thread> newThread;
+		// 		newThread.reset(new std::thread(&TheGameManager::GenerateCity, this));
+		// 		threadContainer.push_back(std::move(newThread));
 	}
+
+	// 	while (!threadContainer.empty())
+	// 	{
+	// 		for (std::vector<std::unique_ptr<std::thread>>::iterator i = threadContainer.begin(); i != threadContainer.end(); ++i)
+	// 		{
+	// 			if (i->get()->joinable())
+	// 			{
+	// 				i->get()->join();
+	// 				threadContainer.erase(i);
+	// 				threadContainer.shrink_to_fit();
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
 }
 
 void TheGameManager::GenerateLocations(int locationNum)
 {
-	std::shared_ptr<std::thread> newThread;
-
 	for (auto i = 0; i < locationNum; i++)
 	{
-		newThread.reset(new std::thread(&TheGameManager::GenerateLocation, this));
-		threadContainer.push_back(newThread);
+		GenerateLocation();
+		// 		std::unique_ptr<std::thread> newThread;
+		// 		newThread.reset(new std::thread(&TheGameManager::GenerateLocation, this));
+		// 		threadContainer.push_back(std::move(newThread));
 	}
 }
 
 void TheGameManager::GenerateCity()
 {
 	// Crate a new City.
-	std::unique_ptr<City> newCity;
+	std::shared_ptr<City> newCity;
 	newCity.reset(new City());
 
-	std::lock_guard<std::mutex> guard(positionMutex); // Not ideal.
 	newCity->SetPosition(locationGenerator->GeneratePosition(1, cityContainer, locationContainer));
 
 	newCity->SetName(theNameManger.GenerateName(3, true));
@@ -96,9 +106,7 @@ void TheGameManager::GenerateCity()
 	newCity->SetResources();
 
 	// Move the city into the container.
-	cityContainerMutex.lock();
-	cityContainer.push_back(std::move(newCity));
-	cityContainerMutex.unlock();
+	cityContainer.push_back(newCity);
 }
 
 void TheGameManager::GenerateLocation()
@@ -107,14 +115,11 @@ void TheGameManager::GenerateLocation()
 	std::unique_ptr<Location> newLocation;
 	newLocation.reset(new Location());
 
-	std::lock_guard<std::mutex> guard(positionMutex); // Not ideal.
 	newLocation->SetPosition(locationGenerator->GeneratePosition(2, cityContainer, locationContainer));
 
 	newLocation->SetName(theNameManger.GenerateName(4));
 	newLocation->SetThreatLevel();
 
 	// Move the location into the container.
-	locationContainerMutex.lock();
 	locationContainer.push_back(std::move(newLocation));
-	locationContainerMutex.unlock();
 }

@@ -31,6 +31,11 @@ namespace
 	const auto tickMessageNameFallBack = "Tick";
 	const auto dayMessageNameFallBack = "Day";
 	const auto monthMessageNameFallBack = "Month";
+
+	const auto radiusVillageFallBack = 50.0f;
+	const auto radiusTownFallBack = 120.0f;
+	const auto radiusSmallCityFallBack = 160.0f;
+	const auto radiusLargeCityFallBack = 200.0f;
 }
 
 City::City()
@@ -39,6 +44,9 @@ City::City()
 
 	cityType = Village; // Initialize city as village.
 	cityTypeName = "";
+
+	iconActor->SetColor(0.5f, 0.1f, 1.0f);
+	iconActor->SetDrawShape(ADS_Circle);
 
 	LoadDefinitions();
 
@@ -71,21 +79,25 @@ void City::UpdateCityType()
 	{
 		cityType = Village;
 		cityTypeName = nameVillage;
+		iconActor->SetSize(radiusVillage * mapRatio.X, radiusVillage * mapRatio.Y);
 	}
 	else if (population <= maxPopTown)
 	{
 		cityType = Town;
 		cityTypeName = nameTown;
+		iconActor->SetSize(radiusTown * mapRatio.X, radiusTown * mapRatio.Y);
 	}
 	else if (population <= maxPopSmallCity)
 	{
 		cityType = SmallCity;
 		cityTypeName = nameSmallCity;
+		iconActor->SetSize(radiusSmallCity * mapRatio.X, radiusSmallCity * mapRatio.Y);
 	}
 	else if (population <= maxPopLargeCity)
 	{
 		cityType = LargeCity;
 		cityTypeName = nameLargeCity;
+		iconActor->SetSize(radiusLargeCity * mapRatio.X, radiusLargeCity * mapRatio.Y);
 	}
 	else
 		sysLog.Log("Invalid City population");
@@ -176,6 +188,32 @@ void City::LoadDefinitions()
 	maxResourceChange = thePrefs.GetInt("CitySettings", "maxResourceChange");
 	if (!maxResourceChange)
 		maxResourceChange = maxResourceChangeFallBack;
+
+	radiusVillage = thePrefs.GetFloat("CitySettings", "radiusVillage");
+	if (!radiusVillage)
+		radiusVillage = radiusVillageFallBack;
+
+	radiusTown = thePrefs.GetFloat("CitySettings", "radiusTown");
+	if (!radiusTown)
+		radiusTown = radiusTownFallBack;
+
+	radiusSmallCity = thePrefs.GetFloat("CitySettings", "radiusSmallCity");
+	if (!radiusSmallCity)
+		radiusSmallCity = radiusSmallCityFallBack;
+
+	radiusLargeCity = thePrefs.GetFloat("CitySettings", "radiusLargeCity");
+	if (!radiusLargeCity)
+		radiusLargeCity = radiusLargeCityFallBack;
+
+	auto mapRatioX = thePrefs.GetFloat("LocationGeneratorSettings", "MapRatioX");
+	if (!mapRatioX)
+		mapRatioX = 1.0f;
+
+	auto mapRatioY = thePrefs.GetFloat("LocationGeneratorSettings", "MapRatioY");
+	if (!mapRatioY)
+		mapRatioY = 1.0f;
+
+	mapRatio = Vector2(mapRatioX, mapRatioY);
 }
 
 void City::SetResources()
@@ -194,6 +232,12 @@ void City::ReceiveMessage(Message *message)
 	auto current = 0;
 	auto change = 0;
 	auto percentage = 0;
+
+	if (message->GetMessageName() == "CameraChange")
+	{
+		// Cheap way to initialise stuff after everything else is done.
+		UpdateCityType();
+	}
 
 	if (message->GetMessageName() == dayMessageName)
 	{

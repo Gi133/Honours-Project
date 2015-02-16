@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTY_BASEPROPERTY_H
@@ -13,8 +13,7 @@
 #include "Gwen/Skin.h"
 #include "Gwen/Utility.h"
 
-
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
@@ -22,33 +21,33 @@ namespace Gwen
 		{
 			class GWEN_EXPORT Base : public Gwen::Controls::Base
 			{
-				public:
+			public:
 
-					GWEN_CONTROL_INLINE( Base, Gwen::Controls::Base )
-					{
-						SetHeight( 17 );
-					}
+				GWEN_CONTROL_INLINE(Base, Gwen::Controls::Base)
+				{
+					SetHeight(17);
+				}
 
-					virtual TextObject GetPropertyValue() = 0;
+				virtual TextObject GetPropertyValue() = 0;
 
-					virtual void SetPropertyValue( const TextObject& v, bool bFireChangeEvents = false ) = 0;
+				virtual void SetPropertyValue(const TextObject& v, bool bFireChangeEvents = false) = 0;
 
-					virtual bool IsEditing() = 0;
+				virtual bool IsEditing() = 0;
 
-					virtual void DoChanged()
-					{
-						Event::Information info;
-						info.String = GetPropertyValue();
+				virtual void DoChanged()
+				{
+					Event::Information info;
+					info.String = GetPropertyValue();
 
-						onChange.Call( this, info );
-					}
+					onChange.Call(this, info);
+				}
 
-					void OnPropertyValueChanged( Gwen::Controls::Base* /*control*/ )
-					{
-						DoChanged();
-					}
+				void OnPropertyValueChanged(Gwen::Controls::Base* /*control*/)
+				{
+					DoChanged();
+				}
 
-					Event::Caller	onChange;
+				Event::Caller	onChange;
 			};
 		}
 	}

@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_LISTBOX_H
@@ -12,8 +12,7 @@
 #include "Gwen/Controls/Layout/Table.h"
 #include "Gwen/Controls/ScrollControl.h"
 
-
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
@@ -21,50 +20,49 @@ namespace Gwen
 
 		class GWEN_EXPORT ListBox : public ScrollControl
 		{
-			public:
-				
-				GWEN_CONTROL( ListBox, ScrollControl );
+		public:
 
-				typedef std::list<Layout::TableRow*> Rows;
+			GWEN_CONTROL(ListBox, ScrollControl);
 
-				Layout::TableRow* AddItem( const TextObject& strLabel, const String& strName = "" );
+			typedef std::list<Layout::TableRow*> Rows;
 
-				void RemoveItem( Layout::TableRow * row );
+			Layout::TableRow* AddItem(const TextObject& strLabel, const String& strName = "");
 
-				void Render( Skin::Base* skin );
-				void Layout( Skin::Base* skin );
+			void RemoveItem(Layout::TableRow * row);
 
-				void UnselectAll();			
+			void Render(Skin::Base* skin);
+			void Layout(Skin::Base* skin);
 
-				void SetAllowMultiSelect( bool bMultiSelect ){ m_bMultiSelect = bMultiSelect; }
-				bool AllowMultiSelect() const { return m_bMultiSelect; }
+			void UnselectAll();
 
-				const ListBox::Rows& GetSelectedRows(){ return m_SelectedRows; }
+			void SetAllowMultiSelect(bool bMultiSelect){ m_bMultiSelect = bMultiSelect; }
+			bool AllowMultiSelect() const { return m_bMultiSelect; }
 
-				virtual Layout::TableRow* GetSelectedRow();
-				virtual Gwen::String GetSelectedRowName();
+			const ListBox::Rows& GetSelectedRows(){ return m_SelectedRows; }
 
-				virtual void SetSelectedRow( Gwen::Controls::Base* pRow, bool bClearOthers = true );
-				virtual void SelectByString( const TextObject& string, bool bClearOthers = true );
-				
-				Gwen::Event::Caller	onRowSelected;
+			virtual Layout::TableRow* GetSelectedRow();
+			virtual Gwen::String GetSelectedRowName();
 
-				Controls::Layout::Table* GetTable() { return m_Table; }
-				virtual void Clear();
+			virtual void SetSelectedRow(Gwen::Controls::Base* pRow, bool bClearOthers = true);
+			virtual void SelectByString(const TextObject& string, bool bClearOthers = true);
 
-				// Pass through, to embedded table
-				void SetColumnCount( int iCount ) { m_Table->SetColumnCount( iCount ); }
-				void SetColumnWidth( int iCount, int iSize ) { m_Table->SetColumnWidth( iCount, iSize ); }
+			Gwen::Event::Caller	onRowSelected;
 
-			protected:
+			Controls::Layout::Table* GetTable() { return m_Table; }
+			virtual void Clear();
 
-				
-				void OnRowSelected( Base* pControl );
-				
-				Controls::Layout::Table*		m_Table;
-				ListBox::Rows					m_SelectedRows;
+			// Pass through, to embedded table
+			void SetColumnCount(int iCount) { m_Table->SetColumnCount(iCount); }
+			void SetColumnWidth(int iCount, int iSize) { m_Table->SetColumnWidth(iCount, iSize); }
 
-				bool m_bMultiSelect;
+		protected:
+
+			void OnRowSelected(Base* pControl);
+
+			Controls::Layout::Table*		m_Table;
+			ListBox::Rows					m_SelectedRows;
+
+			bool m_bMultiSelect;
 		};
 	}
 }

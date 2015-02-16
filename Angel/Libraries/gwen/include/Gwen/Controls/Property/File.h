@@ -1,4 +1,3 @@
-
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTY_FILE_H
 #define GWEN_CONTROLS_PROPERTY_FILE_H
@@ -7,7 +6,7 @@
 #include "Gwen/Controls/Button.h"
 #include "Gwen/Controls/Dialogs/FolderOpen.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
@@ -15,39 +14,37 @@ namespace Gwen
 		{
 			class File : public Property::Text
 			{
-				GWEN_CONTROL_INLINE( File, Property::Text )
+				GWEN_CONTROL_INLINE(File, Property::Text)
 				{
-					Controls::Button* pButton = new Controls::Button( this );
-					pButton->Dock( Pos::Right );
-					pButton->SetText( "..." );
-					pButton->SetWidth( 20 );
-					pButton->onPress.Add( this, &ThisClass::OnButtonPress );
-					pButton->SetMargin( Margin( 1, 1, 1, 2 ) );
+					Controls::Button* pButton = new Controls::Button(this);
+					pButton->Dock(Pos::Right);
+					pButton->SetText("...");
+					pButton->SetWidth(20);
+					pButton->onPress.Add(this, &ThisClass::OnButtonPress);
+					pButton->SetMargin(Margin(1, 1, 1, 2));
 
 					m_strDialogName = "Find File";
 					m_strFileExtension = "*.*";
 				}
 
-				File* SetExtension( const Gwen::String& string )
+				File* SetExtension(const Gwen::String& string)
 				{
 					m_strFileExtension = string;
 					return this;
 				}
 
-				void OnButtonPress( Controls::Base* control )
+				void OnButtonPress(Controls::Base* control)
 				{
-					Gwen::Dialogs::FileOpen( true, m_strDialogName, m_TextBox->GetText().Get(), m_strFileExtension, this, &Folder::EventFilePicked );
+					Gwen::Dialogs::FileOpen(true, m_strDialogName, m_TextBox->GetText().Get(), m_strFileExtension, this, &Folder::EventFilePicked);
 				}
 
-				void EventFilePicked( const Gwen::TextObject& string )
+				void EventFilePicked(const Gwen::TextObject& string)
 				{
-					m_TextBox->SetText( string );
+					m_TextBox->SetText(string);
 				}
-
 
 				String	m_strDialogName;
 				String	m_strFileExtension;
-
 			};
 		}
 	}

@@ -1,10 +1,9 @@
 #pragma once
 #include "UIWindow.h"
-class UIObjectInfo:
+class UIObjectInfo :
 	public UIWindow
 {
 public:
 	UIObjectInfo();
 	~UIObjectInfo();
 };
-

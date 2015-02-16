@@ -23,7 +23,6 @@ private:
 	std::unique_ptr<HUDActor> background;
 
 	Vector2 windowSize, windowTopLeft, windowBottomRight, windowCenter;
-	
 
 	std::string UILayerName, windowBackgroundColor, windowAnchorName;
 	float windowBackgroundAlpha;
@@ -65,5 +64,9 @@ public:
 	void SetLayer(const std::string layerName){ background->SetLayer(layerName); } // To change the layer name from the default (UILayer).
 	int GetLayer(){ return background->GetLayer(); }
 
-	std::string GetWindowAnchor(){ return windowAnchorName; } 
+	Vector2 GetBackgroundSize(){ return background->GetSize(); }
+
+	Vector2 GetCenterPosition(){ return windowCenter; }
+
+	std::string GetWindowAnchor(){ return windowAnchorName; }
 };

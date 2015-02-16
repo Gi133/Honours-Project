@@ -13,6 +13,10 @@ namespace
 	const auto maxThreatLowNameFallBack = "Weak";
 	const auto maxThreatMedNameFallBack = "Dangerous";
 	const auto maxThreatHighNameFallBack = "Deadly";
+
+	const auto colorThreatLowFallBack = "#C68C8C";
+	const auto colorThreatMedFallBack = "#851818";
+	const auto colorThreatHighFallBack = "#EE2C2C";
 }
 
 Location::Location()
@@ -21,6 +25,9 @@ Location::Location()
 	threatLevelName = maxThreatLowName = maxThreatMedName = maxThreatHighName = "";
 
 	LoadDefinitions();
+
+	iconActor->SetColor(0.0f, 0.0f, 0.0f);
+	iconActor->SetDrawShape(ADS_Square);
 }
 
 Location::~Location()
@@ -60,18 +67,39 @@ void Location::LoadDefinitions()
 	maxThreatHighName = thePrefs.GetString("LocationSettings", "maxThreatHighName");
 	if (maxThreatHighName.empty())
 		maxThreatHighName = maxThreatHighNameFallBack;
+
+	colorThreatLow = thePrefs.GetString("LocationSettings", "colorThreatLow");
+	if (colorThreatLow.empty())
+		colorThreatLow = colorThreatLowFallBack;
+
+	colorThreatMed = thePrefs.GetString("LocationSettings", "colorThreatMed");
+	if (colorThreatMed.empty())
+		colorThreatMed = colorThreatMedFallBack;
+
+	colorThreatHigh = thePrefs.GetString("LocationSettings", "colorThreatHigh");
+	if (colorThreatHigh.empty())
+		colorThreatHigh = colorThreatHighFallBack;
 }
 
 void Location::UpdateType()
 {
 	if (threatLevel <= maxThreatLow)
+	{
 		threatLevelName = maxThreatLowName;
+		iconActor->SetColor(Color::FromHexString(colorThreatLow));
+	}
 	else if (threatLevel <= maxThreatMed)
+	{
 		threatLevelName = maxThreatMedName;
+		iconActor->SetColor(Color::FromHexString(colorThreatMed));
+	}
 	else if (threatLevel <= maxThreatHigh)
+	{
 		threatLevelName = maxThreatHighName;
+		iconActor->SetColor(Color::FromHexString(colorThreatHigh));
+	}
 	else
-		sysLog.Log("Invalid City population");
+		sysLog.Log("Invalid location threat level.");
 }
 
 void Location::SetThreatLevel()

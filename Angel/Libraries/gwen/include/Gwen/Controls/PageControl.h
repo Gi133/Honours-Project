@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2012 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_PAGECONTROL_H
@@ -11,7 +11,7 @@
 #include "Gwen/Controls/Base.h"
 #include "Gwen/Controls/Button.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
@@ -19,14 +19,14 @@ namespace Gwen
 		{
 			static const unsigned int MaxPages = 64;
 
-			GWEN_CONTROL( PageControl, Base );
+			GWEN_CONTROL(PageControl, Base);
 
-			virtual void SetPageCount( unsigned int i );
+			virtual void SetPageCount(unsigned int i);
 			virtual unsigned int GetPageCount(){ return m_iPages; }
 
-			virtual void ShowPage( unsigned int i );
+			virtual void ShowPage(unsigned int i);
 			virtual unsigned int GetPageNumber(){ return m_iCurrentPage; }
-			virtual Controls::Base* GetPage( unsigned int i );
+			virtual Controls::Base* GetPage(unsigned int i);
 			virtual Controls::Base* GetCurrentPage();
 
 			virtual void NextPage();
@@ -38,29 +38,27 @@ namespace Gwen
 			Controls::Button* FinishButton(){ return m_Finish; }
 			Controls::Label* Label(){ return m_Label; }
 
-			void SetUseFinishButton( bool b ){ m_bFinish = b; }
+			void SetUseFinishButton(bool b){ m_bFinish = b; }
 			bool GetUseFinishButton(){ return m_bFinish; }
 
 			Event::Caller	onPageChanged;
 			Event::Caller	onFinish;
-			
-			protected:
 
-				virtual void HideAll();
+		protected:
 
-				unsigned int			m_iCurrentPage;
-				unsigned int			m_iPages;
-				Controls::Base*			m_pPages[MaxPages];
+			virtual void HideAll();
 
-				Controls::Button*		m_Next;
-				Controls::Button*		m_Back;
-				Controls::Button*		m_Finish;
-				Controls::Label*		m_Label;
+			unsigned int			m_iCurrentPage;
+			unsigned int			m_iPages;
+			Controls::Base*			m_pPages[MaxPages];
 
-				bool					m_bFinish;
+			Controls::Button*		m_Next;
+			Controls::Button*		m_Back;
+			Controls::Button*		m_Finish;
+			Controls::Label*		m_Label;
 
+			bool					m_bFinish;
 		};
-
 	}
 }
 #endif

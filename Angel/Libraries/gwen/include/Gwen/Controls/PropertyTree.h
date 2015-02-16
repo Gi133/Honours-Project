@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTYTREE_H
@@ -15,40 +15,36 @@
 #include "Gwen/Controls/TreeControl.h"
 #include "Gwen/Controls/Properties.h"
 
-
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
 		class PropertyTreeNode : public TreeNode
 		{
-			public:
+		public:
 
-				GWEN_CONTROL_INLINE( PropertyTreeNode, TreeNode )
-				{
-					m_Title->SetTextColorOverride( GetSkin()->Colors.Properties.Title );
-				}
+			GWEN_CONTROL_INLINE(PropertyTreeNode, TreeNode)
+			{
+				m_Title->SetTextColorOverride(GetSkin()->Colors.Properties.Title);
+			}
 
-				virtual void Render( Skin::Base* skin )
-				{
-					skin->DrawPropertyTreeNode( this, m_InnerPanel->X(), m_InnerPanel->Y() );
-				}
-
+			virtual void Render(Skin::Base* skin)
+			{
+				skin->DrawPropertyTreeNode(this, m_InnerPanel->X(), m_InnerPanel->Y());
+			}
 		};
 
 		class PropertyTree : public TreeControl
 		{
-			public:
+		public:
 
-				GWEN_CONTROL_INLINE( PropertyTree, TreeControl )
-				{
+			GWEN_CONTROL_INLINE(PropertyTree, TreeControl)
+			{
+			}
 
-				}
-
-				Properties* Add( const TextObject& text );
-				Properties* Find( const TextObject& text );
+			Properties* Add(const TextObject& text);
+			Properties* Find(const TextObject& text);
 		};
-
 	}
 }
 #endif

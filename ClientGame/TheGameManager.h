@@ -24,13 +24,13 @@ private:
 	std::unique_ptr<UIManager> uiManager;
 	std::shared_ptr<TimeManager> timeManager;
 	std::unique_ptr<LocationGenerator> locationGenerator;
-	std::vector<std::unique_ptr<City>> cityContainer;
-	std::vector<std::unique_ptr<Location>> locationContainer;
-	std::vector<std::unique_ptr<NPC>> npcContainer;
+	std::vector<std::shared_ptr<City>> cityContainer;
+	std::vector<std::shared_ptr<Location>> locationContainer;
+	std::vector<std::shared_ptr<NPC>> npcContainer;
 
 	Vector2 mapSize, halfMapSize;
 
-	std::vector<std::shared_ptr<std::thread>> threadContainer;
+	std::vector<std::unique_ptr<std::thread>> threadContainer;
 	std::mutex cityContainerMutex, locationContainerMutex, positionMutex;
 
 	void GenerateMap();

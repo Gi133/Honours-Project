@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2011 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_TOOLBAR_H
@@ -12,52 +12,46 @@
 #include "Gwen/Controls/Base.h"
 #include "Gwen/Skin.h"
 
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
-
 		class ToolBarButton : public Gwen::Controls::Button
 		{
-			GWEN_CONTROL_INLINE( ToolBarButton, Gwen::Controls::Button )
+			GWEN_CONTROL_INLINE(ToolBarButton, Gwen::Controls::Button)
 			{
-				SetSize( 20, 20 );
-				Dock( Pos::Left );
+				SetSize(20, 20);
+				Dock(Pos::Left);
 			}
 
 			virtual bool ShouldDrawBackground()
-			{ 
-				return IsHovered(); 
+			{
+				return IsHovered();
 			}
-
 		};
 
 		class ToolBarStrip : public Base
 		{
-			GWEN_CONTROL_INLINE( ToolBarStrip, Base )
+			GWEN_CONTROL_INLINE(ToolBarStrip, Base)
 			{
-				SetSize( 25, 25 );
-				SetPadding( Padding( 2, 2, 2, 2 ) );
+				SetSize(25, 25);
+				SetPadding(Padding(2, 2, 2, 2));
 			}
 
-			virtual void Render( Skin::Base* skin )
+			virtual void Render(Skin::Base* skin)
 			{
-				skin->DrawMenuStrip( this );
+				skin->DrawMenuStrip(this);
 			}
 
-			virtual ToolBarButton* Add( const TextObject& Text, const TextObject& Icon )
+			virtual ToolBarButton* Add(const TextObject& Text, const TextObject& Icon)
 			{
-				ToolBarButton* pButton = new ToolBarButton( this );
-				pButton->SetToolTip( Text );
-				pButton->SetImage( Icon );
+				ToolBarButton* pButton = new ToolBarButton(this);
+				pButton->SetToolTip(Text);
+				pButton->SetImage(Icon);
 
 				return pButton;
 			}
-
 		};
-
-		
 	}
-
 }
 #endif

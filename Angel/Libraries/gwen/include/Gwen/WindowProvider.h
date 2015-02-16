@@ -6,11 +6,10 @@ namespace Gwen
 {
 	class WindowProvider
 	{
-		public:
+	public:
 
-			virtual void* GetWindow() = 0;
+		virtual void* GetWindow() = 0;
 	};
-
 }
 
 #endif

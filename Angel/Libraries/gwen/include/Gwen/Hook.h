@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_HOOK_H
@@ -19,63 +19,62 @@ namespace Gwen
 	{
 		class GWEN_EXPORT BaseHook
 		{
-			public:
+		public:
 
-				virtual bool OnControlClicked( Gwen::Controls::Base*, int /*iMouseX*/, int /*iMouseY*/ ){ return false; };
+			virtual bool OnControlClicked(Gwen::Controls::Base*, int /*iMouseX*/, int /*iMouseY*/){ return false; };
 		};
 
 		typedef std::list<BaseHook*> HookList;
 
 		GWEN_EXPORT HookList& GetHookList();
 
-		GWEN_EXPORT void AddHook( BaseHook* pHook );
-		GWEN_EXPORT void RemoveHook( BaseHook* pHook );
+		GWEN_EXPORT void AddHook(BaseHook* pHook);
+		GWEN_EXPORT void RemoveHook(BaseHook* pHook);
 
 		template< typename fnc >
-		bool  CallHook( fnc f )
+		bool  CallHook(fnc f)
 		{
-			for ( HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it )
+			for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
 			{
-				if ( ((*it)->*f)() ) return true;
+				if (((*it)->*f)()) return true;
 			}
 
 			return false;
 		}
 
 		template< typename fnc, typename AA >
-		bool CallHook( fnc f, AA a )
+		bool CallHook(fnc f, AA a)
 		{
-			for ( HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it )
+			for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
 			{
-				if ( ((*it)->*f)( a ) ) return true;
+				if (((*it)->*f)(a)) return true;
 			}
 
 			return false;
 		}
 
 		template< typename fnc, typename AA, typename AB >
-		bool CallHook( fnc f, AA a, AB b )
+		bool CallHook(fnc f, AA a, AB b)
 		{
-			for ( HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it )
+			for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
 			{
-				if ( ((*it)->*f)( a, b ) ) return true;
+				if (((*it)->*f)(a, b)) return true;
 			}
 
 			return false;
 		}
 
 		template< typename fnc, typename AA, typename AB, typename AC >
-		bool CallHook( fnc f, AA a, AB b, AC c )
+		bool CallHook(fnc f, AA a, AB b, AC c)
 		{
-			for ( HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it )
+			for (HookList::iterator it = GetHookList().begin(); it != GetHookList().end(); ++it)
 			{
-				if ( ((*it)->*f)( a, b, c ) ) return true;
+				if (((*it)->*f)(a, b, c)) return true;
 			}
 
 			return false;
 		}
 	}
-
 }
 
 #endif

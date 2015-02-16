@@ -101,7 +101,7 @@
 #define luaC_white(g)	cast(lu_byte, (g)->currentwhite & WHITEBITS)
 
 #define luaC_condGC(L,c) \
-		{if (G(L)->GCdebt > 0) {c;}; condchangemem(L);}
+				{if (G(L)->GCdebt > 0) {c;}; condchangemem(L);}
 #define luaC_checkGC(L)		luaC_condGC(L, luaC_step(L);)
 
 #define luaC_barrier(L,p,v) { if (valiswhite(v) && isblack(obj2gco(p)))  \
@@ -111,14 +111,14 @@
 	luaC_barrierback_(L,p); }
 
 #define luaC_objbarrier(L,p,o)  \
-		{ if (iswhite(obj2gco(o)) && isblack(obj2gco(p))) \
+				{ if (iswhite(obj2gco(o)) && isblack(obj2gco(p))) \
 		luaC_barrier_(L,obj2gco(p),obj2gco(o)); }
 
 #define luaC_objbarrierback(L,p,o)  \
-      { if (iswhite(obj2gco(o)) && isblack(obj2gco(p))) luaC_barrierback_(L,p); }
+	        { if (iswhite(obj2gco(o)) && isblack(obj2gco(p))) luaC_barrierback_(L,p); }
 
 #define luaC_barrierproto(L,p,c) \
-      { if (isblack(obj2gco(p))) luaC_barrierproto_(L,p,c); }
+	        { if (isblack(obj2gco(p))) luaC_barrierproto_(L,p,c); }
 
 LUAI_FUNC void luaC_freeallobjects(lua_State *L);
 LUAI_FUNC void luaC_step(lua_State *L);

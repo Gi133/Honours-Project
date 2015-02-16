@@ -2,7 +2,7 @@
 	GWEN
 	Copyright (c) 2010 Facepunch Studios
 	See license in Gwen.h
-*/
+	*/
 
 #pragma once
 #ifndef GWEN_CONTROLS_PROPERTIES_H
@@ -16,68 +16,64 @@
 #include "Gwen/Gwen.h"
 #include "Gwen/Skin.h"
 
-
-namespace Gwen 
+namespace Gwen
 {
 	namespace Controls
 	{
-
 		class PropertyRow;
 
 		class GWEN_EXPORT Properties : public Base
 		{
-			public:
+		public:
 
-				GWEN_CONTROL( Properties, Base );
+			GWEN_CONTROL(Properties, Base);
 
-				virtual void PostLayout( Gwen::Skin::Base* skin );
+			virtual void PostLayout(Gwen::Skin::Base* skin);
 
-				PropertyRow* Add( const TextObject& text, const TextObject& value = L"" );
-				PropertyRow* Add( const TextObject& text, Property::Base* pProp, const TextObject& value = L"" );
-				PropertyRow* Find( const TextObject& text );
+			PropertyRow* Add(const TextObject& text, const TextObject& value = L"");
+			PropertyRow* Add(const TextObject& text, Property::Base* pProp, const TextObject& value = L"");
+			PropertyRow* Find(const TextObject& text);
 
-				virtual int GetSplitWidth();
+			virtual int GetSplitWidth();
 
-				virtual void Clear();
+			virtual void Clear();
 
-			protected:
+		protected:
 
-				virtual void OnSplitterMoved( Controls::Base * control );
+			virtual void OnSplitterMoved(Controls::Base * control);
 
-				Controls::SplitterBar*	m_SplitterBar;
-
+			Controls::SplitterBar*	m_SplitterBar;
 		};
 
 		class GWEN_EXPORT PropertyRow : public Base
 		{
-			public:
+		public:
 
-				GWEN_CONTROL( PropertyRow, Base );
+			GWEN_CONTROL(PropertyRow, Base);
 
-				virtual Label* GetLabel(){ return m_Label; }
-				virtual void SetProperty( Property::Base* prop );
-				virtual Property::Base* GetProperty(){ return m_Property; }
+			virtual Label* GetLabel(){ return m_Label; }
+			virtual void SetProperty(Property::Base* prop);
+			virtual Property::Base* GetProperty(){ return m_Property; }
 
-				virtual void Layout( Gwen::Skin::Base* skin );
-				virtual void Render( Gwen::Skin::Base* skin );
+			virtual void Layout(Gwen::Skin::Base* skin);
+			virtual void Render(Gwen::Skin::Base* skin);
 
-				virtual bool IsEditing(){ return m_Property && m_Property->IsEditing(); }
-				virtual bool IsHovered(){ return BaseClass::IsHovered() || (m_Property && m_Property->IsHovered()); }
-				virtual void OnEditingChanged();
-				virtual void OnHoverChanged();
+			virtual bool IsEditing(){ return m_Property && m_Property->IsEditing(); }
+			virtual bool IsHovered(){ return BaseClass::IsHovered() || (m_Property && m_Property->IsHovered()); }
+			virtual void OnEditingChanged();
+			virtual void OnHoverChanged();
 
-				Event::Caller	onChange;
+			Event::Caller	onChange;
 
-			protected:
+		protected:
 
-				void OnPropertyValueChanged( Gwen::Controls::Base* control );
+			void OnPropertyValueChanged(Gwen::Controls::Base* control);
 
-				Label*			m_Label;
-				Property::Base*	m_Property;
+			Label*			m_Label;
+			Property::Base*	m_Property;
 
-				bool			m_bLastEditing;
-				bool			m_bLastHover;
-
+			bool			m_bLastEditing;
+			bool			m_bLastHover;
 		};
 	}
 }

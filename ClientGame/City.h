@@ -21,6 +21,9 @@ private:
 		maxConsumptionPerDay, minPopulationChange, maxPopulationChange, minResourceChange, maxResourceChange;
 	std::string nameVillage, nameTown, nameSmallCity, nameLargeCity, tickMessageName, dayMessageName, monthMessageName;
 
+	float radiusVillage, radiusTown, radiusSmallCity, radiusLargeCity;
+	Vector2 mapRatio;
+
 	CityType cityType;
 	std::string cityTypeName;
 	std::unique_ptr<Inventory> inventory;
