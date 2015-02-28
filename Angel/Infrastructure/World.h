@@ -113,6 +113,24 @@ public:
 	std::vector<Vec3ui> GetVideoModes();
 
 	/**
+	* Changes the name of the window while the game is running.
+	* @param windowName The new string to go in the window's title bar
+	*/
+	void SetWindowName(const String& windowName);
+
+	/**
+	* Changes the name of the window while the game is running.
+	* @param windowNameAppend The new string to append to the current window name.
+	*/
+	void AppendToWindowName(const String& windowNameAppend);
+
+	/**
+	* Changes the name of the window while the game is running.
+	* Changes name back to one set using SetWindowName or in game initialization.
+	*/
+	void RemoveAppendToWindowName();
+
+	/**
 	 * Changes the dimension of the window while the game is running. Note that the
 	 *  behavior is undefined if this method is called while in fullscreen mode.
 	 *
@@ -547,6 +565,7 @@ private:
 	float _systemEstimatedDT;
 #else
 	GLFWwindow* _mainWindow;
+	String _windowName;
 #endif
 	bool _highResScreen;
 	bool _antiAliased;

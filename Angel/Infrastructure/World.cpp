@@ -241,6 +241,7 @@ bool World::Initialize(unsigned int windowWidth, unsigned int windowHeight, Stri
 	}
 
 	_mainWindow = glfwCreateWindow(windowWidth, windowHeight, windowName.c_str(), openOn, NULL);
+	_windowName = windowName;
 	glfwMakeContextCurrent(_mainWindow);
 
 	int fbw, fbh;
@@ -366,6 +367,28 @@ std::vector<Vec3ui> World::GetVideoModes()
 #endif
 
 	return forReturn;
+}
+
+void World::SetWindowName(const String& windowName)
+{
+#if !ANGEL_MOBILE
+	_windowName = windowName;
+	glfwSetWindowTitle(_mainWindow, _windowName.c_str());
+#endif
+}
+
+void World::AppendToWindowName(const String& windowNameAppend)
+{
+#if !ANGEL_MOBILE
+	glfwSetWindowTitle(_mainWindow, (_windowName + "--" + windowNameAppend).c_str());
+#endif
+}
+
+void World::RemoveAppendToWindowName()
+{
+#if !ANGEL_MOBILE
+	glfwSetWindowTitle(_mainWindow, _windowName.c_str());
+#endif
 }
 
 void World::AdjustWindow(int windowWidth, int windowHeight, const String& windowName)

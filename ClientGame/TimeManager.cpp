@@ -21,6 +21,8 @@ TimeManager::TimeManager()
 	day = month = year = 1;
 	tickMessageName = dayMessageName = monthMessageName = yearMessageName = "";
 
+	started = false;
+
 	LoadConfig();
 	theSwitchboard.SubscribeTo(this, tickMessageName);
 }
@@ -31,7 +33,8 @@ TimeManager::~TimeManager()
 
 void TimeManager::Update()
 {
-	CheckTime();
+	if (started)
+		CheckTime();
 }
 
 void TimeManager::CheckTime()

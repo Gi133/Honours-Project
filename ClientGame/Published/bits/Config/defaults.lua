@@ -31,9 +31,9 @@ FontSettings =
 	fontContentName = "ContentFont",
 }
 
-TimerSettings = 
+TimeManagerSettings = 
 {
-	tickTime = 2,
+	tickTime = 1,
 	tickMessageName = "Tick",
 	maxTicksDay = 1,
 	dayMessageName = "Day",
@@ -53,7 +53,7 @@ NameGeneratorSettings =
 
 MapGeneratorSettings = 
 {
-	cities = 20,
+	cities = 10,
 	locations = 22,
 }
 
@@ -94,9 +94,9 @@ CitySettings =
 
 LocationGeneratorSettings =
 {
-	maxAttempts = 10,
-	cityRadius = 60.0,
-	locationRadius = 180.0,
+	maxAttempts = 20,
+	cityRadius = 40.0,
+	locationRadius = 60.0,
 	mapSizeX = 1000,
 	mapSizeY = 1000,
 }

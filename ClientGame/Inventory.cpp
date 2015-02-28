@@ -1,10 +1,16 @@
 #include "stdafx.h"
 #include "Inventory.h"
 
-Inventory::Inventory(bool isCity /* = false */, int startingBagNumber /* = 1 */)
+Inventory::Inventory(const bool isCity /* = false */, int startingBagNumber /* = 1 */, int StartingGold /* = 0 */)
 {
 	city = isCity;
 
+	if (StartingGold < 0)
+		StartingGold = 0;
+	purse.reset(new InventoryPurse(StartingGold));
+
+	if (startingBagNumber <= 0)
+		startingBagNumber = 1;
 	AddBag(startingBagNumber);
 }
 

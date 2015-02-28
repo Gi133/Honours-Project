@@ -1,5 +1,6 @@
 #pragma once
 #include "InventoryBag.h"
+#include "InventoryPurse.h"
 
 class Inventory
 {
@@ -7,19 +8,20 @@ private:
 	bool city; // Bool to store whether the inventory belongs to a city or not.
 
 	std::vector<std::shared_ptr<InventoryBag>> bagContainer;
+	std::unique_ptr<InventoryPurse> purse;
 
 public:
-	Inventory(bool isCity = false, int startingBagNumber = 1);
+	Inventory(const bool isCity = false, int startingBagNumber = 1, int StartingGold = 0);
 	~Inventory();
 
 	// Add bags.
-	void AddBag(int numBag = 1);
+	void AddBag(const int numBag = 1);
 
 	// Resource Management
-	void AddToResource(std::string resourceName, int quantity);
-	void SubtractFromResource(std::string resourceName, int quantity);
-	void SetResource(std::string resourceName, int quantity);
-	int GetTotalResourceAmount(std::string resourceName);
+	void AddToResource(const std::string resourceName, const int quantity);
+	void SubtractFromResource(const std::string resourceName, const int quantity);
+	void SetResource(const std::string resourceName, const int quantity);
+	int GetTotalResourceAmount(const std::string resourceName);
 
 	// Resource Management via Iterator.
 	// Mostly used in loops.
@@ -32,4 +34,11 @@ public:
 	void SubtractFromResource(const int bagNumber, const int iter, const int quantity);
 	int GetResourceInBag(const int bagNumber, const int iter);
 	int GetTotalResourceAmount(const int iter);
+
+	// Gold Managing.
+	void SetGold(const int newGold, const bool checkLimit = true){ purse->SetGold(newGold, checkLimit); }
+	void AddGold(const int goldToAdd, const bool checkLimit = true){ purse->AddGold(goldToAdd, checkLimit); } // Dual Purpose, can add and subtract.
+	void SetGoldLimit(const int newGoldLimit) { SetGoldLimit(newGoldLimit); }
+	int GetGold(){ return purse->GetGold(); }
+	int GetGoldLimit(){ return purse->GetGoldLimit(); }
 };

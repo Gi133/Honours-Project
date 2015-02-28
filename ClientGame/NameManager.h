@@ -19,6 +19,8 @@ private:
 	// TODO: Attempt to make it more in-line with C++11 standard.
 	std::vector<std::string>* nameContainer;
 
+	unsigned int duplicateNumber;
+
 	void LoadFileLocations(); // Function to load all the file locations.
 
 	// Function to load names from files into a vector of strings.

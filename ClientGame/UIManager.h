@@ -4,6 +4,7 @@
 #include "UIMap.h"
 #include "UIObjectInfo.h"
 #include "TimeManager.h"
+#include "Map.h"
 
 class UIManager
 {
@@ -26,5 +27,5 @@ public:
 	void Update();
 
 	void AssignTimeManager(std::weak_ptr<TimeManager> _timeManager){ if (windowWorldInfo.get()){ windowWorldInfo->AssignTimeManager(_timeManager); } }
-	void SetupMapActors(std::reference_wrapper<std::vector<std::shared_ptr<City>>> refCityContainer, std::reference_wrapper<std::vector<std::shared_ptr<Location>>> refLocationContainer);
+	void SetupMapActors();
 };

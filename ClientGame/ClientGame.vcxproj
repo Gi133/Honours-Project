@@ -181,8 +181,10 @@ cd ..\Tools\BuildScripts\
     <ClCompile Include="City.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="InventoryBag.cpp" />
+    <ClCompile Include="InventoryPurse.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="LocationGenerator.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapPOI.cpp" />
     <ClCompile Include="NameManager.cpp" />
     <ClCompile Include="NPC.cpp" />
@@ -210,8 +212,10 @@ cd ..\Tools\BuildScripts\
     <ClInclude Include="City.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryBag.h" />
+    <ClInclude Include="InventoryPurse.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="LocationGenerator.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="MapPOI.h" />
     <ClInclude Include="NameManager.h" />
     <ClInclude Include="NPC.h" />

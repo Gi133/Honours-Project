@@ -52,6 +52,8 @@ dlldata.c
 *.sbr
 *.tlb
 *.tli
+*.tlog
+*.idb
 *.tlh
 *.tmp
 *.tmp_proj

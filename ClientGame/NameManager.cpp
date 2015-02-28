@@ -23,6 +23,8 @@ NameManager::NameManager()
 	nameContainer = nullptr;
 	cityNameLocation = npcNameLocation = npcSurnameLocation = "";
 
+	duplicateNumber = 0;
+
 	LoadFileLocations();
 
 	LoadNames(cityNameLocation, cityNameContainer);
@@ -71,6 +73,7 @@ std::string NameManager::GenerateName(const int mode, bool isUnique /* = true */
 {
 	bool isUniqueFail = false;
 	int num = 0;
+	std::string returnName = "";
 
 	// Check mode and adjust targets appropriately.
 	switch (mode)
@@ -112,16 +115,19 @@ std::string NameManager::GenerateName(const int mode, bool isUnique /* = true */
 			}
 	} while (isUniqueFail);
 
-	// Catch the unlikely scenario of not finding a name.
+	// If unique name could not be generated then add a number to it and alert the user.
 	if (isUniqueFail)
 	{
+		duplicateNumber++;
+
 		sysLog.Log("NAME GENERATION FAILED!");
 		sysLog.Log("Name: " + nameContainer->at(num));
+		sysLog.Log("UNIQUE NAMES HAVE BEEN RESET NAME APPENDED WITH THE NUMBER " + duplicateNumber);
 
-		//Display a Message Box for the user.
-		MessageBox(NULL, L"Something went horribly wrong.\nLog file saved.\nThe application will now exit.", L"ERROR!", MB_OK); // Windows message box code.
-		theWorld.StopGame();
+		returnName = nameContainer->at(num) + IntToString(duplicateNumber);
 	}
+	else
+		returnName = nameContainer->at(num);
 
-	return nameContainer->at(num);
+	return returnName;
 }

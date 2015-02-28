@@ -147,6 +147,12 @@
     <ClCompile Include="UIObjectInfo.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
+    <ClCompile Include="InventoryPurse.cpp">
+      <Filter>SourceCode\Code\Core\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>SourceCode\Code\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -216,6 +222,12 @@
     </ClInclude>
     <ClInclude Include="UIObjectInfo.h">
       <Filter>SourceCode\Headers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryPurse.h">
+      <Filter>SourceCode\Headers\Core\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>SourceCode\Headers\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

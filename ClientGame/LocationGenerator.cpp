@@ -97,6 +97,7 @@ Vector2 LocationGenerator::GeneratePosition(int mode, std::vector<std::shared_pt
 	// Generate city info.
 	for (auto i = 0; i < maxAttempts; i++)
 	{
+		ruleFail = false;
 		position = RandomPosInMap();
 
 		// Check if location is valid.
@@ -121,11 +122,11 @@ Vector2 LocationGenerator::GeneratePosition(int mode, std::vector<std::shared_pt
 		}
 
 		// If it is valid then return the position.
-		if (!ruleFail)
-			break;
-		else // Else regenerate position and check again.
+		if (ruleFail)
 			sysLog.Log("Failed to Generate location at position: " + Vector2ToString(position));
+		else
+			return position;
 	}
 
-	return position;
+	return NULL; // Could not find a city location.
 }
