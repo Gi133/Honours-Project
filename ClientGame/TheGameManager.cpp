@@ -34,8 +34,6 @@ void TheGameManager::Render()
 
 void TheGameManager::Update(float dt)
 {
-	
-
 	uiManager->Update();
 	timeManager->Update();
 }
@@ -48,4 +46,3 @@ void TheGameManager::ReceiveMessage(Message *message)
 		timeManager->StartTime();
 	}
 }
-
