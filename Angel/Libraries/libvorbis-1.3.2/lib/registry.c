@@ -19,8 +19,8 @@
 #include "codec_internal.h"
 #include "registry.h"
 #include "misc.h"
-/* seems like major overkill now; the backend numbers will grow into
-   the infrastructure soon enough */
+ /* seems like major overkill now; the backend numbers will grow into
+	the infrastructure soon enough */
 
 extern const vorbis_func_floor     floor0_exportbundle;
 extern const vorbis_func_floor     floor1_exportbundle;

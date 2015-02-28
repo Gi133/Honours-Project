@@ -43,7 +43,7 @@
 #include "Gwen/Controls/Canvas.h"
 #include "Gwen/Align.h"
 
-// Enable the hook system (se Hook.h)
+	// Enable the hook system (se Hook.h)
 #define GWEN_HOOKSYSTEM
 
 namespace Gwen

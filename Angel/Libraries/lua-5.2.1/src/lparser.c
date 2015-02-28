@@ -30,9 +30,9 @@
 
 #define hasmultret(k)		((k) == VCALL || (k) == VVARARG)
 
-/*
-** nodes for block list (list of active blocks)
-*/
+   /*
+   ** nodes for block list (list of active blocks)
+   */
 typedef struct BlockCnt {
 	struct BlockCnt *previous;  /* chain */
 	short firstlabel;  /* index of first label in this block */

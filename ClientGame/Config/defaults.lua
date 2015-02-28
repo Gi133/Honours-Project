@@ -163,6 +163,11 @@ BagSettings =
 	bagUpgradeLevelSpace = 20,
 }
 
+InventorySettings = 
+{
+	purseStartingLimit = 10000,
+}
+
 -- City Inventory Settings
 CityInventorySettings =
 {

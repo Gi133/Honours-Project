@@ -26,14 +26,14 @@
 #define EHMER_MAX 56
 #endif
 
-/* psychoacoustic setup ********************************************/
+ /* psychoacoustic setup ********************************************/
 #define P_BANDS 17      /* 62Hz to 16kHz */
 #define P_LEVELS 8      /* 30dB to 100dB */
 #define P_LEVEL_0 30.    /* 30 dB */
 #define P_NOISECURVES 3
 
 #define NOISE_COMPAND_LEVELS 40
-typedef struct vorbis_info_psy{
+typedef struct vorbis_info_psy {
 	int   blockflag;
 
 	float ath_adjatt;
@@ -63,7 +63,7 @@ typedef struct vorbis_info_psy{
 	double normal_thresh;
 } vorbis_info_psy;
 
-typedef struct{
+typedef struct {
 	int   eighth_octave_lines;
 
 	/* for block long/short tuning; encode only */

@@ -8,10 +8,10 @@
 #ifndef GWEN_EXPORTS_H
 #define GWEN_EXPORTS_H
 
-//
-// GWEN_COMPILE_DLL
-// - We're compiling the Gwen.DLL (or .dylib etc)
-//
+	//
+	// GWEN_COMPILE_DLL
+	// - We're compiling the Gwen.DLL (or .dylib etc)
+	//
 #if defined(GWEN_COMPILE_DLL)
 
 #ifdef _WIN32

@@ -44,7 +44,7 @@ namespace Gwen
 
 		class GWEN_EXPORT WindowMaximizeButton : public WindowCloseButton
 		{
-			GWEN_CONTROL_INLINE(WindowMaximizeButton, WindowCloseButton){ m_bMaximized = false; };
+			GWEN_CONTROL_INLINE(WindowMaximizeButton, WindowCloseButton) { m_bMaximized = false; };
 
 			virtual void Render(Skin::Base* skin)
 			{
@@ -64,7 +64,7 @@ namespace Gwen
 
 		class GWEN_EXPORT WindowMinimizeButton : public WindowCloseButton
 		{
-			GWEN_CONTROL_INLINE(WindowMinimizeButton, WindowCloseButton){};
+			GWEN_CONTROL_INLINE(WindowMinimizeButton, WindowCloseButton) {};
 
 			virtual void Render(Skin::Base* skin)
 			{

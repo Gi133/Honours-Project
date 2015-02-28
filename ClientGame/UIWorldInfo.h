@@ -17,7 +17,7 @@ public:
 	~UIWorldInfo();
 
 	void InitializeElements();
-	void AssignTimeManager(std::weak_ptr<TimeManager> _timeManager){ timeManager = _timeManager; GrabTimeValues(); }
+	void AssignTimeManager(std::weak_ptr<TimeManager> _timeManager) { timeManager = _timeManager; GrabTimeValues(); }
 
 	void GrabTimeValues();
 

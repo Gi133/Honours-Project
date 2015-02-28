@@ -40,16 +40,16 @@ namespace Gwen
 
 			int Length() const { return (int)m_String.GetUnicode().size(); }
 
-			virtual void SetTextColor(const Gwen::Color& col){ m_Color = col; }
-			virtual void SetTextColorOverride(const Gwen::Color& col){ m_ColorOverride = col; }
+			virtual void SetTextColor(const Gwen::Color& col) { m_Color = col; }
+			virtual void SetTextColorOverride(const Gwen::Color& col) { m_ColorOverride = col; }
 
 			virtual void OnScaleChanged();
 
 			inline const Gwen::Color &TextColor() const { return m_Color; }
 
-			virtual void TextChanged(){ m_bTextChanged = true; }
-			virtual bool Wrap(){ return m_bWrap; }
-			virtual void SetWrap(bool b){ if (m_bWrap == b) return; m_bWrap = b; m_bTextChanged = true; Invalidate(); }
+			virtual void TextChanged() { m_bTextChanged = true; }
+			virtual bool Wrap() { return m_bWrap; }
+			virtual void SetWrap(bool b) { if (m_bWrap == b) return; m_bWrap = b; m_bTextChanged = true; Invalidate(); }
 
 			virtual Text* GetLine(int i);
 			virtual int GetLineFromChar(int i);

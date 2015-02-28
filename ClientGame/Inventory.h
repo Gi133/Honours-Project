@@ -10,6 +10,8 @@ private:
 	std::vector<std::shared_ptr<InventoryBag>> bagContainer;
 	std::unique_ptr<InventoryPurse> purse;
 
+	void LoadDefauts();
+
 public:
 	Inventory(const bool isCity = false, int startingBagNumber = 1, int StartingGold = 0);
 	~Inventory();
@@ -22,6 +24,7 @@ public:
 	void SubtractFromResource(const std::string resourceName, const int quantity);
 	void SetResource(const std::string resourceName, const int quantity);
 	int GetTotalResourceAmount(const std::string resourceName);
+	std::string GetInventoryString();
 
 	// Resource Management via Iterator.
 	// Mostly used in loops.
@@ -36,9 +39,9 @@ public:
 	int GetTotalResourceAmount(const int iter);
 
 	// Gold Managing.
-	void SetGold(const int newGold, const bool checkLimit = true){ purse->SetGold(newGold, checkLimit); }
-	void AddGold(const int goldToAdd, const bool checkLimit = true){ purse->AddGold(goldToAdd, checkLimit); } // Dual Purpose, can add and subtract.
+	void SetGold(const int newGold, const bool checkLimit = true) { purse->SetGold(newGold, checkLimit); }
+	void AddGold(const int goldToAdd, const bool checkLimit = true) { purse->AddGold(goldToAdd, checkLimit); } // Dual Purpose, can add and subtract.
 	void SetGoldLimit(const int newGoldLimit) { SetGoldLimit(newGoldLimit); }
-	int GetGold(){ return purse->GetGold(); }
-	int GetGoldLimit(){ return purse->GetGoldLimit(); }
+	int GetGold() { return purse->GetGold(); }
+	int GetGoldLimit() { return purse->GetGoldLimit(); }
 };

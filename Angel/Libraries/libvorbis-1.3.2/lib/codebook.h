@@ -20,20 +20,20 @@
 
 #include <ogg/ogg.h>
 
-/* This structure encapsulates huffman and VQ style encoding books; it
-   doesn't do anything specific to either.
+ /* This structure encapsulates huffman and VQ style encoding books; it
+	doesn't do anything specific to either.
 
-   valuelist/quantlist are nonNULL (and q_* significant) only if
-   there's entry->value mapping to be done.
+	valuelist/quantlist are nonNULL (and q_* significant) only if
+	there's entry->value mapping to be done.
 
-   If encode-side mapping must be done (and thus the entry needs to be
-   hunted), the auxiliary encode pointer will point to a decision
-   tree.  This is true of both VQ and huffman, but is mostly useful
-   with VQ.
+	If encode-side mapping must be done (and thus the entry needs to be
+	hunted), the auxiliary encode pointer will point to a decision
+	tree.  This is true of both VQ and huffman, but is mostly useful
+	with VQ.
 
-   */
+	*/
 
-typedef struct static_codebook{
+typedef struct static_codebook {
 	long   dim;            /* codebook dimensions (elements per vector) */
 	long   entries;        /* codebook entries */
 	long  *lengthlist;     /* codeword lengths in bits */
@@ -43,7 +43,7 @@ typedef struct static_codebook{
 							  1=implicitly populated values from map column
 							  2=listed arbitrary values */
 
-	/* The below does a linear, single monotonic sequence mapping. */
+							  /* The below does a linear, single monotonic sequence mapping. */
 	long     q_min;       /* packed 32 bit float; quant value 0 maps to minval */
 	long     q_delta;     /* packed 32 bit float; val 1 - val 0 == delta */
 	int      q_quant;     /* bits: 0 < quant <= 16 */
@@ -55,7 +55,7 @@ typedef struct static_codebook{
 	int allocedp;
 } static_codebook;
 
-typedef struct codebook{
+typedef struct codebook {
 	long dim;           /* codebook dimensions (elements per vector) */
 	long entries;       /* codebook entries */
 	long used_entries;  /* populated codebook entries */

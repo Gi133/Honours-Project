@@ -25,9 +25,9 @@
 #include "misc.h"
 #include "os.h"
 
-/* packs the given codebook into the bitstream **************************/
+ /* packs the given codebook into the bitstream **************************/
 
-int vorbis_staticbook_pack(const static_codebook *c, oggpack_buffer *opb){
+int vorbis_staticbook_pack(const static_codebook *c, oggpack_buffer *opb) {
 	long i, j;
 	int ordered = 0;
 
@@ -43,7 +43,7 @@ int vorbis_staticbook_pack(const static_codebook *c, oggpack_buffer *opb){
 		if (c->lengthlist[i - 1] == 0 || c->lengthlist[i] < c->lengthlist[i - 1])break;
 	if (i == c->entries)ordered = 1;
 
-	if (ordered){
+	if (ordered) {
 		/* length ordered.  We only need to say how many codewords of
 		   each length.  The actual codewords are generated
 		   deterministically */
@@ -52,11 +52,11 @@ int vorbis_staticbook_pack(const static_codebook *c, oggpack_buffer *opb){
 		oggpack_write(opb, 1, 1);  /* ordered */
 		oggpack_write(opb, c->lengthlist[0] - 1, 5); /* 1 to 32 */
 
-		for (i = 1; i < c->entries; i++){
+		for (i = 1; i < c->entries; i++) {
 			long this = c->lengthlist[i];
 			long last = c->lengthlist[i - 1];
-			if (this > last){
-				for (j = last; j < this; j++){
+			if (this > last) {
+				for (j = last; j < this; j++) {
 					oggpack_write(opb, i - count, _ilog(c->entries - count));
 					count = i;
 				}
@@ -64,7 +64,7 @@ int vorbis_staticbook_pack(const static_codebook *c, oggpack_buffer *opb){
 		}
 		oggpack_write(opb, i - count, _ilog(c->entries - count));
 	}
-	else{
+	else {
 		/* length random.  Again, we don't code the codeword itself, just
 		   the length.  This time, though, we have to encode each length */
 		oggpack_write(opb, 0, 1);   /* unordered */
@@ -75,18 +75,18 @@ int vorbis_staticbook_pack(const static_codebook *c, oggpack_buffer *opb){
 		for (i = 0; i < c->entries; i++)
 			if (c->lengthlist[i] == 0)break;
 
-		if (i == c->entries){
+		if (i == c->entries) {
 			oggpack_write(opb, 0, 1); /* no unused entries */
 			for (i = 0; i < c->entries; i++)
 				oggpack_write(opb, c->lengthlist[i] - 1, 5);
 		}
-		else{
+		else {
 			oggpack_write(opb, 1, 1); /* we have unused entries; thus we tag */
-			for (i = 0; i < c->entries; i++){
-				if (c->lengthlist[i] == 0){
+			for (i = 0; i < c->entries; i++) {
+				if (c->lengthlist[i] == 0) {
 					oggpack_write(opb, 0, 1);
 				}
-				else{
+				else {
 					oggpack_write(opb, 1, 1);
 					oggpack_write(opb, c->lengthlist[i] - 1, 5);
 				}
@@ -97,7 +97,7 @@ int vorbis_staticbook_pack(const static_codebook *c, oggpack_buffer *opb){
 	/* is the entry number the desired return value, or do we have a
 	   mapping? If we have a mapping, what type? */
 	oggpack_write(opb, c->maptype, 4);
-	switch (c->maptype){
+	switch (c->maptype) {
 	case 0:
 		/* no mapping */
 		break;
@@ -105,7 +105,7 @@ int vorbis_staticbook_pack(const static_codebook *c, oggpack_buffer *opb){
 		/* implicitly populated value mapping */
 		/* explicitly populated value mapping */
 
-		if (!c->quantlist){
+		if (!c->quantlist) {
 			/* no quantlist?  error */
 			return(-1);
 		}
@@ -118,7 +118,7 @@ int vorbis_staticbook_pack(const static_codebook *c, oggpack_buffer *opb){
 
 		{
 			int quantvals;
-			switch (c->maptype){
+			switch (c->maptype) {
 			case 1:
 				/* a single column of (c->entries/c->dim) quantized values for
 				   building a full value list algorithmically (square lattice) */
@@ -147,7 +147,7 @@ int vorbis_staticbook_pack(const static_codebook *c, oggpack_buffer *opb){
 
 /* unpacks a codebook from the packet buffer into the codebook struct,
    readies the codebook auxiliary structures for decode *************/
-static_codebook *vorbis_staticbook_unpack(oggpack_buffer *opb){
+static_codebook *vorbis_staticbook_unpack(oggpack_buffer *opb) {
 	long i, j;
 	static_codebook *s = _ogg_calloc(1, sizeof(*s));
 	s->allocedp = 1;
@@ -163,8 +163,8 @@ static_codebook *vorbis_staticbook_unpack(oggpack_buffer *opb){
 	if (_ilog(s->dim) + _ilog(s->entries) > 24)goto _eofout;
 
 	/* codeword ordering.... length ordered or unordered? */
-	switch ((int)oggpack_read(opb, 1)){
-	case 0:{
+	switch ((int)oggpack_read(opb, 1)) {
+	case 0: {
 		long unused;
 		/* allocated but unused entries? */
 		unused = oggpack_read(opb, 1);
@@ -174,11 +174,11 @@ static_codebook *vorbis_staticbook_unpack(oggpack_buffer *opb){
 		s->lengthlist = _ogg_malloc(sizeof(*s->lengthlist)*s->entries);
 
 		/* allocated but unused entries? */
-		if (unused){
+		if (unused) {
 			/* yes, unused entries */
 
-			for (i = 0; i < s->entries; i++){
-				if (oggpack_read(opb, 1)){
+			for (i = 0; i < s->entries; i++) {
+				if (oggpack_read(opb, 1)) {
 					long num = oggpack_read(opb, 5);
 					if (num == -1)goto _eofout;
 					s->lengthlist[i] = num + 1;
@@ -187,9 +187,9 @@ static_codebook *vorbis_staticbook_unpack(oggpack_buffer *opb){
 					s->lengthlist[i] = 0;
 			}
 		}
-		else{
+		else {
 			/* all entries used; no tagging */
-			for (i = 0; i<s->entries; i++){
+			for (i = 0; i < s->entries; i++) {
 				long num = oggpack_read(opb, 5);
 				if (num == -1)goto _eofout;
 				s->lengthlist[i] = num + 1;
@@ -205,11 +205,11 @@ static_codebook *vorbis_staticbook_unpack(oggpack_buffer *opb){
 		if (length == 0)goto _eofout;
 		s->lengthlist = _ogg_malloc(sizeof(*s->lengthlist)*s->entries);
 
-		for (i = 0; i < s->entries;){
+		for (i = 0; i < s->entries;) {
 			long num = oggpack_read(opb, _ilog(s->entries - i));
 			if (num == -1)goto _eofout;
-			if (length>32 || num>s->entries - i ||
-				(num > 0 && (num - 1) >> (length - 1) > 1)){
+			if (length > 32 || num > s->entries - i ||
+				(num > 0 && (num - 1) >> (length - 1) > 1)) {
 				goto _errout;
 			}
 			if (length > 32)goto _errout;
@@ -225,7 +225,7 @@ static_codebook *vorbis_staticbook_unpack(oggpack_buffer *opb){
 	}
 
 	/* Do we have a mapping to unpack? */
-	switch ((s->maptype = oggpack_read(opb, 4))){
+	switch ((s->maptype = oggpack_read(opb, 4))) {
 	case 0:
 		/* no mapping */
 		break;
@@ -241,7 +241,7 @@ static_codebook *vorbis_staticbook_unpack(oggpack_buffer *opb){
 
 		{
 			int quantvals = 0;
-			switch (s->maptype){
+			switch (s->maptype) {
 			case 1:
 				quantvals = (s->dim == 0 ? 0 : _book_maptype1_quantvals(s));
 				break;
@@ -268,13 +268,13 @@ static_codebook *vorbis_staticbook_unpack(oggpack_buffer *opb){
 	return(s);
 
 _errout:
-_eofout :
+_eofout:
 	vorbis_staticbook_destroy(s);
-		return(NULL);
+	return(NULL);
 }
 
 /* returns the number of bits ************************************************/
-int vorbis_book_encode(codebook *book, int a, oggpack_buffer *b){
+int vorbis_book_encode(codebook *book, int a, oggpack_buffer *b) {
 	if (a < 0 || a >= book->c->entries)return(0);
 	oggpack_write(b, book->codelist[a], book->c->lengthlist[a]);
 	return(book->c->lengthlist[a]);
@@ -288,7 +288,7 @@ int vorbis_book_encode(codebook *book, int a, oggpack_buffer *b){
    be.  The first-stage decode table catches most words so that
    bitreverse is not in the main execution path. */
 
-static ogg_uint32_t bitreverse(ogg_uint32_t x){
+static ogg_uint32_t bitreverse(ogg_uint32_t x) {
 	x = ((x >> 16) & 0x0000ffff) | ((x << 16) & 0xffff0000);
 	x = ((x >> 8) & 0x00ff00ff) | ((x << 8) & 0xff00ff00);
 	x = ((x >> 4) & 0x0f0f0f0f) | ((x << 4) & 0xf0f0f0f0);
@@ -296,23 +296,23 @@ static ogg_uint32_t bitreverse(ogg_uint32_t x){
 	return((x >> 1) & 0x55555555) | ((x << 1) & 0xaaaaaaaa);
 }
 
-STIN long decode_packed_entry_number(codebook *book, oggpack_buffer *b){
+STIN long decode_packed_entry_number(codebook *book, oggpack_buffer *b) {
 	int  read = book->dec_maxlength;
 	long lo, hi;
 	long lok = oggpack_look(b, book->dec_firsttablen);
 
 	if (lok >= 0) {
 		long entry = book->dec_firsttable[lok];
-		if (entry & 0x80000000UL){
+		if (entry & 0x80000000UL) {
 			lo = (entry >> 15) & 0x7fff;
 			hi = book->used_entries - (entry & 0x7fff);
 		}
-		else{
+		else {
 			oggpack_adv(b, book->dec_codelengths[entry - 1]);
 			return(entry - 1);
 		}
 	}
-	else{
+	else {
 		lo = 0;
 		hi = book->used_entries;
 	}
@@ -327,14 +327,14 @@ STIN long decode_packed_entry_number(codebook *book, oggpack_buffer *b){
 	{
 		ogg_uint32_t testword = bitreverse((ogg_uint32_t)lok);
 
-		while (hi - lo > 1){
+		while (hi - lo > 1) {
 			long p = (hi - lo) >> 1;
 			long test = book->codelist[lo + p] > testword;
 			lo += p&(test - 1);
 			hi -= p&(-test);
 		}
 
-		if (book->dec_codelengths[lo] <= read){
+		if (book->dec_codelengths[lo] <= read) {
 			oggpack_adv(b, book->dec_codelengths[lo]);
 			return(lo);
 		}
@@ -359,9 +359,9 @@ STIN long decode_packed_entry_number(codebook *book, oggpack_buffer *b){
    addmul==1 -> additive
    addmul==2 -> multiplicitive */
 
-/* returns the [original, not compacted] entry number or -1 on eof *********/
-long vorbis_book_decode(codebook *book, oggpack_buffer *b){
-	if (book->used_entries > 0){
+   /* returns the [original, not compacted] entry number or -1 on eof *********/
+long vorbis_book_decode(codebook *book, oggpack_buffer *b) {
+	if (book->used_entries > 0) {
 		long packed_entry = decode_packed_entry_number(book, b);
 		if (packed_entry >= 0)
 			return(book->dec_index[packed_entry]);
@@ -372,8 +372,8 @@ long vorbis_book_decode(codebook *book, oggpack_buffer *b){
 }
 
 /* returns 0 on OK or -1 on eof *************************************/
-long vorbis_book_decodevs_add(codebook *book, float *a, oggpack_buffer *b, int n){
-	if (book->used_entries > 0){
+long vorbis_book_decodevs_add(codebook *book, float *a, oggpack_buffer *b, int n) {
+	if (book->used_entries > 0) {
 		int step = n / book->dim;
 		long *entry = alloca(sizeof(*entry)*step);
 		float **t = alloca(sizeof(*t)*step);
@@ -391,13 +391,13 @@ long vorbis_book_decodevs_add(codebook *book, float *a, oggpack_buffer *b, int n
 	return(0);
 }
 
-long vorbis_book_decodev_add(codebook *book, float *a, oggpack_buffer *b, int n){
-	if (book->used_entries>0){
+long vorbis_book_decodev_add(codebook *book, float *a, oggpack_buffer *b, int n) {
+	if (book->used_entries > 0) {
 		int i, j, entry;
 		float *t;
 
-		if (book->dim > 8){
-			for (i = 0; i < n;){
+		if (book->dim > 8) {
+			for (i = 0; i < n;) {
 				entry = decode_packed_entry_number(book, b);
 				if (entry == -1)return(-1);
 				t = book->valuelist + entry*book->dim;
@@ -405,13 +405,13 @@ long vorbis_book_decodev_add(codebook *book, float *a, oggpack_buffer *b, int n)
 					a[i++] += t[j++];
 			}
 		}
-		else{
-			for (i = 0; i < n;){
+		else {
+			for (i = 0; i < n;) {
 				entry = decode_packed_entry_number(book, b);
 				if (entry == -1)return(-1);
 				t = book->valuelist + entry*book->dim;
 				j = 0;
-				switch ((int)book->dim){
+				switch ((int)book->dim) {
 				case 8:
 					a[i++] += t[j++];
 				case 7:
@@ -437,12 +437,12 @@ long vorbis_book_decodev_add(codebook *book, float *a, oggpack_buffer *b, int n)
 	return(0);
 }
 
-long vorbis_book_decodev_set(codebook *book, float *a, oggpack_buffer *b, int n){
-	if (book->used_entries > 0){
+long vorbis_book_decodev_set(codebook *book, float *a, oggpack_buffer *b, int n) {
+	if (book->used_entries > 0) {
 		int i, j, entry;
 		float *t;
 
-		for (i = 0; i < n;){
+		for (i = 0; i < n;) {
 			entry = decode_packed_entry_number(book, b);
 			if (entry == -1)return(-1);
 			t = book->valuelist + entry*book->dim;
@@ -450,10 +450,10 @@ long vorbis_book_decodev_set(codebook *book, float *a, oggpack_buffer *b, int n)
 				a[i++] = t[j++];
 		}
 	}
-	else{
+	else {
 		int i, j;
 
-		for (i = 0; i < n;){
+		for (i = 0; i < n;) {
 			for (j = 0; j < book->dim;)
 				a[i++] = 0.f;
 		}
@@ -462,18 +462,18 @@ long vorbis_book_decodev_set(codebook *book, float *a, oggpack_buffer *b, int n)
 }
 
 long vorbis_book_decodevv_add(codebook *book, float **a, long offset, int ch,
-	oggpack_buffer *b, int n){
+	oggpack_buffer *b, int n) {
 	long i, j, entry;
 	int chptr = 0;
-	if (book->used_entries>0){
-		for (i = offset / ch; i < (offset + n) / ch;){
+	if (book->used_entries > 0) {
+		for (i = offset / ch; i < (offset + n) / ch;) {
 			entry = decode_packed_entry_number(book, b);
 			if (entry == -1)return(-1);
 			{
 				const float *t = book->valuelist + entry*book->dim;
-				for (j = 0; j < book->dim; j++){
+				for (j = 0; j < book->dim; j++) {
 					a[chptr++][i] += t[j];
-					if (chptr == ch){
+					if (chptr == ch) {
 						chptr = 0;
 						i++;
 					}

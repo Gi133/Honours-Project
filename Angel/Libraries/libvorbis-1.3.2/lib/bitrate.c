@@ -25,14 +25,14 @@
 #include "misc.h"
 #include "bitrate.h"
 
-/* compute bitrate tracking setup  */
-void vorbis_bitrate_init(vorbis_info *vi, bitrate_manager_state *bm){
+ /* compute bitrate tracking setup  */
+void vorbis_bitrate_init(vorbis_info *vi, bitrate_manager_state *bm) {
 	codec_setup_info *ci = vi->codec_setup;
 	bitrate_manager_info *bi = &ci->bi;
 
 	memset(bm, 0, sizeof(*bm));
 
-	if (bi && (bi->reservoir_bits > 0)){
+	if (bi && (bi->reservoir_bits > 0)) {
 		long ratesamples = vi->rate;
 		int  halfsamples = ci->blocksizes[0] >> 1;
 
@@ -55,12 +55,12 @@ void vorbis_bitrate_init(vorbis_info *vi, bitrate_manager_state *bm){
 	}
 }
 
-void vorbis_bitrate_clear(bitrate_manager_state *bm){
+void vorbis_bitrate_clear(bitrate_manager_state *bm) {
 	memset(bm, 0, sizeof(*bm));
 	return;
 }
 
-int vorbis_bitrate_managed(vorbis_block *vb){
+int vorbis_bitrate_managed(vorbis_block *vb) {
 	vorbis_dsp_state      *vd = vb->vd;
 	private_state         *b = vd->backend_state;
 	bitrate_manager_state *bm = &b->bms;
@@ -70,7 +70,7 @@ int vorbis_bitrate_managed(vorbis_block *vb){
 }
 
 /* finish taking in the block we just processed */
-int vorbis_bitrate_addblock(vorbis_block *vb){
+int vorbis_bitrate_addblock(vorbis_block *vb) {
 	vorbis_block_internal *vbi = vb->internal;
 	vorbis_dsp_state      *vd = vb->vd;
 	private_state         *b = vd->backend_state;
@@ -85,7 +85,7 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	long max_target_bits = (vb->W ? bm->max_bitsper*bm->short_per_long : bm->max_bitsper);
 	int  samples = ci->blocksizes[vb->W] >> 1;
 	long desired_fill = bi->reservoir_bits*bi->reservoir_bias;
-	if (!bm->managed){
+	if (!bm->managed) {
 		/* not a bitrate managed stream, but for API simplicity, we'll
 		   buffer the packet to keep the code path clean */
 
@@ -98,7 +98,7 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	bm->vb = vb;
 
 	/* look ahead for avg floater */
-	if (bm->avg_bitsper > 0){
+	if (bm->avg_bitsper > 0) {
 		double slew = 0.;
 		long avg_target_bits = (vb->W ? bm->avg_bitsper*bm->short_per_long : bm->avg_bitsper);
 		double slewlimit = 15. / bi->slew_damp;
@@ -114,16 +114,16 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 
 		   Then limit slew to slew max */
 
-		if (bm->avg_reservoir + (this_bits - avg_target_bits) > desired_fill){
+		if (bm->avg_reservoir + (this_bits - avg_target_bits) > desired_fill) {
 			while (choice > 0 && this_bits > avg_target_bits &&
-				bm->avg_reservoir + (this_bits - avg_target_bits) > desired_fill){
+				bm->avg_reservoir + (this_bits - avg_target_bits) > desired_fill) {
 				choice--;
 				this_bits = oggpack_bytes(vbi->packetblob[choice]) * 8;
 			}
 		}
-		else if (bm->avg_reservoir + (this_bits - avg_target_bits) < desired_fill){
+		else if (bm->avg_reservoir + (this_bits - avg_target_bits) < desired_fill) {
 			while (choice + 1 < PACKETBLOBS && this_bits < avg_target_bits &&
-				bm->avg_reservoir + (this_bits - avg_target_bits) < desired_fill){
+				bm->avg_reservoir + (this_bits - avg_target_bits) < desired_fill) {
 				choice++;
 				this_bits = oggpack_bytes(vbi->packetblob[choice]) * 8;
 			}
@@ -137,10 +137,10 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	}
 
 	/* enforce min(if used) on the current floater (if used) */
-	if (bm->min_bitsper > 0){
+	if (bm->min_bitsper > 0) {
 		/* do we need to force the bitrate up? */
-		if (this_bits < min_target_bits){
-			while (bm->minmax_reservoir - (min_target_bits - this_bits) < 0){
+		if (this_bits < min_target_bits) {
+			while (bm->minmax_reservoir - (min_target_bits - this_bits) < 0) {
 				choice++;
 				if (choice >= PACKETBLOBS)break;
 				this_bits = oggpack_bytes(vbi->packetblob[choice]) * 8;
@@ -149,10 +149,10 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	}
 
 	/* enforce max (if used) on the current floater (if used) */
-	if (bm->max_bitsper > 0){
+	if (bm->max_bitsper > 0) {
 		/* do we need to force the bitrate down? */
-		if (this_bits > max_target_bits){
-			while (bm->minmax_reservoir + (this_bits - max_target_bits) > bi->reservoir_bits){
+		if (this_bits > max_target_bits) {
+			while (bm->minmax_reservoir + (this_bits - max_target_bits) > bi->reservoir_bits) {
 				choice--;
 				if (choice < 0)break;
 				this_bits = oggpack_bytes(vbi->packetblob[choice]) * 8;
@@ -163,18 +163,18 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	/* Choice of packetblobs now made based on floater, and min/max
 	   requirements. Now boundary check extreme choices */
 
-	if (choice < 0){
+	if (choice < 0) {
 		/* choosing a smaller packetblob is insufficient to trim bitrate.
 		   frame will need to be truncated */
 		long maxsize = (max_target_bits + (bi->reservoir_bits - bm->minmax_reservoir)) / 8;
 		bm->choice = choice = 0;
 
-		if (oggpack_bytes(vbi->packetblob[choice]) > maxsize){
+		if (oggpack_bytes(vbi->packetblob[choice]) > maxsize) {
 			oggpack_writetrunc(vbi->packetblob[choice], maxsize * 8);
 			this_bits = oggpack_bytes(vbi->packetblob[choice]) * 8;
 		}
 	}
-	else{
+	else {
 		long minsize = (min_target_bits - bm->minmax_reservoir + 7) / 8;
 		if (choice >= PACKETBLOBS)
 			choice = PACKETBLOBS - 1;
@@ -189,30 +189,30 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 
 	/* now we have the final packet and the final packet size.  Update statistics */
 	/* min and max reservoir */
-	if (bm->min_bitsper > 0 || bm->max_bitsper > 0){
-		if (max_target_bits > 0 && this_bits > max_target_bits){
+	if (bm->min_bitsper > 0 || bm->max_bitsper > 0) {
+		if (max_target_bits > 0 && this_bits > max_target_bits) {
 			bm->minmax_reservoir += (this_bits - max_target_bits);
 		}
-		else if (min_target_bits > 0 && this_bits < min_target_bits){
+		else if (min_target_bits > 0 && this_bits < min_target_bits) {
 			bm->minmax_reservoir += (this_bits - min_target_bits);
 		}
-		else{
+		else {
 			/* inbetween; we want to take reservoir toward but not past desired_fill */
-			if (bm->minmax_reservoir > desired_fill){
-				if (max_target_bits > 0){ /* logical bulletproofing against initialization state */
+			if (bm->minmax_reservoir > desired_fill) {
+				if (max_target_bits > 0) { /* logical bulletproofing against initialization state */
 					bm->minmax_reservoir += (this_bits - max_target_bits);
 					if (bm->minmax_reservoir < desired_fill)bm->minmax_reservoir = desired_fill;
 				}
-				else{
+				else {
 					bm->minmax_reservoir = desired_fill;
 				}
 			}
-			else{
-				if (min_target_bits>0){ /* logical bulletproofing against initialization state */
+			else {
+				if (min_target_bits > 0) { /* logical bulletproofing against initialization state */
 					bm->minmax_reservoir += (this_bits - min_target_bits);
 					if (bm->minmax_reservoir > desired_fill)bm->minmax_reservoir = desired_fill;
 				}
-				else{
+				else {
 					bm->minmax_reservoir = desired_fill;
 				}
 			}
@@ -220,7 +220,7 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	}
 
 	/* avg reservoir */
-	if (bm->avg_bitsper > 0){
+	if (bm->avg_bitsper > 0) {
 		long avg_target_bits = (vb->W ? bm->avg_bitsper*bm->short_per_long : bm->avg_bitsper);
 		bm->avg_reservoir += this_bits - avg_target_bits;
 	}
@@ -228,14 +228,14 @@ int vorbis_bitrate_addblock(vorbis_block *vb){
 	return(0);
 }
 
-int vorbis_bitrate_flushpacket(vorbis_dsp_state *vd, ogg_packet *op){
+int vorbis_bitrate_flushpacket(vorbis_dsp_state *vd, ogg_packet *op) {
 	private_state         *b = vd->backend_state;
 	bitrate_manager_state *bm = &b->bms;
 	vorbis_block          *vb = bm->vb;
 	int                    choice = PACKETBLOBS / 2;
 	if (!vb)return 0;
 
-	if (op){
+	if (op) {
 		vorbis_block_internal *vbi = vb->internal;
 
 		if (vorbis_bitrate_managed(vb))

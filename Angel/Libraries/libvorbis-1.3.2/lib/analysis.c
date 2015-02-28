@@ -26,8 +26,8 @@
 #include "os.h"
 #include "misc.h"
 
-/* decides between modes, dispatches to the appropriate mapping. */
-int vorbis_analysis(vorbis_block *vb, ogg_packet *op){
+ /* decides between modes, dispatches to the appropriate mapping. */
+int vorbis_analysis(vorbis_block *vb, ogg_packet *op) {
 	int ret, i;
 	vorbis_block_internal *vbi = vb->internal;
 
@@ -47,7 +47,7 @@ int vorbis_analysis(vorbis_block *vb, ogg_packet *op){
 	if ((ret = _mapping_P[0]->forward(vb)))
 		return(ret);
 
-	if (op){
+	if (op) {
 		if (vorbis_bitrate_managed(vb))
 			/* The app is using a bitmanaged mode... but not using the
 			   bitrate management interface. */
@@ -67,7 +67,7 @@ int vorbis_analysis(vorbis_block *vb, ogg_packet *op){
 int analysis_noisy = 1;
 
 /* there was no great place to put this.... */
-void _analysis_output_always(char *base, int i, float *v, int n, int bark, int dB, ogg_int64_t off){
+void _analysis_output_always(char *base, int i, float *v, int n, int bark, int dB, ogg_int64_t off) {
 	int j;
 	FILE *of;
 	char buffer[80];
@@ -77,8 +77,8 @@ void _analysis_output_always(char *base, int i, float *v, int n, int bark, int d
 
 	if (!of)perror("failed to open data dump file");
 
-	for (j = 0; j < n; j++){
-		if (bark){
+	for (j = 0; j < n; j++) {
+		if (bark) {
 			float b = toBARK((4000.f*j / n) + .25);
 			fprintf(of, "%f ", b);
 		}
@@ -88,7 +88,7 @@ void _analysis_output_always(char *base, int i, float *v, int n, int bark, int d
 			else
 				fprintf(of, "%f ", (double)j);
 
-		if (dB){
+		if (dB) {
 			float val;
 			if (v[j] == 0.)
 				val = -140.;
@@ -96,7 +96,7 @@ void _analysis_output_always(char *base, int i, float *v, int n, int bark, int d
 				val = todB(v + j);
 			fprintf(of, "%f\n", val);
 		}
-		else{
+		else {
 			fprintf(of, "%f\n", v[j]);
 		}
 	}
@@ -104,7 +104,7 @@ void _analysis_output_always(char *base, int i, float *v, int n, int bark, int d
 }
 
 void _analysis_output(char *base, int i, float *v, int n, int bark, int dB,
-	ogg_int64_t off){
+	ogg_int64_t off) {
 	if (analysis_noisy)_analysis_output_always(base, i, v, n, bark, dB, off);
 }
 

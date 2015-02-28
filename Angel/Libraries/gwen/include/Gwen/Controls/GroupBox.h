@@ -26,7 +26,7 @@ namespace Gwen
 			virtual void Render(Skin::Base* skin);
 			virtual void Layout(Skin::Base* skin);
 
-			virtual void SetInnerMargin(int i){ m_InnerMargin = i; }
+			virtual void SetInnerMargin(int i) { m_InnerMargin = i; }
 
 		protected:
 

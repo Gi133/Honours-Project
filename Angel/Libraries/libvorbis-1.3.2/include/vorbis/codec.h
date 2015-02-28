@@ -25,7 +25,7 @@ extern "C"
 
 #include <ogg/ogg.h>
 
-	typedef struct vorbis_info{
+	typedef struct vorbis_info {
 		int version;
 		int channels;
 		long rate;
@@ -56,7 +56,7 @@ extern "C"
 	/* vorbis_dsp_state buffers the current vorbis audio
 	   analysis/synthesis state.  The DSP state belongs to a specific
 	   logical bitstream ****************************************************/
-	typedef struct vorbis_dsp_state{
+	typedef struct vorbis_dsp_state {
 		int analysisp;
 		vorbis_info *vi;
 
@@ -85,7 +85,7 @@ extern "C"
 		void       *backend_state;
 	} vorbis_dsp_state;
 
-	typedef struct vorbis_block{
+	typedef struct vorbis_block {
 		/* necessary stream state for linking to the framing abstraction */
 		float  **pcm;       /* this is a pointer into local storage */
 		oggpack_buffer opb;
@@ -123,7 +123,7 @@ extern "C"
 	bitstream, but is independent from other vorbis_blocks belonging to
 	that logical bitstream. *************************************************/
 
-	struct alloc_chain{
+	struct alloc_chain {
 		void *ptr;
 		struct alloc_chain *next;
 	};
@@ -134,9 +134,9 @@ extern "C"
 	   etc). vorbis_info and substructures are in backends.h.
 	   *********************************************************************/
 
-	/* the comments are not part of vorbis_info so that vorbis_info can be
-	   static storage */
-	typedef struct vorbis_comment{
+	   /* the comments are not part of vorbis_info so that vorbis_info can be
+		  static storage */
+	typedef struct vorbis_comment {
 		/* unlimited user comment fields.  libvorbis writes 'libvorbis'
 		   whatever vendor is set to in encode */
 		char **user_comments;
@@ -157,7 +157,7 @@ extern "C"
 	   packetization aren't necessary as they're provided by the transport
 	   and the streaming layer is not used */
 
-	/* Vorbis PRIMITIVES: general ***************************************/
+	   /* Vorbis PRIMITIVES: general ***************************************/
 
 	extern void     vorbis_info_init(vorbis_info *vi);
 	extern void     vorbis_info_clear(vorbis_info *vi);

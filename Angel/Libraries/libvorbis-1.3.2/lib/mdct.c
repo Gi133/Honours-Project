@@ -31,11 +31,11 @@
 
  ********************************************************************/
 
-/* this can also be run as an integer transform by uncommenting a
-   define in mdct.h; the integerization is a first pass and although
-   it's likely stable for Vorbis, the dynamic range is constrained and
-   roundoff isn't done (so it's noisy).  Consider it functional, but
-   only a starting point.  There's no point on a machine with an FPU */
+ /* this can also be run as an integer transform by uncommenting a
+	define in mdct.h; the integerization is a first pass and although
+	it's likely stable for Vorbis, the dynamic range is constrained and
+	roundoff isn't done (so it's noisy).  Consider it functional, but
+	only a starting point.  There's no point on a machine with an FPU */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,10 +46,10 @@
 #include "os.h"
 #include "misc.h"
 
-/* build lookups for trig functions; also pre-figure scaling and
-   some window function algebra. */
+	/* build lookups for trig functions; also pre-figure scaling and
+	   some window function algebra. */
 
-void mdct_init(mdct_lookup *lookup, int n){
+void mdct_init(mdct_lookup *lookup, int n) {
 	int   *bitrev = _ogg_malloc(sizeof(*bitrev)*(n / 4));
 	DATA_TYPE *T = _ogg_malloc(sizeof(*T)*(n + n / 4));
 
@@ -62,35 +62,35 @@ void mdct_init(mdct_lookup *lookup, int n){
 
 	/* trig lookups... */
 
-	for (i = 0; i < n / 4; i++){
+	for (i = 0; i < n / 4; i++) {
 		T[i * 2] = FLOAT_CONV(cos((M_PI / n)*(4 * i)));
 		T[i * 2 + 1] = FLOAT_CONV(-sin((M_PI / n)*(4 * i)));
 		T[n2 + i * 2] = FLOAT_CONV(cos((M_PI / (2 * n))*(2 * i + 1)));
 		T[n2 + i * 2 + 1] = FLOAT_CONV(sin((M_PI / (2 * n))*(2 * i + 1)));
 	}
-	for (i = 0; i < n / 8; i++){
+	for (i = 0; i < n / 8; i++) {
 		T[n + i * 2] = FLOAT_CONV(cos((M_PI / n)*(4 * i + 2))*.5);
 		T[n + i * 2 + 1] = FLOAT_CONV(-sin((M_PI / n)*(4 * i + 2))*.5);
 	}
 
 	/* bitreverse lookup... */
 
-  {
-	  int mask = (1 << (log2n - 1)) - 1, i, j;
-	  int msb = 1 << (log2n - 2);
-	  for (i = 0; i < n / 8; i++){
-		  int acc = 0;
-		  for (j = 0; msb >> j; j++)
-			  if ((msb >> j)&i)acc |= 1 << j;
-		  bitrev[i * 2] = ((~acc)&mask) - 1;
-		  bitrev[i * 2 + 1] = acc;
-	  }
-  }
-  lookup->scale = FLOAT_CONV(4.f / n);
+	{
+		int mask = (1 << (log2n - 1)) - 1, i, j;
+		int msb = 1 << (log2n - 2);
+		for (i = 0; i < n / 8; i++) {
+			int acc = 0;
+			for (j = 0; msb >> j; j++)
+				if ((msb >> j)&i)acc |= 1 << j;
+			bitrev[i * 2] = ((~acc)&mask) - 1;
+			bitrev[i * 2 + 1] = acc;
+		}
+	}
+	lookup->scale = FLOAT_CONV(4.f / n);
 }
 
 /* 8 point butterfly (in place, 4 register) */
-STIN void mdct_butterfly_8(DATA_TYPE *x){
+STIN void mdct_butterfly_8(DATA_TYPE *x) {
 	REG_TYPE r0 = x[6] + x[2];
 	REG_TYPE r1 = x[6] - x[2];
 	REG_TYPE r2 = x[4] + x[0];
@@ -113,7 +113,7 @@ STIN void mdct_butterfly_8(DATA_TYPE *x){
 }
 
 /* 16 point butterfly (in place, 4 register) */
-STIN void mdct_butterfly_16(DATA_TYPE *x){
+STIN void mdct_butterfly_16(DATA_TYPE *x) {
 	REG_TYPE r0 = x[1] - x[9];
 	REG_TYPE r1 = x[0] - x[8];
 
@@ -148,7 +148,7 @@ STIN void mdct_butterfly_16(DATA_TYPE *x){
 }
 
 /* 32 point butterfly (in place, 4 register) */
-STIN void mdct_butterfly_32(DATA_TYPE *x){
+STIN void mdct_butterfly_32(DATA_TYPE *x) {
 	REG_TYPE r0 = x[30] - x[14];
 	REG_TYPE r1 = x[31] - x[15];
 
@@ -213,13 +213,13 @@ STIN void mdct_butterfly_32(DATA_TYPE *x){
 /* N point first stage butterfly (in place, 2 register) */
 STIN void mdct_butterfly_first(DATA_TYPE *T,
 	DATA_TYPE *x,
-	int points){
+	int points) {
 	DATA_TYPE *x1 = x + points - 8;
 	DATA_TYPE *x2 = x + (points >> 1) - 8;
 	REG_TYPE   r0;
 	REG_TYPE   r1;
 
-	do{
+	do {
 		r0 = x1[6] - x2[6];
 		r1 = x1[7] - x2[7];
 		x1[6] += x2[6];
@@ -258,13 +258,13 @@ STIN void mdct_butterfly_first(DATA_TYPE *T,
 STIN void mdct_butterfly_generic(DATA_TYPE *T,
 	DATA_TYPE *x,
 	int points,
-	int trigint){
+	int trigint) {
 	DATA_TYPE *x1 = x + points - 8;
 	DATA_TYPE *x2 = x + (points >> 1) - 8;
 	REG_TYPE   r0;
 	REG_TYPE   r1;
 
-	do{
+	do {
 		r0 = x1[6] - x2[6];
 		r1 = x1[7] - x2[7];
 		x1[6] += x2[6];
@@ -307,16 +307,16 @@ STIN void mdct_butterfly_generic(DATA_TYPE *T,
 
 STIN void mdct_butterflies(mdct_lookup *init,
 	DATA_TYPE *x,
-	int points){
+	int points) {
 	DATA_TYPE *T = init->trig;
 	int stages = init->log2n - 5;
 	int i, j;
 
-	if (--stages > 0){
+	if (--stages > 0) {
 		mdct_butterfly_first(T, x, points);
 	}
 
-	for (i = 1; --stages > 0; i++){
+	for (i = 1; --stages > 0; i++) {
 		for (j = 0; j < (1 << i); j++)
 			mdct_butterfly_generic(T, x + (points >> i)*j, points >> i, 4 << i);
 	}
@@ -325,8 +325,8 @@ STIN void mdct_butterflies(mdct_lookup *init,
 		mdct_butterfly_32(x + j);
 }
 
-void mdct_clear(mdct_lookup *l){
-	if (l){
+void mdct_clear(mdct_lookup *l) {
+	if (l) {
 		if (l->trig)_ogg_free(l->trig);
 		if (l->bitrev)_ogg_free(l->bitrev);
 		memset(l, 0, sizeof(*l));
@@ -334,14 +334,14 @@ void mdct_clear(mdct_lookup *l){
 }
 
 STIN void mdct_bitreverse(mdct_lookup *init,
-	DATA_TYPE *x){
+	DATA_TYPE *x) {
 	int        n = init->n;
 	int       *bit = init->bitrev;
 	DATA_TYPE *w0 = x;
 	DATA_TYPE *w1 = x = w0 + (n >> 1);
 	DATA_TYPE *T = init->trig + n;
 
-	do{
+	do {
 		DATA_TYPE *x0 = x + bit[0];
 		DATA_TYPE *x1 = x + bit[1];
 
@@ -382,7 +382,7 @@ STIN void mdct_bitreverse(mdct_lookup *init,
 	} while (w0 < w1);
 }
 
-void mdct_backward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
+void mdct_backward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out) {
 	int n = init->n;
 	int n2 = n >> 1;
 	int n4 = n >> 2;
@@ -393,7 +393,7 @@ void mdct_backward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
 	DATA_TYPE *oX = out + n2 + n4;
 	DATA_TYPE *T = init->trig + n4;
 
-	do{
+	do {
 		oX -= 4;
 		oX[0] = MULT_NORM(-iX[2] * T[3] - iX[0] * T[2]);
 		oX[1] = MULT_NORM(iX[0] * T[3] - iX[2] * T[2]);
@@ -407,7 +407,7 @@ void mdct_backward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
 	oX = out + n2 + n4;
 	T = init->trig + n4;
 
-	do{
+	do {
 		T -= 4;
 		oX[0] = MULT_NORM(iX[4] * T[3] + iX[6] * T[2]);
 		oX[1] = MULT_NORM(iX[4] * T[2] - iX[6] * T[3]);
@@ -428,7 +428,7 @@ void mdct_backward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
 		DATA_TYPE *iX = out;
 		T = init->trig + n2;
 
-		do{
+		do {
 			oX1 -= 4;
 
 			oX1[3] = MULT_NORM(iX[0] * T[1] - iX[1] * T[0]);
@@ -452,7 +452,7 @@ void mdct_backward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
 		oX1 = out + n4;
 		oX2 = oX1;
 
-		do{
+		do {
 			oX1 -= 4;
 			iX -= 4;
 
@@ -467,7 +467,7 @@ void mdct_backward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
 		iX = out + n2 + n4;
 		oX1 = out + n2 + n4;
 		oX2 = out + n2;
-		do{
+		do {
 			oX1 -= 4;
 			oX1[0] = iX[3];
 			oX1[1] = iX[2];
@@ -478,7 +478,7 @@ void mdct_backward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
 	}
 }
 
-void mdct_forward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
+void mdct_forward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out) {
 	int n = init->n;
 	int n2 = n >> 1;
 	int n4 = n >> 2;
@@ -498,7 +498,7 @@ void mdct_forward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
 
 	int i = 0;
 
-	for (i = 0; i < n8; i += 2){
+	for (i = 0; i < n8; i += 2) {
 		x0 -= 4;
 		T -= 2;
 		r0 = x0[2] + x1[0];
@@ -510,7 +510,7 @@ void mdct_forward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
 
 	x1 = in + 1;
 
-	for (; i < n2 - n8; i += 2){
+	for (; i < n2 - n8; i += 2) {
 		T -= 2;
 		x0 -= 4;
 		r0 = x0[2] - x1[0];
@@ -522,7 +522,7 @@ void mdct_forward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
 
 	x0 = in + n;
 
-	for (; i < n2; i += 2){
+	for (; i < n2; i += 2) {
 		T -= 2;
 		x0 -= 4;
 		r0 = -x0[2] - x1[0];
@@ -540,7 +540,7 @@ void mdct_forward(mdct_lookup *init, DATA_TYPE *in, DATA_TYPE *out){
 	T = init->trig + n2;
 	x0 = out + n2;
 
-	for (i = 0; i < n4; i++){
+	for (i = 0; i < n4; i++) {
 		x0--;
 		out[i] = MULT_NORM((w[0] * T[0] + w[1] * T[1])*init->scale);
 		x0[0] = MULT_NORM((w[0] * T[1] - w[1] * T[0])*init->scale);

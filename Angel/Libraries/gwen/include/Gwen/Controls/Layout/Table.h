@@ -134,7 +134,7 @@ namespace Gwen
 				//
 				Gwen::Event::Caller	onRowSelected;
 
-				virtual bool GetEven(){ return m_bEvenRow; }
+				virtual bool GetEven() { return m_bEvenRow; }
 				virtual void SetEven(bool b) { m_bEvenRow = b; }
 
 			private:

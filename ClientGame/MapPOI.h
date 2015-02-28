@@ -20,10 +20,10 @@ public:
 
 	void SetActorPosition(Vec2i positionCenter);
 
-	void SetPosition(Vector2 newPosition){ mapCoordinates = newPosition; }
-	void SetPosition(int posX, int posY){ mapCoordinates.X = posX; mapCoordinates.Y = posY; }
-	Vector2 GetPosition(){ return mapCoordinates; }
+	void SetPosition(Vector2 newPosition) { mapCoordinates = newPosition; }
+	void SetPosition(int posX, int posY) { mapCoordinates.X = posX; mapCoordinates.Y = posY; }
+	Vector2 GetPosition() { return mapCoordinates; }
 
-	void SetName(std::string newName){ name = newName; }
-	std::string GetName(){ return name; }
+	void SetName(std::string newName) { name = newName; }
+	std::string GetName() { return name; }
 };

@@ -12,14 +12,14 @@
 
 #include <gdiplus.h>
 
-/*
+	/*
 
- GDI(plus) is pretty slow for rendering GWEN, because we're
- re-rendering everything on redraw.
+	 GDI(plus) is pretty slow for rendering GWEN, because we're
+	 re-rendering everything on redraw.
 
- Therefore its usage should be as a test - rather than production.
+	 Therefore its usage should be as a test - rather than production.
 
- */
+	 */
 
 namespace Gwen
 {

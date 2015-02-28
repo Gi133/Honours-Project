@@ -38,7 +38,7 @@
 
 #include <set>
 
-//Typedefs to let us reference things more sanely
+ //Typedefs to let us reference things more sanely
 typedef std::string			String;
 typedef std::vector<String>	StringList;
 typedef std::set<String>	StringSet;

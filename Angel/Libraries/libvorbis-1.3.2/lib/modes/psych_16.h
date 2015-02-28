@@ -15,7 +15,7 @@
 
  ********************************************************************/
 
-/* stereo mode by base quality level */
+ /* stereo mode by base quality level */
 static const adj_stereo _psy_stereo_modes_16[4] = {
 	/*  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  */
 	{ { 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 },

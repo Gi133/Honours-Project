@@ -357,19 +357,19 @@ FT_Bool          reverse)
 			}
 
 			/* then the tags */
-		{
-			FT_Byte*  tag1 = border->tags + start + 1;
-			FT_Byte*  tag2 = border->tags + count - 1;
-
-			for (; tag1 < tag2; tag1++, tag2--)
 			{
-				FT_Byte  tmp;
+				FT_Byte*  tag1 = border->tags + start + 1;
+				FT_Byte*  tag2 = border->tags + count - 1;
 
-				tmp = *tag1;
-				*tag1 = *tag2;
-				*tag2 = tmp;
+				for (; tag1 < tag2; tag1++, tag2--)
+				{
+					FT_Byte  tmp;
+
+					tmp = *tag1;
+					*tag1 = *tag2;
+					*tag2 = tmp;
+				}
 			}
-		}
 		}
 
 		border->tags[start] |= FT_STROKE_TAG_BEGIN;
@@ -1362,7 +1362,7 @@ FT_Vector*  to)
 				alpha0 = FT_Atan2(arc[0].x - arc[2].x, arc[0].y - arc[2].y);
 
 			for (border = stroker->borders, side = 0;
-				side <= 1;
+			side <= 1;
 				side++, border++)
 			{
 				rotate = FT_SIDE_TO_ROTATE(side);
@@ -1559,7 +1559,7 @@ FT_Vector*  to)
 				alpha0 = FT_Atan2(arc[0].x - arc[3].x, arc[0].y - arc[3].y);
 
 			for (border = stroker->borders, side = 0;
-				side <= 1;
+			side <= 1;
 				side++, border++)
 			{
 				rotate = FT_SIDE_TO_ROTATE(side);

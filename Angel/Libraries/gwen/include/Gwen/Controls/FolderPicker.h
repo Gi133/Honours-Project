@@ -54,8 +54,8 @@ namespace Gwen
 				Gwen::Dialogs::FolderOpen(true, "Name", GetFolder().Get(), this, &FolderPicker::SetFolderCallback);
 			}
 
-			virtual TextObject GetValue(){ return GetFolder(); }
-			virtual void SetValue(const TextObject& strValue){ return SetFolder(strValue); }
+			virtual TextObject GetValue() { return GetFolder(); }
+			virtual void SetValue(const TextObject& strValue) { return SetFolder(strValue); }
 
 			Event::Caller	onFolderChanged;
 

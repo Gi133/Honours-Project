@@ -15,7 +15,7 @@
 
  ********************************************************************/
 
-/* preecho trigger settings *****************************************/
+ /* preecho trigger settings *****************************************/
 
 static const vorbis_info_psy_global _psy_global_44[5] = {
 	{ 8,   /* lines per eighth octave */
@@ -515,9 +515,9 @@ static const int _psy_ath_abs[12] = {
 
    ****************/
 
-/* various stereo possibilities */
+   /* various stereo possibilities */
 
-/* stereo mode by base quality level */
+   /* stereo mode by base quality level */
 static const adj_stereo _psy_stereo_modes_44[12] = {
 	/*  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14         -1  */
 	{ { 4, 4, 4, 4, 4, 4, 4, 3, 2, 2, 1, 0, 0, 0, 0 },

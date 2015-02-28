@@ -22,7 +22,7 @@ namespace Gwen
 			GWEN_CONTROL(TextBox, Label);
 
 			virtual void Render(Skin::Base* skin);
-			virtual void RenderFocus(Gwen::Skin::Base* /*skin*/){};
+			virtual void RenderFocus(Gwen::Skin::Base* /*skin*/) {};
 			virtual void Layout(Skin::Base* skin);
 
 #ifndef GWEN_NO_ANIMATION
@@ -63,13 +63,13 @@ namespace Gwen
 			virtual void OnMouseClickLeft(int x, int y, bool bDown);
 			virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY);
 
-			virtual void SetSelectAllOnFocus(bool b){ m_bSelectAll = b; if (b) OnSelectAll(this); }
+			virtual void SetSelectAllOnFocus(bool b) { m_bSelectAll = b; if (b) OnSelectAll(this); }
 
 			virtual void MakeCaratVisible();
 
 			virtual void OnEnter();
 
-			virtual bool NeedsInputChars(){ return true; }
+			virtual bool NeedsInputChars() { return true; }
 
 			virtual void MoveCaretToEnd();
 			virtual void MoveCaretToStart();
@@ -80,7 +80,7 @@ namespace Gwen
 		protected:
 
 			virtual void OnTextChanged();
-			virtual bool IsTextAllowed(const Gwen::UnicodeString& /*str*/, int /*iPos*/){ return true; }
+			virtual bool IsTextAllowed(const Gwen::UnicodeString& /*str*/, int /*iPos*/) { return true; }
 
 			bool m_bSelectAll;
 

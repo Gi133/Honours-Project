@@ -31,7 +31,7 @@ namespace Gwen
 			*/
 		struct Packet
 		{
-			Packet(Gwen::Controls::Base* pControl = NULL){ Control = pControl; }
+			Packet(Gwen::Controls::Base* pControl = NULL) { Control = pControl; }
 
 			Gwen::Controls::Base*	Control;
 			Gwen::String			String;
@@ -48,8 +48,8 @@ namespace Gwen
 			*/
 		struct Information
 		{
-			Information(){ Init(); }
-			Information(Gwen::Controls::Base* pctrl){ Init(); Control = pctrl; }
+			Information() { Init(); }
+			Information(Gwen::Controls::Base* pctrl) { Init(); Control = pctrl; }
 
 			void Init()
 			{

@@ -31,7 +31,7 @@ public:
 		skin->DrawComboDownArrow(this, m_ComboBox->IsHovered(), m_ComboBox->IsDepressed(), m_ComboBox->IsMenuOpen(), m_ComboBox->IsDisabled());
 	}
 
-	void SetComboBox(ComboBox* p){ m_ComboBox = p; }
+	void SetComboBox(ComboBox* p) { m_ComboBox = p; }
 
 protected:
 

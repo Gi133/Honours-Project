@@ -38,10 +38,10 @@ public:
 	~City();
 
 	void SetPopulation(); // Generate population based on settings files.
-	void SetPopulation(const int newPopulation){ population = newPopulation; UpdateCityType(); } // Specify the population of the city.
+	void SetPopulation(const int newPopulation) { population = newPopulation; UpdateCityType(); } // Specify the population of the city.
 	void SetResources(); // Generate resource quantities based on settings file options.
 	void SetResources(std::string resourceName, int quantity);
 
-	int GetPopulation(){ return population; }
-	std::string GetCityType(){ return cityTypeName; }
+	int GetPopulation() { return population; }
+	std::string GetCityType() { return cityTypeName; }
 };

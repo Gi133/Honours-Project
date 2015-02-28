@@ -18,7 +18,7 @@ public:
 
 	// Function to set threat level, if no parameter is given then it will randomly generate it.
 	void SetThreatLevel();
-	void SetThreatLevel(int newThreatLevel){ threatLevel = newThreatLevel; UpdateType(); }
+	void SetThreatLevel(int newThreatLevel) { threatLevel = newThreatLevel; UpdateType(); }
 
-	int getThreatLevel(){ return threatLevel; }
+	int getThreatLevel() { return threatLevel; }
 };

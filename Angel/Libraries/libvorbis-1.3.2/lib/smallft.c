@@ -15,18 +15,18 @@
 
  ********************************************************************/
 
-/* FFT implementation from OggSquish, minus cosine transforms,
- * minus all but radix 2/4 case.  In Vorbis we only need this
- * cut-down version.
- *
- * To do more than just power-of-two sized vectors, see the full
- * version I wrote for NetLib.
- *
- * Note that the packing is a little strange; rather than the FFT r/i
- * packing following R_0, I_n, R_1, I_1, R_2, I_2 ... R_n-1, I_n-1,
- * it follows R_0, R_1, I_1, R_2, I_2 ... R_n-1, I_n-1, I_n like the
- * FORTRAN version
- */
+ /* FFT implementation from OggSquish, minus cosine transforms,
+  * minus all but radix 2/4 case.  In Vorbis we only need this
+  * cut-down version.
+  *
+  * To do more than just power-of-two sized vectors, see the full
+  * version I wrote for NetLib.
+  *
+  * Note that the packing is a little strange; rather than the FFT r/i
+  * packing following R_0, I_n, R_1, I_1, R_2, I_2 ... R_n-1, I_n-1,
+  * it follows R_0, R_1, I_1, R_2, I_2 ... R_n-1, I_n-1, I_n like the
+  * FORTRAN version
+  */
 
 #include <stdlib.h>
 #include <string.h>
@@ -35,7 +35,7 @@
 #include "os.h"
 #include "misc.h"
 
-static void drfti1(int n, float *wa, int *ifac){
+static void drfti1(int n, float *wa, int *ifac) {
 	static int ntryh[4] = { 4, 2, 3, 5 };
 	static float tpi = 6.28318530717958648f;
 	float arg, argh, argld, fi;
@@ -64,7 +64,7 @@ L104:
 	if (ntry != 2)goto L107;
 	if (nf == 1)goto L107;
 
-	for (i = 1; i < nf; i++){
+	for (i = 1; i < nf; i++) {
 		ib = nf - i + 1;
 		ifac[ib + 1] = ifac[ib];
 	}
@@ -81,19 +81,19 @@ L107:
 
 	if (nfm1 == 0)return;
 
-	for (k1 = 0; k1 < nfm1; k1++){
+	for (k1 = 0; k1 < nfm1; k1++) {
 		ip = ifac[k1 + 2];
 		ld = 0;
 		l2 = l1*ip;
 		ido = n / l2;
 		ipm = ip - 1;
 
-		for (j = 0; j < ipm; j++){
+		for (j = 0; j < ipm; j++) {
 			ld += l1;
 			i = is;
 			argld = (float)ld*argh;
 			fi = 0.f;
-			for (ii = 2; ii < ido; ii += 2){
+			for (ii = 2; ii < ido; ii += 2) {
 				fi += 1.f;
 				arg = fi*argld;
 				wa[i++] = cos(arg);
@@ -105,12 +105,12 @@ L107:
 	}
 }
 
-static void fdrffti(int n, float *wsave, int *ifac){
+static void fdrffti(int n, float *wsave, int *ifac) {
 	if (n == 1) return;
 	drfti1(n, wsave + n, ifac);
 }
 
-static void dradf2(int ido, int l1, float *cc, float *ch, float *wa1){
+static void dradf2(int ido, int l1, float *cc, float *ch, float *wa1) {
 	int i, k;
 	float ti2, tr2;
 	int t0, t1, t2, t3, t4, t5, t6;
@@ -118,7 +118,7 @@ static void dradf2(int ido, int l1, float *cc, float *ch, float *wa1){
 	t1 = 0;
 	t0 = (t2 = l1*ido);
 	t3 = ido << 1;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		ch[t1 << 1] = cc[t1] + cc[t2];
 		ch[(t1 << 1) + t3 - 1] = cc[t1] - cc[t2];
 		t1 += ido;
@@ -130,12 +130,12 @@ static void dradf2(int ido, int l1, float *cc, float *ch, float *wa1){
 
 	t1 = 0;
 	t2 = t0;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		t3 = t2;
 		t4 = (t1 << 1) + (ido << 1);
 		t5 = t1;
 		t6 = t1 + t1;
-		for (i = 2; i < ido; i += 2){
+		for (i = 2; i < ido; i += 2) {
 			t3 += 2;
 			t4 -= 2;
 			t5 += 2;
@@ -156,7 +156,7 @@ static void dradf2(int ido, int l1, float *cc, float *ch, float *wa1){
 L105:
 	t3 = (t2 = (t1 = ido) - 1);
 	t2 += t0;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		ch[t1] = -cc[t2];
 		ch[t1 - 1] = cc[t3];
 		t1 += ido << 1;
@@ -166,7 +166,7 @@ L105:
 }
 
 static void dradf4(int ido, int l1, float *cc, float *ch, float *wa1,
-	float *wa2, float *wa3){
+	float *wa2, float *wa3) {
 	static float hsqt2 = .70710678118654752f;
 	int i, k, t0, t1, t2, t3, t4, t5, t6;
 	float ci2, ci3, ci4, cr2, cr3, cr4, ti1, ti2, ti3, ti4, tr1, tr2, tr3, tr4;
@@ -177,7 +177,7 @@ static void dradf4(int ido, int l1, float *cc, float *ch, float *wa1,
 	t2 = t1 + (t1 << 1);
 	t3 = 0;
 
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		tr1 = cc[t1] + cc[t2];
 		tr2 = cc[t3] + cc[t4];
 
@@ -196,11 +196,11 @@ static void dradf4(int ido, int l1, float *cc, float *ch, float *wa1,
 	if (ido == 2)goto L105;
 
 	t1 = 0;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		t2 = t1;
 		t4 = t1 << 2;
 		t5 = (t6 = ido << 1) + t4;
-		for (i = 2; i < ido; i += 2){
+		for (i = 2; i < ido; i += 2) {
 			t3 = (t2 += 2);
 			t4 += 2;
 			t5 -= 2;
@@ -249,7 +249,7 @@ L105:
 	t5 = ido << 1;
 	t6 = ido;
 
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		ti1 = -hsqt2*(cc[t1] + cc[t2]);
 		tr1 = hsqt2*(cc[t1] - cc[t2]);
 
@@ -267,7 +267,7 @@ L105:
 }
 
 static void dradfg(int ido, int ip, int l1, int idl1, float *cc, float *c1,
-	float *c2, float *ch, float *ch2, float *wa){
+	float *c2, float *ch, float *ch2, float *wa) {
 	static float tpi = 6.283185307179586f;
 	int idij, ipph, i, j, k, l, ic, ik, is;
 	int t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10;
@@ -290,10 +290,10 @@ static void dradfg(int ido, int ip, int l1, int idl1, float *cc, float *c1,
 	for (ik = 0; ik < idl1; ik++)ch2[ik] = c2[ik];
 
 	t1 = 0;
-	for (j = 1; j < ip; j++){
+	for (j = 1; j < ip; j++) {
 		t1 += t0;
 		t2 = t1;
-		for (k = 0; k < l1; k++){
+		for (k = 0; k < l1; k++) {
 			ch[t2] = c1[t2];
 			t2 += ido;
 		}
@@ -301,16 +301,16 @@ static void dradfg(int ido, int ip, int l1, int idl1, float *cc, float *c1,
 
 	is = -ido;
 	t1 = 0;
-	if (nbd > l1){
-		for (j = 1; j < ip; j++){
+	if (nbd > l1) {
+		for (j = 1; j < ip; j++) {
 			t1 += t0;
 			is += ido;
 			t2 = -ido + t1;
-			for (k = 0; k < l1; k++){
+			for (k = 0; k < l1; k++) {
 				idij = is - 1;
 				t2 += ido;
 				t3 = t2;
-				for (i = 2; i < ido; i += 2){
+				for (i = 2; i < ido; i += 2) {
 					idij += 2;
 					t3 += 2;
 					ch[t3 - 1] = wa[idij - 1] * c1[t3 - 1] + wa[idij] * c1[t3];
@@ -319,17 +319,17 @@ static void dradfg(int ido, int ip, int l1, int idl1, float *cc, float *c1,
 			}
 		}
 	}
-	else{
-		for (j = 1; j < ip; j++){
+	else {
+		for (j = 1; j < ip; j++) {
 			is += ido;
 			idij = is - 1;
 			t1 += t0;
 			t2 = t1;
-			for (i = 2; i < ido; i += 2){
+			for (i = 2; i < ido; i += 2) {
 				idij += 2;
 				t2 += 2;
 				t3 = t2;
-				for (k = 0; k < l1; k++){
+				for (k = 0; k < l1; k++) {
 					ch[t3 - 1] = wa[idij - 1] * c1[t3 - 1] + wa[idij] * c1[t3];
 					ch[t3] = wa[idij - 1] * c1[t3] - wa[idij] * c1[t3 - 1];
 					t3 += ido;
@@ -340,18 +340,18 @@ static void dradfg(int ido, int ip, int l1, int idl1, float *cc, float *c1,
 
 	t1 = 0;
 	t2 = ipp2*t0;
-	if (nbd < l1){
-		for (j = 1; j < ipph; j++){
+	if (nbd < l1) {
+		for (j = 1; j < ipph; j++) {
 			t1 += t0;
 			t2 -= t0;
 			t3 = t1;
 			t4 = t2;
-			for (i = 2; i < ido; i += 2){
+			for (i = 2; i < ido; i += 2) {
 				t3 += 2;
 				t4 += 2;
 				t5 = t3 - ido;
 				t6 = t4 - ido;
-				for (k = 0; k < l1; k++){
+				for (k = 0; k < l1; k++) {
 					t5 += ido;
 					t6 += ido;
 					c1[t5 - 1] = ch[t5 - 1] + ch[t6 - 1];
@@ -362,16 +362,16 @@ static void dradfg(int ido, int ip, int l1, int idl1, float *cc, float *c1,
 			}
 		}
 	}
-	else{
-		for (j = 1; j < ipph; j++){
+	else {
+		for (j = 1; j < ipph; j++) {
 			t1 += t0;
 			t2 -= t0;
 			t3 = t1;
 			t4 = t2;
-			for (k = 0; k < l1; k++){
+			for (k = 0; k < l1; k++) {
 				t5 = t3;
 				t6 = t4;
-				for (i = 2; i < ido; i += 2){
+				for (i = 2; i < ido; i += 2) {
 					t5 += 2;
 					t6 += 2;
 					c1[t5 - 1] = ch[t5 - 1] + ch[t6 - 1];
@@ -390,12 +390,12 @@ L119:
 
 	t1 = 0;
 	t2 = ipp2*idl1;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += t0;
 		t2 -= t0;
 		t3 = t1 - ido;
 		t4 = t2 - ido;
-		for (k = 0; k < l1; k++){
+		for (k = 0; k < l1; k++) {
 			t3 += ido;
 			t4 += ido;
 			c1[t3] = ch[t3] + ch[t4];
@@ -408,7 +408,7 @@ L119:
 	t1 = 0;
 	t2 = ipp2*idl1;
 	t3 = (ip - 1)*idl1;
-	for (l = 1; l < ipph; l++){
+	for (l = 1; l < ipph; l++) {
 		t1 += idl1;
 		t2 -= idl1;
 		ar1h = dcp*ar1 - dsp*ai1;
@@ -419,7 +419,7 @@ L119:
 		t6 = t3;
 		t7 = idl1;
 
-		for (ik = 0; ik < idl1; ik++){
+		for (ik = 0; ik < idl1; ik++) {
 			ch2[t4++] = c2[ik] + ar1*c2[t7++];
 			ch2[t5++] = ai1*c2[t6++];
 		}
@@ -431,7 +431,7 @@ L119:
 
 		t4 = idl1;
 		t5 = (ipp2 - 1)*idl1;
-		for (j = 2; j < ipph; j++){
+		for (j = 2; j < ipph; j++) {
 			t4 += idl1;
 			t5 -= idl1;
 
@@ -443,7 +443,7 @@ L119:
 			t7 = t2;
 			t8 = t4;
 			t9 = t5;
-			for (ik = 0; ik < idl1; ik++){
+			for (ik = 0; ik < idl1; ik++) {
 				ch2[t6++] += ar2*c2[t8++];
 				ch2[t7++] += ai2*c2[t9++];
 			}
@@ -451,7 +451,7 @@ L119:
 	}
 
 	t1 = 0;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += idl1;
 		t2 = t1;
 		for (ik = 0; ik < idl1; ik++)ch2[ik] += c2[t2++];
@@ -461,7 +461,7 @@ L119:
 
 	t1 = 0;
 	t2 = 0;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		t3 = t1;
 		t4 = t2;
 		for (i = 0; i < ido; i++)cc[t4++] = ch[t3++];
@@ -472,10 +472,10 @@ L119:
 	goto L135;
 
 L132:
-	for (i = 0; i < ido; i++){
+	for (i = 0; i < ido; i++) {
 		t1 = i;
 		t2 = i;
-		for (k = 0; k < l1; k++){
+		for (k = 0; k < l1; k++) {
 			cc[t2] = ch[t1];
 			t1 += ido;
 			t2 += t10;
@@ -487,7 +487,7 @@ L135:
 	t2 = ido << 1;
 	t3 = 0;
 	t4 = ipp2*t0;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += t2;
 		t3 += t0;
 		t4 -= t0;
@@ -496,7 +496,7 @@ L135:
 		t6 = t3;
 		t7 = t4;
 
-		for (k = 0; k < l1; k++){
+		for (k = 0; k < l1; k++) {
 			cc[t5 - 1] = ch[t6];
 			cc[t5] = ch[t7];
 			t5 += t10;
@@ -512,7 +512,7 @@ L135:
 	t3 = 0;
 	t4 = 0;
 	t5 = ipp2*t0;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += t2;
 		t3 += t2;
 		t4 += t0;
@@ -521,8 +521,8 @@ L135:
 		t7 = t3;
 		t8 = t4;
 		t9 = t5;
-		for (k = 0; k < l1; k++){
-			for (i = 2; i < ido; i += 2){
+		for (k = 0; k < l1; k++) {
+			for (i = 2; i < ido; i += 2) {
 				ic = idp2 - i;
 				cc[i + t7 - 1] = ch[i + t8 - 1] + ch[i + t9 - 1];
 				cc[ic + t6 - 1] = ch[i + t8 - 1] - ch[i + t9 - 1];
@@ -543,17 +543,17 @@ L141:
 	t3 = 0;
 	t4 = 0;
 	t5 = ipp2*t0;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += t2;
 		t3 += t2;
 		t4 += t0;
 		t5 -= t0;
-		for (i = 2; i < ido; i += 2){
+		for (i = 2; i < ido; i += 2) {
 			t6 = idp2 + t1 - i;
 			t7 = i + t3;
 			t8 = i + t4;
 			t9 = i + t5;
-			for (k = 0; k < l1; k++){
+			for (k = 0; k < l1; k++) {
 				cc[t7 - 1] = ch[t8 - 1] + ch[t9 - 1];
 				cc[t6 - 1] = ch[t8 - 1] - ch[t9 - 1];
 				cc[t7] = ch[t8] + ch[t9];
@@ -567,7 +567,7 @@ L141:
 	}
 }
 
-static void drftf1(int n, float *c, float *ch, float *wa, int *ifac){
+static void drftf1(int n, float *c, float *ch, float *wa, int *ifac) {
 	int i, k1, l1, l2;
 	int na, kh, nf;
 	int ip, iw, ido, idl1, ix2, ix3;
@@ -577,7 +577,7 @@ static void drftf1(int n, float *c, float *ch, float *wa, int *ifac){
 	l2 = n;
 	iw = n;
 
-	for (k1 = 0; k1 < nf; k1++){
+	for (k1 = 0; k1 < nf; k1++) {
 		kh = nf - k1;
 		ip = ifac[kh + 1];
 		l1 = l2 / ip;
@@ -628,7 +628,7 @@ static void drftf1(int n, float *c, float *ch, float *wa, int *ifac){
 	for (i = 0; i < n; i++)c[i] = ch[i];
 }
 
-static void dradb2(int ido, int l1, float *cc, float *ch, float *wa1){
+static void dradb2(int ido, int l1, float *cc, float *ch, float *wa1) {
 	int i, k, t0, t1, t2, t3, t4, t5, t6;
 	float ti2, tr2;
 
@@ -637,7 +637,7 @@ static void dradb2(int ido, int l1, float *cc, float *ch, float *wa1){
 	t1 = 0;
 	t2 = 0;
 	t3 = (ido << 1) - 1;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		ch[t1] = cc[t2] + cc[t3 + t2];
 		ch[t1 + t0] = cc[t2] - cc[t3 + t2];
 		t2 = (t1 += ido) << 1;
@@ -648,11 +648,11 @@ static void dradb2(int ido, int l1, float *cc, float *ch, float *wa1){
 
 	t1 = 0;
 	t2 = 0;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		t3 = t1;
 		t5 = (t4 = t2) + (ido << 1);
 		t6 = t0 + t1;
-		for (i = 2; i < ido; i += 2){
+		for (i = 2; i < ido; i += 2) {
 			t3 += 2;
 			t4 += 2;
 			t5 -= 2;
@@ -672,7 +672,7 @@ static void dradb2(int ido, int l1, float *cc, float *ch, float *wa1){
 L105:
 	t1 = ido - 1;
 	t2 = ido - 1;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		ch[t1] = cc[t2] + cc[t2];
 		ch[t1 + t0] = -(cc[t2 + 1] + cc[t2 + 1]);
 		t1 += ido;
@@ -681,7 +681,7 @@ L105:
 }
 
 static void dradb3(int ido, int l1, float *cc, float *ch, float *wa1,
-	float *wa2){
+	float *wa2) {
 	static float taur = -.5f;
 	static float taui = .8660254037844386f;
 	int i, k, t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10;
@@ -693,7 +693,7 @@ static void dradb3(int ido, int l1, float *cc, float *ch, float *wa1,
 	t3 = ido << 1;
 	t4 = ido + (ido << 1);
 	t5 = 0;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		tr2 = cc[t3 - 1] + cc[t3 - 1];
 		cr2 = cc[t5] + (taur*tr2);
 		ch[t1] = cc[t5] + tr2;
@@ -709,13 +709,13 @@ static void dradb3(int ido, int l1, float *cc, float *ch, float *wa1,
 
 	t1 = 0;
 	t3 = ido << 1;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		t7 = t1 + (t1 << 1);
 		t6 = (t5 = t7 + t3);
 		t8 = t1;
 		t10 = (t9 = t1 + t0) + t0;
 
-		for (i = 2; i < ido; i += 2){
+		for (i = 2; i < ido; i += 2) {
 			t5 += 2;
 			t6 -= 2;
 			t7 += 2;
@@ -744,7 +744,7 @@ static void dradb3(int ido, int l1, float *cc, float *ch, float *wa1,
 }
 
 static void dradb4(int ido, int l1, float *cc, float *ch, float *wa1,
-	float *wa2, float *wa3){
+	float *wa2, float *wa3) {
 	static float sqrt2 = 1.414213562373095f;
 	int i, k, t0, t1, t2, t3, t4, t5, t6, t7, t8;
 	float ci2, ci3, ci4, cr2, cr3, cr4, ti1, ti2, ti3, ti4, tr1, tr2, tr3, tr4;
@@ -754,7 +754,7 @@ static void dradb4(int ido, int l1, float *cc, float *ch, float *wa1,
 	t2 = ido << 2;
 	t3 = 0;
 	t6 = ido << 1;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		t4 = t3 + t6;
 		t5 = t1;
 		tr3 = cc[t4 - 1] + cc[t4 - 1];
@@ -773,10 +773,10 @@ static void dradb4(int ido, int l1, float *cc, float *ch, float *wa1,
 	if (ido == 2)goto L105;
 
 	t1 = 0;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		t5 = (t4 = (t3 = (t2 = t1 << 2) + t6)) + t6;
 		t7 = t1;
-		for (i = 2; i < ido; i += 2){
+		for (i = 2; i < ido; i += 2) {
 			t2 += 2;
 			t3 += 2;
 			t4 -= 2;
@@ -817,7 +817,7 @@ L105:
 	t2 = ido << 2;
 	t3 = ido - 1;
 	t4 = ido + (ido << 1);
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		t5 = t3;
 		ti1 = cc[t1] + cc[t4];
 		ti2 = cc[t4] - cc[t1];
@@ -835,7 +835,7 @@ L105:
 }
 
 static void dradbg(int ido, int ip, int l1, int idl1, float *cc, float *c1,
-	float *c2, float *ch, float *ch2, float *wa){
+	float *c2, float *ch, float *ch2, float *wa) {
 	static float tpi = 6.283185307179586f;
 	int idij, ipph, i, j, k, l, ik, is, t0, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10,
 		t11, t12;
@@ -856,10 +856,10 @@ static void dradbg(int ido, int ip, int l1, int idl1, float *cc, float *c1,
 
 	t1 = 0;
 	t2 = 0;
-	for (k = 0; k < l1; k++){
+	for (k = 0; k < l1; k++) {
 		t3 = t1;
 		t4 = t2;
-		for (i = 0; i < ido; i++){
+		for (i = 0; i < ido; i++) {
 			ch[t3] = cc[t4];
 			t3++;
 			t4++;
@@ -871,10 +871,10 @@ static void dradbg(int ido, int ip, int l1, int idl1, float *cc, float *c1,
 
 L103:
 	t1 = 0;
-	for (i = 0; i < ido; i++){
+	for (i = 0; i < ido; i++) {
 		t2 = t1;
 		t3 = t1;
-		for (k = 0; k < l1; k++){
+		for (k = 0; k < l1; k++) {
 			ch[t2] = cc[t3];
 			t2 += ido;
 			t3 += t10;
@@ -886,13 +886,13 @@ L106:
 	t1 = 0;
 	t2 = ipp2*t0;
 	t7 = (t5 = ido << 1);
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += t0;
 		t2 -= t0;
 		t3 = t1;
 		t4 = t2;
 		t6 = t5;
-		for (k = 0; k < l1; k++){
+		for (k = 0; k < l1; k++) {
 			ch[t3] = cc[t6 - 1] + cc[t6 - 1];
 			ch[t4] = cc[t6] + cc[t6];
 			t3 += ido;
@@ -908,7 +908,7 @@ L106:
 	t1 = 0;
 	t2 = ipp2*t0;
 	t7 = 0;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += t0;
 		t2 -= t0;
 		t3 = t1;
@@ -916,12 +916,12 @@ L106:
 
 		t7 += (ido << 1);
 		t8 = t7;
-		for (k = 0; k < l1; k++){
+		for (k = 0; k < l1; k++) {
 			t5 = t3;
 			t6 = t4;
 			t9 = t8;
 			t11 = t8;
-			for (i = 2; i < ido; i += 2){
+			for (i = 2; i < ido; i += 2) {
 				t5 += 2;
 				t6 += 2;
 				t9 += 2;
@@ -942,7 +942,7 @@ L112:
 	t1 = 0;
 	t2 = ipp2*t0;
 	t7 = 0;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += t0;
 		t2 -= t0;
 		t3 = t1;
@@ -950,7 +950,7 @@ L112:
 		t7 += (ido << 1);
 		t8 = t7;
 		t9 = t7;
-		for (i = 2; i < ido; i += 2){
+		for (i = 2; i < ido; i += 2) {
 			t3 += 2;
 			t4 += 2;
 			t8 += 2;
@@ -959,7 +959,7 @@ L112:
 			t6 = t4;
 			t11 = t8;
 			t12 = t9;
-			for (k = 0; k < l1; k++){
+			for (k = 0; k < l1; k++) {
 				ch[t5 - 1] = cc[t11 - 1] + cc[t12 - 1];
 				ch[t6 - 1] = cc[t11 - 1] - cc[t12 - 1];
 				ch[t5] = cc[t11] - cc[t12];
@@ -978,7 +978,7 @@ L116:
 	t1 = 0;
 	t9 = (t2 = ipp2*idl1);
 	t3 = (ip - 1)*idl1;
-	for (l = 1; l < ipph; l++){
+	for (l = 1; l < ipph; l++) {
 		t1 += idl1;
 		t2 -= idl1;
 
@@ -990,7 +990,7 @@ L116:
 		t6 = 0;
 		t7 = idl1;
 		t8 = t3;
-		for (ik = 0; ik < idl1; ik++){
+		for (ik = 0; ik < idl1; ik++) {
 			c2[t4++] = ch2[t6++] + ar1*ch2[t7++];
 			c2[t5++] = ai1*ch2[t8++];
 		}
@@ -1001,7 +1001,7 @@ L116:
 
 		t6 = idl1;
 		t7 = t9 - idl1;
-		for (j = 2; j < ipph; j++){
+		for (j = 2; j < ipph; j++) {
 			t6 += idl1;
 			t7 -= idl1;
 			ar2h = dc2*ar2 - ds2*ai2;
@@ -1011,7 +1011,7 @@ L116:
 			t5 = t2;
 			t11 = t6;
 			t12 = t7;
-			for (ik = 0; ik < idl1; ik++){
+			for (ik = 0; ik < idl1; ik++) {
 				c2[t4++] += ar2*ch2[t11++];
 				c2[t5++] += ai2*ch2[t12++];
 			}
@@ -1019,7 +1019,7 @@ L116:
 	}
 
 	t1 = 0;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += idl1;
 		t2 = t1;
 		for (ik = 0; ik < idl1; ik++)ch2[ik] += ch2[t2++];
@@ -1027,12 +1027,12 @@ L116:
 
 	t1 = 0;
 	t2 = ipp2*t0;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += t0;
 		t2 -= t0;
 		t3 = t1;
 		t4 = t2;
-		for (k = 0; k < l1; k++){
+		for (k = 0; k < l1; k++) {
 			ch[t3] = c1[t3] - c1[t4];
 			ch[t4] = c1[t3] + c1[t4];
 			t3 += ido;
@@ -1045,15 +1045,15 @@ L116:
 
 	t1 = 0;
 	t2 = ipp2*t0;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += t0;
 		t2 -= t0;
 		t3 = t1;
 		t4 = t2;
-		for (k = 0; k < l1; k++){
+		for (k = 0; k < l1; k++) {
 			t5 = t3;
 			t6 = t4;
-			for (i = 2; i < ido; i += 2){
+			for (i = 2; i < ido; i += 2) {
 				t5 += 2;
 				t6 += 2;
 				ch[t5 - 1] = c1[t5 - 1] - c1[t6];
@@ -1070,17 +1070,17 @@ L116:
 L128:
 	t1 = 0;
 	t2 = ipp2*t0;
-	for (j = 1; j < ipph; j++){
+	for (j = 1; j < ipph; j++) {
 		t1 += t0;
 		t2 -= t0;
 		t3 = t1;
 		t4 = t2;
-		for (i = 2; i < ido; i += 2){
+		for (i = 2; i < ido; i += 2) {
 			t3 += 2;
 			t4 += 2;
 			t5 = t3;
 			t6 = t4;
-			for (k = 0; k < l1; k++){
+			for (k = 0; k < l1; k++) {
 				ch[t5 - 1] = c1[t5 - 1] - c1[t6];
 				ch[t6 - 1] = c1[t5 - 1] + c1[t6];
 				ch[t5] = c1[t5] + c1[t6 - 1];
@@ -1097,28 +1097,28 @@ L132:
 	for (ik = 0; ik < idl1; ik++)c2[ik] = ch2[ik];
 
 	t1 = 0;
-	for (j = 1; j < ip; j++){
+	for (j = 1; j < ip; j++) {
 		t2 = (t1 += t0);
-		for (k = 0; k<l1; k++){
+		for (k = 0; k < l1; k++) {
 			c1[t2] = ch[t2];
 			t2 += ido;
 		}
 	}
 
-	if (nbd>l1)goto L139;
+	if (nbd > l1)goto L139;
 
 	is = -ido - 1;
 	t1 = 0;
-	for (j = 1; j < ip; j++){
+	for (j = 1; j < ip; j++) {
 		is += ido;
 		t1 += t0;
 		idij = is;
 		t2 = t1;
-		for (i = 2; i < ido; i += 2){
+		for (i = 2; i < ido; i += 2) {
 			t2 += 2;
 			idij += 2;
 			t3 = t2;
-			for (k = 0; k < l1; k++){
+			for (k = 0; k < l1; k++) {
 				c1[t3 - 1] = wa[idij - 1] * ch[t3 - 1] - wa[idij] * ch[t3];
 				c1[t3] = wa[idij - 1] * ch[t3] + wa[idij] * ch[t3 - 1];
 				t3 += ido;
@@ -1130,14 +1130,14 @@ L132:
 L139:
 	is = -ido - 1;
 	t1 = 0;
-	for (j = 1; j < ip; j++){
+	for (j = 1; j < ip; j++) {
 		is += ido;
 		t1 += t0;
 		t2 = t1;
-		for (k = 0; k < l1; k++){
+		for (k = 0; k < l1; k++) {
 			idij = is;
 			t3 = t2;
-			for (i = 2; i < ido; i += 2){
+			for (i = 2; i < ido; i += 2) {
 				idij += 2;
 				t3 += 2;
 				c1[t3 - 1] = wa[idij - 1] * ch[t3 - 1] - wa[idij] * ch[t3];
@@ -1148,7 +1148,7 @@ L139:
 	}
 }
 
-static void drftb1(int n, float *c, float *ch, float *wa, int *ifac){
+static void drftb1(int n, float *c, float *ch, float *wa, int *ifac) {
 	int i, k1, l1, l2;
 	int na;
 	int nf, ip, iw, ix2, ix3, ido, idl1;
@@ -1158,7 +1158,7 @@ static void drftb1(int n, float *c, float *ch, float *wa, int *ifac){
 	l1 = 1;
 	iw = 1;
 
-	for (k1 = 0; k1 < nf; k1++){
+	for (k1 = 0; k1 < nf; k1++) {
 		ip = ifac[k1 + 2];
 		l2 = ip*l1;
 		ido = n / l2;
@@ -1226,25 +1226,25 @@ static void drftb1(int n, float *c, float *ch, float *wa, int *ifac){
 	for (i = 0; i < n; i++)c[i] = ch[i];
 }
 
-void drft_forward(drft_lookup *l, float *data){
+void drft_forward(drft_lookup *l, float *data) {
 	if (l->n == 1)return;
 	drftf1(l->n, data, l->trigcache, l->trigcache + l->n, l->splitcache);
 }
 
-void drft_backward(drft_lookup *l, float *data){
+void drft_backward(drft_lookup *l, float *data) {
 	if (l->n == 1)return;
 	drftb1(l->n, data, l->trigcache, l->trigcache + l->n, l->splitcache);
 }
 
-void drft_init(drft_lookup *l, int n){
+void drft_init(drft_lookup *l, int n) {
 	l->n = n;
 	l->trigcache = _ogg_calloc(3 * n, sizeof(*l->trigcache));
 	l->splitcache = _ogg_calloc(32, sizeof(*l->splitcache));
 	fdrffti(n, l->trigcache, l->splitcache);
 }
 
-void drft_clear(drft_lookup *l){
-	if (l){
+void drft_clear(drft_lookup *l) {
+	if (l) {
 		if (l->trigcache)_ogg_free(l->trigcache);
 		if (l->splitcache)_ogg_free(l->splitcache);
 		memset(l, 0, sizeof(*l));

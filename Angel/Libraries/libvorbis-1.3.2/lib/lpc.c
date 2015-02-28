@@ -15,33 +15,33 @@
 
  ********************************************************************/
 
-/* Some of these routines (autocorrelator, LPC coefficient estimator)
-   are derived from code written by Jutta Degener and Carsten Bormann;
-   thus we include their copyright below.  The entirety of this file
-   is freely redistributable on the condition that both of these
-   copyright notices are preserved without modification.  */
+ /* Some of these routines (autocorrelator, LPC coefficient estimator)
+	are derived from code written by Jutta Degener and Carsten Bormann;
+	thus we include their copyright below.  The entirety of this file
+	is freely redistributable on the condition that both of these
+	copyright notices are preserved without modification.  */
 
-/* Preserved Copyright: *********************************************/
+	/* Preserved Copyright: *********************************************/
 
-/* Copyright 1992, 1993, 1994 by Jutta Degener and Carsten Bormann,
-Technische Universita"t Berlin
+	/* Copyright 1992, 1993, 1994 by Jutta Degener and Carsten Bormann,
+	Technische Universita"t Berlin
 
-Any use of this software is permitted provided that this notice is not
-removed and that neither the authors nor the Technische Universita"t
-Berlin are deemed to have made any representations as to the
-suitability of this software for any purpose nor are held responsible
-for any defects of this software. THERE IS ABSOLUTELY NO WARRANTY FOR
-THIS SOFTWARE.
+	Any use of this software is permitted provided that this notice is not
+	removed and that neither the authors nor the Technische Universita"t
+	Berlin are deemed to have made any representations as to the
+	suitability of this software for any purpose nor are held responsible
+	for any defects of this software. THERE IS ABSOLUTELY NO WARRANTY FOR
+	THIS SOFTWARE.
 
-As a matter of courtesy, the authors request to be informed about uses
-this software has found, about bugs in this software, and about any
-improvements that may be of general interest.
+	As a matter of courtesy, the authors request to be informed about uses
+	this software has found, about bugs in this software, and about any
+	improvements that may be of general interest.
 
-Berlin, 28.11.1994
-Jutta Degener
-Carsten Bormann
+	Berlin, 28.11.1994
+	Jutta Degener
+	Carsten Bormann
 
-*********************************************************************/
+	*********************************************************************/
 
 #include <stdlib.h>
 #include <string.h>
@@ -52,13 +52,13 @@ Carsten Bormann
 #include "scales.h"
 #include "misc.h"
 
-/* Autocorrelation LPC coeff generation algorithm invented by
-   N. Levinson in 1947, modified by J. Durbin in 1959. */
+	/* Autocorrelation LPC coeff generation algorithm invented by
+	   N. Levinson in 1947, modified by J. Durbin in 1959. */
 
-/* Input : n elements of time doamin data
-   Output: m lpc coefficients, excitation energy */
+	   /* Input : n elements of time doamin data
+		  Output: m lpc coefficients, excitation energy */
 
-float vorbis_lpc_from_data(float *data, float *lpci, int n, int m){
+float vorbis_lpc_from_data(float *data, float *lpci, int n, int m) {
 	double *aut = alloca(sizeof(*aut)*(m + 1));
 	double *lpc = alloca(sizeof(*lpc)*(m));
 	double error;
@@ -67,7 +67,7 @@ float vorbis_lpc_from_data(float *data, float *lpci, int n, int m){
 
 	/* autocorrelation, p+1 lag coefficients */
 	j = m + 1;
-	while (j--){
+	while (j--) {
 		double d = 0; /* double needed for accumulator depth */
 		for (i = j; i < n; i++)d += (double)data[i] * data[i - j];
 		aut[j] = d;
@@ -79,10 +79,10 @@ float vorbis_lpc_from_data(float *data, float *lpci, int n, int m){
 	error = aut[0] * (1. + 1e-10);
 	epsilon = 1e-9*aut[0] + 1e-10;
 
-	for (i = 0; i < m; i++){
+	for (i = 0; i < m; i++) {
 		double r = -aut[i + 1];
 
-		if (error < epsilon){
+		if (error < epsilon) {
 			memset(lpc + i, 0, (m - i)*sizeof(*lpc));
 			goto done;
 		}
@@ -98,7 +98,7 @@ float vorbis_lpc_from_data(float *data, float *lpci, int n, int m){
 		/* Update LPC coefficients and total error */
 
 		lpc[i] = r;
-		for (j = 0; j < i / 2; j++){
+		for (j = 0; j < i / 2; j++) {
 			double tmp = lpc[j];
 
 			lpc[j] += r*lpc[i - 1 - j];
@@ -115,7 +115,7 @@ done:
 	{
 		double g = .99;
 		double damp = g;
-		for (j = 0; j < m; j++){
+		for (j = 0; j < m; j++) {
 			lpc[j] *= damp;
 			damp *= g;
 		}
@@ -130,7 +130,7 @@ done:
 }
 
 void vorbis_lpc_predict(float *coeff, float *prime, int m,
-	float *data, long n){
+	float *data, long n) {
 	/* in: coeff[0...m-1] LPC coefficients
 		   prime[0...m-1] initial values (allocated size of n+m-1)
 		   out: data[0...n-1] data samples */
@@ -146,7 +146,7 @@ void vorbis_lpc_predict(float *coeff, float *prime, int m,
 		for (i = 0; i < m; i++)
 			work[i] = prime[i];
 
-	for (i = 0; i < n; i++){
+	for (i = 0; i < n; i++) {
 		y = 0;
 		o = i;
 		p = m;

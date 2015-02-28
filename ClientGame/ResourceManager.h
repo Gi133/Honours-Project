@@ -8,7 +8,7 @@ class ResourceManager
 {
 private:
 	ResourceManager();
-	~ResourceManager(){ _instance = nullptr; }
+	~ResourceManager() { _instance = nullptr; }
 	static ResourceManager* _instance;
 
 	void LoadPrefs();
@@ -24,14 +24,14 @@ public:
 	static ResourceManager& getInstance();
 
 	// Reload Values into maps.
-	void ReloadTables(){ LoadResourceTable(); LoadResourceNames(); }
+	void ReloadTables() { LoadResourceTable(); LoadResourceNames(); }
 
 	// Return base price based on name.
 	int GetBasePrice(const std::string resourceName);
 
 	// Returns all resource names in a string vector.
-	std::vector<std::string> GetResourceNames(){ return resourceNames; }
+	std::vector<std::string> GetResourceNames() { return resourceNames; }
 
 	// Return the number of all resources in the game.
-	int GetTotalResources(){ return resourceNames.size(); }
+	int GetTotalResources() { return resourceNames.size(); }
 };

@@ -40,14 +40,14 @@
 #define PRE_PHYSICS_INIT_WARNING "WARNING: %s had no effect; this actor's physics were not initialized."
 
 PhysicsActor::PhysicsActor(void) :
-_physBody(NULL),
-_density(1.f),
-_friction(0.3f),
-_restitution(0.0f),
-_shapeType(SHAPETYPE_BOX),
-_isSensor(false),
-_groupIndex(0),
-_fixedRotation(false)
+	_physBody(NULL),
+	_density(1.f),
+	_friction(0.3f),
+	_restitution(0.0f),
+	_shapeType(SHAPETYPE_BOX),
+	_isSensor(false),
+	_groupIndex(0),
+	_fixedRotation(false)
 {
 }
 

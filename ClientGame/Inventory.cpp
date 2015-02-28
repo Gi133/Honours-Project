@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "Inventory.h"
 
+namespace
+{
+	const auto purseStartingLimitFallBack = 10000;
+}
+
 Inventory::Inventory(const bool isCity /* = false */, int startingBagNumber /* = 1 */, int StartingGold /* = 0 */)
 {
 	city = isCity;
@@ -12,10 +17,21 @@ Inventory::Inventory(const bool isCity /* = false */, int startingBagNumber /* =
 	if (startingBagNumber <= 0)
 		startingBagNumber = 1;
 	AddBag(startingBagNumber);
+
+	LoadDefauts();
 }
 
 Inventory::~Inventory()
 {
+}
+
+void Inventory::LoadDefauts()
+{
+	auto purseStartingLimit = thePrefs.GetInt("InventorySettings", "startingGoldLimit");
+	if (!purseStartingLimit)
+		purseStartingLimit = purseStartingLimitFallBack;
+
+	purse->SetGoldLimit(purseStartingLimit);
 }
 
 void Inventory::AddBag(int numBag /*= 1*/)
@@ -104,4 +120,24 @@ int Inventory::GetTotalResourceAmount(const int iter)
 		total += i->GetResourceQuantity(iter);
 
 	return total;
+}
+
+std::string Inventory::GetInventoryString()
+{
+	std::string inventoryString = "";
+	const auto numPerLine = 2;
+
+	// Assemble the string.
+	for (int i = 0; i < theResourceManager.GetTotalResources(); i++)
+	{
+		auto numResource = GetTotalResourceAmount(i);
+		inventoryString += theResourceManager.GetResourceNames().at(i) + ": " + IntToString(numResource);
+
+		if (i % numPerLine)
+			inventoryString += "\n";
+		else
+			inventoryString += " \t ";
+	}
+
+	return inventoryString;
 }

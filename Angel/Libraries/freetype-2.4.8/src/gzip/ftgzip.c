@@ -74,7 +74,7 @@
 #include "infutil.h"
 #undef  NO_INFLATE_MASK
 
-/* infutil.c must be included before infcodes.c */
+   /* infutil.c must be included before infcodes.c */
 #include "zutil.c"
 #include "inftrees.c"
 #include "infutil.c"

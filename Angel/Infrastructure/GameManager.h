@@ -53,7 +53,7 @@ public:
 	 * The default constructor is empty; we expect you to subclass to do
 	 *  anything meaningful.
 	 */
-	GameManager(){}
+	GameManager() {}
 
 	/**
 	 * The destructor makes sure that the GameManager unsubscribes from all
@@ -103,5 +103,5 @@ public:
 	 *
 	 * @param sound The handle to the sound that has just completed.
 	 */
-	virtual void SoundEnded(AngelSoundHandle sound){}
+	virtual void SoundEnded(AngelSoundHandle sound) {}
 };

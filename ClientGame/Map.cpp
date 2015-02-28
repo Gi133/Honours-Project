@@ -61,7 +61,7 @@ void Map::GenerateCity()
 
 		newCity->SetPosition(generatedPosition);
 
-		newCity->SetName(theNameManger.GenerateName(3, true));
+		newCity->SetName(theNameManager.GenerateName(3, true));
 		newCity->SetPopulation();
 		newCity->SetResources();
 
@@ -82,7 +82,7 @@ void Map::GenerateLocation()
 
 		newLocation->SetPosition(generatedPosition);
 
-		newLocation->SetName(theNameManger.GenerateName(4));
+		newLocation->SetName(theNameManager.GenerateName(4));
 		newLocation->SetThreatLevel();
 
 		// Move the location into the container.

@@ -42,7 +42,7 @@ namespace Gwen
 			virtual void Open(unsigned int iPos);
 			virtual void Close();
 
-			virtual bool IsMenuComponent(){ return true; }
+			virtual bool IsMenuComponent() { return true; }
 			virtual void CloseMenus();
 
 			bool IconMarginDisabled() { return m_bDisableIconMargin; }
@@ -53,7 +53,7 @@ namespace Gwen
 
 		protected:
 
-			virtual bool ShouldHoverOpenMenu(){ return true; }
+			virtual bool ShouldHoverOpenMenu() { return true; }
 			virtual void OnAddItem(MenuItem* item);
 
 			bool m_bDisableIconMargin;

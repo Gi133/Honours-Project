@@ -407,7 +407,7 @@ init: /* using goto's to optimize tail recursion */
 		default: goto dflt;
 		}
 	}
-	default: dflt : {  /* pattern class plus optional suffix */
+	default: dflt: {  /* pattern class plus optional suffix */
 		const char *ep = classend(ms, p);  /* points to what is next */
 		int m = s < ms->src_end && singlematch(uchar(*s), p, ep);
 		switch (*ep) {
@@ -562,7 +562,7 @@ static int gmatch_aux(lua_State *L) {
 	ms.src_end = s + ls;
 	ms.p_end = p + lp;
 	for (src = s + (size_t)lua_tointeger(L, lua_upvalueindex(3));
-		src <= ms.src_end;
+	src <= ms.src_end;
 		src++) {
 		const char *e;
 		ms.level = 0;

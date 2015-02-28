@@ -22,6 +22,6 @@ public:
 	void AdjustTextActorSize();
 	void AdjustTextPosition();
 
-	void SetTitleText(std::string newTitle){ textTitle->SetDisplayString(newTitle); }
-	void SetContentText(std::string newContent){ textContent->SetDisplayString(newContent); }
+	void SetTitleText(std::string newTitle) { textTitle->SetDisplayString(newTitle); }
+	void SetContentText(std::string newContent) { textContent->SetDisplayString(newContent); }
 };

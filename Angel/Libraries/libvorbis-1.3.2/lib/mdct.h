@@ -20,7 +20,7 @@
 
 #include "vorbis/codec.h"
 
-/*#define MDCT_INTEGERIZED  <- be warned there could be some hurt left here*/
+ /*#define MDCT_INTEGERIZED  <- be warned there could be some hurt left here*/
 #ifdef MDCT_INTEGERIZED
 
 #define DATA_TYPE int

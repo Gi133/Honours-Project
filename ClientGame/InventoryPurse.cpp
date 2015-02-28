@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include "InventoryPurse.h"
 
-
 InventoryPurse::InventoryPurse()
 {
 }
-
 
 InventoryPurse::InventoryPurse(const int startingGold)
 {

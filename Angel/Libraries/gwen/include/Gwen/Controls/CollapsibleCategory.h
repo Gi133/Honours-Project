@@ -33,7 +33,7 @@ namespace Gwen
 
 			virtual void PostLayout(Skin::Base* /*skin*/);
 
-			virtual void SetList(Controls::CollapsibleList* p){ m_pList = p; }
+			virtual void SetList(Controls::CollapsibleList* p) { m_pList = p; }
 
 			virtual void UnselectAll();
 			virtual Button* GetSelected();

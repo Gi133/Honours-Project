@@ -45,13 +45,13 @@ public:
 	void EmptyBag();
 
 	// BagUpgrade Functions.
-	int GetBagLevel(){ return bagUpgradeLevel; }
-	bool CheckBagUpgradeable(){ return (bagUpgradeLevel < bagMaxUpgradeLevel); } // If upgrade level is lower than max upgrade level, return true.
+	int GetBagLevel() { return bagUpgradeLevel; }
+	bool CheckBagUpgradeable() { return (bagUpgradeLevel < bagMaxUpgradeLevel); } // If upgrade level is lower than max upgrade level, return true.
 	int GetBagUpradeCost();
 	void UpgradeBag();
-	void SetUpgradeLevel(const int upgradeLevel){ bagUpgradeLevel = upgradeLevel; UpdateBagSpace(); } // Debug Function, should not be used in code.
+	void SetUpgradeLevel(const int upgradeLevel) { bagUpgradeLevel = upgradeLevel; UpdateBagSpace(); } // Debug Function, should not be used in code.
 
-	int GetAvailableBagSpace(){ return bagAvailableSpace; }
-	int GetMaxSpace(){ return bagMaxSpace; }
-	int GetUsedSpace(){ return bagUsedSpace; }
+	int GetAvailableBagSpace() { return bagAvailableSpace; }
+	int GetMaxSpace() { return bagMaxSpace; }
+	int GetUsedSpace() { return bagUsedSpace; }
 };

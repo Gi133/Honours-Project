@@ -63,8 +63,8 @@ namespace Gwen
 			virtual void OnButtonUp(Base* control);
 			virtual void OnButtonDown(Base* control);
 
-			virtual bool OnKeyUp(bool bDown)	{ if (bDown) OnButtonUp(NULL); return true; }
-			virtual bool OnKeyDown(bool bDown){ if (bDown) OnButtonDown(NULL); return true; }
+			virtual bool OnKeyUp(bool bDown) { if (bDown) OnButtonUp(NULL); return true; }
+			virtual bool OnKeyDown(bool bDown) { if (bDown) OnButtonDown(NULL); return true; }
 
 			virtual void SyncTextFromNumber();
 			virtual void SyncNumberFromText();

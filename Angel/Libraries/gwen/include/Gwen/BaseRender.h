@@ -42,28 +42,28 @@ namespace Gwen
 			Base();
 			virtual ~Base();
 
-			virtual void Init(){};
+			virtual void Init() {};
 
-			virtual void Begin(){};
-			virtual void End(){};
+			virtual void Begin() {};
+			virtual void End() {};
 
-			virtual void SetDrawColor(Color color){};
+			virtual void SetDrawColor(Color color) {};
 
-			virtual void DrawFilledRect(Gwen::Rect rect){};;
+			virtual void DrawFilledRect(Gwen::Rect rect) {};;
 
-			virtual void StartClip(){};
-			virtual void EndClip(){};
+			virtual void StartClip() {};
+			virtual void EndClip() {};
 
-			virtual void LoadTexture(Gwen::Texture* pTexture){};
-			virtual void FreeTexture(Gwen::Texture* pTexture){};
-			virtual void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f){};
+			virtual void LoadTexture(Gwen::Texture* pTexture) {};
+			virtual void FreeTexture(Gwen::Texture* pTexture) {};
+			virtual void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1 = 0.0f, float v1 = 0.0f, float u2 = 1.0f, float v2 = 1.0f) {};
 			virtual void DrawMissingImage(Gwen::Rect pTargetRect);
-			virtual Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default = Gwen::Color(255, 255, 255, 255)){ return col_default; }
+			virtual Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default = Gwen::Color(255, 255, 255, 255)) { return col_default; }
 
 			virtual ICacheToTexture* GetCTT() { return NULL; }
 
-			virtual void LoadFont(Gwen::Font* pFont){};
-			virtual void FreeFont(Gwen::Font* pFont){};
+			virtual void LoadFont(Gwen::Font* pFont) {};
+			virtual void FreeFont(Gwen::Font* pFont) {};
 			virtual void RenderText(Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text);
 			virtual Gwen::Point MeasureText(Gwen::Font* pFont, const Gwen::UnicodeString& text);
 
@@ -90,8 +90,8 @@ namespace Gwen
 			// Set the rendering offset. You shouldn't have to
 			// touch these, ever.
 			//
-			void SetRenderOffset(const Gwen::Point& offset){ m_RenderOffset = offset; }
-			void AddRenderOffset(const Gwen::Rect& offset){ m_RenderOffset.x += offset.x; m_RenderOffset.y += offset.y; }
+			void SetRenderOffset(const Gwen::Point& offset) { m_RenderOffset = offset; }
+			void AddRenderOffset(const Gwen::Rect& offset) { m_RenderOffset.x += offset.x; m_RenderOffset.y += offset.y; }
 			const Gwen::Point& GetRenderOffset() const { return m_RenderOffset; }
 
 		private:
@@ -112,7 +112,7 @@ namespace Gwen
 
 		public:
 
-			void SetScale(float fScale){ m_fScale = fScale; }
+			void SetScale(float fScale) { m_fScale = fScale; }
 			float Scale() const { return m_fScale; }
 
 			float m_fScale;
@@ -123,13 +123,13 @@ namespace Gwen
 			// Self Initialization, shutdown
 			//
 
-			virtual bool InitializeContext(Gwen::WindowProvider* pWindow){ return false; }
-			virtual bool ShutdownContext(Gwen::WindowProvider* pWindow){ return false; }
-			virtual bool ResizedContext(Gwen::WindowProvider* pWindow, int w, int h){ return false; }
+			virtual bool InitializeContext(Gwen::WindowProvider* pWindow) { return false; }
+			virtual bool ShutdownContext(Gwen::WindowProvider* pWindow) { return false; }
+			virtual bool ResizedContext(Gwen::WindowProvider* pWindow, int w, int h) { return false; }
 
-			virtual bool BeginContext(Gwen::WindowProvider* pWindow){ return false; }
-			virtual bool EndContext(Gwen::WindowProvider* pWindow){ return false; }
-			virtual bool PresentContext(Gwen::WindowProvider* pWindow){ return false; }
+			virtual bool BeginContext(Gwen::WindowProvider* pWindow) { return false; }
+			virtual bool EndContext(Gwen::WindowProvider* pWindow) { return false; }
+			virtual bool PresentContext(Gwen::WindowProvider* pWindow) { return false; }
 		};
 	}
 }

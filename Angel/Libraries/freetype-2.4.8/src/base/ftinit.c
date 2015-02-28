@@ -157,11 +157,11 @@ ft_create_default_module_classes(FT_Library  library)
 
 #include FT_CONFIG_MODULES_H
 
-Exit :
-	if (error) ft_destroy_default_module_classes(library);
-	else pic_container->default_module_classes = classes;
+	Exit :
+		 if (error) ft_destroy_default_module_classes(library);
+		 else pic_container->default_module_classes = classes;
 
-	return error;
+		 return error;
 }
 
 #endif /* FT_CONFIG_OPTION_PIC */

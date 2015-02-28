@@ -36,7 +36,7 @@ namespace Gwen
 			virtual void RenderUnder(Skin::Base* skin);
 
 			virtual void SetTitle(Gwen::UnicodeString title);
-			virtual void SetTitle(Gwen::String title){ SetTitle(Gwen::Utility::StringToUnicode(title)); }
+			virtual void SetTitle(Gwen::String title) { SetTitle(Gwen::Utility::StringToUnicode(title)); }
 			virtual void SetClosable(bool closeable);
 
 			virtual void Touch();
@@ -46,7 +46,7 @@ namespace Gwen
 
 			void CloseButtonPressed();
 			void RenderFocus(Gwen::Skin::Base* skin);
-			void SetDeleteOnClose(bool b){ m_bDeleteOnClose = b; }
+			void SetDeleteOnClose(bool b) { m_bDeleteOnClose = b; }
 
 			void MakeModal(bool bDrawBackground = true);
 			void DestroyModal();

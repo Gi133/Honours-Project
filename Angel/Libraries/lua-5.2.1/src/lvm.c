@@ -774,7 +774,7 @@ newframe:  /* reentry point when frame changes (call/return) */
 			goto l_tforloop;
 			)
 				vmcase(OP_TFORLOOP,
-			l_tforloop:
+				l_tforloop:
 			if (!ttisnil(ra + 1)) {  /* continue loop? */
 				setobjs2s(L, ra, ra + 1);  /* save control variable */
 				ci->u.l.savedpc += GETARG_sBx(i);  /* jump back */

@@ -35,15 +35,15 @@
 
 #include "../Util/StringUtil.h"
 
-/**
- * Gets the entire contents of a file with each line separated for you.
- *  (Doesn't do smart streaming, so don't pass it bajigabyte sized files.)
- *
- * @param fileName The path to the file to load
- * @param outList A StringList to which the file's lines will be appended,
- *   with each line being its own value.
- * @return True if we could read the file, false if we couldn't
- */
+ /**
+  * Gets the entire contents of a file with each line separated for you.
+  *  (Doesn't do smart streaming, so don't pass it bajigabyte sized files.)
+  *
+  * @param fileName The path to the file to load
+  * @param outList A StringList to which the file's lines will be appended,
+  *   with each line being its own value.
+  * @return True if we could read the file, false if we couldn't
+  */
 bool GetLinesFromFile(const String& fileName, StringList& outList);
 
 /**

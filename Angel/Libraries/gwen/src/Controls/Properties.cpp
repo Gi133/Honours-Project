@@ -103,7 +103,7 @@ class PropertyRowLabel : public Label
 		SetTextColor(GetSkin()->Colors.Properties.Label_Normal);
 	}
 
-	void SetPropertyRow(PropertyRow * p){ m_pPropertyRow = p; }
+	void SetPropertyRow(PropertyRow * p) { m_pPropertyRow = p; }
 
 protected:
 

@@ -22,7 +22,7 @@ private:
 
 protected:
 	Map();
-	~Map(){ _instance = nullptr; }
+	~Map() { _instance = nullptr; }
 	static Map* _instance;
 
 public:
@@ -30,6 +30,6 @@ public:
 
 	void GenerateMap();
 
-	std::reference_wrapper<std::vector<std::shared_ptr<City>>> GetCityContainerRef(){ return std::ref(cityContainer); }
-	std::reference_wrapper<std::vector<std::shared_ptr<Location>>> GetLocationContainerRed(){ return std::ref(locationContainer); }
+	std::reference_wrapper<std::vector<std::shared_ptr<City>>> GetCityContainerRef() { return std::ref(cityContainer); }
+	std::reference_wrapper<std::vector<std::shared_ptr<Location>>> GetLocationContainerRed() { return std::ref(locationContainer); }
 };

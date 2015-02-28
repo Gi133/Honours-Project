@@ -28,7 +28,7 @@
 
 #define PACKETBLOBS 15
 
-typedef struct vorbis_block_internal{
+typedef struct vorbis_block_internal {
 	float  **pcmdelay;  /* this is a pointer into local storage */
 	float  ampmax;
 	int    blocktype;

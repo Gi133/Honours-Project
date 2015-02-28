@@ -97,7 +97,7 @@ public:
 	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
 
 	/// The local anchor point relative to bodyB's origin.
-	const b2Vec2& GetLocalAnchorB() const  { return m_localAnchorB; }
+	const b2Vec2& GetLocalAnchorB() const { return m_localAnchorB; }
 
 	/// Get the reference angle.
 	float32 GetReferenceAngle() const { return m_referenceAngle; }

@@ -39,7 +39,7 @@ FTBitmapGlyph::FTBitmapGlyph(FT_GlyphSlot glyph)
 		}
 	}
 
-	pos = FTPoint(glyph->bitmap_left, static_cast<int>(srcHeight)-glyph->bitmap_top, 0.0);
+	pos = FTPoint(glyph->bitmap_left, static_cast<int>(srcHeight) - glyph->bitmap_top, 0.0);
 }
 
 FTBitmapGlyph::~FTBitmapGlyph()

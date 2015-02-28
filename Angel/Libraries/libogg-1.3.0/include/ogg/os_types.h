@@ -17,8 +17,8 @@
 #ifndef _OS_TYPES_H
 #define _OS_TYPES_H
 
-/* make it easy on the folks that want to compile the libs with a
-   different malloc than stdlib */
+ /* make it easy on the folks that want to compile the libs with a
+	different malloc than stdlib */
 #define _ogg_malloc  malloc
 #define _ogg_calloc  calloc
 #define _ogg_realloc realloc
@@ -49,7 +49,7 @@ typedef unsigned int ogg_uint32_t;
 typedef short ogg_int16_t;
 typedef unsigned short ogg_uint16_t;
 #  else
-/* MSVC/Borland */
+	/* MSVC/Borland */
 typedef __int64 ogg_int64_t;
 typedef __int32 ogg_int32_t;
 typedef unsigned __int32 ogg_uint32_t;
@@ -77,7 +77,7 @@ typedef int64_t ogg_int64_t;
 
 #elif defined(__HAIKU__)
 
-/* Haiku */
+	/* Haiku */
 #  include <sys/types.h>
 typedef short ogg_int16_t;
 typedef unsigned short ogg_uint16_t;
@@ -87,7 +87,7 @@ typedef long long ogg_int64_t;
 
 #elif defined(__BEOS__)
 
-/* Be */
+	/* Be */
 #  include <inttypes.h>
 typedef int16_t ogg_int16_t;
 typedef uint16_t ogg_uint16_t;
@@ -97,7 +97,7 @@ typedef int64_t ogg_int64_t;
 
 #elif defined (__EMX__)
 
-/* OS/2 GCC */
+	/* OS/2 GCC */
 typedef short ogg_int16_t;
 typedef unsigned short ogg_uint16_t;
 typedef int ogg_int32_t;
@@ -106,7 +106,7 @@ typedef long long ogg_int64_t;
 
 #elif defined (DJGPP)
 
-/* DJGPP */
+	/* DJGPP */
 typedef short ogg_int16_t;
 typedef int ogg_int32_t;
 typedef unsigned int ogg_uint32_t;
@@ -114,7 +114,7 @@ typedef long long ogg_int64_t;
 
 #elif defined(R5900)
 
-/* PS2 EE */
+	/* PS2 EE */
 typedef long ogg_int64_t;
 typedef int ogg_int32_t;
 typedef unsigned ogg_uint32_t;
@@ -122,7 +122,7 @@ typedef short ogg_int16_t;
 
 #elif defined(__SYMBIAN32__)
 
-/* Symbian GCC */
+	/* Symbian GCC */
 typedef signed short ogg_int16_t;
 typedef unsigned short ogg_uint16_t;
 typedef signed int ogg_int32_t;
@@ -131,7 +131,7 @@ typedef long long int ogg_int64_t;
 
 #elif defined(__TMS320C6X__)
 
-/* TI C64x compiler */
+	/* TI C64x compiler */
 typedef signed short ogg_int16_t;
 typedef unsigned short ogg_uint16_t;
 typedef signed int ogg_int32_t;

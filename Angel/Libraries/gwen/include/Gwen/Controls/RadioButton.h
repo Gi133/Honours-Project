@@ -28,7 +28,7 @@ namespace Gwen
 		private:
 
 			// From CheckBox
-			virtual bool AllowUncheck(){ return false; }
+			virtual bool AllowUncheck() { return false; }
 		};
 
 		class GWEN_EXPORT LabeledRadioButton : public Base
@@ -63,10 +63,10 @@ namespace Gwen
 			}
 
 			virtual RadioButton*	GetRadioButton() { return m_RadioButton; }
-			virtual LabelClickable*	GetLabel(){ return m_Label; }
+			virtual LabelClickable*	GetLabel() { return m_Label; }
 			virtual bool OnKeySpace(bool bDown) { if (bDown)  m_RadioButton->SetChecked(!m_RadioButton->IsChecked()); return true; }
 
-			virtual void Select(){ m_RadioButton->SetChecked(true); }
+			virtual void Select() { m_RadioButton->SetChecked(true); }
 
 		private:
 

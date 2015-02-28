@@ -23,8 +23,8 @@
 
 #ifdef FLOAT_LOOKUP
 
-/* interpolated lookup based cos function, domain 0 to PI only */
-float vorbis_coslook(float a){
+ /* interpolated lookup based cos function, domain 0 to PI only */
+float vorbis_coslook(float a) {
 	double d = a*(.31830989*(float)COS_LOOKUP_SZ);
 	int i = vorbis_ftoi(d - .5);
 
@@ -32,20 +32,20 @@ float vorbis_coslook(float a){
 }
 
 /* interpolated 1./sqrt(p) where .5 <= p < 1. */
-float vorbis_invsqlook(float a){
+float vorbis_invsqlook(float a) {
 	double d = a*(2.f*(float)INVSQ_LOOKUP_SZ) - (float)INVSQ_LOOKUP_SZ;
 	int i = vorbis_ftoi(d - .5f);
 	return INVSQ_LOOKUP[i] + (d - i)*(INVSQ_LOOKUP[i + 1] - INVSQ_LOOKUP[i]);
 }
 
 /* interpolated 1./sqrt(p) where .5 <= p < 1. */
-float vorbis_invsq2explook(int a){
+float vorbis_invsq2explook(int a) {
 	return INVSQ2EXP_LOOKUP[a - INVSQ2EXP_LOOKUP_MIN];
 }
 
 #include <stdio.h>
 /* interpolated lookup based fromdB function, domain -140dB to 0dB only */
-float vorbis_fromdBlook(float a){
+float vorbis_fromdBlook(float a) {
 	int i = vorbis_ftoi(a*((float)(-(1 << FROMdB2_SHIFT))) - .5f);
 	return (i < 0) ? 1.f :
 		((i >= (FROMdB_LOOKUP_SZ << FROMdB_SHIFT)) ? 0.f :
@@ -59,7 +59,7 @@ float vorbis_fromdBlook(float a){
    16.16 format
 
    returns in m.8 format */
-long vorbis_invsqlook_i(long a, long e){
+long vorbis_invsqlook_i(long a, long e) {
 	long i = (a & 0x7fff) >> (INVSQ_LOOKUP_I_SHIFT - 1);
 	long d = (a&INVSQ_LOOKUP_I_MASK) << (16 - INVSQ_LOOKUP_I_SHIFT); /*  0.16 */
 	long val = INVSQ_LOOKUP_I[i] -                                /*  1.16 */
@@ -75,7 +75,7 @@ long vorbis_invsqlook_i(long a, long e){
 
 /* interpolated lookup based fromdB function, domain -140dB to 0dB only */
 /* a is in n.12 format */
-float vorbis_fromdBlook_i(long a){
+float vorbis_fromdBlook_i(long a) {
 	int i = (-a) >> (12 - FROMdB2_SHIFT);
 	return (i < 0) ? 1.f :
 		((i >= (FROMdB_LOOKUP_SZ << FROMdB_SHIFT)) ? 0.f :
@@ -84,7 +84,7 @@ float vorbis_fromdBlook_i(long a){
 
 /* interpolated lookup based cos function, domain 0 to PI only */
 /* a is in 0.16 format, where 0==0, 2^^16-1==PI, return 0.14 */
-long vorbis_coslook_i(long a){
+long vorbis_coslook_i(long a) {
 	int i = a >> COS_LOOKUP_I_SHIFT;
 	int d = a&COS_LOOKUP_I_MASK;
 	return COS_LOOKUP_I[i] - ((d*(COS_LOOKUP_I[i] - COS_LOOKUP_I[i + 1])) >>

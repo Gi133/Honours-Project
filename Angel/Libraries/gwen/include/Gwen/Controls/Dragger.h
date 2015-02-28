@@ -27,10 +27,10 @@ namespace Gwen
 			virtual void OnMouseClickLeft(int x, int y, bool bDown);
 			virtual void Render(Skin::Base* skin);
 
-			virtual void SetTarget(Controls::Base* pBase){ m_pTarget = pBase; }
-			virtual bool IsDepressed(){ return m_bDepressed; }
+			virtual void SetTarget(Controls::Base* pBase) { m_pTarget = pBase; }
+			virtual bool IsDepressed() { return m_bDepressed; }
 
-			virtual void SetDoMove(bool b){ m_bDoMove = b; }
+			virtual void SetDoMove(bool b) { m_bDoMove = b; }
 
 			virtual void OnMouseDoubleClickLeft(int x, int y);
 

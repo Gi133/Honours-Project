@@ -68,7 +68,7 @@ public:
 	const b2Vec2& GetLocalAnchorA() const { return m_localAnchorA; }
 
 	/// The local anchor point relative to bodyB's origin.
-	const b2Vec2& GetLocalAnchorB() const  { return m_localAnchorB; }
+	const b2Vec2& GetLocalAnchorB() const { return m_localAnchorB; }
 
 	/// Set/Get the maximum length of the rope.
 	void SetMaxLength(float32 length) { m_maxLength = length; }

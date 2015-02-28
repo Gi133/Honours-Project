@@ -642,9 +642,9 @@ static void codenot(FuncState *fs, expdesc *e) {
 	}
 	}
 	/* interchange true and false lists */
-  { int temp = e->f; e->f = e->t; e->t = temp; }
-  removevalues(fs, e->f);
-  removevalues(fs, e->t);
+	{ int temp = e->f; e->f = e->t; e->t = temp; }
+	removevalues(fs, e->f);
+	removevalues(fs, e->t);
 }
 
 void luaK_indexed(FuncState *fs, expdesc *t, expdesc *k) {

@@ -24,13 +24,13 @@ public:
 
 	void Update();
 
-	void StartTime(){ started = true; }
-	void StopTime(){ started = false; }
+	void StartTime() { started = true; }
+	void StopTime() { started = false; }
 
-	int getDay(){ return day; }
-	int getMonth(){ return month; }
-	int getYear(){ return year; }
-	int getTicks(){ return ticks; }
-	int getTicksPerDay(){ return maxTicksDay; }
+	int getDay() { return day; }
+	int getMonth() { return month; }
+	int getYear() { return year; }
+	int getTicks() { return ticks; }
+	int getTicksPerDay() { return maxTicksDay; }
 	bool GetStarted() { return started; }
 };

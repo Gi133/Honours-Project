@@ -18,7 +18,7 @@
 #include "vorbis/codec.h"
 #include "backends.h"
 
-/***** residue backends *********************************************/
+ /***** residue backends *********************************************/
 
 static const static_bookblock _resbook_8s_0 = {
 	{

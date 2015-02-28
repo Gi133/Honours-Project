@@ -64,7 +64,7 @@ private:
 	 * objects.
 	 */
 	FTLibrary();
-	FTLibrary(const FT_Library&){}
+	FTLibrary(const FT_Library&) {}
 	FTLibrary& operator=(const FT_Library&) { return *this; }
 
 	/**

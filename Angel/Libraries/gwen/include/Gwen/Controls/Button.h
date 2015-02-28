@@ -41,11 +41,11 @@ namespace Gwen
 			// Buttons can be toggle type, which means that it is
 			// toggled on and off. Its toggle status is in IsDepressed.
 			//
-			virtual void SetIsToggle(bool b){ m_bToggle = b; }
+			virtual void SetIsToggle(bool b) { m_bToggle = b; }
 			virtual bool IsToggle() const { return m_bToggle; }
 			virtual bool GetToggleState() const { return m_bToggleStatus; }
 			virtual void SetToggleState(bool b);
-			virtual void Toggle(){ SetToggleState(!GetToggleState()); }
+			virtual void Toggle() { SetToggleState(!GetToggleState()); }
 
 			virtual void SetImage(const TextObject& strName, bool bCenter = false);
 
@@ -55,7 +55,7 @@ namespace Gwen
 
 			virtual void SetImageAlpha(float fMultiply);
 
-			virtual void DoAction(){ OnPress(); }
+			virtual void DoAction() { OnPress(); }
 			virtual void SetAction(Event::Handler* pObject, Handler::FunctionWithInformation pFunction, const Gwen::Event::Packet& packet);
 
 		public:

@@ -50,7 +50,7 @@ extern "C"
 	 * ov_open() to avoid problems with incompatible crt.o version linking
 	 * issues. */
 
-	static int _ov_header_fseek_wrap(FILE *f, ogg_int64_t off, int whence){
+	static int _ov_header_fseek_wrap(FILE *f, ogg_int64_t off, int whence) {
 		if (f == NULL)return(-1);
 
 #ifdef __MINGW32__

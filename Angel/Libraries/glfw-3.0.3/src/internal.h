@@ -81,26 +81,26 @@ typedef struct _GLFWmonitor     _GLFWmonitor;
  *  each platform and is called by the shared code of the public API It mirrors
  *  the public API except it uses objects instead of handles.
  */
-/*! @defgroup event Event interface
- *  @brief The interface used by the platform-specific code to report events.
- *
- *  The event API is used by the platform-specific code to notify the shared
- *  code of events that can be translated into state changes and/or callback
- *  calls.
- */
-/*! @defgroup utility Utility functions
- *  @brief Various utility functions for internal use.
- *
- *  These functions are shared code and may be used by any part of GLFW
- *  Each platform may add its own utility functions, but those may only be
- *  called by the platform-specific code
- */
+ /*! @defgroup event Event interface
+  *  @brief The interface used by the platform-specific code to report events.
+  *
+  *  The event API is used by the platform-specific code to notify the shared
+  *  code of events that can be translated into state changes and/or callback
+  *  calls.
+  */
+  /*! @defgroup utility Utility functions
+   *  @brief Various utility functions for internal use.
+   *
+   *  These functions are shared code and may be used by any part of GLFW
+   *  Each platform may add its own utility functions, but those may only be
+   *  called by the platform-specific code
+   */
 
-//========================================================================
-// Helper macros
-//========================================================================
+   //========================================================================
+   // Helper macros
+   //========================================================================
 
-// Checks for whether the library has been intitalized
+   // Checks for whether the library has been intitalized
 #define _GLFW_REQUIRE_INIT()                         \
     if (!_glfwInitialized)                           \
 		    {                                                \

@@ -35,10 +35,10 @@ namespace Gwen
 
 			void UnselectAll();
 
-			void SetAllowMultiSelect(bool bMultiSelect){ m_bMultiSelect = bMultiSelect; }
+			void SetAllowMultiSelect(bool bMultiSelect) { m_bMultiSelect = bMultiSelect; }
 			bool AllowMultiSelect() const { return m_bMultiSelect; }
 
-			const ListBox::Rows& GetSelectedRows(){ return m_SelectedRows; }
+			const ListBox::Rows& GetSelectedRows() { return m_SelectedRows; }
 
 			virtual Layout::TableRow* GetSelectedRow();
 			virtual Gwen::String GetSelectedRowName();

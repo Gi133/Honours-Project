@@ -36,13 +36,13 @@
 
 #include "../Infrastructure/Vector2.h"
 
-/**
- * Draws a cross on the screen. Will be in whatever color you last passed in
- *  to a glColor* function.
- *
- * @param point The point for the center of the cross (in world space)
- * @param size How long each arm should be (in GL units)
- */
+ /**
+  * Draws a cross on the screen. Will be in whatever color you last passed in
+  *  to a glColor* function.
+  *
+  * @param point The point for the center of the cross (in world space)
+  * @param size How long each arm should be (in GL units)
+  */
 void DrawCross(const Vector2& point, float size);
 
 /**

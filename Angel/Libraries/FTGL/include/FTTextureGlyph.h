@@ -50,7 +50,7 @@ public:
 	 * Reset the currently active texture to zero to get into a known state before
 	 * drawing a string. This is to get round possible threading issues.
 	 */
-	static void ResetActiveTexture(){ activeTextureID = 0; }
+	static void ResetActiveTexture() { activeTextureID = 0; }
 
 private:
 	/**

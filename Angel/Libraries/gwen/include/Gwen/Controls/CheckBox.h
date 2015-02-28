@@ -38,7 +38,7 @@ namespace Gwen
 		private:
 
 			// For derived controls
-			virtual bool AllowUncheck(){ return true; }
+			virtual bool AllowUncheck() { return true; }
 
 			void OnCheckStatusChanged();
 

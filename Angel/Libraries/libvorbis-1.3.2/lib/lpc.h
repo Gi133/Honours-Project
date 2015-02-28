@@ -20,7 +20,7 @@
 
 #include "vorbis/codec.h"
 
-/* simple linear scale LPC code */
+ /* simple linear scale LPC code */
 extern float vorbis_lpc_from_data(float *data, float *lpc, int n, int m);
 
 extern void vorbis_lpc_predict(float *coeff, float *prime, int m,

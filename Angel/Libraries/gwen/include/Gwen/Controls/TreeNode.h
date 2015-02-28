@@ -41,11 +41,11 @@ namespace Gwen
 			virtual void Layout(Skin::Base* skin);
 			virtual void PostLayout(Skin::Base* skin);
 
-			virtual void SetRoot(bool b){ m_bRoot = b; }
-			virtual void SetTreeControl(TreeControl* pCtrl){ m_TreeControl = pCtrl; }
+			virtual void SetRoot(bool b) { m_bRoot = b; }
+			virtual void SetTreeControl(TreeControl* pCtrl) { m_TreeControl = pCtrl; }
 
-			virtual void SetSelectable(bool b){ m_bSelectable = b; }
-			virtual bool IsSelected(){ return m_bSelected; }
+			virtual void SetSelectable(bool b) { m_bSelectable = b; }
+			virtual bool IsSelected() { return m_bSelected; }
 			virtual void SetSelected(bool b, bool FireEvents = true);
 
 			virtual void DeselectAll();

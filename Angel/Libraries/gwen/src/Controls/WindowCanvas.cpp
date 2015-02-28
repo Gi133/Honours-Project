@@ -72,32 +72,32 @@ WindowCanvas::WindowCanvas(int x, int y, int w, int h, Gwen::Skin::Base* pSkin, 
 	}
 
 	// MAXIMIZE
-		{
-			m_pMaximize = new Gwen::Controls::WindowMaximizeButton(m_TitleBar, "Maximize");
-			m_pMaximize->Dock(Pos::Right);
-			m_pMaximize->onPress.Add(this, &WindowCanvas::MaximizeButtonPressed);
-			m_pMaximize->SetTabable(false);
-			m_pMaximize->SetWindow(this);
-		}
+	{
+		m_pMaximize = new Gwen::Controls::WindowMaximizeButton(m_TitleBar, "Maximize");
+		m_pMaximize->Dock(Pos::Right);
+		m_pMaximize->onPress.Add(this, &WindowCanvas::MaximizeButtonPressed);
+		m_pMaximize->SetTabable(false);
+		m_pMaximize->SetWindow(this);
+	}
 
-		// MINIMiZE
-		{
-			m_pMinimize = new Gwen::Controls::WindowMinimizeButton(m_TitleBar, "Minimize");
-			m_pMinimize->Dock(Pos::Right);
-			m_pMinimize->onPress.Add(this, &WindowCanvas::MinimizeButtonPressed);
-			m_pMinimize->SetTabable(false);
-			m_pMinimize->SetWindow(this);
-		}
+	// MINIMiZE
+	{
+		m_pMinimize = new Gwen::Controls::WindowMinimizeButton(m_TitleBar, "Minimize");
+		m_pMinimize->Dock(Pos::Right);
+		m_pMinimize->onPress.Add(this, &WindowCanvas::MinimizeButtonPressed);
+		m_pMinimize->SetTabable(false);
+		m_pMinimize->SetWindow(this);
+	}
 
-		// Bottom Right Corner Sizer
-		{
-			m_Sizer = new Gwen::ControlsInternal::Dragger(this);
-			m_Sizer->SetSize(16, 16);
-			m_Sizer->SetDoMove(false);
-			m_Sizer->onDragged.Add(this, &WindowCanvas::Sizer_Moved);
-			m_Sizer->onDragStart.Add(this, &WindowCanvas::Dragger_Start);
-			m_Sizer->SetCursor(Gwen::CursorType::SizeNWSE);
-		}
+	// Bottom Right Corner Sizer
+	{
+		m_Sizer = new Gwen::ControlsInternal::Dragger(this);
+		m_Sizer->SetSize(16, 16);
+		m_Sizer->SetDoMove(false);
+		m_Sizer->onDragged.Add(this, &WindowCanvas::Sizer_Moved);
+		m_Sizer->onDragStart.Add(this, &WindowCanvas::Dragger_Start);
+		m_Sizer->SetCursor(Gwen::CursorType::SizeNWSE);
+	}
 }
 
 WindowCanvas::~WindowCanvas()

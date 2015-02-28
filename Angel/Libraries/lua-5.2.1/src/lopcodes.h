@@ -238,14 +238,14 @@ typedef enum {
 
   ===========================================================================*/
 
-/*
-** masks for instruction properties. The format is:
-** bits 0-1: op mode
-** bits 2-3: C arg mode
-** bits 4-5: B arg mode
-** bit 6: instruction set register A
-** bit 7: operator is a test (next instruction must be a jump)
-*/
+  /*
+  ** masks for instruction properties. The format is:
+  ** bits 0-1: op mode
+  ** bits 2-3: C arg mode
+  ** bits 4-5: B arg mode
+  ** bit 6: instruction set register A
+  ** bit 7: operator is a test (next instruction must be a jump)
+  */
 
 enum OpArgMask {
 	OpArgN,  /* argument is not used */

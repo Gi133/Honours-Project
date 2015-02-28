@@ -2,7 +2,7 @@
 #include <fstream>
 #include "stdafx.h"
 
-#define theNameManger NameManager::getInstance()
+#define theNameManager NameManager::getInstance()
 
 class NameManager
 {

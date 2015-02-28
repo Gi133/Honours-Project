@@ -126,7 +126,7 @@ static TString *internshrstr(lua_State *L, const char *str, size_t l) {
 	global_State *g = G(L);
 	unsigned int h = luaS_hash(str, l, g->seed);
 	for (o = g->strt.hash[lmod(h, g->strt.size)];
-		o != NULL;
+	o != NULL;
 		o = gch(o)->next) {
 		TString *ts = rawgco2ts(o);
 		if (h == ts->tsv.hash &&

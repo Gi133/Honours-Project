@@ -771,77 +771,77 @@ FT_Parameter*  params)
 			bsize->x_ppem = FT_PIX_ROUND(bsize->x_ppem);
 		}
 
-	  {
-		  FT_CharMapRec  charmap;
+		{
+			FT_CharMapRec  charmap;
 
-		  charmap.encoding = FT_ENCODING_NONE;
-		  /* initial platform/encoding should indicate unset status? */
-		  charmap.platform_id = TT_PLATFORM_APPLE_UNICODE;
-		  charmap.encoding_id = TT_APPLE_ID_DEFAULT;
-		  charmap.face = root;
+			charmap.encoding = FT_ENCODING_NONE;
+			/* initial platform/encoding should indicate unset status? */
+			charmap.platform_id = TT_PLATFORM_APPLE_UNICODE;
+			charmap.encoding_id = TT_APPLE_ID_DEFAULT;
+			charmap.face = root;
 
-		  if (font->header.charset == FT_WinFNT_ID_MAC)
-		  {
-			  charmap.encoding = FT_ENCODING_APPLE_ROMAN;
-			  charmap.platform_id = TT_PLATFORM_MACINTOSH;
-			  /*        charmap.encoding_id = TT_MAC_ID_ROMAN; */
-		  }
+			if (font->header.charset == FT_WinFNT_ID_MAC)
+			{
+				charmap.encoding = FT_ENCODING_APPLE_ROMAN;
+				charmap.platform_id = TT_PLATFORM_MACINTOSH;
+				/*        charmap.encoding_id = TT_MAC_ID_ROMAN; */
+			}
 
-		  error = FT_CMap_New(fnt_cmap_class,
-			  NULL,
-			  &charmap,
-			  NULL);
-		  if (error)
-			  goto Fail;
+			error = FT_CMap_New(fnt_cmap_class,
+				NULL,
+				&charmap,
+				NULL);
+			if (error)
+				goto Fail;
 
-		  /* Select default charmap */
-		  if (root->num_charmaps)
-			  root->charmap = root->charmaps[0];
-	  }
+			/* Select default charmap */
+			if (root->num_charmaps)
+				root->charmap = root->charmaps[0];
+		}
 
-	  /* setup remaining flags */
+		/* setup remaining flags */
 
-	  /* reserve one slot for the .notdef glyph at index 0 */
-	  root->num_glyphs = font->header.last_char -
-		  font->header.first_char + 1 + 1;
+		/* reserve one slot for the .notdef glyph at index 0 */
+		root->num_glyphs = font->header.last_char -
+			font->header.first_char + 1 + 1;
 
-	  if (font->header.face_name_offset >= font->header.file_size)
-	  {
-		  FT_TRACE2(("invalid family name offset\n"));
-		  error = FNT_Err_Invalid_File_Format;
-		  goto Fail;
-	  }
-	  family_size = font->header.file_size - font->header.face_name_offset;
-	  /* Some broken fonts don't delimit the face name with a final */
-	  /* NULL byte -- the frame is erroneously one byte too small.  */
-	  /* We thus allocate one more byte, setting it explicitly to   */
-	  /* zero.                                                      */
-	  if (FT_ALLOC(font->family_name, family_size + 1))
-		  goto Fail;
+		if (font->header.face_name_offset >= font->header.file_size)
+		{
+			FT_TRACE2(("invalid family name offset\n"));
+			error = FNT_Err_Invalid_File_Format;
+			goto Fail;
+		}
+		family_size = font->header.file_size - font->header.face_name_offset;
+		/* Some broken fonts don't delimit the face name with a final */
+		/* NULL byte -- the frame is erroneously one byte too small.  */
+		/* We thus allocate one more byte, setting it explicitly to   */
+		/* zero.                                                      */
+		if (FT_ALLOC(font->family_name, family_size + 1))
+			goto Fail;
 
-	  FT_MEM_COPY(font->family_name,
-		  font->fnt_frame + font->header.face_name_offset,
-		  family_size);
+		FT_MEM_COPY(font->family_name,
+			font->fnt_frame + font->header.face_name_offset,
+			family_size);
 
-	  font->family_name[family_size] = '\0';
+		font->family_name[family_size] = '\0';
 
-	  if (FT_REALLOC(font->family_name,
-		  family_size,
-		  ft_strlen(font->family_name) + 1))
-		  goto Fail;
+		if (FT_REALLOC(font->family_name,
+			family_size,
+			ft_strlen(font->family_name) + 1))
+			goto Fail;
 
-	  root->family_name = font->family_name;
-	  root->style_name = (char *)"Regular";
+		root->family_name = font->family_name;
+		root->style_name = (char *)"Regular";
 
-	  if (root->style_flags & FT_STYLE_FLAG_BOLD)
-	  {
-		  if (root->style_flags & FT_STYLE_FLAG_ITALIC)
-			  root->style_name = (char *)"Bold Italic";
-		  else
-			  root->style_name = (char *)"Bold";
-	  }
-	  else if (root->style_flags & FT_STYLE_FLAG_ITALIC)
-		  root->style_name = (char *)"Italic";
+		if (root->style_flags & FT_STYLE_FLAG_BOLD)
+		{
+			if (root->style_flags & FT_STYLE_FLAG_ITALIC)
+				root->style_name = (char *)"Bold Italic";
+			else
+				root->style_name = (char *)"Bold";
+		}
+		else if (root->style_flags & FT_STYLE_FLAG_ITALIC)
+			root->style_name = (char *)"Italic";
 	}
 	goto Exit;
 

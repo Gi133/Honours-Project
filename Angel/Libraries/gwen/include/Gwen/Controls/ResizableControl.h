@@ -37,11 +37,11 @@ namespace Gwen
 
 			virtual bool SetBounds(int x, int y, int w, int h);
 
-			virtual void OnResized(){};
+			virtual void OnResized() {};
 
 			Event::Caller	onResize;
 
-			virtual ControlsInternal::Resizer* GetResizer(int iResizer){ return m_Resizer[iResizer]; }
+			virtual ControlsInternal::Resizer* GetResizer(int iResizer) { return m_Resizer[iResizer]; }
 
 		protected:
 

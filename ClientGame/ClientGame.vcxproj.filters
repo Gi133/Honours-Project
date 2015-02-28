@@ -144,14 +144,14 @@
     <ClCompile Include="UIMap.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
-    <ClCompile Include="UIObjectInfo.cpp">
-      <Filter>SourceCode\Code\UI</Filter>
-    </ClCompile>
     <ClCompile Include="InventoryPurse.cpp">
       <Filter>SourceCode\Code\Core\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>SourceCode\Code\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObjectInfo.cpp">
+      <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -608,12 +608,12 @@ SpatialGraphManager & SpatialGraphManager::GetInstance()
 }
 
 SpatialGraphManager::SpatialGraphManager() :
-_spatialGraph(NULL),
-_drawBounds(false),
-_drawBlocked(false),
-_drawGridPoints(false),
-_drawGraph(false),
-_drawNodeIndex(false)
+	_spatialGraph(NULL),
+	_drawBounds(false),
+	_drawBlocked(false),
+	_drawGridPoints(false),
+	_drawGraph(false),
+	_drawNodeIndex(false)
 {
 }
 

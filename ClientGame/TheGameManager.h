@@ -10,7 +10,7 @@
 #define theGameManger TheGameManager::getInstance()
 
 class TheGameManager :
-	public GameManager, public MessageListener
+	public GameManager
 {
 private:
 	std::unique_ptr<UIManager> uiManager;
@@ -19,10 +19,14 @@ private:
 
 	Vector2 mapSize, halfMapSize;
 
+	unsigned int activeNPCIterator;
+
+	void AddNPC(const int numberToAdd);
+
 	virtual void ReceiveMessage(Message *message) override;
 protected:
 	TheGameManager();
-	~TheGameManager(){ _instance = nullptr; }
+	~TheGameManager() { _instance = nullptr; }
 	static TheGameManager* _instance;
 
 public:

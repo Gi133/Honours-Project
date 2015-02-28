@@ -15,11 +15,11 @@
 
  ********************************************************************/
 
-/** \file
- * Libvorbisenc is a convenient API for setting up an encoding
- * environment using libvorbis. Libvorbisenc encapsulates the
- * actions needed to set up the encoder properly.
- */
+ /** \file
+  * Libvorbisenc is a convenient API for setting up an encoding
+  * environment using libvorbis. Libvorbisenc encapsulates the
+  * actions needed to set up the encoder properly.
+  */
 
 #ifndef _OV_ENC_H_
 #define _OV_ENC_H_
@@ -298,133 +298,133 @@ extern "C"
 	 * The type of the referent of that function's \c arg pointer depends on these
 	 * codes.
 	 */
-	/*@{*/
+	 /*@{*/
 
-	/**
-	 * Query the current encoder bitrate management setting.
-	 *
-	 *Argument: <tt>struct ovectl_ratemanage2_arg *</tt>
-	 *
-	 * Used to query the current encoder bitrate management setting. Also used to
-	 * initialize fields of an ovectl_ratemanage2_arg structure for use with
-	 * \ref OV_ECTL_RATEMANAGE2_SET.
-	 */
+	 /**
+	  * Query the current encoder bitrate management setting.
+	  *
+	  *Argument: <tt>struct ovectl_ratemanage2_arg *</tt>
+	  *
+	  * Used to query the current encoder bitrate management setting. Also used to
+	  * initialize fields of an ovectl_ratemanage2_arg structure for use with
+	  * \ref OV_ECTL_RATEMANAGE2_SET.
+	  */
 #define OV_ECTL_RATEMANAGE2_GET      0x14
 
-	/**
-	 * Set the current encoder bitrate management settings.
-	 *
-	 * Argument: <tt>struct ovectl_ratemanage2_arg *</tt>
-	 *
-	 * Used to set the current encoder bitrate management settings to the values
-	 * listed in the ovectl_ratemanage2_arg. Passing a NULL pointer will disable
-	 * bitrate management.
-	 */
+	  /**
+	   * Set the current encoder bitrate management settings.
+	   *
+	   * Argument: <tt>struct ovectl_ratemanage2_arg *</tt>
+	   *
+	   * Used to set the current encoder bitrate management settings to the values
+	   * listed in the ovectl_ratemanage2_arg. Passing a NULL pointer will disable
+	   * bitrate management.
+	   */
 #define OV_ECTL_RATEMANAGE2_SET      0x15
 
-	/**
-	 * Returns the current encoder hard-lowpass setting (kHz) in the double
-	 * pointed to by arg.
-	 *
-	 * Argument: <tt>double *</tt>
-	 */
+	   /**
+		* Returns the current encoder hard-lowpass setting (kHz) in the double
+		* pointed to by arg.
+		*
+		* Argument: <tt>double *</tt>
+		*/
 #define OV_ECTL_LOWPASS_GET          0x20
 
-	/**
-	 *  Sets the encoder hard-lowpass to the value (kHz) pointed to by arg. Valid
-	 *  lowpass settings range from 2 to 99.
-	 *
-	 * Argument: <tt>double *</tt>
-	 */
+		/**
+		 *  Sets the encoder hard-lowpass to the value (kHz) pointed to by arg. Valid
+		 *  lowpass settings range from 2 to 99.
+		 *
+		 * Argument: <tt>double *</tt>
+		 */
 #define OV_ECTL_LOWPASS_SET          0x21
 
-	/**
-	 *  Returns the current encoder impulse block setting in the double pointed
-	 *  to by arg.
-	 *
-	 * Argument: <tt>double *</tt>
-	 */
+		 /**
+		  *  Returns the current encoder impulse block setting in the double pointed
+		  *  to by arg.
+		  *
+		  * Argument: <tt>double *</tt>
+		  */
 #define OV_ECTL_IBLOCK_GET           0x30
 
-	/**
-	 *  Sets the impulse block bias to the the value pointed to by arg.
-	 *
-	 * Argument: <tt>double *</tt>
-	 *
-	 *  Valid range is -15.0 to 0.0 [default]. A negative impulse block bias will
-	 *  direct to encoder to use more bits when incoding short blocks that contain
-	 *  strong impulses, thus improving the accuracy of impulse encoding.
-	 */
+		  /**
+		   *  Sets the impulse block bias to the the value pointed to by arg.
+		   *
+		   * Argument: <tt>double *</tt>
+		   *
+		   *  Valid range is -15.0 to 0.0 [default]. A negative impulse block bias will
+		   *  direct to encoder to use more bits when incoding short blocks that contain
+		   *  strong impulses, thus improving the accuracy of impulse encoding.
+		   */
 #define OV_ECTL_IBLOCK_SET           0x31
 
-	/**
-	 *  Returns the current encoder coupling setting in the int pointed
-	 *  to by arg.
-	 *
-	 * Argument: <tt>int *</tt>
-	 */
+		   /**
+			*  Returns the current encoder coupling setting in the int pointed
+			*  to by arg.
+			*
+			* Argument: <tt>int *</tt>
+			*/
 #define OV_ECTL_COUPLING_GET         0x40
 
-	/**
-	 *  Enables/disables channel coupling in multichannel encoding according to arg.
-	 *
-	 * Argument: <tt>int *</tt>
-	 *
-	 *  Zero disables channel coupling for multichannel inputs, nonzer enables
-	 *  channel coupling.  Setting has no effect on monophonic encoding or
-	 *  multichannel counts that do not offer coupling.  At present, coupling is
-	 *  available for stereo and 5.1 encoding.
-	 */
+			/**
+			 *  Enables/disables channel coupling in multichannel encoding according to arg.
+			 *
+			 * Argument: <tt>int *</tt>
+			 *
+			 *  Zero disables channel coupling for multichannel inputs, nonzer enables
+			 *  channel coupling.  Setting has no effect on monophonic encoding or
+			 *  multichannel counts that do not offer coupling.  At present, coupling is
+			 *  available for stereo and 5.1 encoding.
+			 */
 #define OV_ECTL_COUPLING_SET         0x41
 
-	/* deprecated rate management supported only for compatibility */
+			 /* deprecated rate management supported only for compatibility */
 
-	/**
-	 * Old interface to querying bitrate management settings.
-	 *
-	 * Deprecated after move to bit-reservoir style management in 1.1 rendered
-	 * this interface partially obsolete.
+			 /**
+			  * Old interface to querying bitrate management settings.
+			  *
+			  * Deprecated after move to bit-reservoir style management in 1.1 rendered
+			  * this interface partially obsolete.
 
-	 * \deprecated Please use \ref OV_ECTL_RATEMANAGE2_GET instead.
-	 *
-	 * Argument: <tt>struct ovectl_ratemanage_arg *</tt>
-	 */
+			  * \deprecated Please use \ref OV_ECTL_RATEMANAGE2_GET instead.
+			  *
+			  * Argument: <tt>struct ovectl_ratemanage_arg *</tt>
+			  */
 #define OV_ECTL_RATEMANAGE_GET       0x10
-	/**
-	 * Old interface to modifying bitrate management settings.
-	 *
-	 *  deprecated after move to bit-reservoir style management in 1.1 rendered
-	 *  this interface partially obsolete.
-	 *
-	 * \deprecated Please use \ref OV_ECTL_RATEMANAGE2_SET instead.
-	 *
-	 * Argument: <tt>struct ovectl_ratemanage_arg *</tt>
-	 */
+			  /**
+			   * Old interface to modifying bitrate management settings.
+			   *
+			   *  deprecated after move to bit-reservoir style management in 1.1 rendered
+			   *  this interface partially obsolete.
+			   *
+			   * \deprecated Please use \ref OV_ECTL_RATEMANAGE2_SET instead.
+			   *
+			   * Argument: <tt>struct ovectl_ratemanage_arg *</tt>
+			   */
 #define OV_ECTL_RATEMANAGE_SET       0x11
-	/**
-	 * Old interface to setting average-bitrate encoding mode.
-	 *
-	 * Deprecated after move to bit-reservoir style management in 1.1 rendered
-	 * this interface partially obsolete.
-	 *
-	 *  \deprecated Please use \ref OV_ECTL_RATEMANAGE2_SET instead.
-	 *
-	 * Argument: <tt>struct ovectl_ratemanage_arg *</tt>
-	 */
+			   /**
+				* Old interface to setting average-bitrate encoding mode.
+				*
+				* Deprecated after move to bit-reservoir style management in 1.1 rendered
+				* this interface partially obsolete.
+				*
+				*  \deprecated Please use \ref OV_ECTL_RATEMANAGE2_SET instead.
+				*
+				* Argument: <tt>struct ovectl_ratemanage_arg *</tt>
+				*/
 #define OV_ECTL_RATEMANAGE_AVG       0x12
-	/**
-	 * Old interface to setting bounded-bitrate encoding modes.
-	 *
-	 * deprecated after move to bit-reservoir style management in 1.1 rendered
-	 * this interface partially obsolete.
-	 *
-	 *  \deprecated Please use \ref OV_ECTL_RATEMANAGE2_SET instead.
-	 *
-	 * Argument: <tt>struct ovectl_ratemanage_arg *</tt>
-	 */
+				/**
+				 * Old interface to setting bounded-bitrate encoding modes.
+				 *
+				 * deprecated after move to bit-reservoir style management in 1.1 rendered
+				 * this interface partially obsolete.
+				 *
+				 *  \deprecated Please use \ref OV_ECTL_RATEMANAGE2_SET instead.
+				 *
+				 * Argument: <tt>struct ovectl_ratemanage_arg *</tt>
+				 */
 #define OV_ECTL_RATEMANAGE_HARD      0x13
 
-	/*@}*/
+				 /*@}*/
 
 #ifdef __cplusplus
 }

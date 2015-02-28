@@ -46,18 +46,18 @@ typedef struct {
 
 /***********************************************/
 
-static void floor0_free_info(vorbis_info_floor *i){
+static void floor0_free_info(vorbis_info_floor *i) {
 	vorbis_info_floor0 *info = (vorbis_info_floor0 *)i;
-	if (info){
+	if (info) {
 		memset(info, 0, sizeof(*info));
 		_ogg_free(info);
 	}
 }
 
-static void floor0_free_look(vorbis_look_floor *i){
+static void floor0_free_look(vorbis_look_floor *i) {
 	vorbis_look_floor0 *look = (vorbis_look_floor0 *)i;
-	if (look){
-		if (look->linearmap){
+	if (look) {
+		if (look->linearmap) {
 			if (look->linearmap[0])_ogg_free(look->linearmap[0]);
 			if (look->linearmap[1])_ogg_free(look->linearmap[1]);
 
@@ -68,7 +68,7 @@ static void floor0_free_look(vorbis_look_floor *i){
 	}
 }
 
-static vorbis_info_floor *floor0_unpack(vorbis_info *vi, oggpack_buffer *opb){
+static vorbis_info_floor *floor0_unpack(vorbis_info *vi, oggpack_buffer *opb) {
 	codec_setup_info     *ci = vi->codec_setup;
 	int j;
 
@@ -85,7 +85,7 @@ static vorbis_info_floor *floor0_unpack(vorbis_info *vi, oggpack_buffer *opb){
 	if (info->barkmap < 1)goto err_out;
 	if (info->numbooks < 1)goto err_out;
 
-	for (j = 0; j < info->numbooks; j++){
+	for (j = 0; j < info->numbooks; j++) {
 		info->books[j] = oggpack_read(opb, 8);
 		if (info->books[j] < 0 || info->books[j] >= ci->books)goto err_out;
 		if (ci->book_param[info->books[j]]->maptype == 0)goto err_out;
@@ -108,8 +108,8 @@ err_out:
 
 static void floor0_map_lazy_init(vorbis_block      *vb,
 	vorbis_info_floor *infoX,
-	vorbis_look_floor0 *look){
-	if (!look->linearmap[vb->W]){
+	vorbis_look_floor0 *look) {
+	if (!look->linearmap[vb->W]) {
 		vorbis_dsp_state   *vd = vb->vd;
 		vorbis_info        *vi = vd->vi;
 		codec_setup_info   *ci = vi->codec_setup;
@@ -129,7 +129,7 @@ static void floor0_map_lazy_init(vorbis_block      *vb,
 		   necessary in some mapping combinations to keep the scale spacing
 		   accurate */
 		look->linearmap[W] = _ogg_malloc((n + 1)*sizeof(**look->linearmap));
-		for (j = 0; j < n; j++){
+		for (j = 0; j < n; j++) {
 			int val = floor(toBARK((info->rate / 2.f) / n*j)
 				*scale); /* bark numbers represent band edges */
 			if (val >= look->ln)val = look->ln - 1; /* guard against the approximation */
@@ -141,7 +141,7 @@ static void floor0_map_lazy_init(vorbis_block      *vb,
 }
 
 static vorbis_look_floor *floor0_look(vorbis_dsp_state *vd,
-	vorbis_info_floor *i){
+	vorbis_info_floor *i) {
 	vorbis_info_floor0 *info = (vorbis_info_floor0 *)i;
 	vorbis_look_floor0 *look = _ogg_calloc(1, sizeof(*look));
 	look->m = info->order;
@@ -153,18 +153,18 @@ static vorbis_look_floor *floor0_look(vorbis_dsp_state *vd,
 	return look;
 }
 
-static void *floor0_inverse1(vorbis_block *vb, vorbis_look_floor *i){
+static void *floor0_inverse1(vorbis_block *vb, vorbis_look_floor *i) {
 	vorbis_look_floor0 *look = (vorbis_look_floor0 *)i;
 	vorbis_info_floor0 *info = look->vi;
 	int j, k;
 
 	int ampraw = oggpack_read(&vb->opb, info->ampbits);
-	if (ampraw > 0){ /* also handles the -1 out of data case */
+	if (ampraw > 0) { /* also handles the -1 out of data case */
 		long maxval = (1 << info->ampbits) - 1;
 		float amp = (float)ampraw / maxval*info->ampdB;
 		int booknum = oggpack_read(&vb->opb, _ilog(info->numbooks));
 
-		if (booknum != -1 && booknum < info->numbooks){ /* be paranoid */
+		if (booknum != -1 && booknum < info->numbooks) { /* be paranoid */
 			codec_setup_info  *ci = vb->vd->vi->codec_setup;
 			codebook *b = ci->fullbooks + info->books[booknum];
 			float last = 0.f;
@@ -176,7 +176,7 @@ static void *floor0_inverse1(vorbis_block *vb, vorbis_look_floor *i){
 
 			for (j = 0; j < look->m; j += b->dim)
 				if (vorbis_book_decodev_set(b, lsp + j, &vb->opb, b->dim) == -1)goto eop;
-			for (j = 0; j < look->m;){
+			for (j = 0; j < look->m;) {
 				for (k = 0; k < b->dim; k++, j++)lsp[j] += last;
 				last = lsp[j - 1];
 			}
@@ -190,13 +190,13 @@ eop:
 }
 
 static int floor0_inverse2(vorbis_block *vb, vorbis_look_floor *i,
-	void *memo, float *out){
+	void *memo, float *out) {
 	vorbis_look_floor0 *look = (vorbis_look_floor0 *)i;
 	vorbis_info_floor0 *info = look->vi;
 
 	floor0_map_lazy_init(vb, info, look);
 
-	if (memo){
+	if (memo) {
 		float *lsp = (float *)memo;
 		float amp = lsp[look->m];
 

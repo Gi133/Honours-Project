@@ -26,7 +26,7 @@ namespace Gwen
 					skin->GetRender()->DrawFilledRect(GetRenderBounds());
 				}
 
-				void SetColor(const Gwen::Color& col){ m_Color = col; }
+				void SetColor(const Gwen::Color& col) { m_Color = col; }
 
 				Gwen::Color	m_Color;
 			};

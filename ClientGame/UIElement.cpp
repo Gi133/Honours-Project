@@ -72,6 +72,26 @@ void UIElement::LoadSettings()
 		UILayerTextName = UILayerTextNameFallBack;
 }
 
+void UIElement::AdjustTextPosition()
+{
+	// Find text compartments.
+	titleTopLeft = positionTopLeft;
+	titleBottomRight = Vec2i(positionBottomRight.X, positionCenter.Y * 1.05);
+
+	contentTopLeft = Vec2i(positionTopLeft.X, positionCenter.Y * 1.1);
+	contentBottomRight = positionBottomRight;
+
+	Vec2i titleCenter, contentCenter;
+	titleCenter.X = positionTopLeft.X + ((titleBottomRight.X - titleTopLeft.X) / 2);
+	titleCenter.Y = positionTopLeft.Y + ((titleBottomRight.Y - titleTopLeft.Y) / 2);
+
+	contentCenter.X = positionTopLeft.X + ((contentBottomRight.X - contentTopLeft.X) / 2);
+	contentCenter.Y = positionCenter.Y + ((contentBottomRight.Y - contentTopLeft.Y) / 2);
+
+	textTitle->SetPosition(MathUtil::ScreenToWorld(titleCenter));
+	textContent->SetPosition(MathUtil::ScreenToWorld(contentCenter));
+}
+
 void UIElement::AdjustTextActorSize()
 {
 	compartmentSize = Vec2i(titleBottomRight.X - titleTopLeft.X, titleBottomRight.Y - titleTopLeft.Y);
@@ -86,24 +106,4 @@ void UIElement::AdjustTextActorSize()
 	// Change size from pixels to GLunits.
 	textTitle->SetSize(MathUtil::PixelsToWorldUnits(actorSize.X), MathUtil::PixelsToWorldUnits(actorSize.Y));
 	textContent->SetSize(MathUtil::PixelsToWorldUnits(actorSize.X), MathUtil::PixelsToWorldUnits(actorSize.Y));
-}
-
-void UIElement::AdjustTextPosition()
-{
-	// Find text compartments. compartment.
-	titleTopLeft = positionTopLeft;
-	titleBottomRight = Vec2i(positionBottomRight.X, positionCenter.Y);
-
-	contentTopLeft = Vec2i(positionTopLeft.X, positionCenter.Y);
-	contentBottomRight = positionBottomRight;
-
-	Vec2i titleCenter, contentCenter;
-	titleCenter.X = positionTopLeft.X + ((titleBottomRight.X - titleTopLeft.X) / 2);
-	titleCenter.Y = positionTopLeft.Y + (titleBottomRight.Y - titleTopLeft.Y) / 2;
-
-	contentCenter.X = positionTopLeft.X + ((contentBottomRight.X - contentTopLeft.X) / 2);
-	contentCenter.Y = positionCenter.Y + ((contentBottomRight.Y - contentTopLeft.Y) / 2);
-
-	textTitle->SetPosition(MathUtil::ScreenToWorld(titleCenter));
-	textContent->SetPosition(MathUtil::ScreenToWorld(contentCenter));
 }

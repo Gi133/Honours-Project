@@ -37,36 +37,36 @@ extern "C" {
 	 * Doxygen documentation
 	 *************************************************************************/
 
-	/*! @defgroup native Native access
-	 *
-	 *  **By using the native API, you assert that you know what you're doing and
-	 *  how to fix problems caused by using it.  If you don't, you shouldn't be
-	 *  using it.**
-	 *
-	 *  Before the inclusion of @ref glfw3native.h, you must define exactly one
-	 *  window API macro and exactly one context API macro.  Failure to do this
-	 *  will cause a compile-time error.
-	 *
-	 *  The available window API macros are:
-	 *  * `GLFW_EXPOSE_NATIVE_WIN32`
-	 *  * `GLFW_EXPOSE_NATIVE_COCOA`
-	 *  * `GLFW_EXPOSE_NATIVE_X11`
-	 *
-	 *  The available context API macros are:
-	 *  * `GLFW_EXPOSE_NATIVE_WGL`
-	 *  * `GLFW_EXPOSE_NATIVE_NSGL`
-	 *  * `GLFW_EXPOSE_NATIVE_GLX`
-	 *  * `GLFW_EXPOSE_NATIVE_EGL`
-	 *
-	 *  These macros select which of the native access functions that are declared
-	 *  and which platform-specific headers to include.  It is then up your (by
-	 *  definition platform-specific) code to handle which of these should be
-	 *  defined.
-	 */
+	 /*! @defgroup native Native access
+	  *
+	  *  **By using the native API, you assert that you know what you're doing and
+	  *  how to fix problems caused by using it.  If you don't, you shouldn't be
+	  *  using it.**
+	  *
+	  *  Before the inclusion of @ref glfw3native.h, you must define exactly one
+	  *  window API macro and exactly one context API macro.  Failure to do this
+	  *  will cause a compile-time error.
+	  *
+	  *  The available window API macros are:
+	  *  * `GLFW_EXPOSE_NATIVE_WIN32`
+	  *  * `GLFW_EXPOSE_NATIVE_COCOA`
+	  *  * `GLFW_EXPOSE_NATIVE_X11`
+	  *
+	  *  The available context API macros are:
+	  *  * `GLFW_EXPOSE_NATIVE_WGL`
+	  *  * `GLFW_EXPOSE_NATIVE_NSGL`
+	  *  * `GLFW_EXPOSE_NATIVE_GLX`
+	  *  * `GLFW_EXPOSE_NATIVE_EGL`
+	  *
+	  *  These macros select which of the native access functions that are declared
+	  *  and which platform-specific headers to include.  It is then up your (by
+	  *  definition platform-specific) code to handle which of these should be
+	  *  defined.
+	  */
 
-	/*************************************************************************
-	 * System headers and types
-	 *************************************************************************/
+	  /*************************************************************************
+	   * System headers and types
+	   *************************************************************************/
 
 #if defined(GLFW_EXPOSE_NATIVE_WIN32)
 #include <windows.h>
@@ -83,9 +83,9 @@ extern "C" {
 #endif
 
 #if defined(GLFW_EXPOSE_NATIVE_WGL)
-	/* WGL is declared by windows.h */
+	   /* WGL is declared by windows.h */
 #elif defined(GLFW_EXPOSE_NATIVE_NSGL)
-	/* NSGL is declared by Cocoa.h */
+	   /* NSGL is declared by Cocoa.h */
 #elif defined(GLFW_EXPOSE_NATIVE_GLX)
 #include <GL/glx.h>
 #elif defined(GLFW_EXPOSE_NATIVE_EGL)
@@ -94,15 +94,15 @@ extern "C" {
 #error "No context API specified"
 #endif
 
-	/*************************************************************************
-	 * Functions
-	 *************************************************************************/
+	   /*************************************************************************
+		* Functions
+		*************************************************************************/
 
 #if defined(GLFW_EXPOSE_NATIVE_WIN32)
-	/*! @brief Returns the `HWND` of the specified window.
-	 *  @return The `HWND` of the specified window.
-	 *  @ingroup native
-	 */
+		/*! @brief Returns the `HWND` of the specified window.
+		 *  @return The `HWND` of the specified window.
+		 *  @ingroup native
+		 */
 	GLFWAPI HWND glfwGetWin32Window(GLFWwindow* window);
 #endif
 

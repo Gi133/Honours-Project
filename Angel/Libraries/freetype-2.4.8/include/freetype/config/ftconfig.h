@@ -302,12 +302,12 @@ FT_Int32  b)
 	__asm
 	{
 		smull t2, t, b, a           /* (lo=t2,hi=t) = a*b */
-			mov   a, t, asr #31         /* a   = (hi >> 31) */
-			add   a, a, #0x8000         /* a  += 0x8000 */
-			adds  t2, t2, a               /* t2 += a */
-			adc   t, t, #0              /* t  += carry */
-			mov   a, t2, lsr #16         /* a   = t2 >> 16 */
-			orr   a, a, t, lsl #16     /* a  |= t << 16 */
+		mov   a, t, asr #31         /* a   = (hi >> 31) */
+		add   a, a, #0x8000         /* a  += 0x8000 */
+		adds  t2, t2, a               /* t2 += a */
+		adc   t, t, #0              /* t  += carry */
+		mov   a, t2, lsr #16         /* a   = t2 >> 16 */
+		orr   a, a, t, lsl #16     /* a  |= t << 16 */
 	}
 	return a;
 }
@@ -391,17 +391,17 @@ FT_Int32  b)
 	__asm
 	{
 		mov eax, a
-			mov edx, b
-			imul edx
-			mov ecx, edx
-			sar ecx, 31
-			add ecx, 8000h
-			add eax, ecx
-			adc edx, 0
-			shr eax, 16
-			shl edx, 16
-			add eax, edx
-			mov result, eax
+		mov edx, b
+		imul edx
+		mov ecx, edx
+		sar ecx, 31
+		add ecx, 8000h
+		add eax, ecx
+		adc edx, 0
+		shr eax, 16
+		shl edx, 16
+		add eax, edx
+		mov result, eax
 	}
 	return result;
 }

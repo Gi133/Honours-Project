@@ -31,7 +31,7 @@ namespace Gwen
 			virtual void SetPanel(int i, Controls::Base* pPanel);
 			virtual Controls::Base* GetPanel(int i);
 
-			virtual bool IsZoomed(){ return m_iZoomedSection != -1; }
+			virtual bool IsZoomed() { return m_iZoomedSection != -1; }
 			virtual void Zoom(int section);
 			virtual void UnZoom();
 			virtual void ZoomChanged();

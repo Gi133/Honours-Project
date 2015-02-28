@@ -18,8 +18,8 @@
 #ifndef _V_MASKING_H_
 #define _V_MASKING_H_
 
-/* more detailed ATH; the bass if flat to save stressing the floor
-   overly for only a bin or two of savings. */
+ /* more detailed ATH; the bass if flat to save stressing the floor
+	overly for only a bin or two of savings. */
 
 #define MAX_ATH 88
 static const float ATH[] = {
@@ -43,10 +43,10 @@ static const float ATH[] = {
 #define EHMER_OFFSET 16
 #define EHMER_MAX 56
 
-/* masking tones from -50 to 0dB, 62.5 through 16kHz at half octaves
-   test tones from -2 octaves to +5 octaves sampled at eighth octaves */
-/* (Vorbis 0dB, the loudest possible tone, is assumed to be ~100dB SPL
-   for collection of these curves) */
+   /* masking tones from -50 to 0dB, 62.5 through 16kHz at half octaves
+	  test tones from -2 octaves to +5 octaves sampled at eighth octaves */
+	  /* (Vorbis 0dB, the loudest possible tone, is assumed to be ~100dB SPL
+		 for collection of these curves) */
 
 static const float tonemasks[P_BANDS][6][EHMER_MAX] = {
 	/* 62.5 Hz */

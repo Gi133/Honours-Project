@@ -93,8 +93,8 @@ namespace Gwen
 				return m_Texture.FailedToLoad();
 			}
 
-			virtual bool GetStretch(){ return m_bStretch; }
-			virtual void SetStretch(bool b){ m_bStretch = b; }
+			virtual bool GetStretch() { return m_bStretch; }
+			virtual void SetStretch(bool b) { m_bStretch = b; }
 
 		protected:
 

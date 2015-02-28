@@ -19,7 +19,7 @@
 #include "backends.h"
 #include "books/uncoupled/res_books_uncoupled.h"
 
-/***** residue backends *********************************************/
+ /***** residue backends *********************************************/
 
 static const vorbis_info_residue0 _residue_44_low_un = {
 	0, -1, -1, 8, -1, -1,
@@ -49,7 +49,7 @@ static const vorbis_info_residue0 _residue_44_hi_un = {
 
 /* mapping conventions:
    only one submap (this would change for efficient 5.1 support for example)*/
-/* Four psychoacoustic profiles are used, one for each blocktype */
+   /* Four psychoacoustic profiles are used, one for each blocktype */
 static const vorbis_info_mapping0 _map_nominal_u[2] = {
 	{ 1, { 0, 0, 0, 0, 0, 0 }, { 0 }, { 0 }, 0, { 0 }, { 0 } },
 	{ 1, { 0, 0, 0, 0, 0, 0 }, { 1 }, { 1 }, 0, { 0 }, { 0 } }

@@ -41,8 +41,8 @@ namespace Gwen
 			void CloseMenu();
 			void ToggleMenu();
 
-			void SetOnStrip(bool b){ m_bOnStrip = b; }
-			bool OnStrip(){ return m_bOnStrip; }
+			void SetOnStrip(bool b) { m_bOnStrip = b; }
+			bool OnStrip() { return m_bOnStrip; }
 
 			virtual void SetCheckable(bool bCheck) { m_bCheckable = bCheck; }
 			virtual void SetChecked(bool bCheck);

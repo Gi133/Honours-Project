@@ -30,11 +30,11 @@ namespace Gwen
 
 			virtual void MoveTo(int x, int y);
 
-			virtual void SetHorizontal()	{ m_bHorizontal = true; }
-			virtual void SetVertical()		{ m_bHorizontal = false; }
-			virtual bool IsVertical()		{ return !m_bHorizontal; }
-			virtual bool IsHorizontal()		{ return m_bHorizontal; }
-			virtual bool IsDepressed()		{ return m_bDepressed; }
+			virtual void SetHorizontal() { m_bHorizontal = true; }
+			virtual void SetVertical() { m_bHorizontal = false; }
+			virtual bool IsVertical() { return !m_bHorizontal; }
+			virtual bool IsHorizontal() { return m_bHorizontal; }
+			virtual bool IsDepressed() { return m_bDepressed; }
 
 		protected:
 

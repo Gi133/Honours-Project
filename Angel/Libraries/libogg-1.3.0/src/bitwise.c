@@ -15,8 +15,8 @@
 
  ********************************************************************/
 
-/* We're 'LSb' endian; if we write a word but read individual bits,
-   then we'll read the lsb first */
+ /* We're 'LSb' endian; if we write a word but read individual bits,
+	then we'll read the lsb first */
 
 #include <string.h>
 #include <stdlib.h>
@@ -37,29 +37,29 @@ static const unsigned long mask[] =
 static const unsigned int mask8B[] =
 { 0x00, 0x80, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc, 0xfe, 0xff };
 
-void oggpack_writeinit(oggpack_buffer *b){
+void oggpack_writeinit(oggpack_buffer *b) {
 	memset(b, 0, sizeof(*b));
 	b->ptr = b->buffer = _ogg_malloc(BUFFER_INCREMENT);
 	b->buffer[0] = '\0';
 	b->storage = BUFFER_INCREMENT;
 }
 
-void oggpackB_writeinit(oggpack_buffer *b){
+void oggpackB_writeinit(oggpack_buffer *b) {
 	oggpack_writeinit(b);
 }
 
-int oggpack_writecheck(oggpack_buffer *b){
+int oggpack_writecheck(oggpack_buffer *b) {
 	if (!b->ptr || !b->storage)return -1;
 	return 0;
 }
 
-int oggpackB_writecheck(oggpack_buffer *b){
+int oggpackB_writecheck(oggpack_buffer *b) {
 	return oggpack_writecheck(b);
 }
 
-void oggpack_writetrunc(oggpack_buffer *b, long bits){
+void oggpack_writetrunc(oggpack_buffer *b, long bits) {
 	long bytes = bits >> 3;
-	if (b->ptr){
+	if (b->ptr) {
 		bits -= bytes * 8;
 		b->ptr = b->buffer + bytes;
 		b->endbit = bits;
@@ -68,9 +68,9 @@ void oggpack_writetrunc(oggpack_buffer *b, long bits){
 	}
 }
 
-void oggpackB_writetrunc(oggpack_buffer *b, long bits){
+void oggpackB_writetrunc(oggpack_buffer *b, long bits) {
 	long bytes = bits >> 3;
-	if (b->ptr){
+	if (b->ptr) {
 		bits -= bytes * 8;
 		b->ptr = b->buffer + bytes;
 		b->endbit = bits;
@@ -80,9 +80,9 @@ void oggpackB_writetrunc(oggpack_buffer *b, long bits){
 }
 
 /* Takes only up to 32 bits. */
-void oggpack_write(oggpack_buffer *b, unsigned long value, int bits){
+void oggpack_write(oggpack_buffer *b, unsigned long value, int bits) {
 	if (bits < 0 || bits>32) goto err;
-	if (b->endbyte >= b->storage - 4){
+	if (b->endbyte >= b->storage - 4) {
 		void *ret;
 		if (!b->ptr)return;
 		if (b->storage > LONG_MAX - BUFFER_INCREMENT) goto err;
@@ -98,13 +98,13 @@ void oggpack_write(oggpack_buffer *b, unsigned long value, int bits){
 
 	b->ptr[0] |= value << b->endbit;
 
-	if (bits >= 8){
+	if (bits >= 8) {
 		b->ptr[1] = (unsigned char)(value >> (8 - b->endbit));
-		if (bits >= 16){
+		if (bits >= 16) {
 			b->ptr[2] = (unsigned char)(value >> (16 - b->endbit));
-			if (bits >= 24){
+			if (bits >= 24) {
 				b->ptr[3] = (unsigned char)(value >> (24 - b->endbit));
-				if (bits >= 32){
+				if (bits >= 32) {
 					if (b->endbit)
 						b->ptr[4] = (unsigned char)(value >> (32 - b->endbit));
 					else
@@ -123,9 +123,9 @@ err:
 }
 
 /* Takes only up to 32 bits. */
-void oggpackB_write(oggpack_buffer *b, unsigned long value, int bits){
+void oggpackB_write(oggpack_buffer *b, unsigned long value, int bits) {
 	if (bits < 0 || bits>32) goto err;
-	if (b->endbyte >= b->storage - 4){
+	if (b->endbyte >= b->storage - 4) {
 		void *ret;
 		if (!b->ptr)return;
 		if (b->storage > LONG_MAX - BUFFER_INCREMENT) goto err;
@@ -141,13 +141,13 @@ void oggpackB_write(oggpack_buffer *b, unsigned long value, int bits){
 
 	b->ptr[0] |= value >> (24 + b->endbit);
 
-	if (bits >= 8){
+	if (bits >= 8) {
 		b->ptr[1] = (unsigned char)(value >> (16 + b->endbit));
-		if (bits >= 16){
+		if (bits >= 16) {
 			b->ptr[2] = (unsigned char)(value >> (8 + b->endbit));
-			if (bits >= 24){
+			if (bits >= 24) {
 				b->ptr[3] = (unsigned char)(value >> (b->endbit));
-				if (bits >= 32){
+				if (bits >= 32) {
 					if (b->endbit)
 						b->ptr[4] = (unsigned char)(value << (8 - b->endbit));
 					else
@@ -165,13 +165,13 @@ err:
 	oggpack_writeclear(b);
 }
 
-void oggpack_writealign(oggpack_buffer *b){
+void oggpack_writealign(oggpack_buffer *b) {
 	int bits = 8 - b->endbit;
 	if (bits < 8)
 		oggpack_write(b, 0, bits);
 }
 
-void oggpackB_writealign(oggpack_buffer *b){
+void oggpackB_writealign(oggpack_buffer *b) {
 	int bits = 8 - b->endbit;
 	if (bits < 8)
 		oggpackB_write(b, 0, bits);
@@ -183,21 +183,21 @@ static void oggpack_writecopy_helper(oggpack_buffer *b,
 	void(*w)(oggpack_buffer *,
 	unsigned long,
 	int),
-	int msb){
+	int msb) {
 	unsigned char *ptr = (unsigned char *)source;
 
 	long bytes = bits / 8;
 	bits -= bytes * 8;
 
-	if (b->endbit){
+	if (b->endbit) {
 		int i;
 		/* unaligned copy.  Do it the hard way. */
 		for (i = 0; i < bytes; i++)
 			w(b, (unsigned long)(ptr[i]), 8);
 	}
-	else{
+	else {
 		/* aligned block copy */
-		if (b->endbyte + bytes + 1 >= b->storage){
+		if (b->endbyte + bytes + 1 >= b->storage) {
 			void *ret;
 			if (!b->ptr) goto err;
 			if (b->endbyte + bytes + BUFFER_INCREMENT > b->storage) goto err;
@@ -213,7 +213,7 @@ static void oggpack_writecopy_helper(oggpack_buffer *b,
 		b->endbyte += bytes;
 		*b->ptr = 0;
 	}
-	if (bits){
+	if (bits) {
 		if (msb)
 			w(b, (unsigned long)(ptr[bytes] >> (8 - bits)), bits);
 		else
@@ -224,46 +224,46 @@ err:
 	oggpack_writeclear(b);
 }
 
-void oggpack_writecopy(oggpack_buffer *b, void *source, long bits){
+void oggpack_writecopy(oggpack_buffer *b, void *source, long bits) {
 	oggpack_writecopy_helper(b, source, bits, oggpack_write, 0);
 }
 
-void oggpackB_writecopy(oggpack_buffer *b, void *source, long bits){
+void oggpackB_writecopy(oggpack_buffer *b, void *source, long bits) {
 	oggpack_writecopy_helper(b, source, bits, oggpackB_write, 1);
 }
 
-void oggpack_reset(oggpack_buffer *b){
+void oggpack_reset(oggpack_buffer *b) {
 	if (!b->ptr)return;
 	b->ptr = b->buffer;
 	b->buffer[0] = 0;
 	b->endbit = b->endbyte = 0;
 }
 
-void oggpackB_reset(oggpack_buffer *b){
+void oggpackB_reset(oggpack_buffer *b) {
 	oggpack_reset(b);
 }
 
-void oggpack_writeclear(oggpack_buffer *b){
+void oggpack_writeclear(oggpack_buffer *b) {
 	if (b->buffer)_ogg_free(b->buffer);
 	memset(b, 0, sizeof(*b));
 }
 
-void oggpackB_writeclear(oggpack_buffer *b){
+void oggpackB_writeclear(oggpack_buffer *b) {
 	oggpack_writeclear(b);
 }
 
-void oggpack_readinit(oggpack_buffer *b, unsigned char *buf, int bytes){
+void oggpack_readinit(oggpack_buffer *b, unsigned char *buf, int bytes) {
 	memset(b, 0, sizeof(*b));
 	b->buffer = b->ptr = buf;
 	b->storage = bytes;
 }
 
-void oggpackB_readinit(oggpack_buffer *b, unsigned char *buf, int bytes){
+void oggpackB_readinit(oggpack_buffer *b, unsigned char *buf, int bytes) {
 	oggpack_readinit(b, buf, bytes);
 }
 
 /* Read in bits without advancing the bitptr; bits <= 32 */
-long oggpack_look(oggpack_buffer *b, int bits){
+long oggpack_look(oggpack_buffer *b, int bits) {
 	unsigned long ret;
 	unsigned long m;
 
@@ -271,7 +271,7 @@ long oggpack_look(oggpack_buffer *b, int bits){
 	m = mask[bits];
 	bits += b->endbit;
 
-	if (b->endbyte >= b->storage - 4){
+	if (b->endbyte >= b->storage - 4) {
 		/* not the main path */
 		if (b->endbyte > b->storage - ((bits + 7) >> 3)) return -1;
 		/* special case to avoid reading b->ptr[0], which might be past the end of
@@ -280,11 +280,11 @@ long oggpack_look(oggpack_buffer *b, int bits){
 	}
 
 	ret = b->ptr[0] >> b->endbit;
-	if (bits > 8){
+	if (bits > 8) {
 		ret |= b->ptr[1] << (8 - b->endbit);
-		if (bits > 16){
+		if (bits > 16) {
 			ret |= b->ptr[2] << (16 - b->endbit);
-			if (bits > 24){
+			if (bits > 24) {
 				ret |= b->ptr[3] << (24 - b->endbit);
 				if (bits > 32 && b->endbit)
 					ret |= b->ptr[4] << (32 - b->endbit);
@@ -295,14 +295,14 @@ long oggpack_look(oggpack_buffer *b, int bits){
 }
 
 /* Read in bits without advancing the bitptr; bits <= 32 */
-long oggpackB_look(oggpack_buffer *b, int bits){
+long oggpackB_look(oggpack_buffer *b, int bits) {
 	unsigned long ret;
 	int m = 32 - bits;
 
 	if (m < 0 || m>32) return -1;
 	bits += b->endbit;
 
-	if (b->endbyte >= b->storage - 4){
+	if (b->endbyte >= b->storage - 4) {
 		/* not the main path */
 		if (b->endbyte > b->storage - ((bits + 7) >> 3)) return -1;
 		/* special case to avoid reading b->ptr[0], which might be past the end of
@@ -311,11 +311,11 @@ long oggpackB_look(oggpack_buffer *b, int bits){
 	}
 
 	ret = b->ptr[0] << (24 + b->endbit);
-	if (bits > 8){
+	if (bits > 8) {
 		ret |= b->ptr[1] << (16 + b->endbit);
-		if (bits > 16){
+		if (bits > 16) {
 			ret |= b->ptr[2] << (8 + b->endbit);
-			if (bits > 24){
+			if (bits > 24) {
 				ret |= b->ptr[3] << (b->endbit);
 				if (bits > 32 && b->endbit)
 					ret |= b->ptr[4] >> (8 - b->endbit);
@@ -325,17 +325,17 @@ long oggpackB_look(oggpack_buffer *b, int bits){
 	return ((ret & 0xffffffff) >> (m >> 1)) >> ((m + 1) >> 1);
 }
 
-long oggpack_look1(oggpack_buffer *b){
+long oggpack_look1(oggpack_buffer *b) {
 	if (b->endbyte >= b->storage)return(-1);
 	return((b->ptr[0] >> b->endbit) & 1);
 }
 
-long oggpackB_look1(oggpack_buffer *b){
+long oggpackB_look1(oggpack_buffer *b) {
 	if (b->endbyte >= b->storage)return(-1);
 	return((b->ptr[0] >> (7 - b->endbit)) & 1);
 }
 
-void oggpack_adv(oggpack_buffer *b, int bits){
+void oggpack_adv(oggpack_buffer *b, int bits) {
 	bits += b->endbit;
 
 	if (b->endbyte > b->storage - ((bits + 7) >> 3)) goto overflow;
@@ -351,24 +351,24 @@ overflow:
 	b->endbit = 1;
 }
 
-void oggpackB_adv(oggpack_buffer *b, int bits){
+void oggpackB_adv(oggpack_buffer *b, int bits) {
 	oggpack_adv(b, bits);
 }
 
-void oggpack_adv1(oggpack_buffer *b){
-	if (++(b->endbit) > 7){
+void oggpack_adv1(oggpack_buffer *b) {
+	if (++(b->endbit) > 7) {
 		b->endbit = 0;
 		b->ptr++;
 		b->endbyte++;
 	}
 }
 
-void oggpackB_adv1(oggpack_buffer *b){
+void oggpackB_adv1(oggpack_buffer *b) {
 	oggpack_adv1(b);
 }
 
 /* bits <= 32 */
-long oggpack_read(oggpack_buffer *b, int bits){
+long oggpack_read(oggpack_buffer *b, int bits) {
 	long ret;
 	unsigned long m;
 
@@ -376,7 +376,7 @@ long oggpack_read(oggpack_buffer *b, int bits){
 	m = mask[bits];
 	bits += b->endbit;
 
-	if (b->endbyte >= b->storage - 4){
+	if (b->endbyte >= b->storage - 4) {
 		/* not the main path */
 		if (b->endbyte > b->storage - ((bits + 7) >> 3)) goto overflow;
 		/* special case to avoid reading b->ptr[0], which might be past the end of
@@ -385,13 +385,13 @@ long oggpack_read(oggpack_buffer *b, int bits){
 	}
 
 	ret = b->ptr[0] >> b->endbit;
-	if (bits > 8){
+	if (bits > 8) {
 		ret |= b->ptr[1] << (8 - b->endbit);
-		if (bits > 16){
+		if (bits > 16) {
 			ret |= b->ptr[2] << (16 - b->endbit);
-			if (bits > 24){
+			if (bits > 24) {
 				ret |= b->ptr[3] << (24 - b->endbit);
-				if (bits > 32 && b->endbit){
+				if (bits > 32 && b->endbit) {
 					ret |= b->ptr[4] << (32 - b->endbit);
 				}
 			}
@@ -404,7 +404,7 @@ long oggpack_read(oggpack_buffer *b, int bits){
 	return ret;
 
 overflow:
-err :
+err:
 	b->ptr = NULL;
 	b->endbyte = b->storage;
 	b->endbit = 1;
@@ -412,14 +412,14 @@ err :
 }
 
 /* bits <= 32 */
-long oggpackB_read(oggpack_buffer *b, int bits){
+long oggpackB_read(oggpack_buffer *b, int bits) {
 	long ret;
 	long m = 32 - bits;
 
 	if (m < 0 || m>32) goto err;
 	bits += b->endbit;
 
-	if (b->endbyte + 4 >= b->storage){
+	if (b->endbyte + 4 >= b->storage) {
 		/* not the main path */
 		if (b->endbyte > b->storage - ((bits + 7) >> 3)) goto overflow;
 		/* special case to avoid reading b->ptr[0], which might be past the end of
@@ -428,11 +428,11 @@ long oggpackB_read(oggpack_buffer *b, int bits){
 	}
 
 	ret = b->ptr[0] << (24 + b->endbit);
-	if (bits > 8){
+	if (bits > 8) {
 		ret |= b->ptr[1] << (16 + b->endbit);
-		if (bits > 16){
+		if (bits > 16) {
 			ret |= b->ptr[2] << (8 + b->endbit);
-			if (bits > 24){
+			if (bits > 24) {
 				ret |= b->ptr[3] << (b->endbit);
 				if (bits > 32 && b->endbit)
 					ret |= b->ptr[4] >> (8 - b->endbit);
@@ -447,21 +447,21 @@ long oggpackB_read(oggpack_buffer *b, int bits){
 	return ret;
 
 overflow:
-err :
+err:
 	b->ptr = NULL;
 	b->endbyte = b->storage;
 	b->endbit = 1;
 	return -1L;
 }
 
-long oggpack_read1(oggpack_buffer *b){
+long oggpack_read1(oggpack_buffer *b) {
 	long ret;
 
 	if (b->endbyte >= b->storage) goto overflow;
 	ret = (b->ptr[0] >> b->endbit) & 1;
 
 	b->endbit++;
-	if (b->endbit > 7){
+	if (b->endbit > 7) {
 		b->endbit = 0;
 		b->ptr++;
 		b->endbyte++;
@@ -475,14 +475,14 @@ overflow:
 	return -1L;
 }
 
-long oggpackB_read1(oggpack_buffer *b){
+long oggpackB_read1(oggpack_buffer *b) {
 	long ret;
 
 	if (b->endbyte >= b->storage) goto overflow;
 	ret = (b->ptr[0] >> (7 - b->endbit)) & 1;
 
 	b->endbit++;
-	if (b->endbit > 7){
+	if (b->endbit > 7) {
 		b->endbit = 0;
 		b->ptr++;
 		b->endbyte++;
@@ -496,27 +496,27 @@ overflow:
 	return -1L;
 }
 
-long oggpack_bytes(oggpack_buffer *b){
+long oggpack_bytes(oggpack_buffer *b) {
 	return(b->endbyte + (b->endbit + 7) / 8);
 }
 
-long oggpack_bits(oggpack_buffer *b){
+long oggpack_bits(oggpack_buffer *b) {
 	return(b->endbyte * 8 + b->endbit);
 }
 
-long oggpackB_bytes(oggpack_buffer *b){
+long oggpackB_bytes(oggpack_buffer *b) {
 	return oggpack_bytes(b);
 }
 
-long oggpackB_bits(oggpack_buffer *b){
+long oggpackB_bits(oggpack_buffer *b) {
 	return oggpack_bits(b);
 }
 
-unsigned char *oggpack_get_buffer(oggpack_buffer *b){
+unsigned char *oggpack_get_buffer(oggpack_buffer *b) {
 	return(b->buffer);
 }
 
-unsigned char *oggpackB_get_buffer(oggpack_buffer *b){
+unsigned char *oggpackB_get_buffer(oggpack_buffer *b) {
 	return oggpack_get_buffer(b);
 }
 
@@ -526,9 +526,9 @@ unsigned char *oggpackB_get_buffer(oggpack_buffer *b){
 #ifdef _V_SELFTEST
 #include <stdio.h>
 
-static int ilog(unsigned int v){
+static int ilog(unsigned int v) {
 	int ret = 0;
-	while (v){
+	while (v) {
 		ret++;
 		v >>= 1;
 	}
@@ -538,12 +538,12 @@ static int ilog(unsigned int v){
 oggpack_buffer o;
 oggpack_buffer r;
 
-void report(char *in){
+void report(char *in) {
 	fprintf(stderr, "%s", in);
 	exit(1);
 }
 
-void cliptest(unsigned long *b, int vals, int bits, int *comp, int compsize){
+void cliptest(unsigned long *b, int vals, int bits, int *comp, int compsize) {
 	long bytes, i;
 	unsigned char *buffer;
 
@@ -553,12 +553,12 @@ void cliptest(unsigned long *b, int vals, int bits, int *comp, int compsize){
 	buffer = oggpack_get_buffer(&o);
 	bytes = oggpack_bytes(&o);
 	if (bytes != compsize)report("wrong number of bytes!\n");
-	for (i = 0; i < bytes; i++)if (buffer[i] != comp[i]){
+	for (i = 0; i < bytes; i++)if (buffer[i] != comp[i]) {
 		for (i = 0; i < bytes; i++)fprintf(stderr, "%x %x\n", (int)buffer[i], (int)comp[i]);
 		report("wrote incorrect value!\n");
 	}
 	oggpack_readinit(&r, buffer, bytes);
-	for (i = 0; i < vals; i++){
+	for (i = 0; i < vals; i++) {
 		int tbit = bits ? bits : ilog(b[i]);
 		if (oggpack_look(&r, tbit) == -1)
 			report("out of data!\n");
@@ -567,11 +567,11 @@ void cliptest(unsigned long *b, int vals, int bits, int *comp, int compsize){
 		if (tbit == 1)
 			if (oggpack_look1(&r) != (b[i] & mask[tbit]))
 				report("looked at single bit incorrect value!\n");
-		if (tbit == 1){
+		if (tbit == 1) {
 			if (oggpack_read1(&r) != (b[i] & mask[tbit]))
 				report("read incorrect single bit value!\n");
 		}
-		else{
+		else {
 			if (oggpack_read(&r, tbit) != (b[i] & mask[tbit]))
 				report("read incorrect value!\n");
 		}
@@ -579,7 +579,7 @@ void cliptest(unsigned long *b, int vals, int bits, int *comp, int compsize){
 	if (oggpack_bytes(&r) != bytes)report("leftover bytes after read!\n");
 }
 
-void cliptestB(unsigned long *b, int vals, int bits, int *comp, int compsize){
+void cliptestB(unsigned long *b, int vals, int bits, int *comp, int compsize) {
 	long bytes, i;
 	unsigned char *buffer;
 
@@ -589,12 +589,12 @@ void cliptestB(unsigned long *b, int vals, int bits, int *comp, int compsize){
 	buffer = oggpackB_get_buffer(&o);
 	bytes = oggpackB_bytes(&o);
 	if (bytes != compsize)report("wrong number of bytes!\n");
-	for (i = 0; i < bytes; i++)if (buffer[i] != comp[i]){
+	for (i = 0; i < bytes; i++)if (buffer[i] != comp[i]) {
 		for (i = 0; i < bytes; i++)fprintf(stderr, "%x %x\n", (int)buffer[i], (int)comp[i]);
 		report("wrote incorrect value!\n");
 	}
 	oggpackB_readinit(&r, buffer, bytes);
-	for (i = 0; i < vals; i++){
+	for (i = 0; i < vals; i++) {
 		int tbit = bits ? bits : ilog(b[i]);
 		if (oggpackB_look(&r, tbit) == -1)
 			report("out of data!\n");
@@ -603,11 +603,11 @@ void cliptestB(unsigned long *b, int vals, int bits, int *comp, int compsize){
 		if (tbit == 1)
 			if (oggpackB_look1(&r) != (b[i] & mask[tbit]))
 				report("looked at single bit incorrect value!\n");
-		if (tbit == 1){
+		if (tbit == 1) {
 			if (oggpackB_read1(&r) != (b[i] & mask[tbit]))
 				report("read incorrect single bit value!\n");
 		}
-		else{
+		else {
 			if (oggpackB_read(&r, tbit) != (b[i] & mask[tbit]))
 				report("read incorrect value!\n");
 		}
@@ -615,7 +615,7 @@ void cliptestB(unsigned long *b, int vals, int bits, int *comp, int compsize){
 	if (oggpackB_bytes(&r) != bytes)report("leftover bytes after read!\n");
 }
 
-int main(void){
+int main(void) {
 	unsigned char *buffer;
 	long bytes, i;
 	static unsigned long testbuffer1[] =
@@ -704,9 +704,9 @@ int main(void){
 	buffer = oggpack_get_buffer(&o);
 	bytes = oggpack_bytes(&o);
 	oggpack_readinit(&r, buffer, bytes);
-	for (i = 0; i < test2size; i++){
+	for (i = 0; i < test2size; i++) {
 		if (oggpack_look(&r, 32) == -1)report("out of data. failed!");
-		if (oggpack_look(&r, 32) != large[i]){
+		if (oggpack_look(&r, 32) != large[i]) {
 			fprintf(stderr, "%ld != %ld (%lx!=%lx):", oggpack_look(&r, 32), large[i],
 				oggpack_look(&r, 32), large[i]);
 			report("read incorrect value!\n");
@@ -730,35 +730,35 @@ int main(void){
 
 	fprintf(stderr, "\nTesting read past end (LSb): ");
 	oggpack_readinit(&r, (unsigned char *)"\0\0\0\0\0\0\0\0", 8);
-	for (i = 0; i < 64; i++){
-		if (oggpack_read(&r, 1) != 0){
+	for (i = 0; i < 64; i++) {
+		if (oggpack_read(&r, 1) != 0) {
 			fprintf(stderr, "failed; got -1 prematurely.\n");
 			exit(1);
 		}
 	}
 	if (oggpack_look(&r, 1) != -1 ||
-		oggpack_read(&r, 1) != -1){
+		oggpack_read(&r, 1) != -1) {
 		fprintf(stderr, "failed; read past end without -1.\n");
 		exit(1);
 	}
 	oggpack_readinit(&r, (unsigned char *)"\0\0\0\0\0\0\0\0", 8);
-	if (oggpack_read(&r, 30) != 0 || oggpack_read(&r, 16) != 0){
+	if (oggpack_read(&r, 30) != 0 || oggpack_read(&r, 16) != 0) {
 		fprintf(stderr, "failed 2; got -1 prematurely.\n");
 		exit(1);
 	}
 
 	if (oggpack_look(&r, 18) != 0 ||
-		oggpack_look(&r, 18) != 0){
+		oggpack_look(&r, 18) != 0) {
 		fprintf(stderr, "failed 3; got -1 prematurely.\n");
 		exit(1);
 	}
 	if (oggpack_look(&r, 19) != -1 ||
-		oggpack_look(&r, 19) != -1){
+		oggpack_look(&r, 19) != -1) {
 		fprintf(stderr, "failed; read past end without -1.\n");
 		exit(1);
 	}
 	if (oggpack_look(&r, 32) != -1 ||
-		oggpack_look(&r, 32) != -1){
+		oggpack_look(&r, 32) != -1) {
 		fprintf(stderr, "failed; read past end without -1.\n");
 		exit(1);
 	}
@@ -790,9 +790,9 @@ int main(void){
 	buffer = oggpackB_get_buffer(&o);
 	bytes = oggpackB_bytes(&o);
 	oggpackB_readinit(&r, buffer, bytes);
-	for (i = 0; i < test2size; i++){
+	for (i = 0; i < test2size; i++) {
 		if (oggpackB_look(&r, 32) == -1)report("out of data. failed!");
-		if (oggpackB_look(&r, 32) != large[i]){
+		if (oggpackB_look(&r, 32) != large[i]) {
 			fprintf(stderr, "%ld != %ld (%lx!=%lx):", oggpackB_look(&r, 32), large[i],
 				oggpackB_look(&r, 32), large[i]);
 			report("read incorrect value!\n");
@@ -816,35 +816,35 @@ int main(void){
 
 	fprintf(stderr, "\nTesting read past end (MSb): ");
 	oggpackB_readinit(&r, (unsigned char *)"\0\0\0\0\0\0\0\0", 8);
-	for (i = 0; i < 64; i++){
-		if (oggpackB_read(&r, 1) != 0){
+	for (i = 0; i < 64; i++) {
+		if (oggpackB_read(&r, 1) != 0) {
 			fprintf(stderr, "failed; got -1 prematurely.\n");
 			exit(1);
 		}
 	}
 	if (oggpackB_look(&r, 1) != -1 ||
-		oggpackB_read(&r, 1) != -1){
+		oggpackB_read(&r, 1) != -1) {
 		fprintf(stderr, "failed; read past end without -1.\n");
 		exit(1);
 	}
 	oggpackB_readinit(&r, (unsigned char *)"\0\0\0\0\0\0\0\0", 8);
-	if (oggpackB_read(&r, 30) != 0 || oggpackB_read(&r, 16) != 0){
+	if (oggpackB_read(&r, 30) != 0 || oggpackB_read(&r, 16) != 0) {
 		fprintf(stderr, "failed 2; got -1 prematurely.\n");
 		exit(1);
 	}
 
 	if (oggpackB_look(&r, 18) != 0 ||
-		oggpackB_look(&r, 18) != 0){
+		oggpackB_look(&r, 18) != 0) {
 		fprintf(stderr, "failed 3; got -1 prematurely.\n");
 		exit(1);
 	}
 	if (oggpackB_look(&r, 19) != -1 ||
-		oggpackB_look(&r, 19) != -1){
+		oggpackB_look(&r, 19) != -1) {
 		fprintf(stderr, "failed; read past end without -1.\n");
 		exit(1);
 	}
 	if (oggpackB_look(&r, 32) != -1 ||
-		oggpackB_look(&r, 32) != -1){
+		oggpackB_look(&r, 32) != -1) {
 		fprintf(stderr, "failed; read past end without -1.\n");
 		exit(1);
 	}

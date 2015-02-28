@@ -24,25 +24,25 @@
 #include <string.h>
 #include <ogg/ogg.h>
 
-/* A complete description of Ogg framing exists in docs/framing.html */
+ /* A complete description of Ogg framing exists in docs/framing.html */
 
-int ogg_page_version(const ogg_page *og){
+int ogg_page_version(const ogg_page *og) {
 	return((int)(og->header[4]));
 }
 
-int ogg_page_continued(const ogg_page *og){
+int ogg_page_continued(const ogg_page *og) {
 	return((int)(og->header[5] & 0x01));
 }
 
-int ogg_page_bos(const ogg_page *og){
+int ogg_page_bos(const ogg_page *og) {
 	return((int)(og->header[5] & 0x02));
 }
 
-int ogg_page_eos(const ogg_page *og){
+int ogg_page_eos(const ogg_page *og) {
 	return((int)(og->header[5] & 0x04));
 }
 
-ogg_int64_t ogg_page_granulepos(const ogg_page *og){
+ogg_int64_t ogg_page_granulepos(const ogg_page *og) {
 	unsigned char *page = og->header;
 	ogg_int64_t granulepos = page[13] & (0xff);
 	granulepos = (granulepos << 8) | (page[12] & 0xff);
@@ -55,14 +55,14 @@ ogg_int64_t ogg_page_granulepos(const ogg_page *og){
 	return(granulepos);
 }
 
-int ogg_page_serialno(const ogg_page *og){
+int ogg_page_serialno(const ogg_page *og) {
 	return(og->header[14] |
 		(og->header[15] << 8) |
 		(og->header[16] << 16) |
 		(og->header[17] << 24));
 }
 
-long ogg_page_pageno(const ogg_page *og){
+long ogg_page_pageno(const ogg_page *og) {
 	return(og->header[18] |
 		(og->header[19] << 8) |
 		(og->header[20] << 16) |
@@ -73,20 +73,20 @@ long ogg_page_pageno(const ogg_page *og){
    the leading packet is begun on a previous page, but ends on this
    page, it's counted */
 
-/* NOTE:
-   If a page consists of a packet begun on a previous page, and a new
-   packet begun (but not completed) on this page, the return will be:
-   ogg_page_packets(page)   ==1,
-   ogg_page_continued(page) !=0
+   /* NOTE:
+	  If a page consists of a packet begun on a previous page, and a new
+	  packet begun (but not completed) on this page, the return will be:
+	  ogg_page_packets(page)   ==1,
+	  ogg_page_continued(page) !=0
 
-   If a page happens to be a single packet that was begun on a
-   previous page, and spans to the next page (in the case of a three or
-   more page packet), the return will be:
-   ogg_page_packets(page)   ==0,
-   ogg_page_continued(page) !=0
-   */
+	  If a page happens to be a single packet that was begun on a
+	  previous page, and spans to the next page (in the case of a three or
+	  more page packet), the return will be:
+	  ogg_page_packets(page)   ==0,
+	  ogg_page_continued(page) !=0
+	  */
 
-int ogg_page_packets(const ogg_page *og){
+int ogg_page_packets(const ogg_page *og) {
 	int i, n = og->header[26], count = 0;
 	for (i = 0; i < n; i++)
 		if (og->header[27 + i] < 255)count++;
@@ -97,7 +97,7 @@ int ogg_page_packets(const ogg_page *og){
 /* helper to initialize lookup for direct-table CRC (illustrative; we
    use the static init below) */
 
-static ogg_uint32_t _ogg_crc_entry(unsigned long index){
+static ogg_uint32_t _ogg_crc_entry(unsigned long index) {
 	int           i;
 	unsigned long r;
 
@@ -182,8 +182,8 @@ static const ogg_uint32_t crc_lookup[256] = {
 
 /* init the encode/decode logical stream state */
 
-int ogg_stream_init(ogg_stream_state *os, int serialno){
-	if (os){
+int ogg_stream_init(ogg_stream_state *os, int serialno) {
+	if (os) {
 		memset(os, 0, sizeof(*os));
 		os->body_storage = 16 * 1024;
 		os->lacing_storage = 1024;
@@ -192,7 +192,7 @@ int ogg_stream_init(ogg_stream_state *os, int serialno){
 		os->lacing_vals = _ogg_malloc(os->lacing_storage*sizeof(*os->lacing_vals));
 		os->granule_vals = _ogg_malloc(os->lacing_storage*sizeof(*os->granule_vals));
 
-		if (!os->body_data || !os->lacing_vals || !os->granule_vals){
+		if (!os->body_data || !os->lacing_vals || !os->granule_vals) {
 			ogg_stream_clear(os);
 			return -1;
 		}
@@ -205,14 +205,14 @@ int ogg_stream_init(ogg_stream_state *os, int serialno){
 }
 
 /* async/delayed error detection for the ogg_stream_state */
-int ogg_stream_check(ogg_stream_state *os){
+int ogg_stream_check(ogg_stream_state *os) {
 	if (!os || !os->body_data) return -1;
 	return 0;
 }
 
 /* _clear does not free os, only the non-flat storage within */
-int ogg_stream_clear(ogg_stream_state *os){
-	if (os){
+int ogg_stream_clear(ogg_stream_state *os) {
+	if (os) {
 		if (os->body_data)_ogg_free(os->body_data);
 		if (os->lacing_vals)_ogg_free(os->lacing_vals);
 		if (os->granule_vals)_ogg_free(os->granule_vals);
@@ -222,8 +222,8 @@ int ogg_stream_clear(ogg_stream_state *os){
 	return(0);
 }
 
-int ogg_stream_destroy(ogg_stream_state *os){
-	if (os){
+int ogg_stream_destroy(ogg_stream_state *os) {
+	if (os) {
 		ogg_stream_clear(os);
 		_ogg_free(os);
 	}
@@ -233,12 +233,12 @@ int ogg_stream_destroy(ogg_stream_state *os){
 /* Helpers for ogg_stream_encode; this keeps the structure and
    what's happening fairly clear */
 
-static int _os_body_expand(ogg_stream_state *os, int needed){
-	if (os->body_storage <= os->body_fill + needed){
+static int _os_body_expand(ogg_stream_state *os, int needed) {
+	if (os->body_storage <= os->body_fill + needed) {
 		void *ret;
 		ret = _ogg_realloc(os->body_data, (os->body_storage + needed + 1024)*
 			sizeof(*os->body_data));
-		if (!ret){
+		if (!ret) {
 			ogg_stream_clear(os);
 			return -1;
 		}
@@ -248,19 +248,19 @@ static int _os_body_expand(ogg_stream_state *os, int needed){
 	return 0;
 }
 
-static int _os_lacing_expand(ogg_stream_state *os, int needed){
-	if (os->lacing_storage <= os->lacing_fill + needed){
+static int _os_lacing_expand(ogg_stream_state *os, int needed) {
+	if (os->lacing_storage <= os->lacing_fill + needed) {
 		void *ret;
 		ret = _ogg_realloc(os->lacing_vals, (os->lacing_storage + needed + 32)*
 			sizeof(*os->lacing_vals));
-		if (!ret){
+		if (!ret) {
 			ogg_stream_clear(os);
 			return -1;
 		}
 		os->lacing_vals = ret;
 		ret = _ogg_realloc(os->granule_vals, (os->lacing_storage + needed + 32)*
 			sizeof(*os->granule_vals));
-		if (!ret){
+		if (!ret) {
 			ogg_stream_clear(os);
 			return -1;
 		}
@@ -274,8 +274,8 @@ static int _os_lacing_expand(ogg_stream_state *os, int needed){
 /* Direct table CRC; note that this will be faster in the future if we
    perform the checksum simultaneously with other copies */
 
-void ogg_page_checksum_set(ogg_page *og){
-	if (og){
+void ogg_page_checksum_set(ogg_page *og) {
+	if (og) {
 		ogg_uint32_t crc_reg = 0;
 		int i;
 
@@ -299,7 +299,7 @@ void ogg_page_checksum_set(ogg_page *og){
 
 /* submit data to the internal buffer of the framing engine */
 int ogg_stream_iovecin(ogg_stream_state *os, ogg_iovec_t *iov, int count,
-	long e_o_s, ogg_int64_t granulepos){
+	long e_o_s, ogg_int64_t granulepos) {
 	int bytes = 0, lacing_vals, i;
 
 	if (ogg_stream_check(os)) return -1;
@@ -308,7 +308,7 @@ int ogg_stream_iovecin(ogg_stream_state *os, ogg_iovec_t *iov, int count,
 	for (i = 0; i < count; ++i) bytes += (int)iov[i].iov_len;
 	lacing_vals = bytes / 255 + 1;
 
-	if (os->body_returned){
+	if (os->body_returned) {
 		/* advance packet data according to the body_returned pointer. We
 		   had to keep it around to return a pointer into the buffer last
 		   call */
@@ -335,7 +335,7 @@ int ogg_stream_iovecin(ogg_stream_state *os, ogg_iovec_t *iov, int count,
 	}
 
 	/* Store lacing vals for this packet */
-	for (i = 0; i < lacing_vals - 1; i++){
+	for (i = 0; i < lacing_vals - 1; i++) {
 		os->lacing_vals[os->lacing_fill + i] = 255;
 		os->granule_vals[os->lacing_fill + i] = os->granulepos;
 	}
@@ -355,7 +355,7 @@ int ogg_stream_iovecin(ogg_stream_state *os, ogg_iovec_t *iov, int count,
 	return(0);
 }
 
-int ogg_stream_packetin(ogg_stream_state *os, ogg_packet *op){
+int ogg_stream_packetin(ogg_stream_state *os, ogg_packet *op) {
 	ogg_iovec_t iov;
 	iov.iov_base = op->packet;
 	iov.iov_len = op->bytes;
@@ -365,7 +365,7 @@ int ogg_stream_packetin(ogg_stream_state *os, ogg_packet *op){
 /* Conditionally flush a page; force==0 will only flush nominal-size
    pages, force==1 forces us to flush a page regardless of page size
    so long as there's any data available at all. */
-static int ogg_stream_flush_i(ogg_stream_state *os, ogg_page *og, int force, int nfill){
+static int ogg_stream_flush_i(ogg_stream_state *os, ogg_page *og, int force, int nfill) {
 	int i;
 	int vals = 0;
 	int maxvals = (os->lacing_fill > 255 ? 255 : os->lacing_fill);
@@ -381,16 +381,16 @@ static int ogg_stream_flush_i(ogg_stream_state *os, ogg_page *og, int force, int
 
 	/* If this is the initial header case, the first page must only include
 	   the initial header packet */
-	if (os->b_o_s == 0){  /* 'initial header page' case */
+	if (os->b_o_s == 0) {  /* 'initial header page' case */
 		granule_pos = 0;
-		for (vals = 0; vals < maxvals; vals++){
-			if ((os->lacing_vals[vals] & 0x0ff) < 255){
+		for (vals = 0; vals < maxvals; vals++) {
+			if ((os->lacing_vals[vals] & 0x0ff) < 255) {
 				vals++;
 				break;
 			}
 		}
 	}
-	else{
+	else {
 		/* The extra packets_done, packet_just_done logic here attempts to do two things:
 		   1) Don't unneccessarily span pages.
 		   2) Unless necessary, don't flush pages if there are less than four packets on
@@ -402,13 +402,13 @@ static int ogg_stream_flush_i(ogg_stream_state *os, ogg_page *og, int force, int
 
 		int packets_done = 0;
 		int packet_just_done = 0;
-		for (vals = 0; vals<maxvals; vals++){
-			if (acc>nfill && packet_just_done >= 4){
+		for (vals = 0; vals < maxvals; vals++) {
+			if (acc > nfill && packet_just_done >= 4) {
 				force = 1;
 				break;
 			}
 			acc += os->lacing_vals[vals] & 0x0ff;
-			if ((os->lacing_vals[vals] & 0xff) < 255){
+			if ((os->lacing_vals[vals] & 0xff) < 255) {
 				granule_pos = os->granule_vals[vals];
 				packet_just_done = ++packets_done;
 			}
@@ -436,65 +436,65 @@ static int ogg_stream_flush_i(ogg_stream_state *os, ogg_page *og, int force, int
 	os->b_o_s = 1;
 
 	/* 64 bits of PCM position */
-	for (i = 6; i < 14; i++){
+	for (i = 6; i < 14; i++) {
 		os->header[i] = (unsigned char)(granule_pos & 0xff);
 		granule_pos >>= 8;
 	}
 
 	/* 32 bits of stream serial number */
-  {
-	  long serialno = os->serialno;
-	  for (i = 14; i < 18; i++){
-		  os->header[i] = (unsigned char)(serialno & 0xff);
-		  serialno >>= 8;
-	  }
-  }
+	{
+		long serialno = os->serialno;
+		for (i = 14; i < 18; i++) {
+			os->header[i] = (unsigned char)(serialno & 0xff);
+			serialno >>= 8;
+		}
+	}
 
-  /* 32 bits of page counter (we have both counter and page header
-	 because this val can roll over) */
-  if (os->pageno == -1)os->pageno = 0; /* because someone called
-									 stream_reset; this would be a
-									 strange thing to do in an
-									 encode stream, but it has
-									 plausible uses */
-  {
-	  long pageno = os->pageno++;
-	  for (i = 18; i < 22; i++){
-		  os->header[i] = (unsigned char)(pageno & 0xff);
-		  pageno >>= 8;
-	  }
-  }
+	/* 32 bits of page counter (we have both counter and page header
+	   because this val can roll over) */
+	if (os->pageno == -1)os->pageno = 0; /* because someone called
+									   stream_reset; this would be a
+									   strange thing to do in an
+									   encode stream, but it has
+									   plausible uses */
+	{
+		long pageno = os->pageno++;
+		for (i = 18; i < 22; i++) {
+			os->header[i] = (unsigned char)(pageno & 0xff);
+			pageno >>= 8;
+		}
+	}
 
-  /* zero for computation; filled in later */
-  os->header[22] = 0;
-  os->header[23] = 0;
-  os->header[24] = 0;
-  os->header[25] = 0;
+	/* zero for computation; filled in later */
+	os->header[22] = 0;
+	os->header[23] = 0;
+	os->header[24] = 0;
+	os->header[25] = 0;
 
-  /* segment table */
-  os->header[26] = (unsigned char)(vals & 0xff);
-  for (i = 0; i < vals; i++)
-	  bytes += os->header[i + 27] = (unsigned char)(os->lacing_vals[i] & 0xff);
+	/* segment table */
+	os->header[26] = (unsigned char)(vals & 0xff);
+	for (i = 0; i < vals; i++)
+		bytes += os->header[i + 27] = (unsigned char)(os->lacing_vals[i] & 0xff);
 
-  /* set pointers in the ogg_page struct */
-  og->header = os->header;
-  og->header_len = os->header_fill = vals + 27;
-  og->body = os->body_data + os->body_returned;
-  og->body_len = bytes;
+	/* set pointers in the ogg_page struct */
+	og->header = os->header;
+	og->header_len = os->header_fill = vals + 27;
+	og->body = os->body_data + os->body_returned;
+	og->body_len = bytes;
 
-  /* advance the lacing data and set the body_returned pointer */
+	/* advance the lacing data and set the body_returned pointer */
 
-  os->lacing_fill -= vals;
-  memmove(os->lacing_vals, os->lacing_vals + vals, os->lacing_fill*sizeof(*os->lacing_vals));
-  memmove(os->granule_vals, os->granule_vals + vals, os->lacing_fill*sizeof(*os->granule_vals));
-  os->body_returned += bytes;
+	os->lacing_fill -= vals;
+	memmove(os->lacing_vals, os->lacing_vals + vals, os->lacing_fill*sizeof(*os->lacing_vals));
+	memmove(os->granule_vals, os->granule_vals + vals, os->lacing_fill*sizeof(*os->granule_vals));
+	os->body_returned += bytes;
 
-  /* calculate the checksum */
+	/* calculate the checksum */
 
-  ogg_page_checksum_set(og);
+	ogg_page_checksum_set(og);
 
-  /* done */
-  return(1);
+	/* done */
+	return(1);
 }
 
 /* This will flush remaining packets into a page (returning nonzero),
@@ -511,7 +511,7 @@ static int ogg_stream_flush_i(ogg_stream_state *os, ogg_page *og, int force, int
    (and *not* ogg_stream_flush) unless you specifically need to flush
    a page regardless of size in the middle of a stream. */
 
-int ogg_stream_flush(ogg_stream_state *os, ogg_page *og){
+int ogg_stream_flush(ogg_stream_state *os, ogg_page *og) {
 	return ogg_stream_flush_i(os, og, 1, 4096);
 }
 
@@ -519,7 +519,7 @@ int ogg_stream_flush(ogg_stream_state *os, ogg_page *og){
    page size for applications which are smart enough to provide their
    own delay based flushing */
 
-int ogg_stream_flush_fill(ogg_stream_state *os, ogg_page *og, int nfill){
+int ogg_stream_flush_fill(ogg_stream_state *os, ogg_page *og, int nfill) {
 	return ogg_stream_flush_i(os, og, 1, nfill);
 }
 
@@ -527,7 +527,7 @@ int ogg_stream_flush_fill(ogg_stream_state *os, ogg_page *og, int nfill){
 returned are to static buffers; do not free. The returned buffers are
 good only until the next call (using the same ogg_stream_state) */
 
-int ogg_stream_pageout(ogg_stream_state *os, ogg_page *og){
+int ogg_stream_pageout(ogg_stream_state *os, ogg_page *og) {
 	int force = 0;
 	if (ogg_stream_check(os)) return 0;
 
@@ -542,7 +542,7 @@ int ogg_stream_pageout(ogg_stream_state *os, ogg_page *og){
 page size for applications which are smart enough to provide their
 own delay based flushing */
 
-int ogg_stream_pageout_fill(ogg_stream_state *os, ogg_page *og, int nfill){
+int ogg_stream_pageout_fill(ogg_stream_state *os, ogg_page *og, int nfill) {
 	int force = 0;
 	if (ogg_stream_check(os)) return 0;
 
@@ -553,7 +553,7 @@ int ogg_stream_pageout_fill(ogg_stream_state *os, ogg_page *og, int nfill){
 	return(ogg_stream_flush_i(os, og, force, nfill));
 }
 
-int ogg_stream_eos(ogg_stream_state *os){
+int ogg_stream_eos(ogg_stream_state *os) {
 	if (ogg_stream_check(os)) return 1;
 	return os->e_o_s;
 }
@@ -573,9 +573,9 @@ int ogg_stream_eos(ogg_stream_state *os){
    packets out calling ogg_stream_packetout() with a
    ogg_stream_state. */
 
-/* initialize the struct to a known state */
-int ogg_sync_init(ogg_sync_state *oy){
-	if (oy){
+   /* initialize the struct to a known state */
+int ogg_sync_init(ogg_sync_state *oy) {
+	if (oy) {
 		oy->storage = -1; /* used as a readiness flag */
 		memset(oy, 0, sizeof(*oy));
 	}
@@ -583,39 +583,39 @@ int ogg_sync_init(ogg_sync_state *oy){
 }
 
 /* clear non-flat storage within */
-int ogg_sync_clear(ogg_sync_state *oy){
-	if (oy){
+int ogg_sync_clear(ogg_sync_state *oy) {
+	if (oy) {
 		if (oy->data)_ogg_free(oy->data);
 		memset(oy, 0, sizeof(*oy));
 	}
 	return(0);
 }
 
-int ogg_sync_destroy(ogg_sync_state *oy){
-	if (oy){
+int ogg_sync_destroy(ogg_sync_state *oy) {
+	if (oy) {
 		ogg_sync_clear(oy);
 		_ogg_free(oy);
 	}
 	return(0);
 }
 
-int ogg_sync_check(ogg_sync_state *oy){
+int ogg_sync_check(ogg_sync_state *oy) {
 	if (oy->storage < 0) return -1;
 	return 0;
 }
 
-char *ogg_sync_buffer(ogg_sync_state *oy, long size){
+char *ogg_sync_buffer(ogg_sync_state *oy, long size) {
 	if (ogg_sync_check(oy)) return NULL;
 
 	/* first, clear out any space that has been previously returned */
-	if (oy->returned){
+	if (oy->returned) {
 		oy->fill -= oy->returned;
-		if (oy->fill>0)
+		if (oy->fill > 0)
 			memmove(oy->data, oy->data + oy->returned, oy->fill);
 		oy->returned = 0;
 	}
 
-	if (size > oy->storage - oy->fill){
+	if (size > oy->storage - oy->fill) {
 		/* We need to extend the internal buffer */
 		long newsize = size + oy->fill + 4096; /* an extra page to be nice */
 		void *ret;
@@ -624,7 +624,7 @@ char *ogg_sync_buffer(ogg_sync_state *oy, long size){
 			ret = _ogg_realloc(oy->data, newsize);
 		else
 			ret = _ogg_malloc(newsize);
-		if (!ret){
+		if (!ret) {
 			ogg_sync_clear(oy);
 			return NULL;
 		}
@@ -636,7 +636,7 @@ char *ogg_sync_buffer(ogg_sync_state *oy, long size){
 	return((char *)oy->data + oy->fill);
 }
 
-int ogg_sync_wrote(ogg_sync_state *oy, long bytes){
+int ogg_sync_wrote(ogg_sync_state *oy, long bytes) {
 	if (ogg_sync_check(oy))return -1;
 	if (oy->fill + bytes > oy->storage)return -1;
 	oy->fill += bytes;
@@ -653,14 +653,14 @@ int ogg_sync_wrote(ogg_sync_state *oy, long bytes){
 
    */
 
-long ogg_sync_pageseek(ogg_sync_state *oy, ogg_page *og){
+long ogg_sync_pageseek(ogg_sync_state *oy, ogg_page *og) {
 	unsigned char *page = oy->data + oy->returned;
 	unsigned char *next;
 	long bytes = oy->fill - oy->returned;
 
 	if (ogg_sync_check(oy))return 0;
 
-	if (oy->headerbytes == 0){
+	if (oy->headerbytes == 0) {
 		int headerbytes, i;
 		if (bytes < 27)return(0); /* not enough for a header */
 
@@ -696,10 +696,10 @@ long ogg_sync_pageseek(ogg_sync_state *oy, ogg_page *og){
 		ogg_page_checksum_set(&log);
 
 		/* Compare */
-		if (memcmp(chksum, page + 22, 4)){
+		if (memcmp(chksum, page + 22, 4)) {
 			/* D'oh.  Mismatch! Corrupt page (or miscapture and not a page
 			   at all) */
-			/* replace the computed checksum with the one actually read in */
+			   /* replace the computed checksum with the one actually read in */
 			memcpy(page + 22, chksum, 4);
 
 			/* Bad checksum. Lose sync */
@@ -708,36 +708,36 @@ long ogg_sync_pageseek(ogg_sync_state *oy, ogg_page *og){
 	}
 
 	/* yes, have a whole page all ready to go */
-  {
-	  unsigned char *page = oy->data + oy->returned;
-	  long bytes;
+	{
+		unsigned char *page = oy->data + oy->returned;
+		long bytes;
 
-	  if (og){
-		  og->header = page;
-		  og->header_len = oy->headerbytes;
-		  og->body = page + oy->headerbytes;
-		  og->body_len = oy->bodybytes;
-	  }
+		if (og) {
+			og->header = page;
+			og->header_len = oy->headerbytes;
+			og->body = page + oy->headerbytes;
+			og->body_len = oy->bodybytes;
+		}
 
-	  oy->unsynced = 0;
-	  oy->returned += (bytes = oy->headerbytes + oy->bodybytes);
-	  oy->headerbytes = 0;
-	  oy->bodybytes = 0;
-	  return(bytes);
-  }
+		oy->unsynced = 0;
+		oy->returned += (bytes = oy->headerbytes + oy->bodybytes);
+		oy->headerbytes = 0;
+		oy->bodybytes = 0;
+		return(bytes);
+	}
 
 sync_fail:
 
-  oy->headerbytes = 0;
-  oy->bodybytes = 0;
+	oy->headerbytes = 0;
+	oy->bodybytes = 0;
 
-  /* search for possible capture */
-  next = memchr(page + 1, 'O', bytes - 1);
-  if (!next)
-	  next = oy->data + oy->fill;
+	/* search for possible capture */
+	next = memchr(page + 1, 'O', bytes - 1);
+	if (!next)
+		next = oy->data + oy->fill;
 
-  oy->returned = (int)(next - oy->data);
-  return((long)-(next - page));
+	oy->returned = (int)(next - oy->data);
+	return((long)-(next - page));
 }
 
 /* sync the stream and get a page.  Keep trying until we find a page.
@@ -751,26 +751,26 @@ sync_fail:
    Returns pointers into buffered data; invalidated by next call to
    _stream, _clear, _init, or _buffer */
 
-int ogg_sync_pageout(ogg_sync_state *oy, ogg_page *og){
+int ogg_sync_pageout(ogg_sync_state *oy, ogg_page *og) {
 	if (ogg_sync_check(oy))return 0;
 
 	/* all we need to do is verify a page at the head of the stream
 	   buffer.  If it doesn't verify, we look for the next potential
 	   frame */
 
-	for (;;){
+	for (;;) {
 		long ret = ogg_sync_pageseek(oy, og);
-		if (ret > 0){
+		if (ret > 0) {
 			/* have a page */
 			return(1);
 		}
-		if (ret == 0){
+		if (ret == 0) {
 			/* need more data */
 			return(0);
 		}
 
 		/* head did not start a synced page... skipped some bytes */
-		if (!oy->unsynced){
+		if (!oy->unsynced) {
 			oy->unsynced = 1;
 			return(-1);
 		}
@@ -782,7 +782,7 @@ int ogg_sync_pageout(ogg_sync_state *oy, ogg_page *og){
 /* add the incoming page to the stream state; we decompose the page
    into packet segments here as well. */
 
-int ogg_stream_pagein(ogg_stream_state *os, ogg_page *og){
+int ogg_stream_pagein(ogg_stream_state *os, ogg_page *og) {
 	unsigned char *header = og->header;
 	unsigned char *body = og->body;
 	long           bodysize = og->body_len;
@@ -805,16 +805,16 @@ int ogg_stream_pagein(ogg_stream_state *os, ogg_page *og){
 		long br = os->body_returned;
 
 		/* body data */
-		if (br){
+		if (br) {
 			os->body_fill -= br;
 			if (os->body_fill)
 				memmove(os->body_data, os->body_data + br, os->body_fill);
 			os->body_returned = 0;
 		}
 
-		if (lr){
+		if (lr) {
 			/* segment table */
-			if (os->lacing_fill - lr){
+			if (os->lacing_fill - lr) {
 				memmove(os->lacing_vals, os->lacing_vals + lr,
 					(os->lacing_fill - lr)*sizeof(*os->lacing_vals));
 				memmove(os->granule_vals, os->granule_vals + lr,
@@ -833,7 +833,7 @@ int ogg_stream_pagein(ogg_stream_state *os, ogg_page *og){
 	if (_os_lacing_expand(os, segments + 1)) return -1;
 
 	/* are we in sequence? */
-	if (pageno != os->pageno){
+	if (pageno != os->pageno) {
 		int i;
 
 		/* unroll previous partial packet (if any) */
@@ -842,7 +842,7 @@ int ogg_stream_pagein(ogg_stream_state *os, ogg_page *og){
 		os->lacing_fill = os->lacing_packet;
 
 		/* make a note of dropped data in segment table */
-		if (os->pageno != -1){
+		if (os->pageno != -1) {
 			os->lacing_vals[os->lacing_fill++] = 0x400;
 			os->lacing_packet++;
 		}
@@ -850,15 +850,15 @@ int ogg_stream_pagein(ogg_stream_state *os, ogg_page *og){
 
 	/* are we a 'continued packet' page?  If so, we may need to skip
 	   some segments */
-	if (continued){
+	if (continued) {
 		if (os->lacing_fill < 1 ||
-			os->lacing_vals[os->lacing_fill - 1] == 0x400){
+			os->lacing_vals[os->lacing_fill - 1] == 0x400) {
 			bos = 0;
-			for (; segptr < segments; segptr++){
+			for (; segptr < segments; segptr++) {
 				int val = header[27 + segptr];
 				body += val;
 				bodysize -= val;
-				if (val < 255){
+				if (val < 255) {
 					segptr++;
 					break;
 				}
@@ -866,51 +866,51 @@ int ogg_stream_pagein(ogg_stream_state *os, ogg_page *og){
 		}
 	}
 
-	if (bodysize){
+	if (bodysize) {
 		if (_os_body_expand(os, bodysize)) return -1;
 		memcpy(os->body_data + os->body_fill, body, bodysize);
 		os->body_fill += bodysize;
 	}
 
-  {
-	  int saved = -1;
-	  while (segptr < segments){
-		  int val = header[27 + segptr];
-		  os->lacing_vals[os->lacing_fill] = val;
-		  os->granule_vals[os->lacing_fill] = -1;
+	{
+		int saved = -1;
+		while (segptr < segments) {
+			int val = header[27 + segptr];
+			os->lacing_vals[os->lacing_fill] = val;
+			os->granule_vals[os->lacing_fill] = -1;
 
-		  if (bos){
-			  os->lacing_vals[os->lacing_fill] |= 0x100;
-			  bos = 0;
-		  }
+			if (bos) {
+				os->lacing_vals[os->lacing_fill] |= 0x100;
+				bos = 0;
+			}
 
-		  if (val < 255)saved = os->lacing_fill;
+			if (val < 255)saved = os->lacing_fill;
 
-		  os->lacing_fill++;
-		  segptr++;
+			os->lacing_fill++;
+			segptr++;
 
-		  if (val < 255)os->lacing_packet = os->lacing_fill;
-	  }
+			if (val < 255)os->lacing_packet = os->lacing_fill;
+		}
 
-	  /* set the granulepos on the last granuleval of the last full packet */
-	  if (saved != -1){
-		  os->granule_vals[saved] = granulepos;
-	  }
-  }
+		/* set the granulepos on the last granuleval of the last full packet */
+		if (saved != -1) {
+			os->granule_vals[saved] = granulepos;
+		}
+	}
 
-  if (eos){
-	  os->e_o_s = 1;
-	  if (os->lacing_fill>0)
-		  os->lacing_vals[os->lacing_fill - 1] |= 0x200;
-  }
+	if (eos) {
+		os->e_o_s = 1;
+		if (os->lacing_fill>0)
+			os->lacing_vals[os->lacing_fill - 1] |= 0x200;
+	}
 
-  os->pageno = pageno + 1;
+	os->pageno = pageno + 1;
 
-  return(0);
+	return(0);
 }
 
 /* clear things to an initial state.  Good to call, eg, before seeking */
-int ogg_sync_reset(ogg_sync_state *oy){
+int ogg_sync_reset(ogg_sync_state *oy) {
 	if (ogg_sync_check(oy))return -1;
 
 	oy->fill = 0;
@@ -921,7 +921,7 @@ int ogg_sync_reset(ogg_sync_state *oy){
 	return(0);
 }
 
-int ogg_stream_reset(ogg_stream_state *os){
+int ogg_stream_reset(ogg_stream_state *os) {
 	if (ogg_stream_check(os)) return -1;
 
 	os->body_fill = 0;
@@ -942,14 +942,14 @@ int ogg_stream_reset(ogg_stream_state *os){
 	return(0);
 }
 
-int ogg_stream_reset_serialno(ogg_stream_state *os, int serialno){
+int ogg_stream_reset_serialno(ogg_stream_state *os, int serialno) {
 	if (ogg_stream_check(os)) return -1;
 	ogg_stream_reset(os);
 	os->serialno = serialno;
 	return(0);
 }
 
-static int _packetout(ogg_stream_state *os, ogg_packet *op, int adv){
+static int _packetout(ogg_stream_state *os, ogg_packet *op, int adv) {
 	/* The last part of decode. We have the stream broken into packet
 	   segments.  Now we need to group them into packets (or return the
 	   out of sync markers) */
@@ -958,7 +958,7 @@ static int _packetout(ogg_stream_state *os, ogg_packet *op, int adv){
 
 	if (os->lacing_packet <= ptr)return(0);
 
-	if (os->lacing_vals[ptr] & 0x400){
+	if (os->lacing_vals[ptr] & 0x400) {
 		/* we need to tell the codec there's a gap; it might need to
 		   handle previous packet dependencies. */
 		os->lacing_returned++;
@@ -970,21 +970,21 @@ static int _packetout(ogg_stream_state *os, ogg_packet *op, int adv){
 								 to ask if there's a whole packet
 								 waiting */
 
-	/* Gather the whole packet. We'll have no holes or a partial packet */
+								 /* Gather the whole packet. We'll have no holes or a partial packet */
 	{
 		int size = os->lacing_vals[ptr] & 0xff;
 		long bytes = size;
 		int eos = os->lacing_vals[ptr] & 0x200; /* last packet of the stream? */
 		int bos = os->lacing_vals[ptr] & 0x100; /* first packet of the stream? */
 
-		while (size == 255){
+		while (size == 255) {
 			int val = os->lacing_vals[++ptr];
 			size = val & 0xff;
 			if (val & 0x200)eos = 0x200;
 			bytes += size;
 		}
 
-		if (op){
+		if (op) {
 			op->e_o_s = eos;
 			op->b_o_s = bos;
 			op->packet = os->body_data + os->body_returned;
@@ -993,7 +993,7 @@ static int _packetout(ogg_stream_state *os, ogg_packet *op, int adv){
 			op->bytes = bytes;
 		}
 
-		if (adv){
+		if (adv) {
 			os->body_returned += bytes;
 			os->lacing_returned = ptr + 1;
 			os->packetno++;
@@ -1002,12 +1002,12 @@ static int _packetout(ogg_stream_state *os, ogg_packet *op, int adv){
 	return(1);
 }
 
-int ogg_stream_packetout(ogg_stream_state *os, ogg_packet *op){
+int ogg_stream_packetout(ogg_stream_state *os, ogg_packet *op) {
 	if (ogg_stream_check(os)) return 0;
 	return _packetout(os, op, 1);
 }
 
-int ogg_stream_packetpeek(ogg_stream_state *os, ogg_packet *op){
+int ogg_stream_packetpeek(ogg_stream_state *os, ogg_packet *op) {
 	if (ogg_stream_check(os)) return 0;
 	return _packetout(os, op, 0);
 }
@@ -1023,32 +1023,32 @@ void ogg_packet_clear(ogg_packet *op) {
 ogg_stream_state os_en, os_de;
 ogg_sync_state oy;
 
-void checkpacket(ogg_packet *op, long len, int no, long pos){
+void checkpacket(ogg_packet *op, long len, int no, long pos) {
 	long j;
 	static int sequence = 0;
 	static int lastno = 0;
 
-	if (op->bytes != len){
+	if (op->bytes != len) {
 		fprintf(stderr, "incorrect packet length (%ld != %ld)!\n", op->bytes, len);
 		exit(1);
 	}
-	if (op->granulepos != pos){
+	if (op->granulepos != pos) {
 		fprintf(stderr, "incorrect packet granpos (%ld != %ld)!\n", (long)op->granulepos, pos);
 		exit(1);
 	}
 
 	/* packet number just follows sequence/gap; adjust the input number
 	   for that */
-	if (no == 0){
+	if (no == 0) {
 		sequence = 0;
 	}
-	else{
+	else {
 		sequence++;
 		if (no > lastno + 1)
 			sequence++;
 	}
 	lastno = no;
-	if (op->packetno != sequence){
+	if (op->packetno != sequence) {
 		fprintf(stderr, "incorrect packet sequence %ld != %d\n",
 			(long)(op->packetno), sequence);
 		exit(1);
@@ -1056,26 +1056,26 @@ void checkpacket(ogg_packet *op, long len, int no, long pos){
 
 	/* Test data */
 	for (j = 0; j < op->bytes; j++)
-		if (op->packet[j] != ((j + no) & 0xff)){
+		if (op->packet[j] != ((j + no) & 0xff)) {
 			fprintf(stderr, "body data mismatch (1) at pos %ld: %x!=%lx!\n\n",
 				j, op->packet[j], (j + no) & 0xff);
 			exit(1);
 		}
 }
 
-void check_page(unsigned char *data, const int *header, ogg_page *og){
+void check_page(unsigned char *data, const int *header, ogg_page *og) {
 	long j;
 	/* Test data */
 	for (j = 0; j < og->body_len; j++)
-		if (og->body[j] != data[j]){
+		if (og->body[j] != data[j]) {
 			fprintf(stderr, "body data mismatch (2) at pos %ld: %x!=%x!\n\n",
 				j, data[j], og->body[j]);
 			exit(1);
 		}
 
 	/* Test header */
-	for (j = 0; j < og->header_len; j++){
-		if (og->header[j] != header[j]){
+	for (j = 0; j < og->header_len; j++) {
+		if (og->header[j] != header[j]) {
 			fprintf(stderr, "header content mismatch at pos %ld:\n", j);
 			for (j = 0; j < header[26] + 27; j++)
 				fprintf(stderr, " (%ld)%02x:%02x", j, header[j], og->header[j]);
@@ -1083,14 +1083,14 @@ void check_page(unsigned char *data, const int *header, ogg_page *og){
 			exit(1);
 		}
 	}
-	if (og->header_len != header[26] + 27){
+	if (og->header_len != header[26] + 27) {
 		fprintf(stderr, "header length incorrect! (%ld!=%d)\n",
 			og->header_len, header[26] + 27);
 		exit(1);
 	}
 }
 
-void print_header(ogg_page *og){
+void print_header(ogg_page *og) {
 	int j;
 	fprintf(stderr, "\nHEADER:\n");
 	fprintf(stderr, "  capture: %c %c %c %c  version: %d  flags: %x\n",
@@ -1115,7 +1115,7 @@ void print_header(ogg_page *og){
 	fprintf(stderr, ")\n\n");
 }
 
-void copy_page(ogg_page *og){
+void copy_page(ogg_page *og) {
 	unsigned char *temp = _ogg_malloc(og->header_len);
 	memcpy(temp, og->header, og->header_len);
 	og->header = temp;
@@ -1125,12 +1125,12 @@ void copy_page(ogg_page *og){
 	og->body = temp;
 }
 
-void free_page(ogg_page *og){
+void free_page(ogg_page *og) {
 	_ogg_free(og->header);
 	_ogg_free(og->body);
 }
 
-void error(void){
+void error(void) {
 	fprintf(stderr, "error!\n");
 	exit(1);
 }
@@ -1465,7 +1465,7 @@ const int head3_7[] = { 0x4f, 0x67, 0x67, 0x53, 0, 0x05,
 0 };
 
 void test_pack(const int *pl, const int **headers, int byteskip,
-	int pageskip, int packetskip){
+	int pageskip, int packetskip) {
 	unsigned char *data = _ogg_malloc(1024 * 1024); /* for scripted test cases only */
 	long inptr = 0;
 	long outptr = 0;
@@ -1487,7 +1487,7 @@ void test_pack(const int *pl, const int **headers, int byteskip,
 
 	for (packets = 0;; packets++)if (pl[packets] == -1)break;
 
-	for (i = 0; i < packets; i++){
+	for (i = 0; i < packets; i++) {
 		/* construct a test packet */
 		ogg_packet op;
 		int len = pl[i];
@@ -1508,12 +1508,12 @@ void test_pack(const int *pl, const int **headers, int byteskip,
 		{
 			ogg_page og;
 
-			while (ogg_stream_pageout(&os_en, &og)){
+			while (ogg_stream_pageout(&os_en, &og)) {
 				/* We have a page.  Check it carefully */
 
 				fprintf(stderr, "%ld, ", pageno);
 
-				if (headers[pageno] == NULL){
+				if (headers[pageno] == NULL) {
 					fprintf(stderr, "coded too many pages!\n");
 					exit(1);
 				}
@@ -1522,7 +1522,7 @@ void test_pack(const int *pl, const int **headers, int byteskip,
 
 				outptr += og.body_len;
 				pageno++;
-				if (pageskip){
+				if (pageskip) {
 					bosflag = 1;
 					pageskip--;
 					deptr += og.body_len;
@@ -1530,120 +1530,120 @@ void test_pack(const int *pl, const int **headers, int byteskip,
 
 				/* have a complete page; submit it to sync/decode */
 
-		{
-			ogg_page og_de;
-			ogg_packet op_de, op_de2;
-			char *buf = ogg_sync_buffer(&oy, og.header_len + og.body_len);
-			char *next = buf;
-			byteskipcount += og.header_len;
-			if (byteskipcount > byteskip){
-				memcpy(next, og.header, byteskipcount - byteskip);
-				next += byteskipcount - byteskip;
-				byteskipcount = byteskip;
-			}
-
-			byteskipcount += og.body_len;
-			if (byteskipcount > byteskip){
-				memcpy(next, og.body, byteskipcount - byteskip);
-				next += byteskipcount - byteskip;
-				byteskipcount = byteskip;
-			}
-
-			ogg_sync_wrote(&oy, next - buf);
-
-			while (1){
-				int ret = ogg_sync_pageout(&oy, &og_de);
-				if (ret == 0)break;
-				if (ret < 0)continue;
-				/* got a page.  Happy happy.  Verify that it's good. */
-
-				fprintf(stderr, "(%d), ", pageout);
-
-				check_page(data + deptr, headers[pageout], &og_de);
-				deptr += og_de.body_len;
-				pageout++;
-
-				/* submit it to deconstitution */
-				ogg_stream_pagein(&os_de, &og_de);
-
-				/* packets out? */
-				while (ogg_stream_packetpeek(&os_de, &op_de2) > 0){
-					ogg_stream_packetpeek(&os_de, NULL);
-					ogg_stream_packetout(&os_de, &op_de); /* just catching them all */
-
-					/* verify peek and out match */
-					if (memcmp(&op_de, &op_de2, sizeof(op_de))){
-						fprintf(stderr, "packetout != packetpeek! pos=%ld\n",
-							depacket);
-						exit(1);
+				{
+					ogg_page og_de;
+					ogg_packet op_de, op_de2;
+					char *buf = ogg_sync_buffer(&oy, og.header_len + og.body_len);
+					char *next = buf;
+					byteskipcount += og.header_len;
+					if (byteskipcount > byteskip) {
+						memcpy(next, og.header, byteskipcount - byteskip);
+						next += byteskipcount - byteskip;
+						byteskipcount = byteskip;
 					}
 
-					/* verify the packet! */
-					/* check data */
-					if (memcmp(data + depacket, op_de.packet, op_de.bytes)){
-						fprintf(stderr, "packet data mismatch in decode! pos=%ld\n",
-							depacket);
-						exit(1);
-					}
-					/* check bos flag */
-					if (bosflag == 0 && op_de.b_o_s == 0){
-						fprintf(stderr, "b_o_s flag not set on packet!\n");
-						exit(1);
-					}
-					if (bosflag && op_de.b_o_s){
-						fprintf(stderr, "b_o_s flag incorrectly set on packet!\n");
-						exit(1);
-					}
-					bosflag = 1;
-					depacket += op_de.bytes;
-
-					/* check eos flag */
-					if (eosflag){
-						fprintf(stderr, "Multiple decoded packets with eos flag!\n");
-						exit(1);
+					byteskipcount += og.body_len;
+					if (byteskipcount > byteskip) {
+						memcpy(next, og.body, byteskipcount - byteskip);
+						next += byteskipcount - byteskip;
+						byteskipcount = byteskip;
 					}
 
-					if (op_de.e_o_s)eosflag = 1;
+					ogg_sync_wrote(&oy, next - buf);
 
-					/* check granulepos flag */
-					if (op_de.granulepos != -1){
-						fprintf(stderr, " granule:%ld ", (long)op_de.granulepos);
+					while (1) {
+						int ret = ogg_sync_pageout(&oy, &og_de);
+						if (ret == 0)break;
+						if (ret < 0)continue;
+						/* got a page.  Happy happy.  Verify that it's good. */
+
+						fprintf(stderr, "(%d), ", pageout);
+
+						check_page(data + deptr, headers[pageout], &og_de);
+						deptr += og_de.body_len;
+						pageout++;
+
+						/* submit it to deconstitution */
+						ogg_stream_pagein(&os_de, &og_de);
+
+						/* packets out? */
+						while (ogg_stream_packetpeek(&os_de, &op_de2) > 0) {
+							ogg_stream_packetpeek(&os_de, NULL);
+							ogg_stream_packetout(&os_de, &op_de); /* just catching them all */
+
+							/* verify peek and out match */
+							if (memcmp(&op_de, &op_de2, sizeof(op_de))) {
+								fprintf(stderr, "packetout != packetpeek! pos=%ld\n",
+									depacket);
+								exit(1);
+							}
+
+							/* verify the packet! */
+							/* check data */
+							if (memcmp(data + depacket, op_de.packet, op_de.bytes)) {
+								fprintf(stderr, "packet data mismatch in decode! pos=%ld\n",
+									depacket);
+								exit(1);
+							}
+							/* check bos flag */
+							if (bosflag == 0 && op_de.b_o_s == 0) {
+								fprintf(stderr, "b_o_s flag not set on packet!\n");
+								exit(1);
+							}
+							if (bosflag && op_de.b_o_s) {
+								fprintf(stderr, "b_o_s flag incorrectly set on packet!\n");
+								exit(1);
+							}
+							bosflag = 1;
+							depacket += op_de.bytes;
+
+							/* check eos flag */
+							if (eosflag) {
+								fprintf(stderr, "Multiple decoded packets with eos flag!\n");
+								exit(1);
+							}
+
+							if (op_de.e_o_s)eosflag = 1;
+
+							/* check granulepos flag */
+							if (op_de.granulepos != -1) {
+								fprintf(stderr, " granule:%ld ", (long)op_de.granulepos);
+							}
+						}
 					}
 				}
 			}
 		}
-			}
-		}
 	}
 	_ogg_free(data);
-	if (headers[pageno] != NULL){
+	if (headers[pageno] != NULL) {
 		fprintf(stderr, "did not write last page!\n");
 		exit(1);
 	}
-	if (headers[pageout] != NULL){
+	if (headers[pageout] != NULL) {
 		fprintf(stderr, "did not decode last page!\n");
 		exit(1);
 	}
-	if (inptr != outptr){
+	if (inptr != outptr) {
 		fprintf(stderr, "encoded page data incomplete!\n");
 		exit(1);
 	}
-	if (inptr != deptr){
+	if (inptr != deptr) {
 		fprintf(stderr, "decoded page data incomplete!\n");
 		exit(1);
 	}
-	if (inptr != depacket){
+	if (inptr != depacket) {
 		fprintf(stderr, "decoded packet data incomplete!\n");
 		exit(1);
 	}
-	if (!eosflag){
+	if (!eosflag) {
 		fprintf(stderr, "Never got a packet with EOS set!\n");
 		exit(1);
 	}
 	fprintf(stderr, "ok.\n");
 }
 
-int main(void){
+int main(void) {
 	ogg_stream_init(&os_en, 0x04030201);
 	ogg_stream_init(&os_de, 0x04030201);
 	ogg_sync_init(&oy);
@@ -1660,420 +1660,420 @@ int main(void){
 		test_pack(packets, headret, 0, 0, 0);
 	}
 
-  {
-	  /* 17, 254, 255, 256, 500, 510, 600 byte, pad */
-	  const int packets[] = { 17, 254, 255, 256, 500, 510, 600, -1 };
-	  const int *headret[] = { head1_1, head2_1, NULL };
-
-	  fprintf(stderr, "testing basic page encoding... ");
-	  test_pack(packets, headret, 0, 0, 0);
-  }
-
-  {
-	  /* nil packets; beginning,middle,end */
-	  const int packets[] = { 0, 17, 254, 255, 0, 256, 0, 500, 510, 600, 0, -1 };
-	  const int *headret[] = { head1_2, head2_2, NULL };
-
-	  fprintf(stderr, "testing basic nil packets... ");
-	  test_pack(packets, headret, 0, 0, 0);
-  }
-
-  {
-	  /* large initial packet */
-	  const int packets[] = { 4345, 259, 255, -1 };
-	  const int *headret[] = { head1_3, head2_3, NULL };
-
-	  fprintf(stderr, "testing initial-packet lacing > 4k... ");
-	  test_pack(packets, headret, 0, 0, 0);
-  }
-
-  {
-	  /* continuing packet test; with page spill expansion, we have to
-		 overflow the lacing table. */
-	  const int packets[] = { 0, 65500, 259, 255, -1 };
-	  const int *headret[] = { head1_4, head2_4, head3_4, NULL };
-
-	  fprintf(stderr, "testing single packet page span... ");
-	  test_pack(packets, headret, 0, 0, 0);
-  }
-
-  {
-	  /* spill expand packet test */
-	  const int packets[] = { 0, 4345, 259, 255, 0, 0, -1 };
-	  const int *headret[] = { head1_4b, head2_4b, head3_4b, NULL };
-
-	  fprintf(stderr, "testing page spill expansion... ");
-	  test_pack(packets, headret, 0, 0, 0);
-  }
-
-  /* page with the 255 segment limit */
-  {
-	  const int packets[] = { 0, 10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 10,
-		  10, 10, 10, 10, 10, 10, 10, 50, -1 };
-	  const int *headret[] = { head1_5, head2_5, head3_5, NULL };
-
-	  fprintf(stderr, "testing max packet segments... ");
-	  test_pack(packets, headret, 0, 0, 0);
-  }
-
-  {
-	  /* packet that overspans over an entire page */
-	  const int packets[] = { 0, 100, 130049, 259, 255, -1 };
-	  const int *headret[] = { head1_6, head2_6, head3_6, head4_6, NULL };
-
-	  fprintf(stderr, "testing very large packets... ");
-	  test_pack(packets, headret, 0, 0, 0);
-  }
-
-  {
-	  /* test for the libogg 1.1.1 resync in large continuation bug
-		 found by Josh Coalson)  */
-	  const int packets[] = { 0, 100, 130049, 259, 255, -1 };
-	  const int *headret[] = { head1_6, head2_6, head3_6, head4_6, NULL };
-
-	  fprintf(stderr, "testing continuation resync in very large packets... ");
-	  test_pack(packets, headret, 100, 2, 3);
-  }
-
-  {
-	  /* term only page.  why not? */
-	  const int packets[] = { 0, 100, 64770, -1 };
-	  const int *headret[] = { head1_7, head2_7, head3_7, NULL };
-
-	  fprintf(stderr, "testing zero data page (1 nil packet)... ");
-	  test_pack(packets, headret, 0, 0, 0);
-  }
-
-  {
-	  /* build a bunch of pages for testing */
-	  unsigned char *data = _ogg_malloc(1024 * 1024);
-	  int pl[] = { 0, 1, 1, 98, 4079, 1, 1, 2954, 2057, 76, 34, 912, 0, 234, 1000, 1000, 1000, 300, -1 };
-	  int inptr = 0, i, j;
-	  ogg_page og[5];
-
-	  ogg_stream_reset(&os_en);
-
-	  for (i = 0; pl[i] != -1; i++){
-		  ogg_packet op;
-		  int len = pl[i];
-
-		  op.packet = data + inptr;
-		  op.bytes = len;
-		  op.e_o_s = (pl[i + 1] < 0 ? 1 : 0);
-		  op.granulepos = (i + 1) * 1000;
-
-		  for (j = 0; j < len; j++)data[inptr++] = i + j;
-		  ogg_stream_packetin(&os_en, &op);
-	  }
-
-	  _ogg_free(data);
-
-	  /* retrieve finished pages */
-	  for (i = 0; i < 5; i++){
-		  if (ogg_stream_pageout(&os_en, &og[i]) == 0){
-			  fprintf(stderr, "Too few pages output building sync tests!\n");
-			  exit(1);
-		  }
-		  copy_page(&og[i]);
-	  }
-
-	  /* Test lost pages on pagein/packetout: no rollback */
 	{
-		ogg_page temp;
-		ogg_packet test;
+		/* 17, 254, 255, 256, 500, 510, 600 byte, pad */
+		const int packets[] = { 17, 254, 255, 256, 500, 510, 600, -1 };
+		const int *headret[] = { head1_1, head2_1, NULL };
 
-		fprintf(stderr, "Testing loss of pages... ");
+		fprintf(stderr, "testing basic page encoding... ");
+		test_pack(packets, headret, 0, 0, 0);
+	}
 
-		ogg_sync_reset(&oy);
-		ogg_stream_reset(&os_de);
-		for (i = 0; i < 5; i++){
-			memcpy(ogg_sync_buffer(&oy, og[i].header_len), og[i].header,
-				og[i].header_len);
-			ogg_sync_wrote(&oy, og[i].header_len);
-			memcpy(ogg_sync_buffer(&oy, og[i].body_len), og[i].body, og[i].body_len);
-			ogg_sync_wrote(&oy, og[i].body_len);
+	{
+		/* nil packets; beginning,middle,end */
+		const int packets[] = { 0, 17, 254, 255, 0, 256, 0, 500, 510, 600, 0, -1 };
+		const int *headret[] = { head1_2, head2_2, NULL };
+
+		fprintf(stderr, "testing basic nil packets... ");
+		test_pack(packets, headret, 0, 0, 0);
+	}
+
+	{
+		/* large initial packet */
+		const int packets[] = { 4345, 259, 255, -1 };
+		const int *headret[] = { head1_3, head2_3, NULL };
+
+		fprintf(stderr, "testing initial-packet lacing > 4k... ");
+		test_pack(packets, headret, 0, 0, 0);
+	}
+
+	{
+		/* continuing packet test; with page spill expansion, we have to
+		   overflow the lacing table. */
+		const int packets[] = { 0, 65500, 259, 255, -1 };
+		const int *headret[] = { head1_4, head2_4, head3_4, NULL };
+
+		fprintf(stderr, "testing single packet page span... ");
+		test_pack(packets, headret, 0, 0, 0);
+	}
+
+	{
+		/* spill expand packet test */
+		const int packets[] = { 0, 4345, 259, 255, 0, 0, -1 };
+		const int *headret[] = { head1_4b, head2_4b, head3_4b, NULL };
+
+		fprintf(stderr, "testing page spill expansion... ");
+		test_pack(packets, headret, 0, 0, 0);
+	}
+
+	/* page with the 255 segment limit */
+	{
+		const int packets[] = { 0, 10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 10,
+			10, 10, 10, 10, 10, 10, 10, 50, -1 };
+		const int *headret[] = { head1_5, head2_5, head3_5, NULL };
+
+		fprintf(stderr, "testing max packet segments... ");
+		test_pack(packets, headret, 0, 0, 0);
+	}
+
+	{
+		/* packet that overspans over an entire page */
+		const int packets[] = { 0, 100, 130049, 259, 255, -1 };
+		const int *headret[] = { head1_6, head2_6, head3_6, head4_6, NULL };
+
+		fprintf(stderr, "testing very large packets... ");
+		test_pack(packets, headret, 0, 0, 0);
+	}
+
+	{
+		/* test for the libogg 1.1.1 resync in large continuation bug
+		   found by Josh Coalson)  */
+		const int packets[] = { 0, 100, 130049, 259, 255, -1 };
+		const int *headret[] = { head1_6, head2_6, head3_6, head4_6, NULL };
+
+		fprintf(stderr, "testing continuation resync in very large packets... ");
+		test_pack(packets, headret, 100, 2, 3);
+	}
+
+	{
+		/* term only page.  why not? */
+		const int packets[] = { 0, 100, 64770, -1 };
+		const int *headret[] = { head1_7, head2_7, head3_7, NULL };
+
+		fprintf(stderr, "testing zero data page (1 nil packet)... ");
+		test_pack(packets, headret, 0, 0, 0);
+	}
+
+	{
+		/* build a bunch of pages for testing */
+		unsigned char *data = _ogg_malloc(1024 * 1024);
+		int pl[] = { 0, 1, 1, 98, 4079, 1, 1, 2954, 2057, 76, 34, 912, 0, 234, 1000, 1000, 1000, 300, -1 };
+		int inptr = 0, i, j;
+		ogg_page og[5];
+
+		ogg_stream_reset(&os_en);
+
+		for (i = 0; pl[i] != -1; i++) {
+			ogg_packet op;
+			int len = pl[i];
+
+			op.packet = data + inptr;
+			op.bytes = len;
+			op.e_o_s = (pl[i + 1] < 0 ? 1 : 0);
+			op.granulepos = (i + 1) * 1000;
+
+			for (j = 0; j < len; j++)data[inptr++] = i + j;
+			ogg_stream_packetin(&os_en, &op);
 		}
 
-		ogg_sync_pageout(&oy, &temp);
-		ogg_stream_pagein(&os_de, &temp);
-		ogg_sync_pageout(&oy, &temp);
-		ogg_stream_pagein(&os_de, &temp);
-		ogg_sync_pageout(&oy, &temp);
-		/* skip */
-		ogg_sync_pageout(&oy, &temp);
-		ogg_stream_pagein(&os_de, &temp);
+		_ogg_free(data);
 
-		/* do we get the expected results/packets? */
-
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 0, 0, 0);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 1, 1, -1);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 1, 2, -1);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 98, 3, -1);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 4079, 4, 5000);
-		if (ogg_stream_packetout(&os_de, &test) != -1){
-			fprintf(stderr, "Error: loss of page did not return error\n");
-			exit(1);
-		}
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 76, 9, -1);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 34, 10, -1);
-		fprintf(stderr, "ok.\n");
-	}
-
-	/* Test lost pages on pagein/packetout: rollback with continuation */
-	{
-		ogg_page temp;
-		ogg_packet test;
-
-		fprintf(stderr, "Testing loss of pages (rollback required)... ");
-
-		ogg_sync_reset(&oy);
-		ogg_stream_reset(&os_de);
-		for (i = 0; i < 5; i++){
-			memcpy(ogg_sync_buffer(&oy, og[i].header_len), og[i].header,
-				og[i].header_len);
-			ogg_sync_wrote(&oy, og[i].header_len);
-			memcpy(ogg_sync_buffer(&oy, og[i].body_len), og[i].body, og[i].body_len);
-			ogg_sync_wrote(&oy, og[i].body_len);
+		/* retrieve finished pages */
+		for (i = 0; i < 5; i++) {
+			if (ogg_stream_pageout(&os_en, &og[i]) == 0) {
+				fprintf(stderr, "Too few pages output building sync tests!\n");
+				exit(1);
+			}
+			copy_page(&og[i]);
 		}
 
-		ogg_sync_pageout(&oy, &temp);
-		ogg_stream_pagein(&os_de, &temp);
-		ogg_sync_pageout(&oy, &temp);
-		ogg_stream_pagein(&os_de, &temp);
-		ogg_sync_pageout(&oy, &temp);
-		ogg_stream_pagein(&os_de, &temp);
-		ogg_sync_pageout(&oy, &temp);
-		/* skip */
-		ogg_sync_pageout(&oy, &temp);
-		ogg_stream_pagein(&os_de, &temp);
+		/* Test lost pages on pagein/packetout: no rollback */
+		{
+			ogg_page temp;
+			ogg_packet test;
 
-		/* do we get the expected results/packets? */
+			fprintf(stderr, "Testing loss of pages... ");
 
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 0, 0, 0);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 1, 1, -1);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 1, 2, -1);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 98, 3, -1);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 4079, 4, 5000);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 1, 5, -1);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 1, 6, -1);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 2954, 7, -1);
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 2057, 8, 9000);
-		if (ogg_stream_packetout(&os_de, &test) != -1){
-			fprintf(stderr, "Error: loss of page did not return error\n");
-			exit(1);
+			ogg_sync_reset(&oy);
+			ogg_stream_reset(&os_de);
+			for (i = 0; i < 5; i++) {
+				memcpy(ogg_sync_buffer(&oy, og[i].header_len), og[i].header,
+					og[i].header_len);
+				ogg_sync_wrote(&oy, og[i].header_len);
+				memcpy(ogg_sync_buffer(&oy, og[i].body_len), og[i].body, og[i].body_len);
+				ogg_sync_wrote(&oy, og[i].body_len);
+			}
+
+			ogg_sync_pageout(&oy, &temp);
+			ogg_stream_pagein(&os_de, &temp);
+			ogg_sync_pageout(&oy, &temp);
+			ogg_stream_pagein(&os_de, &temp);
+			ogg_sync_pageout(&oy, &temp);
+			/* skip */
+			ogg_sync_pageout(&oy, &temp);
+			ogg_stream_pagein(&os_de, &temp);
+
+			/* do we get the expected results/packets? */
+
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 0, 0, 0);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 1, 1, -1);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 1, 2, -1);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 98, 3, -1);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 4079, 4, 5000);
+			if (ogg_stream_packetout(&os_de, &test) != -1) {
+				fprintf(stderr, "Error: loss of page did not return error\n");
+				exit(1);
+			}
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 76, 9, -1);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 34, 10, -1);
+			fprintf(stderr, "ok.\n");
 		}
-		if (ogg_stream_packetout(&os_de, &test) != 1)error();
-		checkpacket(&test, 300, 17, 18000);
-		fprintf(stderr, "ok.\n");
-	}
 
-	/* the rest only test sync */
-	{
-		ogg_page og_de;
-		/* Test fractional page inputs: incomplete capture */
-		fprintf(stderr, "Testing sync on partial inputs... ");
-		ogg_sync_reset(&oy);
-		memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header,
-			3);
-		ogg_sync_wrote(&oy, 3);
-		if (ogg_sync_pageout(&oy, &og_de) > 0)error();
+		/* Test lost pages on pagein/packetout: rollback with continuation */
+		{
+			ogg_page temp;
+			ogg_packet test;
 
-		/* Test fractional page inputs: incomplete fixed header */
-		memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header + 3,
-			20);
-		ogg_sync_wrote(&oy, 20);
-		if (ogg_sync_pageout(&oy, &og_de) > 0)error();
+			fprintf(stderr, "Testing loss of pages (rollback required)... ");
 
-		/* Test fractional page inputs: incomplete header */
-		memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header + 23,
-			5);
-		ogg_sync_wrote(&oy, 5);
-		if (ogg_sync_pageout(&oy, &og_de) > 0)error();
+			ogg_sync_reset(&oy);
+			ogg_stream_reset(&os_de);
+			for (i = 0; i < 5; i++) {
+				memcpy(ogg_sync_buffer(&oy, og[i].header_len), og[i].header,
+					og[i].header_len);
+				ogg_sync_wrote(&oy, og[i].header_len);
+				memcpy(ogg_sync_buffer(&oy, og[i].body_len), og[i].body, og[i].body_len);
+				ogg_sync_wrote(&oy, og[i].body_len);
+			}
 
-		/* Test fractional page inputs: incomplete body */
+			ogg_sync_pageout(&oy, &temp);
+			ogg_stream_pagein(&os_de, &temp);
+			ogg_sync_pageout(&oy, &temp);
+			ogg_stream_pagein(&os_de, &temp);
+			ogg_sync_pageout(&oy, &temp);
+			ogg_stream_pagein(&os_de, &temp);
+			ogg_sync_pageout(&oy, &temp);
+			/* skip */
+			ogg_sync_pageout(&oy, &temp);
+			ogg_stream_pagein(&os_de, &temp);
 
-		memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header + 28,
-			og[1].header_len - 28);
-		ogg_sync_wrote(&oy, og[1].header_len - 28);
-		if (ogg_sync_pageout(&oy, &og_de) > 0)error();
+			/* do we get the expected results/packets? */
 
-		memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body, 1000);
-		ogg_sync_wrote(&oy, 1000);
-		if (ogg_sync_pageout(&oy, &og_de) > 0)error();
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 0, 0, 0);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 1, 1, -1);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 1, 2, -1);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 98, 3, -1);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 4079, 4, 5000);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 1, 5, -1);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 1, 6, -1);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 2954, 7, -1);
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 2057, 8, 9000);
+			if (ogg_stream_packetout(&os_de, &test) != -1) {
+				fprintf(stderr, "Error: loss of page did not return error\n");
+				exit(1);
+			}
+			if (ogg_stream_packetout(&os_de, &test) != 1)error();
+			checkpacket(&test, 300, 17, 18000);
+			fprintf(stderr, "ok.\n");
+		}
 
-		memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body + 1000,
-			og[1].body_len - 1000);
-		ogg_sync_wrote(&oy, og[1].body_len - 1000);
-		if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
+		/* the rest only test sync */
+		{
+			ogg_page og_de;
+			/* Test fractional page inputs: incomplete capture */
+			fprintf(stderr, "Testing sync on partial inputs... ");
+			ogg_sync_reset(&oy);
+			memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header,
+				3);
+			ogg_sync_wrote(&oy, 3);
+			if (ogg_sync_pageout(&oy, &og_de) > 0)error();
 
-		fprintf(stderr, "ok.\n");
-	}
+			/* Test fractional page inputs: incomplete fixed header */
+			memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header + 3,
+				20);
+			ogg_sync_wrote(&oy, 20);
+			if (ogg_sync_pageout(&oy, &og_de) > 0)error();
 
-	/* Test fractional page inputs: page + incomplete capture */
-	{
-		ogg_page og_de;
-		fprintf(stderr, "Testing sync on 1+partial inputs... ");
-		ogg_sync_reset(&oy);
+			/* Test fractional page inputs: incomplete header */
+			memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header + 23,
+				5);
+			ogg_sync_wrote(&oy, 5);
+			if (ogg_sync_pageout(&oy, &og_de) > 0)error();
 
-		memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header,
-			og[1].header_len);
-		ogg_sync_wrote(&oy, og[1].header_len);
+			/* Test fractional page inputs: incomplete body */
 
-		memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body,
-			og[1].body_len);
-		ogg_sync_wrote(&oy, og[1].body_len);
+			memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header + 28,
+				og[1].header_len - 28);
+			ogg_sync_wrote(&oy, og[1].header_len - 28);
+			if (ogg_sync_pageout(&oy, &og_de) > 0)error();
 
-		memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header,
-			20);
-		ogg_sync_wrote(&oy, 20);
-		if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
-		if (ogg_sync_pageout(&oy, &og_de) > 0)error();
+			memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body, 1000);
+			ogg_sync_wrote(&oy, 1000);
+			if (ogg_sync_pageout(&oy, &og_de) > 0)error();
 
-		memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header + 20,
-			og[1].header_len - 20);
-		ogg_sync_wrote(&oy, og[1].header_len - 20);
-		memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body,
-			og[1].body_len);
-		ogg_sync_wrote(&oy, og[1].body_len);
-		if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
+			memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body + 1000,
+				og[1].body_len - 1000);
+			ogg_sync_wrote(&oy, og[1].body_len - 1000);
+			if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
 
-		fprintf(stderr, "ok.\n");
-	}
+			fprintf(stderr, "ok.\n");
+		}
 
-	/* Test recapture: garbage + page */
-	{
-		ogg_page og_de;
-		fprintf(stderr, "Testing search for capture... ");
-		ogg_sync_reset(&oy);
+		/* Test fractional page inputs: page + incomplete capture */
+		{
+			ogg_page og_de;
+			fprintf(stderr, "Testing sync on 1+partial inputs... ");
+			ogg_sync_reset(&oy);
 
-		/* 'garbage' */
-		memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body,
-			og[1].body_len);
-		ogg_sync_wrote(&oy, og[1].body_len);
+			memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header,
+				og[1].header_len);
+			ogg_sync_wrote(&oy, og[1].header_len);
 
-		memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header,
-			og[1].header_len);
-		ogg_sync_wrote(&oy, og[1].header_len);
+			memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body,
+				og[1].body_len);
+			ogg_sync_wrote(&oy, og[1].body_len);
 
-		memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body,
-			og[1].body_len);
-		ogg_sync_wrote(&oy, og[1].body_len);
+			memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header,
+				20);
+			ogg_sync_wrote(&oy, 20);
+			if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
+			if (ogg_sync_pageout(&oy, &og_de) > 0)error();
 
-		memcpy(ogg_sync_buffer(&oy, og[2].header_len), og[2].header,
-			20);
-		ogg_sync_wrote(&oy, 20);
-		if (ogg_sync_pageout(&oy, &og_de) > 0)error();
-		if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
-		if (ogg_sync_pageout(&oy, &og_de) > 0)error();
+			memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header + 20,
+				og[1].header_len - 20);
+			ogg_sync_wrote(&oy, og[1].header_len - 20);
+			memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body,
+				og[1].body_len);
+			ogg_sync_wrote(&oy, og[1].body_len);
+			if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
 
-		memcpy(ogg_sync_buffer(&oy, og[2].header_len), og[2].header + 20,
-			og[2].header_len - 20);
-		ogg_sync_wrote(&oy, og[2].header_len - 20);
-		memcpy(ogg_sync_buffer(&oy, og[2].body_len), og[2].body,
-			og[2].body_len);
-		ogg_sync_wrote(&oy, og[2].body_len);
-		if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
+			fprintf(stderr, "ok.\n");
+		}
 
-		fprintf(stderr, "ok.\n");
-	}
+		/* Test recapture: garbage + page */
+		{
+			ogg_page og_de;
+			fprintf(stderr, "Testing search for capture... ");
+			ogg_sync_reset(&oy);
 
-	/* Test recapture: page + garbage + page */
-	{
-		ogg_page og_de;
-		fprintf(stderr, "Testing recapture... ");
-		ogg_sync_reset(&oy);
+			/* 'garbage' */
+			memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body,
+				og[1].body_len);
+			ogg_sync_wrote(&oy, og[1].body_len);
 
-		memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header,
-			og[1].header_len);
-		ogg_sync_wrote(&oy, og[1].header_len);
+			memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header,
+				og[1].header_len);
+			ogg_sync_wrote(&oy, og[1].header_len);
 
-		memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body,
-			og[1].body_len);
-		ogg_sync_wrote(&oy, og[1].body_len);
+			memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body,
+				og[1].body_len);
+			ogg_sync_wrote(&oy, og[1].body_len);
 
-		memcpy(ogg_sync_buffer(&oy, og[2].header_len), og[2].header,
-			og[2].header_len);
-		ogg_sync_wrote(&oy, og[2].header_len);
+			memcpy(ogg_sync_buffer(&oy, og[2].header_len), og[2].header,
+				20);
+			ogg_sync_wrote(&oy, 20);
+			if (ogg_sync_pageout(&oy, &og_de) > 0)error();
+			if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
+			if (ogg_sync_pageout(&oy, &og_de) > 0)error();
 
-		memcpy(ogg_sync_buffer(&oy, og[2].header_len), og[2].header,
-			og[2].header_len);
-		ogg_sync_wrote(&oy, og[2].header_len);
+			memcpy(ogg_sync_buffer(&oy, og[2].header_len), og[2].header + 20,
+				og[2].header_len - 20);
+			ogg_sync_wrote(&oy, og[2].header_len - 20);
+			memcpy(ogg_sync_buffer(&oy, og[2].body_len), og[2].body,
+				og[2].body_len);
+			ogg_sync_wrote(&oy, og[2].body_len);
+			if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
 
-		if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
+			fprintf(stderr, "ok.\n");
+		}
 
-		memcpy(ogg_sync_buffer(&oy, og[2].body_len), og[2].body,
-			og[2].body_len - 5);
-		ogg_sync_wrote(&oy, og[2].body_len - 5);
+		/* Test recapture: page + garbage + page */
+		{
+			ogg_page og_de;
+			fprintf(stderr, "Testing recapture... ");
+			ogg_sync_reset(&oy);
 
-		memcpy(ogg_sync_buffer(&oy, og[3].header_len), og[3].header,
-			og[3].header_len);
-		ogg_sync_wrote(&oy, og[3].header_len);
+			memcpy(ogg_sync_buffer(&oy, og[1].header_len), og[1].header,
+				og[1].header_len);
+			ogg_sync_wrote(&oy, og[1].header_len);
 
-		memcpy(ogg_sync_buffer(&oy, og[3].body_len), og[3].body,
-			og[3].body_len);
-		ogg_sync_wrote(&oy, og[3].body_len);
+			memcpy(ogg_sync_buffer(&oy, og[1].body_len), og[1].body,
+				og[1].body_len);
+			ogg_sync_wrote(&oy, og[1].body_len);
 
-		if (ogg_sync_pageout(&oy, &og_de) > 0)error();
-		if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
+			memcpy(ogg_sync_buffer(&oy, og[2].header_len), og[2].header,
+				og[2].header_len);
+			ogg_sync_wrote(&oy, og[2].header_len);
 
-		fprintf(stderr, "ok.\n");
-	}
+			memcpy(ogg_sync_buffer(&oy, og[2].header_len), og[2].header,
+				og[2].header_len);
+			ogg_sync_wrote(&oy, og[2].header_len);
 
-	/* Free page data that was previously copied */
-	{
-		for (i = 0; i < 5; i++){
-			free_page(&og[i]);
+			if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
+
+			memcpy(ogg_sync_buffer(&oy, og[2].body_len), og[2].body,
+				og[2].body_len - 5);
+			ogg_sync_wrote(&oy, og[2].body_len - 5);
+
+			memcpy(ogg_sync_buffer(&oy, og[3].header_len), og[3].header,
+				og[3].header_len);
+			ogg_sync_wrote(&oy, og[3].header_len);
+
+			memcpy(ogg_sync_buffer(&oy, og[3].body_len), og[3].body,
+				og[3].body_len);
+			ogg_sync_wrote(&oy, og[3].body_len);
+
+			if (ogg_sync_pageout(&oy, &og_de) > 0)error();
+			if (ogg_sync_pageout(&oy, &og_de) <= 0)error();
+
+			fprintf(stderr, "ok.\n");
+		}
+
+		/* Free page data that was previously copied */
+		{
+			for (i = 0; i < 5; i++) {
+				free_page(&og[i]);
+			}
 		}
 	}
-  }
 
-  return(0);
+	return(0);
 }
 
 #endif

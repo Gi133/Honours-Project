@@ -32,7 +32,7 @@ namespace Gwen
 			virtual void Layout(Skin::Base* skin);
 			virtual void PostLayout(Skin::Base* skin);
 
-			virtual void AllowMultiSelect(bool b){ m_bAllowMultipleSelection = b; }
+			virtual void AllowMultiSelect(bool b) { m_bAllowMultipleSelection = b; }
 
 			virtual void OnNodeAdded(TreeNode* pNode);
 

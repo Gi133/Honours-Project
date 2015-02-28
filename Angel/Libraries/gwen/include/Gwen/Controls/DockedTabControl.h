@@ -21,7 +21,7 @@ namespace Gwen
 
 			GWEN_CONTROL(DockedTabControl, TabControl);
 
-			void SetShowTitlebar(bool bShow){ m_pTitleBar->SetHidden(!bShow); }
+			void SetShowTitlebar(bool bShow) { m_pTitleBar->SetHidden(!bShow); }
 
 			void Layout(Skin::Base* skin);
 			void UpdateTitleBar();

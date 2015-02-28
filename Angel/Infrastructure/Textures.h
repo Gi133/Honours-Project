@@ -39,9 +39,9 @@
 #include "../Util/StringUtil.h"
 #include "../Infrastructure/Color.h"
 
-/**
- * Do whatever setup needs to be done at program start.
- */
+ /**
+  * Do whatever setup needs to be done at program start.
+  */
 void InitializeTextureLoading();
 
 /**

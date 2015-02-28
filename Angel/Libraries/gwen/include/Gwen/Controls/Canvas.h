@@ -29,7 +29,7 @@ namespace Gwen
 			// For additional initialization
 			// (which is sometimes not appropriate in the constructor)
 			//
-			virtual void Initialize(){};
+			virtual void Initialize() {};
 
 			//
 			// You should call this to render your canvas.
@@ -48,15 +48,15 @@ namespace Gwen
 			// to render when there have been changes. You can do this
 			// by checking NeedsRedraw().
 			//
-			virtual bool NeedsRedraw(){ return m_bNeedsRedraw; }
-			virtual void Redraw(){ m_bNeedsRedraw = true; }
+			virtual bool NeedsRedraw() { return m_bNeedsRedraw; }
+			virtual void Redraw() { m_bNeedsRedraw = true; }
 
 			// Internal. Do not call directly.
 			virtual void Render(Skin::Base* pRender);
 
 			// Childpanels call parent->GetCanvas() until they get to
 			// this top level function.
-			virtual Controls::Canvas* GetCanvas(){ return this; }
+			virtual Controls::Canvas* GetCanvas() { return this; }
 
 			virtual void SetScale(float f);
 			virtual float Scale() const { return m_fScale; }
@@ -79,11 +79,11 @@ namespace Gwen
 			virtual bool InputKey(int iKey, bool bDown);
 			virtual bool InputCharacter(Gwen::UnicodeChar chr);
 			virtual bool InputMouseWheel(int val);
-			virtual bool InputQuit(){ return true; };
+			virtual bool InputQuit() { return true; };
 
 			// Background
-			virtual void SetBackgroundColor(const Gwen::Color& color){ m_BackgroundColor = color; }
-			virtual void SetDrawBackground(bool bShouldDraw){ m_bDrawBackground = bShouldDraw; }
+			virtual void SetBackgroundColor(const Gwen::Color& color) { m_BackgroundColor = color; }
+			virtual void SetDrawBackground(bool bShouldDraw) { m_bDrawBackground = bShouldDraw; }
 
 		protected:
 

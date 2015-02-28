@@ -22,7 +22,7 @@
 #include "codec_internal.h"
 #include "os.h"
 
-/* encode side bitrate tracking */
+ /* encode side bitrate tracking */
 typedef struct bitrate_manager_state {
 	int            managed;
 
@@ -39,7 +39,7 @@ typedef struct bitrate_manager_state {
 	int            choice;
 } bitrate_manager_state;
 
-typedef struct bitrate_manager_info{
+typedef struct bitrate_manager_info {
 	long           avg_rate;
 	long           min_rate;
 	long           max_rate;

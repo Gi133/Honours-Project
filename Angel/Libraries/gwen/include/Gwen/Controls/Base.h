@@ -62,16 +62,16 @@ namespace Gwen
 			Base(Base* pParent, const Gwen::String& Name = "");
 			virtual ~Base();
 
-			virtual const char* GetTypeName(){ return "Base"; }
+			virtual const char* GetTypeName() { return "Base"; }
 
 			virtual void DelayedDelete();
-			virtual void PreDelete(Gwen::Skin::Base* skin){};
+			virtual void PreDelete(Gwen::Skin::Base* skin) {};
 
 			virtual void SetParent(Controls::Base* pParent);
 			virtual Controls::Base* GetParent() const { return m_Parent; }
 			virtual Controls::Canvas* GetCanvas();
 
-			virtual Base::List& GetChildren(){ if (m_InnerPanel) return m_InnerPanel->GetChildren(); return Children; }
+			virtual Base::List& GetChildren() { if (m_InnerPanel) return m_InnerPanel->GetChildren(); return Children; }
 			virtual bool IsChild(Controls::Base* pChild);
 			virtual unsigned int NumChildren();
 			virtual Controls::Base* GetChild(unsigned int i);
@@ -84,7 +84,7 @@ namespace Gwen
 			virtual void SetName(const Gwen::String& name) { m_Name = name; }
 			virtual const Gwen::String& GetName() { return m_Name; }
 
-			virtual void Think(){}
+			virtual void Think() {}
 
 		protected:
 
@@ -121,13 +121,13 @@ namespace Gwen
 			virtual const Padding& GetPadding() const { return m_Padding; }
 
 			virtual void SetPos(int x, int y);
-			virtual void SetPos(const Point& p){ return SetPos(p.x, p.y); }
-			virtual Point GetPos(){ return Point(X(), Y()); }
+			virtual void SetPos(const Point& p) { return SetPos(p.x, p.y); }
+			virtual Point GetPos() { return Point(X(), Y()); }
 			virtual void SetWidth(int w) { SetSize(w, Height()); }
 			virtual void SetHeight(int h) { SetSize(Width(), h); }
 			virtual bool SetSize(int w, int h);
 			virtual bool SetSize(const Point& p);
-			virtual Point GetSize(){ return Point(Width(), Height()); }
+			virtual Point GetSize() { return Point(Width(), Height()); }
 			virtual bool SetBounds(int x, int y, int w, int h);
 			virtual bool SetBounds(const Gwen::Rect& bounds);
 
@@ -161,7 +161,7 @@ namespace Gwen
 
 		public:
 
-			virtual const Gwen::Rect& GetRenderBounds() const{ return m_RenderBounds; }
+			virtual const Gwen::Rect& GetRenderBounds() const { return m_RenderBounds; }
 
 		protected:
 
@@ -173,13 +173,13 @@ namespace Gwen
 			virtual void DoCacheRender(Gwen::Skin::Base* skin, Gwen::Controls::Base* pMaster);
 			virtual void RenderRecursive(Gwen::Skin::Base* skin, const Gwen::Rect& cliprect);
 
-			virtual bool ShouldClip(){ return true; }
+			virtual bool ShouldClip() { return true; }
 
 		protected:
 
 			virtual void Render(Gwen::Skin::Base* skin);
-			virtual void RenderUnder(Gwen::Skin::Base* /*skin*/){};
-			virtual void RenderOver(Gwen::Skin::Base* /*skin*/){};
+			virtual void RenderUnder(Gwen::Skin::Base* /*skin*/) {};
+			virtual void RenderOver(Gwen::Skin::Base* /*skin*/) {};
 			virtual void RenderFocus(Gwen::Skin::Base* /*skin*/);
 
 		public:
@@ -187,16 +187,16 @@ namespace Gwen
 			virtual void SetHidden(bool hidden) { if (m_bHidden == hidden) return; m_bHidden = hidden; Invalidate(); Redraw(); }
 			virtual bool Hidden() const; // Returns true only if this control is hidden
 			virtual bool Visible() const; // Returns false if this control or its parents are hidden
-			virtual void Hide(){ SetHidden(true); }
-			virtual void Show(){ SetHidden(false); }
+			virtual void Hide() { SetHidden(true); }
+			virtual void Show() { SetHidden(false); }
 
 			//Skin
 			virtual void SetSkin(Skin::Base* skin, bool doChildren = false);
 			virtual Gwen::Skin::Base* GetSkin(void);
 
 			// Background drawing
-			virtual bool ShouldDrawBackground(){ return m_bDrawBackground; }
-			virtual void SetShouldDrawBackground(bool b){ m_bDrawBackground = b; }
+			virtual bool ShouldDrawBackground() { return m_bDrawBackground; }
+			virtual void SetShouldDrawBackground(bool b) { m_bDrawBackground = b; }
 
 		protected:
 
@@ -206,41 +206,41 @@ namespace Gwen
 
 			virtual void OnMouseMoved(int x, int y, int deltaX, int deltaY);
 			virtual bool OnMouseWheeled(int iDelta);
-			virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/){};
-			virtual void OnMouseClickRight(int /*x*/, int /*y*/, bool /*bDown*/){}
-			virtual void OnMouseDoubleClickLeft(int x, int y){ OnMouseClickLeft(x, y, true); };
-			virtual void OnMouseDoubleClickRight(int x, int y){ OnMouseClickRight(x, y, true); };
-			virtual void OnLostKeyboardFocus(){}
-			virtual void OnKeyboardFocus(){}
+			virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) {};
+			virtual void OnMouseClickRight(int /*x*/, int /*y*/, bool /*bDown*/) {}
+			virtual void OnMouseDoubleClickLeft(int x, int y) { OnMouseClickLeft(x, y, true); };
+			virtual void OnMouseDoubleClickRight(int x, int y) { OnMouseClickRight(x, y, true); };
+			virtual void OnLostKeyboardFocus() {}
+			virtual void OnKeyboardFocus() {}
 
-			virtual void SetMouseInputEnabled(bool b)	{ m_bMouseInputEnabled = b; }
-			virtual bool GetMouseInputEnabled()	{ return m_bMouseInputEnabled; }
+			virtual void SetMouseInputEnabled(bool b) { m_bMouseInputEnabled = b; }
+			virtual bool GetMouseInputEnabled() { return m_bMouseInputEnabled; }
 
-			virtual void SetKeyboardInputEnabled(bool b){ m_bKeyboardInputEnabled = b; }
+			virtual void SetKeyboardInputEnabled(bool b) { m_bKeyboardInputEnabled = b; }
 			virtual bool GetKeyboardInputEnabled() const { return m_bKeyboardInputEnabled; }
-			virtual bool NeedsInputChars(){ return false; }
+			virtual bool NeedsInputChars() { return false; }
 
-			virtual bool OnChar(Gwen::UnicodeChar /*c*/){ return false; }
+			virtual bool OnChar(Gwen::UnicodeChar /*c*/) { return false; }
 
 			virtual bool OnKeyPress(int iKey, bool bPress = true);
 			virtual bool OnKeyRelease(int iKey);
 
-			virtual void OnPaste(Controls::Base* /*pFrom*/){}
-			virtual void OnCopy(Controls::Base* /*pFrom*/){}
-			virtual void OnCut(Controls::Base* /*pFrom*/){}
-			virtual void OnSelectAll(Controls::Base* /*pFrom*/){}
+			virtual void OnPaste(Controls::Base* /*pFrom*/) {}
+			virtual void OnCopy(Controls::Base* /*pFrom*/) {}
+			virtual void OnCut(Controls::Base* /*pFrom*/) {}
+			virtual void OnSelectAll(Controls::Base* /*pFrom*/) {}
 
 			virtual bool OnKeyTab(bool bDown);
-			virtual bool OnKeySpace(bool /*bDown*/){ return false; }
-			virtual bool OnKeyReturn(bool /*bDown*/){ return false; }
-			virtual bool OnKeyBackspace(bool /*bDown*/){ return false; }
-			virtual bool OnKeyDelete(bool /*bDown*/){ return false; }
-			virtual bool OnKeyRight(bool /*bDown*/){ return false; }
-			virtual bool OnKeyLeft(bool /*bDown*/){ return false; }
-			virtual bool OnKeyHome(bool /*bDown*/){ return false; }
-			virtual bool OnKeyEnd(bool /*bDown*/){ return false; }
-			virtual bool OnKeyUp(bool /*bDown*/){ return false; }
-			virtual bool OnKeyDown(bool /*bDown*/){ return false; }
+			virtual bool OnKeySpace(bool /*bDown*/) { return false; }
+			virtual bool OnKeyReturn(bool /*bDown*/) { return false; }
+			virtual bool OnKeyBackspace(bool /*bDown*/) { return false; }
+			virtual bool OnKeyDelete(bool /*bDown*/) { return false; }
+			virtual bool OnKeyRight(bool /*bDown*/) { return false; }
+			virtual bool OnKeyLeft(bool /*bDown*/) { return false; }
+			virtual bool OnKeyHome(bool /*bDown*/) { return false; }
+			virtual bool OnKeyEnd(bool /*bDown*/) { return false; }
+			virtual bool OnKeyUp(bool /*bDown*/) { return false; }
+			virtual bool OnKeyDown(bool /*bDown*/) { return false; }
 			virtual bool OnKeyEscape(bool /*bDown*/) { return false; }
 
 			virtual void OnMouseEnter();
@@ -259,21 +259,21 @@ namespace Gwen
 
 			//Other
 			virtual void SetDisabled(bool active) { if (m_bDisabled == active) return; m_bDisabled = active; Redraw(); }
-			virtual bool IsDisabled(){ return m_bDisabled; }
+			virtual bool IsDisabled() { return m_bDisabled; }
 
-			virtual void Redraw(){ UpdateColours(); m_bCacheTextureDirty = true; if (m_Parent) m_Parent->Redraw(); }
-			virtual void UpdateColours(){};
+			virtual void Redraw() { UpdateColours(); m_bCacheTextureDirty = true; if (m_Parent) m_Parent->Redraw(); }
+			virtual void UpdateColours() {};
 			virtual void SetCacheToTexture() { m_bCacheToTexture = true; }
 			virtual bool ShouldCacheToTexture() { return m_bCacheToTexture; }
 
-			virtual void SetCursor(unsigned char c){ m_Cursor = c; }
+			virtual void SetCursor(unsigned char c) { m_Cursor = c; }
 			virtual void UpdateCursor();
 
-			virtual Gwen::Point GetMinimumSize(){ return Gwen::Point(1, 1); }
-			virtual Gwen::Point GetMaximumSize(){ return Gwen::Point(4096, 4096); }
+			virtual Gwen::Point GetMinimumSize() { return Gwen::Point(1, 1); }
+			virtual Gwen::Point GetMaximumSize() { return Gwen::Point(4096, 4096); }
 
 			virtual void SetToolTip(const Gwen::TextObject& strText);
-			virtual void SetToolTip(Base* tooltip) { m_ToolTip = tooltip; if (m_ToolTip){ m_ToolTip->SetParent(this); m_ToolTip->SetHidden(true); } }
+			virtual void SetToolTip(Base* tooltip) { m_ToolTip = tooltip; if (m_ToolTip) { m_ToolTip->SetParent(this); m_ToolTip->SetHidden(true); } }
 			virtual Base* GetToolTip() { return m_ToolTip; }
 
 			virtual bool IsMenuComponent();
@@ -331,7 +331,7 @@ namespace Gwen
 			//  become children of that instead of us - allowing us to move
 			//  them all around by moving that panel (useful for scrolling etc)
 			Base* m_InnerPanel;
-			virtual Base* Inner(){ return m_InnerPanel; }
+			virtual Base* Inner() { return m_InnerPanel; }
 
 			// This is the panel's actual parent - most likely the logical
 			//  parent's InnerPanel (if it has one). You should rarely need this.
@@ -364,9 +364,9 @@ namespace Gwen
 
 		public:
 
-			bool NeedsLayout(){ return m_bNeedsLayout; }
+			bool NeedsLayout() { return m_bNeedsLayout; }
 			void Invalidate();
-			void InvalidateParent(){ if (m_Parent){ m_Parent->Invalidate(); } }
+			void InvalidateParent() { if (m_Parent) { m_Parent->Invalidate(); } }
 			void InvalidateChildren(bool bRecursive = false);
 			void Position(int pos, int xpadding = 0, int ypadding = 0);
 
@@ -374,7 +374,7 @@ namespace Gwen
 
 			virtual void RecurseLayout(Skin::Base* skin);
 			virtual void Layout(Skin::Base* skin);
-			virtual void PostLayout(Skin::Base* /*skin*/){};
+			virtual void PostLayout(Skin::Base* /*skin*/) {};
 
 			bool m_bNeedsLayout;
 			bool m_bCacheTextureDirty;
@@ -388,10 +388,10 @@ namespace Gwen
 
 			virtual void DragAndDrop_SetPackage(bool bDraggable, const String& strName = "", void* pUserData = NULL);
 			virtual bool DragAndDrop_Draggable();
-			virtual bool DragAndDrop_ShouldStartDrag(){ return true; }
+			virtual bool DragAndDrop_ShouldStartDrag() { return true; }
 			virtual void DragAndDrop_StartDragging(Gwen::DragAndDrop::Package* pPackage, int x, int y);
 			virtual Gwen::DragAndDrop::Package* DragAndDrop_GetPackage(int x, int y);
-			virtual void DragAndDrop_EndDragging(bool /*bSuccess*/, int /*x*/, int /*y*/){};
+			virtual void DragAndDrop_EndDragging(bool /*bSuccess*/, int /*x*/, int /*y*/) {};
 
 		protected:
 
@@ -400,11 +400,11 @@ namespace Gwen
 		public:
 
 			// Receiver
-			virtual void DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* /*pPackage*/, int /*x*/, int /*y*/){ }
-			virtual void DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* /*pPackage*/){ }
-			virtual void DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int /*x*/, int /*y*/){};
+			virtual void DragAndDrop_HoverEnter(Gwen::DragAndDrop::Package* /*pPackage*/, int /*x*/, int /*y*/) { }
+			virtual void DragAndDrop_HoverLeave(Gwen::DragAndDrop::Package* /*pPackage*/) { }
+			virtual void DragAndDrop_Hover(Gwen::DragAndDrop::Package* /*pPackage*/, int /*x*/, int /*y*/) {};
 			virtual bool DragAndDrop_HandleDrop(Gwen::DragAndDrop::Package* pPackage, int x, int y);
-			virtual bool DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* /*pPackage*/){ return false; }
+			virtual bool DragAndDrop_CanAcceptPackage(Gwen::DragAndDrop::Package* /*pPackage*/) { return false; }
 
 			//
 			// Useful anim shortcuts
@@ -437,8 +437,8 @@ namespace Gwen
 
 		public:
 
-			void DoNotIncludeInSize(){ m_bIncludeInSize = false; }
-			bool ShouldIncludeInSize(){ return m_bIncludeInSize; }
+			void DoNotIncludeInSize() { m_bIncludeInSize = false; }
+			bool ShouldIncludeInSize() { return m_bIncludeInSize; }
 
 		protected:
 
@@ -449,8 +449,8 @@ namespace Gwen
 			virtual TextObject GetChildValue(const Gwen::String& strName);
 			virtual TextObject GetValue();
 			virtual void SetValue(const TextObject& strValue);
-			virtual void DoAction(){};
-			virtual void SetAction(Event::Handler* pObject, Handler::FunctionWithInformation pFunction, const Gwen::Event::Packet& packet){};
+			virtual void DoAction() {};
+			virtual void SetAction(Event::Handler* pObject, Handler::FunctionWithInformation pFunction, const Gwen::Event::Packet& packet) {};
 
 			virtual int GetNamedChildren(Gwen::ControlList& list, const Gwen::String& strName, bool bDeep = true);
 			virtual Gwen::ControlList GetNamedChildren(const Gwen::String& strName, bool bDeep = true);

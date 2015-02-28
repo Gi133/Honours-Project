@@ -122,7 +122,7 @@ SoundDevice& SoundDevice::GetInstance()
 
 #if !ANGEL_DISABLE_FMOD
 /* static */
-FMOD_RESULT F_CALLBACK SoundDevice::FMOD_SoundCallback(FMOD_CHANNEL *channel, FMOD_CHANNEL_CALLBACKTYPE type, void *commanddata1, void *commanddata2)	{
+FMOD_RESULT F_CALLBACK SoundDevice::FMOD_SoundCallback(FMOD_CHANNEL *channel, FMOD_CHANNEL_CALLBACKTYPE type, void *commanddata1, void *commanddata2) {
 	FMOD::Channel *soundChannel = (FMOD::Channel *)channel;
 
 	if (theSound.soundCallback.GetInstance() && theSound.soundCallback.GetFunction())

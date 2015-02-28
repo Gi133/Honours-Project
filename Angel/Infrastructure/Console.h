@@ -125,7 +125,7 @@ public:
 	 *
 	 * @return The toggle console key
 	 */
-	unsigned char GetToggleConsoleKey()	{ return '`'; }
+	unsigned char GetToggleConsoleKey() { return '`'; }
 
 	/**
 	 * Writes a string to the log area of the console. Used internally by

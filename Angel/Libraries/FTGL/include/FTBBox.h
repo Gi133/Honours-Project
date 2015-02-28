@@ -106,7 +106,7 @@ public:
 	/**
 	 * The bounds of the box
 	 */
-	// Make these ftPoints & private
+	 // Make these ftPoints & private
 	float lowerX, lowerY, lowerZ, upperX, upperY, upperZ;
 protected:
 

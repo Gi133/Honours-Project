@@ -177,7 +177,7 @@ void TreeNode::ExpandAll()
 	}
 }
 
-Button* TreeNode::GetButton(){ return m_Title; }
+Button* TreeNode::GetButton() { return m_Title; }
 
 void TreeNode::OnToggleButtonPress(Base* /*control*/)
 {

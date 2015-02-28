@@ -57,8 +57,8 @@ namespace Gwen
 				Gwen::Dialogs::FileOpen(true, "Name", "Start Path", m_FileType, this, &FilePicker::SetFileNameEvent);
 			}
 
-			virtual TextObject GetValue(){ return GetFileName(); }
-			virtual void SetValue(const TextObject& strValue){ return SetFileName(strValue); }
+			virtual TextObject GetValue() { return GetFileName(); }
+			virtual void SetValue(const TextObject& strValue) { return SetFileName(strValue); }
 
 			Event::Caller	onFileChanged;
 

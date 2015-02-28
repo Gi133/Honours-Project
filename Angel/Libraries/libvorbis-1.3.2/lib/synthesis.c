@@ -23,7 +23,7 @@
 #include "misc.h"
 #include "os.h"
 
-int vorbis_synthesis(vorbis_block *vb, ogg_packet *op){
+int vorbis_synthesis(vorbis_block *vb, ogg_packet *op) {
 	vorbis_dsp_state     *vd = vb ? vb->vd : 0;
 	private_state        *b = vd ? vd->backend_state : 0;
 	vorbis_info          *vi = vd ? vd->vi : 0;
@@ -40,33 +40,33 @@ int vorbis_synthesis(vorbis_block *vb, ogg_packet *op){
 	oggpack_readinit(opb, op->packet, op->bytes);
 
 	/* Check the packet type */
-	if (oggpack_read(opb, 1) != 0){
+	if (oggpack_read(opb, 1) != 0) {
 		/* Oops.  This is not an audio data packet */
 		return(OV_ENOTAUDIO);
 	}
 
 	/* read our mode and pre/post windowsize */
 	mode = oggpack_read(opb, b->modebits);
-	if (mode == -1){
+	if (mode == -1) {
 		return(OV_EBADPACKET);
 	}
 
 	vb->mode = mode;
-	if (!ci->mode_param[mode]){
+	if (!ci->mode_param[mode]) {
 		return(OV_EBADPACKET);
 	}
 
 	vb->W = ci->mode_param[mode]->blockflag;
-	if (vb->W){
+	if (vb->W) {
 		/* this doesn;t get mapped through mode selection as it's used
 		   only for window selection */
 		vb->lW = oggpack_read(opb, 1);
 		vb->nW = oggpack_read(opb, 1);
-		if (vb->nW == -1){
+		if (vb->nW == -1) {
 			return(OV_EBADPACKET);
 		}
 	}
-	else{
+	else {
 		vb->lW = 0;
 		vb->nW = 0;
 	}
@@ -91,7 +91,7 @@ int vorbis_synthesis(vorbis_block *vb, ogg_packet *op){
 
 /* used to track pcm position without actually performing decode.
    Useful for sequential 'fast forward' */
-int vorbis_synthesis_trackonly(vorbis_block *vb, ogg_packet *op){
+int vorbis_synthesis_trackonly(vorbis_block *vb, ogg_packet *op) {
 	vorbis_dsp_state     *vd = vb->vd;
 	private_state        *b = vd->backend_state;
 	vorbis_info          *vi = vd->vi;
@@ -104,7 +104,7 @@ int vorbis_synthesis_trackonly(vorbis_block *vb, ogg_packet *op){
 	oggpack_readinit(opb, op->packet, op->bytes);
 
 	/* Check the packet type */
-	if (oggpack_read(opb, 1) != 0){
+	if (oggpack_read(opb, 1) != 0) {
 		/* Oops.  This is not an audio data packet */
 		return(OV_ENOTAUDIO);
 	}
@@ -114,17 +114,17 @@ int vorbis_synthesis_trackonly(vorbis_block *vb, ogg_packet *op){
 	if (mode == -1)return(OV_EBADPACKET);
 
 	vb->mode = mode;
-	if (!ci->mode_param[mode]){
+	if (!ci->mode_param[mode]) {
 		return(OV_EBADPACKET);
 	}
 
 	vb->W = ci->mode_param[mode]->blockflag;
-	if (vb->W){
+	if (vb->W) {
 		vb->lW = oggpack_read(opb, 1);
 		vb->nW = oggpack_read(opb, 1);
 		if (vb->nW == -1)   return(OV_EBADPACKET);
 	}
-	else{
+	else {
 		vb->lW = 0;
 		vb->nW = 0;
 	}
@@ -141,7 +141,7 @@ int vorbis_synthesis_trackonly(vorbis_block *vb, ogg_packet *op){
 	return(0);
 }
 
-long vorbis_packet_blocksize(vorbis_info *vi, ogg_packet *op){
+long vorbis_packet_blocksize(vorbis_info *vi, ogg_packet *op) {
 	codec_setup_info     *ci = vi->codec_setup;
 	oggpack_buffer       opb;
 	int                  mode;
@@ -149,27 +149,27 @@ long vorbis_packet_blocksize(vorbis_info *vi, ogg_packet *op){
 	oggpack_readinit(&opb, op->packet, op->bytes);
 
 	/* Check the packet type */
-	if (oggpack_read(&opb, 1) != 0){
+	if (oggpack_read(&opb, 1) != 0) {
 		/* Oops.  This is not an audio data packet */
 		return(OV_ENOTAUDIO);
 	}
 
-  {
-	  int modebits = 0;
-	  int v = ci->modes;
-	  while (v > 1){
-		  modebits++;
-		  v >>= 1;
-	  }
+	{
+		int modebits = 0;
+		int v = ci->modes;
+		while (v > 1) {
+			modebits++;
+			v >>= 1;
+		}
 
-	  /* read our mode and pre/post windowsize */
-	  mode = oggpack_read(&opb, modebits);
-  }
-  if (mode == -1)return(OV_EBADPACKET);
-  return(ci->blocksizes[ci->mode_param[mode]->blockflag]);
+		/* read our mode and pre/post windowsize */
+		mode = oggpack_read(&opb, modebits);
+	}
+	if (mode == -1)return(OV_EBADPACKET);
+	return(ci->blocksizes[ci->mode_param[mode]->blockflag]);
 }
 
-int vorbis_synthesis_halfrate(vorbis_info *vi, int flag){
+int vorbis_synthesis_halfrate(vorbis_info *vi, int flag) {
 	/* set / clear half-sample-rate mode */
 	codec_setup_info     *ci = vi->codec_setup;
 
@@ -179,7 +179,7 @@ int vorbis_synthesis_halfrate(vorbis_info *vi, int flag){
 	return 0;
 }
 
-int vorbis_synthesis_halfrate_p(vorbis_info *vi){
+int vorbis_synthesis_halfrate_p(vorbis_info *vi) {
 	codec_setup_info     *ci = vi->codec_setup;
 	return ci->halfrate_flag;
 }

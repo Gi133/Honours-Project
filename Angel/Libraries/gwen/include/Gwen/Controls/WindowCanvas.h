@@ -30,7 +30,7 @@ namespace Gwen
 
 			virtual void DoThink();
 
-			virtual bool WantsQuit(){ return m_bQuit; }
+			virtual bool WantsQuit() { return m_bQuit; }
 
 			// Gwen::WindowProvider
 			virtual void* GetWindow();
@@ -46,12 +46,12 @@ namespace Gwen
 
 			virtual void Layout(Skin::Base* skin);
 
-			virtual bool CanMaximize(){ return m_bCanMaximize; }
+			virtual bool CanMaximize() { return m_bCanMaximize; }
 			virtual void SetCanMaximize(bool b);
 			virtual void SetMaximize(bool b);
 
-			virtual void SetSizable(bool b){ m_Sizer->SetHidden(!b); }
-			virtual bool GetSizable(){ return m_Sizer->Visible(); }
+			virtual void SetSizable(bool b) { m_Sizer->SetHidden(!b); }
+			virtual bool GetSizable() { return m_Sizer->Visible(); }
 
 		protected:
 

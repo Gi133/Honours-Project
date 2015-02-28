@@ -13,7 +13,7 @@
 #define SWIG_LUA_MODULE_GLOBAL
 
 #ifdef __cplusplus
-/* SwigValueWrapper is described in swig.swg */
+ /* SwigValueWrapper is described in swig.swg */
 template<typename T> class SwigValueWrapper {
 	struct SwigMovePointer {
 		T *ptr;
@@ -40,7 +40,7 @@ template <typename T> T SwigValueInit() {
  *  declarations/attributes, and other compiler dependent labels.
  * ----------------------------------------------------------------------------- */
 
-/* template workaround for compilers that cannot correctly implement the C++ standard */
+ /* template workaround for compilers that cannot correctly implement the C++ standard */
 #ifndef SWIGTEMPLATEDISAMBIGUATOR
 # if defined(__SUNPRO_CC) && (__SUNPRO_CC <= 0x560)
 #  define SWIGTEMPLATEDISAMBIGUATOR template
@@ -150,11 +150,11 @@ template <typename T> T SwigValueInit() {
  * type checking.
  * ----------------------------------------------------------------------------- */
 
-/* This should only be incremented when either the layout of swig_type_info changes,
-   or for whatever reason, the runtime changes incompatibly */
+ /* This should only be incremented when either the layout of swig_type_info changes,
+	or for whatever reason, the runtime changes incompatibly */
 #define SWIG_RUNTIME_VERSION "4"
 
-/* define SWIG_TYPE_TABLE_NAME as "SWIG_TYPE_TABLE" */
+	/* define SWIG_TYPE_TABLE_NAME as "SWIG_TYPE_TABLE" */
 #ifdef SWIG_TYPE_TABLE
 # define SWIG_QUOTE_STRING(x) #x
 # define SWIG_EXPAND_AND_QUOTE_STRING(x) SWIG_QUOTE_STRING(x)
@@ -180,7 +180,7 @@ template <typename T> T SwigValueInit() {
 # define SWIGRUNTIMEINLINE SWIGRUNTIME SWIGINLINE
 #endif
 
-/*  Generic buffer size */
+  /*  Generic buffer size */
 #ifndef SWIG_BUFFER_SIZE
 # define SWIG_BUFFER_SIZE 1024
 #endif
@@ -276,7 +276,7 @@ template <typename T> T SwigValueInit() {
 #define SWIG_IsOK(r)               (r >= 0)
 #define SWIG_ArgError(r)           ((r != SWIG_ERROR) ? r : SWIG_TypeError)
 
-/* The CastRankLimit says how many bits are used for the cast rank */
+   /* The CastRankLimit says how many bits are used for the cast rank */
 #define SWIG_CASTRANKLIMIT         (1 << 8)
 /* The NewMask denotes the object was created (using new/malloc) */
 #define SWIG_NEWOBJMASK            (SWIG_CASTRANKLIMIT  << 1)
@@ -768,38 +768,38 @@ extern "C" {
 #  define LSTRVAL LRO_STRVAL
 #endif
 
-	/* -----------------------------------------------------------------------------
-	 * compatibility defines
-	 * ----------------------------------------------------------------------------- */
+	 /* -----------------------------------------------------------------------------
+	  * compatibility defines
+	  * ----------------------------------------------------------------------------- */
 
-	/* History of Lua C API length functions:  In Lua 5.0 (and before?)
-	   there was "lua_strlen".  In Lua 5.1, this was renamed "lua_objlen",
-	   but a compatibility define of "lua_strlen" was added.  In Lua 5.2,
-	   this function was again renamed, to "lua_rawlen" (to emphasize that
-	   it doesn't call the "__len" metamethod), and the compatibility
-	   define of lua_strlen was removed.  All SWIG uses have been updated
-	   to "lua_rawlen", and we add our own defines of that here for older
-	   versions of Lua.  */
+	  /* History of Lua C API length functions:  In Lua 5.0 (and before?)
+		 there was "lua_strlen".  In Lua 5.1, this was renamed "lua_objlen",
+		 but a compatibility define of "lua_strlen" was added.  In Lua 5.2,
+		 this function was again renamed, to "lua_rawlen" (to emphasize that
+		 it doesn't call the "__len" metamethod), and the compatibility
+		 define of lua_strlen was removed.  All SWIG uses have been updated
+		 to "lua_rawlen", and we add our own defines of that here for older
+		 versions of Lua.  */
 #if !defined(LUA_VERSION_NUM) || LUA_VERSION_NUM < 501
 # define lua_rawlen lua_strlen
 #elif LUA_VERSION_NUM == 501
 # define lua_rawlen lua_objlen
 #endif
 
-	/* lua_pushglobaltable is the recommended "future-proof" way to get
-	   the global table for Lua 5.2 and later.  Here we define
-	   lua_pushglobaltable ourselves for Lua versions before 5.2.  */
+		 /* lua_pushglobaltable is the recommended "future-proof" way to get
+			the global table for Lua 5.2 and later.  Here we define
+			lua_pushglobaltable ourselves for Lua versions before 5.2.  */
 #if !defined(LUA_VERSION_NUM) || LUA_VERSION_NUM < 502
 # define lua_pushglobaltable(L) lua_pushvalue(L, LUA_GLOBALSINDEX)
 #endif
 
-	/* --------------------------------------------------------------------------
-	 * Helper functions for error handling
-	 * -------------------------------------------------------------------------- */
+			/* --------------------------------------------------------------------------
+			 * Helper functions for error handling
+			 * -------------------------------------------------------------------------- */
 
-	/* Push the string STR on the Lua stack, like lua_pushstring, but
-	   prefixed with the the location of the innermost Lua call-point
-	   (as formated by luaL_where).  */
+			 /* Push the string STR on the Lua stack, like lua_pushstring, but
+				prefixed with the the location of the innermost Lua call-point
+				(as formated by luaL_where).  */
 	SWIGRUNTIME void
 		SWIG_Lua_pusherrstring(lua_State *L, const char *str)
 	{
@@ -825,7 +825,7 @@ extern "C" {
 	/* -----------------------------------------------------------------------------
 	 * global swig types
 	 * ----------------------------------------------------------------------------- */
-	/* Constant table */
+	 /* Constant table */
 #define SWIG_LUA_INT     1
 #define SWIG_LUA_FLOAT   2
 #define SWIG_LUA_STRING  3
@@ -972,9 +972,9 @@ extern "C" {
 	 * global variable support code: modules
 	 * ----------------------------------------------------------------------------- */
 
-	/* this function is called when trying to set an immutable.
-	default action is to print an error.
-	This can removed with a compile flag SWIGLUA_IGNORE_SET_IMMUTABLE */
+	 /* this function is called when trying to set an immutable.
+	 default action is to print an error.
+	 This can removed with a compile flag SWIGLUA_IGNORE_SET_IMMUTABLE */
 	SWIGINTERN int SWIG_Lua_set_immutable(lua_State* L)
 	{
 		/*  there should be 1 param passed in: the new value */
@@ -995,7 +995,7 @@ extern "C" {
 		  lua_topointer(L,1),lua_typename(L,lua_type(L,1)),
 		  lua_tostring(L,2));
 		  */
-		/* get the metatable */
+		  /* get the metatable */
 #if ((SWIG_LUA_TARGET == SWIG_LUA_FLAVOR_ELUA) || (SWIG_LUA_TARGET == SWIG_LUA_FLAVOR_ELUAC))
 		assert(lua_isrotable(L, 1)); /* just in case */
 #else
@@ -1039,7 +1039,7 @@ extern "C" {
 		  (2) string name of the attribute
 		  (3) any for the new value
 		  */
-		/* get the metatable */
+		  /* get the metatable */
 #if ((SWIG_LUA_TARGET == SWIG_LUA_FLAVOR_ELUA) || (SWIG_LUA_TARGET == SWIG_LUA_FLAVOR_ELUAC))
 		assert(lua_isrotable(L, 1));  /* just in case */
 #else
@@ -1229,14 +1229,14 @@ extern "C" {
 		lua_getmetatable(L, -1);
 
 		/* add fns */
-		for (i = 0; ns->ns_attributes[i].name; i++){
+		for (i = 0; ns->ns_attributes[i].name; i++) {
 			SWIG_Lua_add_class_variable(L, ns->ns_attributes[i].name, ns->ns_attributes[i].getmethod, ns->ns_attributes[i].setmethod);
 		}
 
 		/* add methods to the metatable */
 		SWIG_Lua_get_table(L, ".fn"); /* find the .fn table */
 		assert(lua_istable(L, -1));  /* just in case */
-		for (i = 0; ns->ns_methods[i].name; i++){
+		for (i = 0; ns->ns_methods[i].name; i++) {
 			SWIG_Lua_add_function(L, ns->ns_methods[i].name, ns->ns_methods[i].method);
 		}
 		lua_pop(L, 1);
@@ -1278,7 +1278,7 @@ extern "C" {
 	 * global variable support code: classes
 	 * ----------------------------------------------------------------------------- */
 
-	/* the class.get method, performs the lookup of class attributes */
+	 /* the class.get method, performs the lookup of class attributes */
 	SWIGINTERN int  SWIG_Lua_class_get(lua_State* L)
 	{
 		/*  there should be 2 params passed in
@@ -1515,13 +1515,13 @@ extern "C" {
 			SWIG_Lua_add_class_details(L, clss->bases[i]);
 		}
 		/* add fns */
-		for (i = 0; clss->attributes[i].name; i++){
+		for (i = 0; clss->attributes[i].name; i++) {
 			SWIG_Lua_add_class_variable(L, clss->attributes[i].name, clss->attributes[i].getmethod, clss->attributes[i].setmethod);
 		}
 		/* add methods to the metatable */
 		SWIG_Lua_get_table(L, ".fn"); /* find the .fn table */
 		assert(lua_istable(L, -1));  /* just in case */
-		for (i = 0; clss->methods[i].name; i++){
+		for (i = 0; clss->methods[i].name; i++) {
 			SWIG_Lua_add_function(L, clss->methods[i].name, clss->methods[i].method);
 		}
 		lua_pop(L, 1);       /* tidy stack (remove table) */
@@ -1529,8 +1529,8 @@ extern "C" {
 		  these look ANY method which start with "__" and assume they
 		  are operator overloads & add them to the metatable
 		  (this might mess up is someone defines a method __gc (the destructor)*/
-		for (i = 0; clss->methods[i].name; i++){
-			if (clss->methods[i].name[0] == '_' && clss->methods[i].name[1] == '_'){
+		for (i = 0; clss->methods[i].name; i++) {
+			if (clss->methods[i].name[0] == '_' && clss->methods[i].name[1] == '_') {
 				SWIG_Lua_add_function(L, clss->methods[i].name, clss->methods[i].method);
 			}
 		}
@@ -1635,7 +1635,7 @@ extern "C" {
 	 * Class/structure conversion fns
 	 * ----------------------------------------------------------------------------- */
 
-	/* helper to add metatable to new lua object */
+	 /* helper to add metatable to new lua object */
 	SWIGINTERN void _SWIG_Lua_AddMetatable(lua_State* L, swig_type_info *type)
 	{
 		if (type->clientdata)  /* there is clientdata: so add the metatable */
@@ -1656,7 +1656,7 @@ extern "C" {
 	SWIGRUNTIME void SWIG_Lua_NewPointerObj(lua_State* L, void* ptr, swig_type_info *type, int own)
 	{
 		swig_lua_userdata* usr;
-		if (!ptr){
+		if (!ptr) {
 			lua_pushnil(L);
 			return;
 		}
@@ -1675,7 +1675,7 @@ extern "C" {
 	{
 		swig_lua_userdata* usr;
 		swig_cast_info *cast;
-		if (lua_isnil(L, index)){ *ptr = 0; return SWIG_OK; }    /* special case: lua nil => NULL pointer */
+		if (lua_isnil(L, index)) { *ptr = 0; return SWIG_OK; }    /* special case: lua nil => NULL pointer */
 		usr = (swig_lua_userdata*)lua_touserdata(L, index);  /* get data */
 		if (usr)
 		{
@@ -1701,9 +1701,9 @@ extern "C" {
 	}
 
 	SWIGRUNTIME void* SWIG_Lua_MustGetPtr(lua_State* L, int index, swig_type_info *type, int flags,
-		int argnum, const char* func_name){
+		int argnum, const char* func_name) {
 		void* result;
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, index, &result, type, flags))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, index, &result, type, flags))) {
 			luaL_error(L, "Error in %s, expected a %s at argument number %d\n",
 				func_name, (type && type->str) ? type->str : "void*", argnum);
 		}
@@ -1779,7 +1779,7 @@ extern "C" {
 	 * ----------------------------------------------------------------------------- */
 
 #if ((SWIG_LUA_TARGET != SWIG_LUA_FLAVOR_ELUA) && (SWIG_LUA_TARGET != SWIG_LUA_FLAVOR_ELUAC))
-	/* Install Constants */
+	 /* Install Constants */
 	SWIGINTERN void
 		SWIG_Lua_InstallConstants(lua_State* L, swig_lua_const_info constants[]) {
 		int i;
@@ -1829,11 +1829,11 @@ extern "C" {
 #ifndef SWIG_DOSTRING_FAIL /* Allows redefining of error function */
 #define SWIG_DOSTRING_FAIL(S) fprintf(stderr,"%s\n",S)
 #endif
-	/* Executes a C string in Lua which is a really simple way of calling lua from C
-	Unfortunately lua keeps changing its APIs, so we need a conditional compile
-	In lua 5.0.X its lua_dostring()
-	In lua 5.1.X its luaL_dostring()
-	*/
+	 /* Executes a C string in Lua which is a really simple way of calling lua from C
+	 Unfortunately lua keeps changing its APIs, so we need a conditional compile
+	 In lua 5.0.X its lua_dostring()
+	 In lua 5.1.X its luaL_dostring()
+	 */
 	SWIGINTERN int
 		SWIG_Lua_dostring(lua_State *L, const char* str) {
 		int ok, top;
@@ -1934,7 +1934,7 @@ static swig_module_info swig_module = { swig_types, 61, 0, 0, 0, 0 };
 #define SWIG_LUACODE   luaopen_angel_luacode
 
 namespace swig {
-	typedef struct{} LANGUAGE_OBJ;
+	typedef struct {} LANGUAGE_OBJ;
 }
 
 #define SWIGVERSION 0x020011
@@ -2073,7 +2073,7 @@ extern "C" {
 		SWIG_check_num_args("std::string::size", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("std::string::size", 1, "std::string const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))) {
 			SWIG_fail_ptr("string_size", 1, SWIGTYPE_p_std__string);
 		}
 
@@ -2096,7 +2096,7 @@ extern "C" {
 		SWIG_check_num_args("std::string::length", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("std::string::length", 1, "std::string const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))) {
 			SWIG_fail_ptr("string_length", 1, SWIGTYPE_p_std__string);
 		}
 
@@ -2119,7 +2119,7 @@ extern "C" {
 		SWIG_check_num_args("std::string::empty", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("std::string::empty", 1, "std::string const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))) {
 			SWIG_fail_ptr("string_empty", 1, SWIGTYPE_p_std__string);
 		}
 
@@ -2142,7 +2142,7 @@ extern "C" {
 		SWIG_check_num_args("std::string::c_str", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("std::string::c_str", 1, "std::string const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))) {
 			SWIG_fail_ptr("string_c_str", 1, SWIGTYPE_p_std__string);
 		}
 
@@ -2165,7 +2165,7 @@ extern "C" {
 		SWIG_check_num_args("std::string::data", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("std::string::data", 1, "std::string const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))) {
 			SWIG_fail_ptr("string_data", 1, SWIGTYPE_p_std__string);
 		}
 
@@ -2189,7 +2189,7 @@ extern "C" {
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("std::string::assign", 1, "std::string *");
 		if (!SWIG_lua_isnilstring(L, 2)) SWIG_fail_arg("std::string::assign", 2, "char const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_std__string, 0))) {
 			SWIG_fail_ptr("string_assign", 1, SWIGTYPE_p_std__string);
 		}
 
@@ -2243,7 +2243,7 @@ extern "C" {
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec2i::X", 1, "Vec2i *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vec2i::X", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2i, 0))) {
 			SWIG_fail_ptr("Vec2i_X_set", 1, SWIGTYPE_p_Vec2i);
 		}
 
@@ -2267,7 +2267,7 @@ extern "C" {
 		SWIG_check_num_args("Vec2i::X", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec2i::X", 1, "Vec2i *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2i, 0))) {
 			SWIG_fail_ptr("Vec2i_X_get", 1, SWIGTYPE_p_Vec2i);
 		}
 
@@ -2291,7 +2291,7 @@ extern "C" {
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec2i::Y", 1, "Vec2i *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vec2i::Y", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2i, 0))) {
 			SWIG_fail_ptr("Vec2i_Y_set", 1, SWIGTYPE_p_Vec2i);
 		}
 
@@ -2315,7 +2315,7 @@ extern "C" {
 		SWIG_check_num_args("Vec2i::Y", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec2i::Y", 1, "Vec2i *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2i, 0))) {
 			SWIG_fail_ptr("Vec2i_Y_get", 1, SWIGTYPE_p_Vec2i);
 		}
 
@@ -2409,45 +2409,45 @@ extern "C" {
 		SWIG_check_num_args("Vec2i::operator ==", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec2i::operator ==", 1, "Vec2i const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2i, 0))) {
 			SWIG_fail_ptr("Vec2i___eq", 1, SWIGTYPE_p_Vec2i);
 		}
 
-  {
-	  // const Vec2i& conversion
-	  Vec2i *vecPtr;
-	  Vec2i vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec2i, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to ints
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  int x = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  int y = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vec2i& conversion
+			Vec2i *vecPtr;
+			Vec2i vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec2i, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to ints
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				int x = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				int y = lua_tointeger(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = (bool)((Vec2i const *)arg1)->operator ==((Vec2i const &)*arg2);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = (bool)((Vec2i const *)arg1)->operator ==((Vec2i const &)*arg2);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static void swig_delete_Vec2i(void *obj) {
@@ -2485,7 +2485,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec2ui::X", 1, "Vec2ui *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vec2ui::X", 2, "unsigned int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2ui, 0))) {
 			SWIG_fail_ptr("Vec2ui_X_set", 1, SWIGTYPE_p_Vec2ui);
 		}
 
@@ -2510,7 +2510,7 @@ fail:
 		SWIG_check_num_args("Vec2ui::X", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec2ui::X", 1, "Vec2ui *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2ui, 0))) {
 			SWIG_fail_ptr("Vec2ui_X_get", 1, SWIGTYPE_p_Vec2ui);
 		}
 
@@ -2534,7 +2534,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec2ui::Y", 1, "Vec2ui *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vec2ui::Y", 2, "unsigned int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2ui, 0))) {
 			SWIG_fail_ptr("Vec2ui_Y_set", 1, SWIGTYPE_p_Vec2ui);
 		}
 
@@ -2559,7 +2559,7 @@ fail:
 		SWIG_check_num_args("Vec2ui::Y", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec2ui::Y", 1, "Vec2ui *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2ui, 0))) {
 			SWIG_fail_ptr("Vec2ui_Y_get", 1, SWIGTYPE_p_Vec2ui);
 		}
 
@@ -2655,45 +2655,45 @@ fail:
 		SWIG_check_num_args("Vec2ui::operator ==", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec2ui::operator ==", 1, "Vec2ui const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec2ui, 0))) {
 			SWIG_fail_ptr("Vec2ui___eq", 1, SWIGTYPE_p_Vec2ui);
 		}
 
-  {
-	  // cosnt Vec2ui& conversion
-	  Vec2ui *vecPtr;
-	  Vec2ui vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec2ui, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to ints
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  unsigned int x = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  unsigned int y = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
+		{
+			// cosnt Vec2ui& conversion
+			Vec2ui *vecPtr;
+			Vec2ui vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec2ui, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to ints
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				unsigned int x = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				unsigned int y = lua_tointeger(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = (bool)((Vec2ui const *)arg1)->operator ==((Vec2ui const &)*arg2);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = (bool)((Vec2ui const *)arg1)->operator ==((Vec2ui const &)*arg2);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static void swig_delete_Vec2ui(void *obj) {
@@ -2731,7 +2731,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3i::X", 1, "Vec3i *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vec3i::X", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))) {
 			SWIG_fail_ptr("Vec3i_X_set", 1, SWIGTYPE_p_Vec3i);
 		}
 
@@ -2755,7 +2755,7 @@ fail:
 		SWIG_check_num_args("Vec3i::X", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3i::X", 1, "Vec3i *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))) {
 			SWIG_fail_ptr("Vec3i_X_get", 1, SWIGTYPE_p_Vec3i);
 		}
 
@@ -2779,7 +2779,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3i::Y", 1, "Vec3i *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vec3i::Y", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))) {
 			SWIG_fail_ptr("Vec3i_Y_set", 1, SWIGTYPE_p_Vec3i);
 		}
 
@@ -2803,7 +2803,7 @@ fail:
 		SWIG_check_num_args("Vec3i::Y", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3i::Y", 1, "Vec3i *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))) {
 			SWIG_fail_ptr("Vec3i_Y_get", 1, SWIGTYPE_p_Vec3i);
 		}
 
@@ -2827,7 +2827,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3i::Z", 1, "Vec3i *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vec3i::Z", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))) {
 			SWIG_fail_ptr("Vec3i_Z_set", 1, SWIGTYPE_p_Vec3i);
 		}
 
@@ -2851,7 +2851,7 @@ fail:
 		SWIG_check_num_args("Vec3i::Z", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3i::Z", 1, "Vec3i *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))) {
 			SWIG_fail_ptr("Vec3i_Z_get", 1, SWIGTYPE_p_Vec3i);
 		}
 
@@ -2953,50 +2953,50 @@ fail:
 		SWIG_check_num_args("Vec3i::operator ==", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3i::operator ==", 1, "Vec3i const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3i, 0))) {
 			SWIG_fail_ptr("Vec3i___eq", 1, SWIGTYPE_p_Vec3i);
 		}
 
-  {
-	  // const Vec3i& conversion
-	  Vec3i *vecPtr;
-	  Vec3i vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec3i, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to ints
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  int x = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  int y = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  int z = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vec3i& conversion
+			Vec3i *vecPtr;
+			Vec3i vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec3i, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to ints
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				int x = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				int y = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				int z = lua_tointeger(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = (bool)((Vec3i const *)arg1)->operator ==((Vec3i const &)*arg2);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = (bool)((Vec3i const *)arg1)->operator ==((Vec3i const &)*arg2);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static void swig_delete_Vec3i(void *obj) {
@@ -3035,7 +3035,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3ui::X", 1, "Vec3ui *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vec3ui::X", 2, "unsigned int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))) {
 			SWIG_fail_ptr("Vec3ui_X_set", 1, SWIGTYPE_p_Vec3ui);
 		}
 
@@ -3060,7 +3060,7 @@ fail:
 		SWIG_check_num_args("Vec3ui::X", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3ui::X", 1, "Vec3ui *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))) {
 			SWIG_fail_ptr("Vec3ui_X_get", 1, SWIGTYPE_p_Vec3ui);
 		}
 
@@ -3084,7 +3084,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3ui::Y", 1, "Vec3ui *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vec3ui::Y", 2, "unsigned int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))) {
 			SWIG_fail_ptr("Vec3ui_Y_set", 1, SWIGTYPE_p_Vec3ui);
 		}
 
@@ -3109,7 +3109,7 @@ fail:
 		SWIG_check_num_args("Vec3ui::Y", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3ui::Y", 1, "Vec3ui *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))) {
 			SWIG_fail_ptr("Vec3ui_Y_get", 1, SWIGTYPE_p_Vec3ui);
 		}
 
@@ -3133,7 +3133,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3ui::Z", 1, "Vec3ui *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vec3ui::Z", 2, "unsigned int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))) {
 			SWIG_fail_ptr("Vec3ui_Z_set", 1, SWIGTYPE_p_Vec3ui);
 		}
 
@@ -3158,7 +3158,7 @@ fail:
 		SWIG_check_num_args("Vec3ui::Z", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3ui::Z", 1, "Vec3ui *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))) {
 			SWIG_fail_ptr("Vec3ui_Z_get", 1, SWIGTYPE_p_Vec3ui);
 		}
 
@@ -3263,50 +3263,50 @@ fail:
 		SWIG_check_num_args("Vec3ui::operator ==", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vec3ui::operator ==", 1, "Vec3ui const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vec3ui, 0))) {
 			SWIG_fail_ptr("Vec3ui___eq", 1, SWIGTYPE_p_Vec3ui);
 		}
 
-  {
-	  // const Vec3ui& conversion
-	  Vec3ui *vecPtr;
-	  Vec3ui vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec3ui, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to ints
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  unsigned int x = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  unsigned int y = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  unsigned int z = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vec3ui& conversion
+			Vec3ui *vecPtr;
+			Vec3ui vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec3ui, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to ints
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				unsigned int x = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				unsigned int y = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				unsigned int z = lua_tointeger(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = (bool)((Vec3ui const *)arg1)->operator ==((Vec3ui const &)*arg2);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = (bool)((Vec3ui const *)arg1)->operator ==((Vec3ui const &)*arg2);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static void swig_delete_Vec3ui(void *obj) {
@@ -3345,7 +3345,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::X", 1, "Vector2 *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vector2::X", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_X_set", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3369,7 +3369,7 @@ fail:
 		SWIG_check_num_args("Vector2::X", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::X", 1, "Vector2 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_X_get", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3393,7 +3393,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::Y", 1, "Vector2 *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vector2::Y", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_Y_set", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3417,7 +3417,7 @@ fail:
 		SWIG_check_num_args("Vector2::Y", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::Y", 1, "Vector2 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_Y_get", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3439,7 +3439,7 @@ fail:
 		SWIG_check_num_args("Vector2::Zero", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::Zero", 1, "Vector2 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_Zero_set", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3477,7 +3477,7 @@ fail:
 		SWIG_check_num_args("Vector2::One", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::One", 1, "Vector2 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_One_set", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3515,7 +3515,7 @@ fail:
 		SWIG_check_num_args("Vector2::UnitX", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::UnitX", 1, "Vector2 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_UnitX_set", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3553,7 +3553,7 @@ fail:
 		SWIG_check_num_args("Vector2::UnitY", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::UnitY", 1, "Vector2 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_UnitY_set", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3691,7 +3691,7 @@ fail:
 		SWIG_check_num_args("Vector2::Length", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::Length", 1, "Vector2 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_Length", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3714,7 +3714,7 @@ fail:
 		SWIG_check_num_args("Vector2::LengthSquared", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::LengthSquared", 1, "Vector2 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_LengthSquared", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3762,41 +3762,41 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = (float)Vector2::Distance((Vector2 const &)*arg1, (Vector2 const &)*arg2);
-  lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = (float)Vector2::Distance((Vector2 const &)*arg1, (Vector2 const &)*arg2);
+		lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2_DistanceSquared(lua_State* L) {
@@ -3832,41 +3832,41 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = (float)Vector2::DistanceSquared((Vector2 const &)*arg1, (Vector2 const &)*arg2);
-  lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = (float)Vector2::DistanceSquared((Vector2 const &)*arg1, (Vector2 const &)*arg2);
+		lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2_Dot(lua_State* L) {
@@ -3902,41 +3902,41 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = (float)Vector2::Dot((Vector2 const &)*arg1, (Vector2 const &)*arg2);
-  lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = (float)Vector2::Dot((Vector2 const &)*arg1, (Vector2 const &)*arg2);
+		lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2_Normalize(lua_State* L) {
@@ -3946,7 +3946,7 @@ fail:
 		SWIG_check_num_args("Vector2::Normalize", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::Normalize", 1, "Vector2 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2_Normalize", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -3994,44 +3994,44 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = Vector2::Reflect((Vector2 const &)*arg1, (Vector2 const &)*arg2);
-  {
-	  Vector2 * resultptr = new Vector2((const Vector2 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = Vector2::Reflect((Vector2 const &)*arg1, (Vector2 const &)*arg2);
+		{
+			Vector2 * resultptr = new Vector2((const Vector2 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2_Min(lua_State* L) {
@@ -4067,44 +4067,44 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = Vector2::Min((Vector2 const &)*arg1, (Vector2 const &)*arg2);
-  {
-	  Vector2 * resultptr = new Vector2((const Vector2 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = Vector2::Min((Vector2 const &)*arg1, (Vector2 const &)*arg2);
+		{
+			Vector2 * resultptr = new Vector2((const Vector2 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2_Max(lua_State* L) {
@@ -4140,44 +4140,44 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = Vector2::Max((Vector2 const &)*arg1, (Vector2 const &)*arg2);
-  {
-	  Vector2 * resultptr = new Vector2((const Vector2 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = Vector2::Max((Vector2 const &)*arg1, (Vector2 const &)*arg2);
+		{
+			Vector2 * resultptr = new Vector2((const Vector2 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2_Clamp(lua_State* L) {
@@ -4214,70 +4214,70 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  result = Vector2::Clamp((Vector2 const &)*arg1, (Vector2 const &)*arg2, (Vector2 const &)*arg3);
-  {
-	  Vector2 * resultptr = new Vector2((const Vector2 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		result = Vector2::Clamp((Vector2 const &)*arg1, (Vector2 const &)*arg2, (Vector2 const &)*arg3);
+		{
+			Vector2 * resultptr = new Vector2((const Vector2 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2_Lerp(lua_State* L) {
@@ -4315,45 +4315,45 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  result = Vector2::Lerp((Vector2 const &)*arg1, (Vector2 const &)*arg2, arg3);
-  {
-	  Vector2 * resultptr = new Vector2((const Vector2 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		result = Vector2::Lerp((Vector2 const &)*arg1, (Vector2 const &)*arg2, arg3);
+		{
+			Vector2 * resultptr = new Vector2((const Vector2 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2_Negate(lua_State* L) {
@@ -4460,45 +4460,45 @@ fail:
 		SWIG_check_num_args("Vector2::operator ==", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::operator ==", 1, "Vector2 const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2___eq", 1, SWIGTYPE_p_Vector2);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = (bool)((Vector2 const *)arg1)->operator ==((Vector2 const &)*arg2);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = (bool)((Vector2 const *)arg1)->operator ==((Vector2 const &)*arg2);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2___unm(lua_State* L) {
@@ -4509,7 +4509,7 @@ fail:
 		SWIG_check_num_args("Vector2::operator -", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::operator -", 1, "Vector2 const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2___unm", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -4536,48 +4536,48 @@ fail:
 		SWIG_check_num_args("Vector2::operator -", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::operator -", 1, "Vector2 const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2___sub", 1, SWIGTYPE_p_Vector2);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = ((Vector2 const *)arg1)->operator -((Vector2 const &)*arg2);
-  {
-	  Vector2 * resultptr = new Vector2((const Vector2 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = ((Vector2 const *)arg1)->operator -((Vector2 const &)*arg2);
+		{
+			Vector2 * resultptr = new Vector2((const Vector2 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2___add(lua_State* L) {
@@ -4589,48 +4589,48 @@ fail:
 		SWIG_check_num_args("Vector2::operator +", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::operator +", 1, "Vector2 const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2___add", 1, SWIGTYPE_p_Vector2);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = ((Vector2 const *)arg1)->operator +((Vector2 const &)*arg2);
-  {
-	  Vector2 * resultptr = new Vector2((const Vector2 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = ((Vector2 const *)arg1)->operator +((Vector2 const &)*arg2);
+		{
+			Vector2 * resultptr = new Vector2((const Vector2 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector2___div(lua_State* L) {
@@ -4643,7 +4643,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::operator /", 1, "Vector2 const *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vector2::operator /", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2___div", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -4672,7 +4672,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector2::operator *", 1, "Vector2 const *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vector2::operator *", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Vector2___mul", 1, SWIGTYPE_p_Vector2);
 		}
 
@@ -4748,7 +4748,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::X", 1, "Vector3 *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vector3::X", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_X_set", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -4772,7 +4772,7 @@ fail:
 		SWIG_check_num_args("Vector3::X", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::X", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_X_get", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -4796,7 +4796,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::Y", 1, "Vector3 *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vector3::Y", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_Y_set", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -4820,7 +4820,7 @@ fail:
 		SWIG_check_num_args("Vector3::Y", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::Y", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_Y_get", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -4844,7 +4844,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::Z", 1, "Vector3 *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vector3::Z", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_Z_set", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -4868,7 +4868,7 @@ fail:
 		SWIG_check_num_args("Vector3::Z", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::Z", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_Z_get", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -4890,7 +4890,7 @@ fail:
 		SWIG_check_num_args("Vector3::Zero", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::Zero", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_Zero_set", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -4928,7 +4928,7 @@ fail:
 		SWIG_check_num_args("Vector3::One", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::One", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_One_set", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -4966,7 +4966,7 @@ fail:
 		SWIG_check_num_args("Vector3::UnitX", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::UnitX", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_UnitX_set", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -5004,7 +5004,7 @@ fail:
 		SWIG_check_num_args("Vector3::UnitY", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::UnitY", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_UnitY_set", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -5042,7 +5042,7 @@ fail:
 		SWIG_check_num_args("Vector3::UnitZ", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::UnitZ", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_UnitZ_set", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -5188,7 +5188,7 @@ fail:
 		SWIG_check_num_args("Vector3::Length", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::Length", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_Length", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -5211,7 +5211,7 @@ fail:
 		SWIG_check_num_args("Vector3::LengthSquared", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::LengthSquared", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_LengthSquared", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -5266,48 +5266,48 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = (float)Vector3::Distance((Vector3 const &)*arg1, (Vector3 const &)*arg2);
-  lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = (float)Vector3::Distance((Vector3 const &)*arg1, (Vector3 const &)*arg2);
+		lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3_DistanceSquared(lua_State* L) {
@@ -5350,48 +5350,48 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = (float)Vector3::DistanceSquared((Vector3 const &)*arg1, (Vector3 const &)*arg2);
-  lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = (float)Vector3::DistanceSquared((Vector3 const &)*arg1, (Vector3 const &)*arg2);
+		lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3_Dot(lua_State* L) {
@@ -5434,48 +5434,48 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = (float)Vector3::Dot((Vector3 const &)*arg1, (Vector3 const &)*arg2);
-  lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = (float)Vector3::Dot((Vector3 const &)*arg1, (Vector3 const &)*arg2);
+		lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3_Normalize(lua_State* L) {
@@ -5485,7 +5485,7 @@ fail:
 		SWIG_check_num_args("Vector3::Normalize", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::Normalize", 1, "Vector3 *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3_Normalize", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -5540,51 +5540,51 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = Vector3::Reflect((Vector3 const &)*arg1, (Vector3 const &)*arg2);
-  {
-	  Vector3 * resultptr = new Vector3((const Vector3 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = Vector3::Reflect((Vector3 const &)*arg1, (Vector3 const &)*arg2);
+		{
+			Vector3 * resultptr = new Vector3((const Vector3 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3_Min(lua_State* L) {
@@ -5627,51 +5627,51 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = Vector3::Min((Vector3 const &)*arg1, (Vector3 const &)*arg2);
-  {
-	  Vector3 * resultptr = new Vector3((const Vector3 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = Vector3::Min((Vector3 const &)*arg1, (Vector3 const &)*arg2);
+		{
+			Vector3 * resultptr = new Vector3((const Vector3 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3_Max(lua_State* L) {
@@ -5714,51 +5714,51 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = Vector3::Max((Vector3 const &)*arg1, (Vector3 const &)*arg2);
-  {
-	  Vector3 * resultptr = new Vector3((const Vector3 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = Vector3::Max((Vector3 const &)*arg1, (Vector3 const &)*arg2);
+		{
+			Vector3 * resultptr = new Vector3((const Vector3 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3_Clamp(lua_State* L) {
@@ -5802,84 +5802,84 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 3);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 3);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg3 = &vec;
-	  }
-  }
-  result = Vector3::Clamp((Vector3 const &)*arg1, (Vector3 const &)*arg2, (Vector3 const &)*arg3);
-  {
-	  Vector3 * resultptr = new Vector3((const Vector3 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg3 = &vec;
+			}
+		}
+		result = Vector3::Clamp((Vector3 const &)*arg1, (Vector3 const &)*arg2, (Vector3 const &)*arg3);
+		{
+			Vector3 * resultptr = new Vector3((const Vector3 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3_Lerp(lua_State* L) {
@@ -5924,52 +5924,52 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  result = Vector3::Lerp((Vector3 const &)*arg1, (Vector3 const &)*arg2, arg3);
-  {
-	  Vector3 * resultptr = new Vector3((const Vector3 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		result = Vector3::Lerp((Vector3 const &)*arg1, (Vector3 const &)*arg2, arg3);
+		{
+			Vector3 * resultptr = new Vector3((const Vector3 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3_Negate(lua_State* L) {
@@ -6034,52 +6034,52 @@ fail:
 		SWIG_check_num_args("Vector3::operator ==", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::operator ==", 1, "Vector3 const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3___eq", 1, SWIGTYPE_p_Vector3);
 		}
 
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = (bool)((Vector3 const *)arg1)->operator ==((Vector3 const &)*arg2);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = (bool)((Vector3 const *)arg1)->operator ==((Vector3 const &)*arg2);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3___unm(lua_State* L) {
@@ -6090,7 +6090,7 @@ fail:
 		SWIG_check_num_args("Vector3::operator -", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::operator -", 1, "Vector3 const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3___unm", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -6117,55 +6117,55 @@ fail:
 		SWIG_check_num_args("Vector3::operator -", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::operator -", 1, "Vector3 const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3___sub", 1, SWIGTYPE_p_Vector3);
 		}
 
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = ((Vector3 const *)arg1)->operator -((Vector3 const &)*arg2);
-  {
-	  Vector3 * resultptr = new Vector3((const Vector3 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = ((Vector3 const *)arg1)->operator -((Vector3 const &)*arg2);
+		{
+			Vector3 * resultptr = new Vector3((const Vector3 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3___add(lua_State* L) {
@@ -6177,55 +6177,55 @@ fail:
 		SWIG_check_num_args("Vector3::operator +", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::operator +", 1, "Vector3 const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3___add", 1, SWIGTYPE_p_Vector3);
 		}
 
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  result = ((Vector3 const *)arg1)->operator +((Vector3 const &)*arg2);
-  {
-	  Vector3 * resultptr = new Vector3((const Vector3 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		result = ((Vector3 const *)arg1)->operator +((Vector3 const &)*arg2);
+		{
+			Vector3 * resultptr = new Vector3((const Vector3 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector3, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Vector3___div(lua_State* L) {
@@ -6238,7 +6238,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::operator /", 1, "Vector3 const *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vector3::operator /", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3___div", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -6267,7 +6267,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Vector3::operator *", 1, "Vector3 const *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Vector3::operator *", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Vector3, 0))) {
 			SWIG_fail_ptr("Vector3___mul", 1, SWIGTYPE_p_Vector3);
 		}
 
@@ -6344,7 +6344,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::R", 1, "Color *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Color::R", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color_R_set", 1, SWIGTYPE_p_Color);
 		}
 
@@ -6368,7 +6368,7 @@ fail:
 		SWIG_check_num_args("Color::R", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::R", 1, "Color *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color_R_get", 1, SWIGTYPE_p_Color);
 		}
 
@@ -6392,7 +6392,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::G", 1, "Color *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Color::G", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color_G_set", 1, SWIGTYPE_p_Color);
 		}
 
@@ -6416,7 +6416,7 @@ fail:
 		SWIG_check_num_args("Color::G", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::G", 1, "Color *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color_G_get", 1, SWIGTYPE_p_Color);
 		}
 
@@ -6440,7 +6440,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::B", 1, "Color *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Color::B", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color_B_set", 1, SWIGTYPE_p_Color);
 		}
 
@@ -6464,7 +6464,7 @@ fail:
 		SWIG_check_num_args("Color::B", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::B", 1, "Color *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color_B_get", 1, SWIGTYPE_p_Color);
 		}
 
@@ -6488,7 +6488,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::A", 1, "Color *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Color::A", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color_A_set", 1, SWIGTYPE_p_Color);
 		}
 
@@ -6512,7 +6512,7 @@ fail:
 		SWIG_check_num_args("Color::A", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::A", 1, "Color *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color_A_get", 1, SWIGTYPE_p_Color);
 		}
 
@@ -6931,63 +6931,63 @@ fail:
 		SWIG_check_num_args("Color::operator ==", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::operator ==", 1, "Color const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color___eq", 1, SWIGTYPE_p_Color);
 		}
 
-  {
-	  // const Color& conversion
-	  Color *colPtr;
-	  Color col;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Color& conversion
+			Color *colPtr;
+			Color col;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  col.R = r;
-		  col.G = g;
-		  col.B = b;
-		  col.A = a;
-		  arg2 = &col;
-	  }
-  }
-  result = (bool)((Color const *)arg1)->operator ==((Color const &)*arg2);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the color
+				col.R = r;
+				col.G = g;
+				col.B = b;
+				col.A = a;
+				arg2 = &col;
+			}
+		}
+		result = (bool)((Color const *)arg1)->operator ==((Color const &)*arg2);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Color___sub(lua_State* L) {
@@ -6999,66 +6999,66 @@ fail:
 		SWIG_check_num_args("Color::operator -", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::operator -", 1, "Color const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color___sub", 1, SWIGTYPE_p_Color);
 		}
 
-  {
-	  // const Color& conversion
-	  Color *colPtr;
-	  Color col;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Color& conversion
+			Color *colPtr;
+			Color col;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  col.R = r;
-		  col.G = g;
-		  col.B = b;
-		  col.A = a;
-		  arg2 = &col;
-	  }
-  }
-  result = ((Color const *)arg1)->operator -((Color const &)*arg2);
-  {
-	  Color * resultptr = new Color((const Color &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Color, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the color
+				col.R = r;
+				col.G = g;
+				col.B = b;
+				col.A = a;
+				arg2 = &col;
+			}
+		}
+		result = ((Color const *)arg1)->operator -((Color const &)*arg2);
+		{
+			Color * resultptr = new Color((const Color &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Color, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Color___add(lua_State* L) {
@@ -7070,66 +7070,66 @@ fail:
 		SWIG_check_num_args("Color::operator +", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::operator +", 1, "Color const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color___add", 1, SWIGTYPE_p_Color);
 		}
 
-  {
-	  // const Color& conversion
-	  Color *colPtr;
-	  Color col;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Color& conversion
+			Color *colPtr;
+			Color col;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  col.R = r;
-		  col.G = g;
-		  col.B = b;
-		  col.A = a;
-		  arg2 = &col;
-	  }
-  }
-  result = ((Color const *)arg1)->operator +((Color const &)*arg2);
-  {
-	  Color * resultptr = new Color((const Color &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Color, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the color
+				col.R = r;
+				col.G = g;
+				col.B = b;
+				col.A = a;
+				arg2 = &col;
+			}
+		}
+		result = ((Color const *)arg1)->operator +((Color const &)*arg2);
+		{
+			Color * resultptr = new Color((const Color &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Color, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Color___div(lua_State* L) {
@@ -7142,7 +7142,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::operator /", 1, "Color const *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Color::operator /", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color___div", 1, SWIGTYPE_p_Color);
 		}
 
@@ -7171,7 +7171,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Color::operator *", 1, "Color const *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Color::operator *", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Color, 0))) {
 			SWIG_fail_ptr("Color___mul", 1, SWIGTYPE_p_Color);
 		}
 
@@ -7235,7 +7235,7 @@ fail:
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Message::Message", 2, "MessageListener *");
 		(&arg1)->assign(lua_tostring(L, 1), lua_rawlen(L, 1));
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("new_Message", 2, SWIGTYPE_p_MessageListener);
 		}
 
@@ -7321,7 +7321,7 @@ fail:
 		SWIG_check_num_args("Message::GetMessageName", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Message::GetMessageName", 1, "Message *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Message, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Message, 0))) {
 			SWIG_fail_ptr("Message_GetMessageName", 1, SWIGTYPE_p_Message);
 		}
 
@@ -7344,7 +7344,7 @@ fail:
 		SWIG_check_num_args("Message::GetSender", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Message::GetSender", 1, "Message *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Message, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Message, 0))) {
 			SWIG_fail_ptr("Message_GetSender", 1, SWIGTYPE_p_Message);
 		}
 
@@ -7480,7 +7480,7 @@ fail:
 		temp1.assign(lua_tostring(L, 1), lua_rawlen(L, 1)); arg1 = &temp1;
 		arg2 = (float)lua_tonumber(L, 2);
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("new_FloatMessage", 3, SWIGTYPE_p_MessageListener);
 		}
 
@@ -7580,7 +7580,7 @@ fail:
 		SWIG_check_num_args("TypedMessage< float >::GetValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TypedMessage< float >::GetValue", 1, "TypedMessage< float > *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_float_t, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_float_t, 0))) {
 			SWIG_fail_ptr("FloatMessage_GetValue", 1, SWIGTYPE_p_TypedMessageT_float_t);
 		}
 
@@ -7634,7 +7634,7 @@ fail:
 		temp1.assign(lua_tostring(L, 1), lua_rawlen(L, 1)); arg1 = &temp1;
 		arg2 = (int)lua_tonumber(L, 2);
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("new_IntMessage", 3, SWIGTYPE_p_MessageListener);
 		}
 
@@ -7734,7 +7734,7 @@ fail:
 		SWIG_check_num_args("TypedMessage< int >::GetValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TypedMessage< int >::GetValue", 1, "TypedMessage< int > *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_int_t, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_int_t, 0))) {
 			SWIG_fail_ptr("IntMessage_GetValue", 1, SWIGTYPE_p_TypedMessageT_int_t);
 		}
 
@@ -7788,7 +7788,7 @@ fail:
 		temp1.assign(lua_tostring(L, 1), lua_rawlen(L, 1)); arg1 = &temp1;
 		(&arg2)->assign(lua_tostring(L, 2), lua_rawlen(L, 2));
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("new_StringMessage", 3, SWIGTYPE_p_MessageListener);
 		}
 
@@ -7888,7 +7888,7 @@ fail:
 		SWIG_check_num_args("TypedMessage< String >::GetValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TypedMessage< String >::GetValue", 1, "TypedMessage< String > *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_std__string_t, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_std__string_t, 0))) {
 			SWIG_fail_ptr("StringMessage_GetValue", 1, SWIGTYPE_p_TypedMessageT_std__string_t);
 		}
 
@@ -7963,7 +7963,7 @@ fail:
 			}
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("new_Vector2Message", 3, SWIGTYPE_p_MessageListener);
 		}
 
@@ -8150,7 +8150,7 @@ fail:
 		SWIG_check_num_args("TypedMessage< Vector2 >::GetValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TypedMessage< Vector2 >::GetValue", 1, "TypedMessage< Vector2 > *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vector2_t, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vector2_t, 0))) {
 			SWIG_fail_ptr("Vector2Message_GetValue", 1, SWIGTYPE_p_TypedMessageT_Vector2_t);
 		}
 
@@ -8234,7 +8234,7 @@ fail:
 			}
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("new_Vector3Message", 3, SWIGTYPE_p_MessageListener);
 		}
 
@@ -8435,7 +8435,7 @@ fail:
 		SWIG_check_num_args("TypedMessage< Vector3 >::GetValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TypedMessage< Vector3 >::GetValue", 1, "TypedMessage< Vector3 > *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vector3_t, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vector3_t, 0))) {
 			SWIG_fail_ptr("Vector3Message_GetValue", 1, SWIGTYPE_p_TypedMessageT_Vector3_t);
 		}
 
@@ -8513,7 +8513,7 @@ fail:
 			}
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("new_Vec2iMessage", 3, SWIGTYPE_p_MessageListener);
 		}
 
@@ -8700,7 +8700,7 @@ fail:
 		SWIG_check_num_args("TypedMessage< Vec2i >::GetValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TypedMessage< Vec2i >::GetValue", 1, "TypedMessage< Vec2i > *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vec2i_t, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vec2i_t, 0))) {
 			SWIG_fail_ptr("Vec2iMessage_GetValue", 1, SWIGTYPE_p_TypedMessageT_Vec2i_t);
 		}
 
@@ -8778,7 +8778,7 @@ fail:
 			}
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("new_Vec2uiMessage", 3, SWIGTYPE_p_MessageListener);
 		}
 
@@ -8969,7 +8969,7 @@ fail:
 		SWIG_check_num_args("TypedMessage< Vec2ui >::GetValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TypedMessage< Vec2ui >::GetValue", 1, "TypedMessage< Vec2ui > *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vec2ui_t, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vec2ui_t, 0))) {
 			SWIG_fail_ptr("Vec2uiMessage_GetValue", 1, SWIGTYPE_p_TypedMessageT_Vec2ui_t);
 		}
 
@@ -9051,7 +9051,7 @@ fail:
 			}
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("new_Vec3iMessage", 3, SWIGTYPE_p_MessageListener);
 		}
 
@@ -9250,7 +9250,7 @@ fail:
 		SWIG_check_num_args("TypedMessage< Vec3i >::GetValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TypedMessage< Vec3i >::GetValue", 1, "TypedMessage< Vec3i > *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vec3i_t, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vec3i_t, 0))) {
 			SWIG_fail_ptr("Vec3iMessage_GetValue", 1, SWIGTYPE_p_TypedMessageT_Vec3i_t);
 		}
 
@@ -9332,7 +9332,7 @@ fail:
 			}
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("new_Vec3uiMessage", 3, SWIGTYPE_p_MessageListener);
 		}
 
@@ -9537,7 +9537,7 @@ fail:
 		SWIG_check_num_args("TypedMessage< Vec3ui >::GetValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TypedMessage< Vec3ui >::GetValue", 1, "TypedMessage< Vec3ui > *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vec3ui_t, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TypedMessageT_Vec3ui_t, 0))) {
 			SWIG_fail_ptr("Vec3uiMessage_GetValue", 1, SWIGTYPE_p_TypedMessageT_Vec3ui_t);
 		}
 
@@ -9627,11 +9627,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Switchboard::Broadcast", 1, "Switchboard *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Switchboard::Broadcast", 2, "Message *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))) {
 			SWIG_fail_ptr("Switchboard_Broadcast", 1, SWIGTYPE_p_Switchboard);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Message, SWIG_POINTER_DISOWN))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Message, SWIG_POINTER_DISOWN))) {
 			SWIG_fail_ptr("Switchboard_Broadcast", 2, SWIGTYPE_p_Message);
 		}
 
@@ -9657,11 +9657,11 @@ fail:
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Switchboard::DeferredBroadcast", 2, "Message *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Switchboard::DeferredBroadcast", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))) {
 			SWIG_fail_ptr("Switchboard_DeferredBroadcast", 1, SWIGTYPE_p_Switchboard);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Message, SWIG_POINTER_DISOWN))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Message, SWIG_POINTER_DISOWN))) {
 			SWIG_fail_ptr("Switchboard_DeferredBroadcast", 2, SWIGTYPE_p_Message);
 		}
 
@@ -9689,11 +9689,11 @@ fail:
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Switchboard::SubscribeTo", 2, "MessageListener *");
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("Switchboard::SubscribeTo", 3, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))) {
 			SWIG_fail_ptr("Switchboard_SubscribeTo", 1, SWIGTYPE_p_Switchboard);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("Switchboard_SubscribeTo", 2, SWIGTYPE_p_MessageListener);
 		}
 
@@ -9721,11 +9721,11 @@ fail:
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Switchboard::UnsubscribeFrom", 2, "MessageListener *");
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("Switchboard::UnsubscribeFrom", 3, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))) {
 			SWIG_fail_ptr("Switchboard_UnsubscribeFrom", 1, SWIGTYPE_p_Switchboard);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("Switchboard_UnsubscribeFrom", 2, SWIGTYPE_p_MessageListener);
 		}
 
@@ -9751,7 +9751,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Switchboard::GetSubscribersTo", 1, "Switchboard *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Switchboard::GetSubscribersTo", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))) {
 			SWIG_fail_ptr("Switchboard_GetSubscribersTo", 1, SWIGTYPE_p_Switchboard);
 		}
 
@@ -9780,11 +9780,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Switchboard::GetSubscriptionsFor", 1, "Switchboard *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Switchboard::GetSubscriptionsFor", 2, "MessageListener *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Switchboard, 0))) {
 			SWIG_fail_ptr("Switchboard_GetSubscriptionsFor", 1, SWIGTYPE_p_Switchboard);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_MessageListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_MessageListener, 0))) {
 			SWIG_fail_ptr("Switchboard_GetSubscriptionsFor", 2, SWIGTYPE_p_MessageListener);
 		}
 
@@ -9853,7 +9853,7 @@ fail:
 		SWIG_check_num_args("Renderable::Destroy", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Renderable::Destroy", 1, "Renderable *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Renderable, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Renderable, 0))) {
 			SWIG_fail_ptr("Renderable_Destroy", 1, SWIGTYPE_p_Renderable);
 		}
 
@@ -9876,7 +9876,7 @@ fail:
 		SWIG_check_num_args("Renderable::IsDestroyed", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Renderable::IsDestroyed", 1, "Renderable *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Renderable, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Renderable, 0))) {
 			SWIG_fail_ptr("Renderable_IsDestroyed", 1, SWIGTYPE_p_Renderable);
 		}
 
@@ -9899,7 +9899,7 @@ fail:
 		SWIG_check_num_args("Renderable::GetLayer", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Renderable::GetLayer", 1, "Renderable *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Renderable, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Renderable, 0))) {
 			SWIG_fail_ptr("Renderable_GetLayer", 1, SWIGTYPE_p_Renderable);
 		}
 
@@ -10236,41 +10236,41 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = (float)MathUtil::AngleFromVectors((Vector2 const &)*arg1, (Vector2 const &)*arg2);
-  lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = (float)MathUtil::AngleFromVectors((Vector2 const &)*arg1, (Vector2 const &)*arg2);
+		lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_MathUtil_RoundToInt(lua_State* L) {
@@ -10575,44 +10575,44 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = MathUtil::RandomVector((Vector2 const &)*arg1, (Vector2 const &)*arg2);
-  {
-	  Vector2 * resultptr = new Vector2((const Vector2 &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = MathUtil::RandomVector((Vector2 const &)*arg1, (Vector2 const &)*arg2);
+		{
+			Vector2 * resultptr = new Vector2((const Vector2 &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_MathUtil_RandomVector(lua_State* L) {
@@ -10794,45 +10794,45 @@ fail:
 				arg2 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  arg4 = (float)lua_tonumber(L, 4);
-  result = MathUtil::RandomPointField(arg1, (Vector2 const &)*arg2, (Vector2 const &)*arg3, arg4);
-  {
-	  Vector2List * resultptr = new Vector2List((const Vector2List &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2List, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		arg4 = (float)lua_tonumber(L, 4);
+		result = MathUtil::RandomPointField(arg1, (Vector2 const &)*arg2, (Vector2 const &)*arg3, arg4);
+		{
+			Vector2List * resultptr = new Vector2List((const Vector2List &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2List, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_MathUtil_RandomPointField__SWIG_1(lua_State* L) {
@@ -10871,44 +10871,44 @@ fail:
 				arg2 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  result = MathUtil::RandomPointField(arg1, (Vector2 const &)*arg2, (Vector2 const &)*arg3);
-  {
-	  Vector2List * resultptr = new Vector2List((const Vector2List &)result);
-	  SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2List, 1); SWIG_arg++;
-  }
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		result = MathUtil::RandomPointField(arg1, (Vector2 const &)*arg2, (Vector2 const &)*arg3);
+		{
+			Vector2List * resultptr = new Vector2List((const Vector2List &)result);
+			SWIG_NewPointerObj(L, (void *)resultptr, SWIGTYPE_p_Vector2List, 1); SWIG_arg++;
+		}
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_MathUtil_RandomPointField(lua_State* L) {
@@ -11183,42 +11183,42 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  result = (bool)MathUtil::FuzzyEquals((Vector2 const &)*arg1, (Vector2 const &)*arg2, arg3);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		result = (bool)MathUtil::FuzzyEquals((Vector2 const &)*arg1, (Vector2 const &)*arg2, arg3);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_MathUtil_FuzzyEquals__SWIG_3(lua_State* L) {
@@ -11254,41 +11254,41 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = (bool)MathUtil::FuzzyEquals((Vector2 const &)*arg1, (Vector2 const &)*arg2);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = (bool)MathUtil::FuzzyEquals((Vector2 const &)*arg1, (Vector2 const &)*arg2);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_MathUtil_FuzzyEquals(lua_State* L) {
@@ -11902,41 +11902,41 @@ fail:
 				arg1 = &vec;
 			}
 		}
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = (float)MathUtil::VectorDeltaAngle((Vector2 const &)*arg1, (Vector2 const &)*arg2);
-  lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = (float)MathUtil::VectorDeltaAngle((Vector2 const &)*arg1, (Vector2 const &)*arg2);
+		lua_pushnumber(L, (lua_Number)result); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_new_MathUtil(lua_State* L) {
@@ -12035,7 +12035,7 @@ fail:
 		SWIG_check_num_args("World::GetVideoModes", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::GetVideoModes", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_GetVideoModes", 1, SWIGTYPE_p_World);
 		}
 
@@ -12067,7 +12067,7 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("World::AdjustWindow", 3, "int");
 		if (!lua_isstring(L, 4)) SWIG_fail_arg("World::AdjustWindow", 4, "String const &");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_AdjustWindow", 1, SWIGTYPE_p_World);
 		}
 
@@ -12096,7 +12096,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("World::MoveWindow", 2, "int");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("World::MoveWindow", 3, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_MoveWindow", 1, SWIGTYPE_p_World);
 		}
 
@@ -12120,7 +12120,7 @@ fail:
 		SWIG_check_num_args("World::ResetWorld", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::ResetWorld", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_ResetWorld", 1, SWIGTYPE_p_World);
 		}
 
@@ -12142,7 +12142,7 @@ fail:
 		SWIG_check_num_args("World::StopGame", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::StopGame", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_StopGame", 1, SWIGTYPE_p_World);
 		}
 
@@ -12165,7 +12165,7 @@ fail:
 		SWIG_check_num_args("World::GetCurrentTimeSeconds", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::GetCurrentTimeSeconds", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_GetCurrentTimeSeconds", 1, SWIGTYPE_p_World);
 		}
 
@@ -12188,58 +12188,58 @@ fail:
 		SWIG_check_num_args("World::SetBackgroundColor", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::SetBackgroundColor", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_SetBackgroundColor", 1, SWIGTYPE_p_World);
 		}
 
-  {
-	  // Color conversion
-	  Color *colPtr;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = *colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// Color conversion
+			Color *colPtr;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = *colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  arg2 = Color(r, g, b, a);
-	  }
-  }
-  (arg1)->SetBackgroundColor(arg2);
+				// build the color
+				arg2 = Color(r, g, b, a);
+			}
+		}
+		(arg1)->SetBackgroundColor(arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_World_Add__SWIG_0(lua_State* L) {
@@ -12253,11 +12253,11 @@ fail:
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("World::Add", 2, "Renderable *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("World::Add", 3, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_Add", 1, SWIGTYPE_p_World);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, SWIG_POINTER_DISOWN))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, SWIG_POINTER_DISOWN))) {
 			SWIG_fail_ptr("World_Add", 2, SWIGTYPE_p_Renderable);
 		}
 
@@ -12282,11 +12282,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::Add", 1, "World *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("World::Add", 2, "Renderable *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_Add", 1, SWIGTYPE_p_World);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, SWIG_POINTER_DISOWN))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, SWIG_POINTER_DISOWN))) {
 			SWIG_fail_ptr("World_Add", 2, SWIGTYPE_p_Renderable);
 		}
 
@@ -12312,11 +12312,11 @@ fail:
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("World::Add", 2, "Renderable *");
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("World::Add", 3, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_Add", 1, SWIGTYPE_p_World);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, SWIG_POINTER_DISOWN))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, SWIG_POINTER_DISOWN))) {
 			SWIG_fail_ptr("World_Add", 2, SWIGTYPE_p_Renderable);
 		}
 
@@ -12445,11 +12445,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::Remove", 1, "World *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("World::Remove", 2, "Renderable *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_Remove", 1, SWIGTYPE_p_World);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, 0))) {
 			SWIG_fail_ptr("World_Remove", 2, SWIGTYPE_p_Renderable);
 		}
 
@@ -12475,11 +12475,11 @@ fail:
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("World::UpdateLayer", 2, "Renderable *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("World::UpdateLayer", 3, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_UpdateLayer", 1, SWIGTYPE_p_World);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, 0))) {
 			SWIG_fail_ptr("World_UpdateLayer", 2, SWIGTYPE_p_Renderable);
 		}
 
@@ -12506,11 +12506,11 @@ fail:
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("World::UpdateLayer", 2, "Renderable *");
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("World::UpdateLayer", 3, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_UpdateLayer", 1, SWIGTYPE_p_World);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Renderable, 0))) {
 			SWIG_fail_ptr("World_UpdateLayer", 2, SWIGTYPE_p_Renderable);
 		}
 
@@ -12614,7 +12614,7 @@ fail:
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("World::NameLayer", 2, "String");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("World::NameLayer", 3, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_NameLayer", 1, SWIGTYPE_p_World);
 		}
 
@@ -12641,7 +12641,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::GetLayerByName", 1, "World *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("World::GetLayerByName", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_GetLayerByName", 1, SWIGTYPE_p_World);
 		}
 
@@ -12669,111 +12669,111 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::DrawDebugLine", 1, "World *");
 		if (!lua_isnumber(L, 4)) SWIG_fail_arg("World::DrawDebugLine", 4, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_DrawDebugLine", 1, SWIGTYPE_p_World);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  arg4 = (float)lua_tonumber(L, 4);
-  {
-	  // Color conversion
-	  Color *colPtr;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 5, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg5 = *colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 5);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 5);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 5);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		arg4 = (float)lua_tonumber(L, 4);
+		{
+			// Color conversion
+			Color *colPtr;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 5, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg5 = *colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 5);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 5);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 5);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 5) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 5);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 5) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 5);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  arg5 = Color(r, g, b, a);
-	  }
-  }
-  (arg1)->DrawDebugLine((Vector2 const &)*arg2, (Vector2 const &)*arg3, arg4, arg5);
+				// build the color
+				arg5 = Color(r, g, b, a);
+			}
+		}
+		(arg1)->DrawDebugLine((Vector2 const &)*arg2, (Vector2 const &)*arg3, arg4, arg5);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_World_DrawDebugLine__SWIG_1(lua_State* L) {
@@ -12787,72 +12787,72 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::DrawDebugLine", 1, "World *");
 		if (!lua_isnumber(L, 4)) SWIG_fail_arg("World::DrawDebugLine", 4, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_DrawDebugLine", 1, SWIGTYPE_p_World);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  arg4 = (float)lua_tonumber(L, 4);
-  (arg1)->DrawDebugLine((Vector2 const &)*arg2, (Vector2 const &)*arg3, arg4);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		arg4 = (float)lua_tonumber(L, 4);
+		(arg1)->DrawDebugLine((Vector2 const &)*arg2, (Vector2 const &)*arg3, arg4);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_World_DrawDebugLine__SWIG_2(lua_State* L) {
@@ -12864,71 +12864,71 @@ fail:
 		SWIG_check_num_args("World::DrawDebugLine", 3, 3)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::DrawDebugLine", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_DrawDebugLine", 1, SWIGTYPE_p_World);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  (arg1)->DrawDebugLine((Vector2 const &)*arg2, (Vector2 const &)*arg3);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		(arg1)->DrawDebugLine((Vector2 const &)*arg2, (Vector2 const &)*arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_World_DrawDebugLine(lua_State* L) {
@@ -13279,7 +13279,7 @@ fail:
 		SWIG_check_num_args("World::PurgeDebugDrawing", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::PurgeDebugDrawing", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_PurgeDebugDrawing", 1, SWIGTYPE_p_World);
 		}
 
@@ -13302,7 +13302,7 @@ fail:
 		SWIG_check_num_args("World::PauseSimulation", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::PauseSimulation", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_PauseSimulation", 1, SWIGTYPE_p_World);
 		}
 
@@ -13325,7 +13325,7 @@ fail:
 		SWIG_check_num_args("World::ResumeSimulation", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::ResumeSimulation", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_ResumeSimulation", 1, SWIGTYPE_p_World);
 		}
 
@@ -13348,7 +13348,7 @@ fail:
 		SWIG_check_num_args("World::IsSimulationOn", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::IsSimulationOn", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_IsSimulationOn", 1, SWIGTYPE_p_World);
 		}
 
@@ -13374,97 +13374,97 @@ fail:
 		SWIG_check_num_args("World::SetupPhysics", 4, 4)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::SetupPhysics", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_SetupPhysics", 1, SWIGTYPE_p_World);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg4 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 4);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 4);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg4 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 4);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 4);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg4 = &vec;
-	  }
-  }
-  result = (bool)(arg1)->SetupPhysics((Vector2 const &)*arg2, (Vector2 const &)*arg3, (Vector2 const &)*arg4);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg4 = &vec;
+			}
+		}
+		result = (bool)(arg1)->SetupPhysics((Vector2 const &)*arg2, (Vector2 const &)*arg3, (Vector2 const &)*arg4);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_World_SetupPhysics__SWIG_1(lua_State* L) {
@@ -13477,71 +13477,71 @@ fail:
 		SWIG_check_num_args("World::SetupPhysics", 3, 3)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::SetupPhysics", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_SetupPhysics", 1, SWIGTYPE_p_World);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  result = (bool)(arg1)->SetupPhysics((Vector2 const &)*arg2, (Vector2 const &)*arg3);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		result = (bool)(arg1)->SetupPhysics((Vector2 const &)*arg2, (Vector2 const &)*arg3);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_World_SetupPhysics__SWIG_2(lua_State* L) {
@@ -13553,45 +13553,45 @@ fail:
 		SWIG_check_num_args("World::SetupPhysics", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::SetupPhysics", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_SetupPhysics", 1, SWIGTYPE_p_World);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  result = (bool)(arg1)->SetupPhysics((Vector2 const &)*arg2);
-  lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		result = (bool)(arg1)->SetupPhysics((Vector2 const &)*arg2);
+		lua_pushboolean(L, (int)(result != 0)); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_World_SetupPhysics__SWIG_3(lua_State* L) {
@@ -13602,7 +13602,7 @@ fail:
 		SWIG_check_num_args("World::SetupPhysics", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::SetupPhysics", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_SetupPhysics", 1, SWIGTYPE_p_World);
 		}
 
@@ -13930,7 +13930,7 @@ fail:
 		SWIG_check_num_args("World::IsPhysicsSetUp", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::IsPhysicsSetUp", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_IsPhysicsSetUp", 1, SWIGTYPE_p_World);
 		}
 
@@ -13953,7 +13953,7 @@ fail:
 		SWIG_check_num_args("World::PausePhysics", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::PausePhysics", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_PausePhysics", 1, SWIGTYPE_p_World);
 		}
 
@@ -13976,7 +13976,7 @@ fail:
 		SWIG_check_num_args("World::ResumePhysics", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::ResumePhysics", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_ResumePhysics", 1, SWIGTYPE_p_World);
 		}
 
@@ -14000,11 +14000,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::RegisterConsole", 1, "World *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("World::RegisterConsole", 2, "Console *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_RegisterConsole", 1, SWIGTYPE_p_World);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Console, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Console, 0))) {
 			SWIG_fail_ptr("World_RegisterConsole", 2, SWIGTYPE_p_Console);
 		}
 
@@ -14027,7 +14027,7 @@ fail:
 		SWIG_check_num_args("World::GetConsole", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("World::GetConsole", 1, "World *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_World, 0))) {
 			SWIG_fail_ptr("World_GetConsole", 1, SWIGTYPE_p_World);
 		}
 
@@ -14099,7 +14099,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("DeveloperLog::Log", 1, "DeveloperLog *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("DeveloperLog::Log", 2, "String const &");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_DeveloperLog, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_DeveloperLog, 0))) {
 			SWIG_fail_ptr("DeveloperLog_Log", 1, SWIGTYPE_p_DeveloperLog);
 		}
 
@@ -14125,7 +14125,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("DeveloperLog::Printf", 1, "DeveloperLog *");
 		if (!SWIG_lua_isnilstring(L, 2)) SWIG_fail_arg("DeveloperLog::Printf", 2, "char const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_DeveloperLog, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_DeveloperLog, 0))) {
 			SWIG_fail_ptr("DeveloperLog_Printf", 1, SWIGTYPE_p_DeveloperLog);
 		}
 
@@ -14176,7 +14176,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ConsoleLog::Log", 1, "ConsoleLog *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("ConsoleLog::Log", 2, "String const &");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ConsoleLog, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ConsoleLog, 0))) {
 			SWIG_fail_ptr("ConsoleLog_Log", 1, SWIGTYPE_p_ConsoleLog);
 		}
 
@@ -14282,7 +14282,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("FileLog::Log", 1, "FileLog *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("FileLog::Log", 2, "String const &");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_FileLog, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_FileLog, 0))) {
 			SWIG_fail_ptr("FileLog_Log", 1, SWIGTYPE_p_FileLog);
 		}
 
@@ -14333,7 +14333,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("SystemLog::Log", 1, "SystemLog *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("SystemLog::Log", 2, "String const &");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SystemLog, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SystemLog, 0))) {
 			SWIG_fail_ptr("SystemLog_Log", 1, SWIGTYPE_p_SystemLog);
 		}
 
@@ -14398,11 +14398,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("CompoundLog::AddLog", 1, "CompoundLog *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("CompoundLog::AddLog", 2, "DeveloperLog *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_CompoundLog, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_CompoundLog, 0))) {
 			SWIG_fail_ptr("CompoundLog_AddLog", 1, SWIGTYPE_p_CompoundLog);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_DeveloperLog, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_DeveloperLog, 0))) {
 			SWIG_fail_ptr("CompoundLog_AddLog", 2, SWIGTYPE_p_DeveloperLog);
 		}
 
@@ -14427,7 +14427,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("CompoundLog::Log", 1, "CompoundLog *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("CompoundLog::Log", 2, "String const &");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_CompoundLog, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_CompoundLog, 0))) {
 			SWIG_fail_ptr("CompoundLog_Log", 1, SWIGTYPE_p_CompoundLog);
 		}
 
@@ -14525,7 +14525,7 @@ fail:
 		SWIG_check_num_args("Tuning::GetVariables", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Tuning::GetVariables", 1, "Tuning *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_GetVariables", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14567,7 +14567,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Tuning::GetInt", 1, "Tuning *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Tuning::GetInt", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_GetInt", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14593,7 +14593,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Tuning::GetFloat", 1, "Tuning *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Tuning::GetFloat", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_GetFloat", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14619,7 +14619,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Tuning::GetString", 1, "Tuning *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Tuning::GetString", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_GetString", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14645,7 +14645,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Tuning::GetVector", 1, "Tuning *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Tuning::GetVector", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_GetVector", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14675,7 +14675,7 @@ fail:
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Tuning::SetInt", 2, "String");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Tuning::SetInt", 3, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_SetInt", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14703,7 +14703,7 @@ fail:
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Tuning::SetFloat", 2, "String");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Tuning::SetFloat", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_SetFloat", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14731,7 +14731,7 @@ fail:
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Tuning::SetString", 2, "String");
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("Tuning::SetString", 3, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_SetString", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14758,7 +14758,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Tuning::SetVector", 1, "Tuning *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Tuning::SetVector", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_SetVector", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14809,7 +14809,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Tuning::AddToRuntimeTuningList", 1, "Tuning *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Tuning::AddToRuntimeTuningList", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_AddToRuntimeTuningList", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14835,7 +14835,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Tuning::IsRuntimeTuned", 1, "Tuning *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Tuning::IsRuntimeTuned", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Tuning, 0))) {
 			SWIG_fail_ptr("Tuning_IsRuntimeTuned", 1, SWIGTYPE_p_Tuning);
 		}
 
@@ -14909,7 +14909,7 @@ fail:
 		SWIG_check_num_args("Preferences::SavePreferences", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Preferences::SavePreferences", 1, "Preferences *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))) {
 			SWIG_fail_ptr("Preferences_SavePreferences", 1, SWIGTYPE_p_Preferences);
 		}
 
@@ -14936,7 +14936,7 @@ fail:
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Preferences::GetInt", 2, "String");
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("Preferences::GetInt", 3, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))) {
 			SWIG_fail_ptr("Preferences_GetInt", 1, SWIGTYPE_p_Preferences);
 		}
 
@@ -14965,7 +14965,7 @@ fail:
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Preferences::GetFloat", 2, "String");
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("Preferences::GetFloat", 3, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))) {
 			SWIG_fail_ptr("Preferences_GetFloat", 1, SWIGTYPE_p_Preferences);
 		}
 
@@ -14994,7 +14994,7 @@ fail:
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Preferences::GetString", 2, "String");
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("Preferences::GetString", 3, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))) {
 			SWIG_fail_ptr("Preferences_GetString", 1, SWIGTYPE_p_Preferences);
 		}
 
@@ -15024,7 +15024,7 @@ fail:
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("Preferences::SetInt", 3, "String");
 		if (!lua_isnumber(L, 4)) SWIG_fail_arg("Preferences::SetInt", 4, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))) {
 			SWIG_fail_ptr("Preferences_SetInt", 1, SWIGTYPE_p_Preferences);
 		}
 
@@ -15055,7 +15055,7 @@ fail:
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("Preferences::SetFloat", 3, "String");
 		if (!lua_isnumber(L, 4)) SWIG_fail_arg("Preferences::SetFloat", 4, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))) {
 			SWIG_fail_ptr("Preferences_SetFloat", 1, SWIGTYPE_p_Preferences);
 		}
 
@@ -15086,7 +15086,7 @@ fail:
 		if (!lua_isstring(L, 3)) SWIG_fail_arg("Preferences::SetString", 3, "String");
 		if (!lua_isstring(L, 4)) SWIG_fail_arg("Preferences::SetString", 4, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))) {
 			SWIG_fail_ptr("Preferences_SetString", 1, SWIGTYPE_p_Preferences);
 		}
 
@@ -15112,7 +15112,7 @@ fail:
 		SWIG_check_num_args("Preferences::GetDefaultPath", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Preferences::GetDefaultPath", 1, "Preferences *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))) {
 			SWIG_fail_ptr("Preferences_GetDefaultPath", 1, SWIGTYPE_p_Preferences);
 		}
 
@@ -15135,7 +15135,7 @@ fail:
 		SWIG_check_num_args("Preferences::GetUserPrefsPath", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Preferences::GetUserPrefsPath", 1, "Preferences *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Preferences, 0))) {
 			SWIG_fail_ptr("Preferences_GetUserPrefsPath", 1, SWIGTYPE_p_Preferences);
 		}
 
@@ -15211,7 +15211,7 @@ fail:
 		if (!SWIG_lua_isnilstring(L, 2)) SWIG_fail_arg("SoundDevice::LoadSample", 2, "char const *");
 		if (!lua_isboolean(L, 3)) SWIG_fail_arg("SoundDevice::LoadSample", 3, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_LoadSample", 1, SWIGTYPE_p_SoundDevice);
 		}
 
@@ -15248,11 +15248,11 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("SoundDevice::PlaySound", 4, "bool");
 		if (!lua_isnumber(L, 5)) SWIG_fail_arg("SoundDevice::PlaySound", 5, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_PlaySound", 1, SWIGTYPE_p_SoundDevice);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSampleHandle, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSampleHandle, 0))) {
 			SWIG_fail_ptr("SoundDevice_PlaySound", 2, SWIGTYPE_p_AngelSampleHandle);
 		}
 		arg2 = *argp2;
@@ -15289,11 +15289,11 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("SoundDevice::PlaySound", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("SoundDevice::PlaySound", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_PlaySound", 1, SWIGTYPE_p_SoundDevice);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSampleHandle, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSampleHandle, 0))) {
 			SWIG_fail_ptr("SoundDevice_PlaySound", 2, SWIGTYPE_p_AngelSampleHandle);
 		}
 		arg2 = *argp2;
@@ -15327,11 +15327,11 @@ fail:
 		if (!lua_isuserdata(L, 2)) SWIG_fail_arg("SoundDevice::PlaySound", 2, "AngelSampleHandle");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("SoundDevice::PlaySound", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_PlaySound", 1, SWIGTYPE_p_SoundDevice);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSampleHandle, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSampleHandle, 0))) {
 			SWIG_fail_ptr("SoundDevice_PlaySound", 2, SWIGTYPE_p_AngelSampleHandle);
 		}
 		arg2 = *argp2;
@@ -15362,11 +15362,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("SoundDevice::PlaySound", 1, "SoundDevice *");
 		if (!lua_isuserdata(L, 2)) SWIG_fail_arg("SoundDevice::PlaySound", 2, "AngelSampleHandle");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_PlaySound", 1, SWIGTYPE_p_SoundDevice);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSampleHandle, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSampleHandle, 0))) {
 			SWIG_fail_ptr("SoundDevice_PlaySound", 2, SWIGTYPE_p_AngelSampleHandle);
 		}
 		arg2 = *argp2;
@@ -15546,11 +15546,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("SoundDevice::StopSound", 1, "SoundDevice *");
 		if (!lua_isuserdata(L, 2)) SWIG_fail_arg("SoundDevice::StopSound", 2, "AngelSoundHandle");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_StopSound", 1, SWIGTYPE_p_SoundDevice);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))) {
 			SWIG_fail_ptr("SoundDevice_StopSound", 2, SWIGTYPE_p_AngelSoundHandle);
 		}
 		arg2 = *argp2;
@@ -15578,11 +15578,11 @@ fail:
 		if (!lua_isuserdata(L, 2)) SWIG_fail_arg("SoundDevice::PauseSound", 2, "AngelSoundHandle");
 		if (!lua_isboolean(L, 3)) SWIG_fail_arg("SoundDevice::PauseSound", 3, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_PauseSound", 1, SWIGTYPE_p_SoundDevice);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))) {
 			SWIG_fail_ptr("SoundDevice_PauseSound", 2, SWIGTYPE_p_AngelSoundHandle);
 		}
 		arg2 = *argp2;
@@ -15610,11 +15610,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("SoundDevice::IsPlaying", 1, "SoundDevice *");
 		if (!lua_isuserdata(L, 2)) SWIG_fail_arg("SoundDevice::IsPlaying", 2, "AngelSoundHandle");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_IsPlaying", 1, SWIGTYPE_p_SoundDevice);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))) {
 			SWIG_fail_ptr("SoundDevice_IsPlaying", 2, SWIGTYPE_p_AngelSoundHandle);
 		}
 		arg2 = *argp2;
@@ -15641,11 +15641,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("SoundDevice::IsPaused", 1, "SoundDevice *");
 		if (!lua_isuserdata(L, 2)) SWIG_fail_arg("SoundDevice::IsPaused", 2, "AngelSoundHandle");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_IsPaused", 1, SWIGTYPE_p_SoundDevice);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))) {
 			SWIG_fail_ptr("SoundDevice_IsPaused", 2, SWIGTYPE_p_AngelSoundHandle);
 		}
 		arg2 = *argp2;
@@ -15673,11 +15673,11 @@ fail:
 		if (!lua_isuserdata(L, 2)) SWIG_fail_arg("SoundDevice::SetPan", 2, "AngelSoundHandle");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("SoundDevice::SetPan", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_SetPan", 1, SWIGTYPE_p_SoundDevice);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))) {
 			SWIG_fail_ptr("SoundDevice_SetPan", 2, SWIGTYPE_p_AngelSoundHandle);
 		}
 		arg2 = *argp2;
@@ -15706,11 +15706,11 @@ fail:
 		if (!lua_isuserdata(L, 2)) SWIG_fail_arg("SoundDevice::SetVolume", 2, "AngelSoundHandle");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("SoundDevice::SetVolume", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_SoundDevice, 0))) {
 			SWIG_fail_ptr("SoundDevice_SetVolume", 1, SWIGTYPE_p_SoundDevice);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_AngelSoundHandle, 0))) {
 			SWIG_fail_ptr("SoundDevice_SetVolume", 2, SWIGTYPE_p_AngelSoundHandle);
 		}
 		arg2 = *argp2;
@@ -15786,7 +15786,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::LeftThumbstickX", 1, "ControllerInput *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ControllerInput::LeftThumbstickX", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_LeftThumbstickX_set", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -15810,7 +15810,7 @@ fail:
 		SWIG_check_num_args("ControllerInput::LeftThumbstickX", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::LeftThumbstickX", 1, "ControllerInput *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_LeftThumbstickX_get", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -15834,7 +15834,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::LeftThumbstickY", 1, "ControllerInput *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ControllerInput::LeftThumbstickY", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_LeftThumbstickY_set", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -15858,7 +15858,7 @@ fail:
 		SWIG_check_num_args("ControllerInput::LeftThumbstickY", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::LeftThumbstickY", 1, "ControllerInput *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_LeftThumbstickY_get", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -15882,7 +15882,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::RightThumbstickX", 1, "ControllerInput *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ControllerInput::RightThumbstickX", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_RightThumbstickX_set", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -15906,7 +15906,7 @@ fail:
 		SWIG_check_num_args("ControllerInput::RightThumbstickX", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::RightThumbstickX", 1, "ControllerInput *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_RightThumbstickX_get", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -15930,7 +15930,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::RightThumbstickY", 1, "ControllerInput *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ControllerInput::RightThumbstickY", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_RightThumbstickY_set", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -15954,7 +15954,7 @@ fail:
 		SWIG_check_num_args("ControllerInput::RightThumbstickY", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::RightThumbstickY", 1, "ControllerInput *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_RightThumbstickY_get", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -15978,7 +15978,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::LeftTriggerValue", 1, "ControllerInput *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ControllerInput::LeftTriggerValue", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_LeftTriggerValue_set", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -16002,7 +16002,7 @@ fail:
 		SWIG_check_num_args("ControllerInput::LeftTriggerValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::LeftTriggerValue", 1, "ControllerInput *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_LeftTriggerValue_get", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -16026,7 +16026,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::RightTriggerValue", 1, "ControllerInput *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ControllerInput::RightTriggerValue", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_RightTriggerValue_set", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -16050,7 +16050,7 @@ fail:
 		SWIG_check_num_args("ControllerInput::RightTriggerValue", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::RightTriggerValue", 1, "ControllerInput *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_RightTriggerValue_get", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -16074,7 +16074,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::Buttons", 1, "ControllerInput *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ControllerInput::Buttons", 2, "unsigned int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_Buttons_set", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -16099,7 +16099,7 @@ fail:
 		SWIG_check_num_args("ControllerInput::Buttons", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerInput::Buttons", 1, "ControllerInput *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerInput, 0))) {
 			SWIG_fail_ptr("ControllerInput_Buttons_get", 1, SWIGTYPE_p_ControllerInput);
 		}
 
@@ -16186,7 +16186,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerManager::GetController", 1, "ControllerManager *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ControllerManager::GetController", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerManager, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerManager, 0))) {
 			SWIG_fail_ptr("ControllerManager_GetController", 1, SWIGTYPE_p_ControllerManager);
 		}
 
@@ -16210,7 +16210,7 @@ fail:
 		SWIG_check_num_args("ControllerManager::GetController", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ControllerManager::GetController", 1, "ControllerManager *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerManager, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ControllerManager, 0))) {
 			SWIG_fail_ptr("ControllerManager_GetController", 1, SWIGTYPE_p_ControllerManager);
 		}
 
@@ -16308,7 +16308,7 @@ fail:
 		SWIG_check_num_args("Controller::GetState", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::GetState", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_GetState", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16334,7 +16334,7 @@ fail:
 		SWIG_check_num_args("Controller::GetLeftThumbVec2", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::GetLeftThumbVec2", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_GetLeftThumbVec2", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16360,7 +16360,7 @@ fail:
 		SWIG_check_num_args("Controller::GetRightThumbVec2", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::GetRightThumbVec2", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_GetRightThumbVec2", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16386,7 +16386,7 @@ fail:
 		SWIG_check_num_args("Controller::GetLeftThumbstick", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::GetLeftThumbstick", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_GetLeftThumbstick", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16412,7 +16412,7 @@ fail:
 		SWIG_check_num_args("Controller::GetRightThumbstick", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::GetRightThumbstick", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_GetRightThumbstick", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16438,7 +16438,7 @@ fail:
 		SWIG_check_num_args("Controller::GetRightTrigger", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::GetRightTrigger", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_GetRightTrigger", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16461,7 +16461,7 @@ fail:
 		SWIG_check_num_args("Controller::GetLeftTrigger", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::GetLeftTrigger", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_GetLeftTrigger", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16486,7 +16486,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsButtonDown", 1, "Controller *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Controller::IsButtonDown", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsButtonDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16510,7 +16510,7 @@ fail:
 		SWIG_check_num_args("Controller::IsAButtonDown", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsAButtonDown", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsAButtonDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16533,7 +16533,7 @@ fail:
 		SWIG_check_num_args("Controller::IsBButtonDown", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsBButtonDown", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsBButtonDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16556,7 +16556,7 @@ fail:
 		SWIG_check_num_args("Controller::IsXButtonDown", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsXButtonDown", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsXButtonDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16579,7 +16579,7 @@ fail:
 		SWIG_check_num_args("Controller::IsYButtonDown", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsYButtonDown", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsYButtonDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16602,7 +16602,7 @@ fail:
 		SWIG_check_num_args("Controller::IsLeftThumbstickButtonDown", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsLeftThumbstickButtonDown", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsLeftThumbstickButtonDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16625,7 +16625,7 @@ fail:
 		SWIG_check_num_args("Controller::IsRightThumbstickButtonDown", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsRightThumbstickButtonDown", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsRightThumbstickButtonDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16648,7 +16648,7 @@ fail:
 		SWIG_check_num_args("Controller::IsStartButtonDown", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsStartButtonDown", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsStartButtonDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16671,7 +16671,7 @@ fail:
 		SWIG_check_num_args("Controller::IsBackButtonDown", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsBackButtonDown", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsBackButtonDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16694,7 +16694,7 @@ fail:
 		SWIG_check_num_args("Controller::IsLeftBumperDown", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsLeftBumperDown", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsLeftBumperDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16717,7 +16717,7 @@ fail:
 		SWIG_check_num_args("Controller::IsRightBumperDown", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsRightBumperDown", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsRightBumperDown", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16740,7 +16740,7 @@ fail:
 		SWIG_check_num_args("Controller::IsLeftTriggerPressed", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsLeftTriggerPressed", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsLeftTriggerPressed", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16763,7 +16763,7 @@ fail:
 		SWIG_check_num_args("Controller::IsRightTriggerPressed", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsRightTriggerPressed", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsRightTriggerPressed", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16787,7 +16787,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::SetLeftVibrationRaw", 1, "Controller *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Controller::SetLeftVibrationRaw", 2, "unsigned int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_SetLeftVibrationRaw", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16813,7 +16813,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::SetRightVibrationRaw", 1, "Controller *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Controller::SetRightVibrationRaw", 2, "unsigned int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_SetRightVibrationRaw", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16839,7 +16839,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::SetLeftVibration", 1, "Controller *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Controller::SetLeftVibration", 2, "unsigned int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_SetLeftVibration", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16865,7 +16865,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::SetRightVibration", 1, "Controller *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Controller::SetRightVibration", 2, "unsigned int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_SetRightVibration", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16890,7 +16890,7 @@ fail:
 		SWIG_check_num_args("Controller::GetLeftVibration", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::GetLeftVibration", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_GetLeftVibration", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16913,7 +16913,7 @@ fail:
 		SWIG_check_num_args("Controller::GetRightVibration", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::GetRightVibration", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_GetRightVibration", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16936,7 +16936,7 @@ fail:
 		SWIG_check_num_args("Controller::IsConnected", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::IsConnected", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_IsConnected", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -16959,7 +16959,7 @@ fail:
 		SWIG_check_num_args("Controller::GetControllerID", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Controller::GetControllerID", 1, "Controller *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Controller, 0))) {
 			SWIG_fail_ptr("Controller_GetControllerID", 1, SWIGTYPE_p_Controller);
 		}
 
@@ -17049,42 +17049,42 @@ fail:
 		SWIG_check_num_args("MouseListener::MouseMotionEvent", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("MouseListener::MouseMotionEvent", 1, "MouseListener *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_MouseListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_MouseListener, 0))) {
 			SWIG_fail_ptr("MouseListener_MouseMotionEvent", 1, SWIGTYPE_p_MouseListener);
 		}
 
-  {
-	  // Vec2i conversion
-	  Vec2i *vecPtr;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec2i, 0)))
-	  {
-		  arg2 = *vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to ints
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  int x = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  int y = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
+		{
+			// Vec2i conversion
+			Vec2i *vecPtr;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec2i, 0)))
+			{
+				arg2 = *vecPtr;
+			}
+			else
+			{
+				// convert table parameters to ints
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				int x = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				int y = lua_tointeger(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  arg2 = Vec2i(x, y);
-	  }
-  }
-  (arg1)->MouseMotionEvent(arg2);
+				// build the vector
+				arg2 = Vec2i(x, y);
+			}
+		}
+		(arg1)->MouseMotionEvent(arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_MouseListener_MouseDownEvent(lua_State* L) {
@@ -17097,43 +17097,43 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("MouseListener::MouseDownEvent", 1, "MouseListener *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("MouseListener::MouseDownEvent", 3, "MouseButtonInput");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_MouseListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_MouseListener, 0))) {
 			SWIG_fail_ptr("MouseListener_MouseDownEvent", 1, SWIGTYPE_p_MouseListener);
 		}
 
-  {
-	  // Vec2i conversion
-	  Vec2i *vecPtr;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec2i, 0)))
-	  {
-		  arg2 = *vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to ints
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  int x = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  int y = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
+		{
+			// Vec2i conversion
+			Vec2i *vecPtr;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec2i, 0)))
+			{
+				arg2 = *vecPtr;
+			}
+			else
+			{
+				// convert table parameters to ints
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				int x = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				int y = lua_tointeger(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  arg2 = Vec2i(x, y);
-	  }
-  }
-  arg3 = (MouseButtonInput)(int)lua_tonumber(L, 3);
-  (arg1)->MouseDownEvent(arg2, arg3);
+				// build the vector
+				arg2 = Vec2i(x, y);
+			}
+		}
+		arg3 = (MouseButtonInput)(int)lua_tonumber(L, 3);
+		(arg1)->MouseDownEvent(arg2, arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_MouseListener_MouseUpEvent(lua_State* L) {
@@ -17146,43 +17146,43 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("MouseListener::MouseUpEvent", 1, "MouseListener *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("MouseListener::MouseUpEvent", 3, "MouseButtonInput");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_MouseListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_MouseListener, 0))) {
 			SWIG_fail_ptr("MouseListener_MouseUpEvent", 1, SWIGTYPE_p_MouseListener);
 		}
 
-  {
-	  // Vec2i conversion
-	  Vec2i *vecPtr;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec2i, 0)))
-	  {
-		  arg2 = *vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to ints
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  int x = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  int y = lua_tointeger(L, -1);
-		  lua_pop(L, 1);
+		{
+			// Vec2i conversion
+			Vec2i *vecPtr;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vec2i, 0)))
+			{
+				arg2 = *vecPtr;
+			}
+			else
+			{
+				// convert table parameters to ints
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				int x = lua_tointeger(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				int y = lua_tointeger(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  arg2 = Vec2i(x, y);
-	  }
-  }
-  arg3 = (MouseButtonInput)(int)lua_tonumber(L, 3);
-  (arg1)->MouseUpEvent(arg2, arg3);
+				// build the vector
+				arg2 = Vec2i(x, y);
+			}
+		}
+		arg3 = (MouseButtonInput)(int)lua_tonumber(L, 3);
+		(arg1)->MouseUpEvent(arg2, arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_MouseListener_MouseWheelEvent(lua_State* L) {
@@ -17193,45 +17193,45 @@ fail:
 		SWIG_check_num_args("MouseListener::MouseWheelEvent", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("MouseListener::MouseWheelEvent", 1, "MouseListener *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_MouseListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_MouseListener, 0))) {
 			SWIG_fail_ptr("MouseListener_MouseWheelEvent", 1, SWIGTYPE_p_MouseListener);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->MouseWheelEvent((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->MouseWheelEvent((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static void swig_delete_MouseListener(void *obj) {
@@ -17270,11 +17270,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Touch::StartingPoint", 1, "Touch *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Touch::StartingPoint", 2, "Vec2i *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("Touch_StartingPoint_set", 1, SWIGTYPE_p_Touch);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Vec2i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Vec2i, 0))) {
 			SWIG_fail_ptr("Touch_StartingPoint_set", 2, SWIGTYPE_p_Vec2i);
 		}
 
@@ -17297,7 +17297,7 @@ fail:
 		SWIG_check_num_args("Touch::StartingPoint", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Touch::StartingPoint", 1, "Touch *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("Touch_StartingPoint_get", 1, SWIGTYPE_p_Touch);
 		}
 
@@ -17321,11 +17321,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Touch::CurrentPoint", 1, "Touch *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Touch::CurrentPoint", 2, "Vec2i *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("Touch_CurrentPoint_set", 1, SWIGTYPE_p_Touch);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Vec2i, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Vec2i, 0))) {
 			SWIG_fail_ptr("Touch_CurrentPoint_set", 2, SWIGTYPE_p_Vec2i);
 		}
 
@@ -17348,7 +17348,7 @@ fail:
 		SWIG_check_num_args("Touch::CurrentPoint", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Touch::CurrentPoint", 1, "Touch *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("Touch_CurrentPoint_get", 1, SWIGTYPE_p_Touch);
 		}
 
@@ -17372,7 +17372,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Touch::StartTime", 1, "Touch *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Touch::StartTime", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("Touch_StartTime_set", 1, SWIGTYPE_p_Touch);
 		}
 
@@ -17396,7 +17396,7 @@ fail:
 		SWIG_check_num_args("Touch::StartTime", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Touch::StartTime", 1, "Touch *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("Touch_StartTime_get", 1, SWIGTYPE_p_Touch);
 		}
 
@@ -17420,7 +17420,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Touch::MotionStartTime", 1, "Touch *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Touch::MotionStartTime", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("Touch_MotionStartTime_set", 1, SWIGTYPE_p_Touch);
 		}
 
@@ -17444,7 +17444,7 @@ fail:
 		SWIG_check_num_args("Touch::MotionStartTime", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Touch::MotionStartTime", 1, "Touch *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("Touch_MotionStartTime_get", 1, SWIGTYPE_p_Touch);
 		}
 
@@ -17468,7 +17468,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Touch::__platformTouch", 1, "Touch *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Touch::__platformTouch", 2, "void *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("Touch___platformTouch_set", 1, SWIGTYPE_p_Touch);
 		}
 
@@ -17492,7 +17492,7 @@ fail:
 		SWIG_check_num_args("Touch::__platformTouch", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Touch::__platformTouch", 1, "Touch *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("Touch___platformTouch_get", 1, SWIGTYPE_p_Touch);
 		}
 
@@ -17560,7 +17560,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GestureData::Velocity", 1, "GestureData *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("GestureData::Velocity", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GestureData, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GestureData, 0))) {
 			SWIG_fail_ptr("GestureData_Velocity_set", 1, SWIGTYPE_p_GestureData);
 		}
 
@@ -17584,7 +17584,7 @@ fail:
 		SWIG_check_num_args("GestureData::Velocity", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GestureData::Velocity", 1, "GestureData *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GestureData, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GestureData, 0))) {
 			SWIG_fail_ptr("GestureData_Velocity_get", 1, SWIGTYPE_p_GestureData);
 		}
 
@@ -17608,7 +17608,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GestureData::GestureMagnitude", 1, "GestureData *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("GestureData::GestureMagnitude", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GestureData, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GestureData, 0))) {
 			SWIG_fail_ptr("GestureData_GestureMagnitude_set", 1, SWIGTYPE_p_GestureData);
 		}
 
@@ -17632,7 +17632,7 @@ fail:
 		SWIG_check_num_args("GestureData::GestureMagnitude", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GestureData::GestureMagnitude", 1, "GestureData *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GestureData, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GestureData, 0))) {
 			SWIG_fail_ptr("GestureData_GestureMagnitude_get", 1, SWIGTYPE_p_GestureData);
 		}
 
@@ -17713,11 +17713,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TouchListener::TouchMotionEvent", 1, "TouchListener *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("TouchListener::TouchMotionEvent", 2, "Touch *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TouchListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TouchListener, 0))) {
 			SWIG_fail_ptr("TouchListener_TouchMotionEvent", 1, SWIGTYPE_p_TouchListener);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("TouchListener_TouchMotionEvent", 2, SWIGTYPE_p_Touch);
 		}
 
@@ -17741,11 +17741,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TouchListener::TouchEndEvent", 1, "TouchListener *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("TouchListener::TouchEndEvent", 2, "Touch *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TouchListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TouchListener, 0))) {
 			SWIG_fail_ptr("TouchListener_TouchEndEvent", 1, SWIGTYPE_p_TouchListener);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("TouchListener_TouchEndEvent", 2, SWIGTYPE_p_Touch);
 		}
 
@@ -17769,11 +17769,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TouchListener::TouchStartEvent", 1, "TouchListener *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("TouchListener::TouchStartEvent", 2, "Touch *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TouchListener, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TouchListener, 0))) {
 			SWIG_fail_ptr("TouchListener_TouchStartEvent", 1, SWIGTYPE_p_TouchListener);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Touch, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Touch, 0))) {
 			SWIG_fail_ptr("TouchListener_TouchStartEvent", 2, SWIGTYPE_p_Touch);
 		}
 
@@ -17855,7 +17855,7 @@ fail:
 		SWIG_check_num_args("Accelerometer::GetData", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Accelerometer::GetData", 1, "Accelerometer *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Accelerometer, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Accelerometer, 0))) {
 			SWIG_fail_ptr("Accelerometer_GetData", 1, SWIGTYPE_p_Accelerometer);
 		}
 
@@ -17995,7 +17995,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::SetSize", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::SetSize", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetSize", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18021,7 +18021,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetSize", 1, "Actor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::SetSize", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetSize", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18045,45 +18045,45 @@ fail:
 		SWIG_check_num_args("Actor::SetSize", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetSize", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetSize", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetSize((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetSize((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_SetSize(lua_State* L) {
@@ -18208,7 +18208,7 @@ fail:
 		SWIG_check_num_args("Actor::GetSize", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetSize", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetSize", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18234,7 +18234,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::SetPosition", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::SetPosition", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetPosition", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18259,45 +18259,45 @@ fail:
 		SWIG_check_num_args("Actor::SetPosition", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetPosition", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetPosition", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetPosition((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetPosition((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_SetPosition(lua_State* L) {
@@ -18401,7 +18401,7 @@ fail:
 		SWIG_check_num_args("Actor::GetPosition", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetPosition", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetPosition", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18425,7 +18425,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetRotation", 1, "Actor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::SetRotation", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetRotation", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18449,7 +18449,7 @@ fail:
 		SWIG_check_num_args("Actor::GetRotation", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetRotation", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetRotation", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18479,7 +18479,7 @@ fail:
 		if (!lua_isnumber(L, 4)) SWIG_fail_arg("Actor::SetColor", 4, "float");
 		if (!lua_isnumber(L, 5)) SWIG_fail_arg("Actor::SetColor", 5, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetColor", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18511,7 +18511,7 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::SetColor", 3, "float");
 		if (!lua_isnumber(L, 4)) SWIG_fail_arg("Actor::SetColor", 4, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetColor", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18537,58 +18537,58 @@ fail:
 		SWIG_check_num_args("Actor::SetColor", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetColor", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetColor", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // Color conversion
-	  Color *colPtr;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = *colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// Color conversion
+			Color *colPtr;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = *colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  arg2 = Color(r, g, b, a);
-	  }
-  }
-  (arg1)->SetColor(arg2);
+				// build the color
+				arg2 = Color(r, g, b, a);
+			}
+		}
+		(arg1)->SetColor(arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_SetColor(lua_State* L) {
@@ -18737,7 +18737,7 @@ fail:
 		SWIG_check_num_args("Actor::GetColor", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetColor", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetColor", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18761,7 +18761,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetAlpha", 1, "Actor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::SetAlpha", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetAlpha", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18785,7 +18785,7 @@ fail:
 		SWIG_check_num_args("Actor::GetAlpha", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetAlpha", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetAlpha", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18809,7 +18809,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetDrawShape", 1, "Actor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::SetDrawShape", 2, "actorDrawShape");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetDrawShape", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18833,7 +18833,7 @@ fail:
 		SWIG_check_num_args("Actor::GetDrawShape", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetDrawShape", 1, "Actor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetDrawShape", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -18862,48 +18862,48 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Actor::MoveTo", 4, "bool");
 		if (!lua_isstring(L, 5)) SWIG_fail_arg("Actor::MoveTo", 5, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_MoveTo", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
-  (arg1)->MoveTo((Vector2 const &)*arg2, arg3, arg4, arg5);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
+		(arg1)->MoveTo((Vector2 const &)*arg2, arg3, arg4, arg5);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_MoveTo__SWIG_1(lua_State* L) {
@@ -18918,47 +18918,47 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::MoveTo", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Actor::MoveTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_MoveTo", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (arg1)->MoveTo((Vector2 const &)*arg2, arg3, arg4);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(arg1)->MoveTo((Vector2 const &)*arg2, arg3, arg4);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_MoveTo__SWIG_2(lua_State* L) {
@@ -18971,46 +18971,46 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::MoveTo", 1, "Actor *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::MoveTo", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_MoveTo", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  (arg1)->MoveTo((Vector2 const &)*arg2, arg3);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		(arg1)->MoveTo((Vector2 const &)*arg2, arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_MoveTo(lua_State* L) {
@@ -19233,7 +19233,7 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Actor::RotateTo", 4, "bool");
 		if (!lua_isstring(L, 5)) SWIG_fail_arg("Actor::RotateTo", 5, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_RotateTo", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -19265,7 +19265,7 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::RotateTo", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Actor::RotateTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_RotateTo", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -19294,7 +19294,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::RotateTo", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::RotateTo", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_RotateTo", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -19431,66 +19431,66 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Actor::ChangeColorTo", 4, "bool");
 		if (!lua_isstring(L, 5)) SWIG_fail_arg("Actor::ChangeColorTo", 5, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_ChangeColorTo", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Color& conversion
-	  Color *colPtr;
-	  Color col;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Color& conversion
+			Color *colPtr;
+			Color col;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  col.R = r;
-		  col.G = g;
-		  col.B = b;
-		  col.A = a;
-		  arg2 = &col;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
-  (arg1)->ChangeColorTo((Color const &)*arg2, arg3, arg4, arg5);
+				// build the color
+				col.R = r;
+				col.G = g;
+				col.B = b;
+				col.A = a;
+				arg2 = &col;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
+		(arg1)->ChangeColorTo((Color const &)*arg2, arg3, arg4, arg5);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_ChangeColorTo__SWIG_1(lua_State* L) {
@@ -19505,65 +19505,65 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::ChangeColorTo", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Actor::ChangeColorTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_ChangeColorTo", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Color& conversion
-	  Color *colPtr;
-	  Color col;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Color& conversion
+			Color *colPtr;
+			Color col;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  col.R = r;
-		  col.G = g;
-		  col.B = b;
-		  col.A = a;
-		  arg2 = &col;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (arg1)->ChangeColorTo((Color const &)*arg2, arg3, arg4);
+				// build the color
+				col.R = r;
+				col.G = g;
+				col.B = b;
+				col.A = a;
+				arg2 = &col;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(arg1)->ChangeColorTo((Color const &)*arg2, arg3, arg4);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_ChangeColorTo__SWIG_2(lua_State* L) {
@@ -19576,64 +19576,64 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::ChangeColorTo", 1, "Actor *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::ChangeColorTo", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_ChangeColorTo", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Color& conversion
-	  Color *colPtr;
-	  Color col;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Color& conversion
+			Color *colPtr;
+			Color col;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  col.R = r;
-		  col.G = g;
-		  col.B = b;
-		  col.A = a;
-		  arg2 = &col;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  (arg1)->ChangeColorTo((Color const &)*arg2, arg3);
+				// build the color
+				col.R = r;
+				col.G = g;
+				col.B = b;
+				col.A = a;
+				arg2 = &col;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		(arg1)->ChangeColorTo((Color const &)*arg2, arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_ChangeColorTo(lua_State* L) {
@@ -19867,48 +19867,48 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Actor::ChangeSizeTo", 4, "bool");
 		if (!lua_isstring(L, 5)) SWIG_fail_arg("Actor::ChangeSizeTo", 5, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_ChangeSizeTo", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
-  (arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3, arg4, arg5);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
+		(arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3, arg4, arg5);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_ChangeSizeTo__SWIG_1(lua_State* L) {
@@ -19923,47 +19923,47 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::ChangeSizeTo", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Actor::ChangeSizeTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_ChangeSizeTo", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3, arg4);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3, arg4);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_ChangeSizeTo__SWIG_2(lua_State* L) {
@@ -19976,46 +19976,46 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::ChangeSizeTo", 1, "Actor *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::ChangeSizeTo", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_ChangeSizeTo", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  (arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		(arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_ChangeSizeTo__SWIG_3(lua_State* L) {
@@ -20033,7 +20033,7 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Actor::ChangeSizeTo", 4, "bool");
 		if (!lua_isstring(L, 5)) SWIG_fail_arg("Actor::ChangeSizeTo", 5, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_ChangeSizeTo", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -20065,7 +20065,7 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::ChangeSizeTo", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Actor::ChangeSizeTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_ChangeSizeTo", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -20094,7 +20094,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::ChangeSizeTo", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::ChangeSizeTo", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_ChangeSizeTo", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -20419,7 +20419,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetSpriteTexture", 1, "Actor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::GetSpriteTexture", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetSpriteTexture", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -20443,7 +20443,7 @@ fail:
 		SWIG_check_num_args("Actor::GetSpriteTexture", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetSpriteTexture", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetSpriteTexture", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -20528,19 +20528,19 @@ fail:
 		if (!lua_isuserdata(L, 5)) SWIG_fail_arg("Actor::SetSprite", 5, "GLint");
 		if (!lua_isboolean(L, 6)) SWIG_fail_arg("Actor::SetSprite", 6, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetSprite", 1, SWIGTYPE_p_Actor);
 		}
 
 		(&arg2)->assign(lua_tostring(L, 2), lua_rawlen(L, 2));
 		arg3 = (int)lua_tonumber(L, 3);
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&argp4, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&argp4, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("Actor_SetSprite", 4, SWIGTYPE_p_GLint);
 		}
 		arg4 = *argp4;
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 5, (void**)&argp5, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 5, (void**)&argp5, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("Actor_SetSprite", 5, SWIGTYPE_p_GLint);
 		}
 		arg5 = *argp5;
@@ -20575,19 +20575,19 @@ fail:
 		if (!lua_isuserdata(L, 4)) SWIG_fail_arg("Actor::SetSprite", 4, "GLint");
 		if (!lua_isuserdata(L, 5)) SWIG_fail_arg("Actor::SetSprite", 5, "GLint");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetSprite", 1, SWIGTYPE_p_Actor);
 		}
 
 		(&arg2)->assign(lua_tostring(L, 2), lua_rawlen(L, 2));
 		arg3 = (int)lua_tonumber(L, 3);
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&argp4, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&argp4, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("Actor_SetSprite", 4, SWIGTYPE_p_GLint);
 		}
 		arg4 = *argp4;
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 5, (void**)&argp5, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 5, (void**)&argp5, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("Actor_SetSprite", 5, SWIGTYPE_p_GLint);
 		}
 		arg5 = *argp5;
@@ -20618,14 +20618,14 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::SetSprite", 3, "int");
 		if (!lua_isuserdata(L, 4)) SWIG_fail_arg("Actor::SetSprite", 4, "GLint");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetSprite", 1, SWIGTYPE_p_Actor);
 		}
 
 		(&arg2)->assign(lua_tostring(L, 2), lua_rawlen(L, 2));
 		arg3 = (int)lua_tonumber(L, 3);
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&argp4, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&argp4, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("Actor_SetSprite", 4, SWIGTYPE_p_GLint);
 		}
 		arg4 = *argp4;
@@ -20653,7 +20653,7 @@ fail:
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Actor::SetSprite", 2, "String");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::SetSprite", 3, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetSprite", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -20680,7 +20680,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetSprite", 1, "Actor *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Actor::SetSprite", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetSprite", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -20901,7 +20901,7 @@ fail:
 		SWIG_check_num_args("Actor::ClearSpriteInfo", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::ClearSpriteInfo", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_ClearSpriteInfo", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -20931,18 +20931,18 @@ fail:
 		if (!lua_isuserdata(L, 3)) SWIG_fail_arg("Actor::LoadSpriteFrames", 3, "GLint");
 		if (!lua_isuserdata(L, 4)) SWIG_fail_arg("Actor::LoadSpriteFrames", 4, "GLint");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_LoadSpriteFrames", 1, SWIGTYPE_p_Actor);
 		}
 
 		(&arg2)->assign(lua_tostring(L, 2), lua_rawlen(L, 2));
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&argp3, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&argp3, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("Actor_LoadSpriteFrames", 3, SWIGTYPE_p_GLint);
 		}
 		arg3 = *argp3;
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&argp4, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&argp4, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("Actor_LoadSpriteFrames", 4, SWIGTYPE_p_GLint);
 		}
 		arg4 = *argp4;
@@ -20970,13 +20970,13 @@ fail:
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Actor::LoadSpriteFrames", 2, "String");
 		if (!lua_isuserdata(L, 3)) SWIG_fail_arg("Actor::LoadSpriteFrames", 3, "GLint");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_LoadSpriteFrames", 1, SWIGTYPE_p_Actor);
 		}
 
 		(&arg2)->assign(lua_tostring(L, 2), lua_rawlen(L, 2));
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&argp3, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&argp3, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("Actor_LoadSpriteFrames", 3, SWIGTYPE_p_GLint);
 		}
 		arg3 = *argp3;
@@ -21001,7 +21001,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::LoadSpriteFrames", 1, "Actor *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Actor::LoadSpriteFrames", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_LoadSpriteFrames", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21143,7 +21143,7 @@ fail:
 		if (!lua_isnumber(L, 5)) SWIG_fail_arg("Actor::PlaySpriteAnimation", 5, "int");
 		if (!SWIG_lua_isnilstring(L, 6)) SWIG_fail_arg("Actor::PlaySpriteAnimation", 6, "char const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_PlaySpriteAnimation", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21178,7 +21178,7 @@ fail:
 		if (!lua_isnumber(L, 4)) SWIG_fail_arg("Actor::PlaySpriteAnimation", 4, "int");
 		if (!lua_isnumber(L, 5)) SWIG_fail_arg("Actor::PlaySpriteAnimation", 5, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_PlaySpriteAnimation", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21210,7 +21210,7 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::PlaySpriteAnimation", 3, "spriteAnimationType");
 		if (!lua_isnumber(L, 4)) SWIG_fail_arg("Actor::PlaySpriteAnimation", 4, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_PlaySpriteAnimation", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21239,7 +21239,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::PlaySpriteAnimation", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Actor::PlaySpriteAnimation", 3, "spriteAnimationType");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_PlaySpriteAnimation", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21265,7 +21265,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::PlaySpriteAnimation", 1, "Actor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::PlaySpriteAnimation", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_PlaySpriteAnimation", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21458,7 +21458,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetSpriteFrame", 1, "Actor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::SetSpriteFrame", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetSpriteFrame", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21482,7 +21482,7 @@ fail:
 		SWIG_check_num_args("Actor::GetSpriteFrame", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetSpriteFrame", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetSpriteFrame", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21505,7 +21505,7 @@ fail:
 		SWIG_check_num_args("Actor::IsSpriteAnimPlaying", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::IsSpriteAnimPlaying", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_IsSpriteAnimPlaying", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21529,71 +21529,71 @@ fail:
 		SWIG_check_num_args("Actor::SetUVs", 3, 3)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetUVs", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetUVs", 1, SWIGTYPE_p_Actor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  (arg1)->SetUVs((Vector2 const &)*arg2, (Vector2 const &)*arg3);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		(arg1)->SetUVs((Vector2 const &)*arg2, (Vector2 const &)*arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Actor_GetUVs(lua_State* L) {
@@ -21607,15 +21607,15 @@ fail:
 		if (!lua_isuserdata(L, 2)) SWIG_fail_arg("Actor::GetUVs", 2, "Vector2 &");
 		if (!lua_isuserdata(L, 3)) SWIG_fail_arg("Actor::GetUVs", 3, "Vector2 &");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetUVs", 1, SWIGTYPE_p_Actor);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Actor_GetUVs", 2, SWIGTYPE_p_Vector2);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_Vector2, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&arg3, SWIGTYPE_p_Vector2, 0))) {
 			SWIG_fail_ptr("Actor_GetUVs", 3, SWIGTYPE_p_Vector2);
 		}
 
@@ -21640,7 +21640,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::IsTagged", 1, "Actor *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Actor::IsTagged", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_IsTagged", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21665,7 +21665,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::Tag", 1, "Actor *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Actor::Tag", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_Tag", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21690,7 +21690,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::Untag", 1, "Actor *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Actor::Untag", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_Untag", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21714,7 +21714,7 @@ fail:
 		SWIG_check_num_args("Actor::GetTags", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetTags", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetTags", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21756,7 +21756,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetName", 1, "Actor *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Actor::SetName", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetName", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21780,7 +21780,7 @@ fail:
 		SWIG_check_num_args("Actor::GetName", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetName", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetName", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21893,7 +21893,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetLayer", 1, "Actor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Actor::SetLayer", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetLayer", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21918,7 +21918,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetLayer", 1, "Actor *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("Actor::SetLayer", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_SetLayer", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -21996,7 +21996,7 @@ fail:
 		SWIG_check_num_args("Actor::LevelUnloaded", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::LevelUnloaded", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_LevelUnloaded", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -22019,7 +22019,7 @@ fail:
 		SWIG_check_num_args("Actor::GetSelf", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetSelf", 1, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetSelf", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -22112,7 +22112,7 @@ fail:
 		SWIG_check_num_args("Actor::GetClassName", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::GetClassName", 1, "Actor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Actor_GetClassName", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -22133,7 +22133,7 @@ fail:
 
 		SWIG_check_num_args("Actor::SetScriptCreatedActor", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Actor::SetScriptCreatedActor", 1, "Actor *");
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, SWIG_POINTER_DISOWN))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Actor, SWIG_POINTER_DISOWN))) {
 			SWIG_fail_ptr("Actor_SetScriptCreatedActor", 1, SWIGTYPE_p_Actor);
 		}
 
@@ -22235,7 +22235,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TagCollection::GetObjectsTagged", 1, "TagCollection *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("TagCollection::GetObjectsTagged", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TagCollection, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TagCollection, 0))) {
 			SWIG_fail_ptr("TagCollection_GetObjectsTagged", 1, SWIGTYPE_p_TagCollection);
 		}
 
@@ -22275,7 +22275,7 @@ fail:
 		SWIG_check_num_args("TagCollection::GetTagList", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TagCollection::GetTagList", 1, "TagCollection *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TagCollection, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TagCollection, 0))) {
 			SWIG_fail_ptr("TagCollection_GetTagList", 1, SWIGTYPE_p_TagCollection);
 		}
 
@@ -22356,7 +22356,7 @@ fail:
 		SWIG_check_num_args("Camera::Reset", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::Reset", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_Reset", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -22386,11 +22386,11 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Camera::LockTo", 4, "bool");
 		if (!lua_isboolean(L, 5)) SWIG_fail_arg("Camera::LockTo", 5, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_LockTo", 1, SWIGTYPE_p_Camera);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Camera_LockTo", 2, SWIGTYPE_p_Actor);
 		}
 
@@ -22421,11 +22421,11 @@ fail:
 		if (!lua_isboolean(L, 3)) SWIG_fail_arg("Camera::LockTo", 3, "bool");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Camera::LockTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_LockTo", 1, SWIGTYPE_p_Camera);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Camera_LockTo", 2, SWIGTYPE_p_Actor);
 		}
 
@@ -22453,11 +22453,11 @@ fail:
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Camera::LockTo", 2, "Actor *");
 		if (!lua_isboolean(L, 3)) SWIG_fail_arg("Camera::LockTo", 3, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_LockTo", 1, SWIGTYPE_p_Camera);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Camera_LockTo", 2, SWIGTYPE_p_Actor);
 		}
 
@@ -22482,11 +22482,11 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::LockTo", 1, "Camera *");
 		if (!SWIG_isptrtype(L, 2)) SWIG_fail_arg("Camera::LockTo", 2, "Actor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_LockTo", 1, SWIGTYPE_p_Camera);
 		}
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Actor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&arg2, SWIGTYPE_p_Actor, 0))) {
 			SWIG_fail_ptr("Camera_LockTo", 2, SWIGTYPE_p_Actor);
 		}
 
@@ -22660,7 +22660,7 @@ fail:
 		SWIG_check_num_args("Camera::GetLockedActor", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetLockedActor", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetLockedActor", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -22753,7 +22753,7 @@ fail:
 		SWIG_check_num_args("Camera::GetWindowHeight", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetWindowHeight", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetWindowHeight", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -22776,7 +22776,7 @@ fail:
 		SWIG_check_num_args("Camera::GetWindowWidth", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetWindowWidth", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetWindowWidth", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -22799,7 +22799,7 @@ fail:
 		SWIG_check_num_args("Camera::GetViewRadius", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetViewRadius", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetViewRadius", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -22822,7 +22822,7 @@ fail:
 		SWIG_check_num_args("Camera::GetWorldMaxVertex", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetWorldMaxVertex", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetWorldMaxVertex", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -22848,7 +22848,7 @@ fail:
 		SWIG_check_num_args("Camera::GetWorldMinVertex", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetWorldMinVertex", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetWorldMinVertex", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -22879,7 +22879,7 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Camera::SetPosition", 3, "float");
 		if (!lua_isnumber(L, 4)) SWIG_fail_arg("Camera::SetPosition", 4, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_SetPosition", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -22908,7 +22908,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Camera::SetPosition", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Camera::SetPosition", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_SetPosition", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -22933,52 +22933,52 @@ fail:
 		SWIG_check_num_args("Camera::SetPosition", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::SetPosition", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_SetPosition", 1, SWIGTYPE_p_Camera);
 		}
 
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetPosition((Vector3 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetPosition((Vector3 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Camera_SetPosition__SWIG_3(lua_State* L) {
@@ -22989,45 +22989,45 @@ fail:
 		SWIG_check_num_args("Camera::SetPosition", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::SetPosition", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_SetPosition", 1, SWIGTYPE_p_Camera);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetPosition((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetPosition((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Camera_SetPosition(lua_State* L) {
@@ -23221,7 +23221,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::SetRotation", 1, "Camera *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Camera::SetRotation", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_SetRotation", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23251,55 +23251,55 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Camera::MoveTo", 4, "bool");
 		if (!lua_isstring(L, 5)) SWIG_fail_arg("Camera::MoveTo", 5, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_MoveTo", 1, SWIGTYPE_p_Camera);
 		}
 
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
-  (arg1)->MoveTo((Vector3 const &)*arg2, arg3, arg4, arg5);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
+		(arg1)->MoveTo((Vector3 const &)*arg2, arg3, arg4, arg5);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Camera_MoveTo__SWIG_1(lua_State* L) {
@@ -23314,54 +23314,54 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Camera::MoveTo", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("Camera::MoveTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_MoveTo", 1, SWIGTYPE_p_Camera);
 		}
 
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (arg1)->MoveTo((Vector3 const &)*arg2, arg3, arg4);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(arg1)->MoveTo((Vector3 const &)*arg2, arg3, arg4);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Camera_MoveTo__SWIG_2(lua_State* L) {
@@ -23374,53 +23374,53 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::MoveTo", 1, "Camera *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Camera::MoveTo", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_MoveTo", 1, SWIGTYPE_p_Camera);
 		}
 
-  {
-	  // const Vector3& conversion
-	  Vector3 *vecPtr;
-	  Vector3 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector3& conversion
+			Vector3 *vecPtr;
+			Vector3 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector3, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float z = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float z = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  vec.Z = z;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  (arg1)->MoveTo((Vector3 const &)*arg2, arg3);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				vec.Z = z;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		(arg1)->MoveTo((Vector3 const &)*arg2, arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_Camera_MoveTo(lua_State* L) {
@@ -23648,7 +23648,7 @@ fail:
 		SWIG_check_num_args("Camera::GetZ", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetZ", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetZ", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23673,7 +23673,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetZForViewRadius", 1, "Camera *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Camera::GetZForViewRadius", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetZForViewRadius", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23697,7 +23697,7 @@ fail:
 		SWIG_check_num_args("Camera::GetNearClipDist", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetNearClipDist", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetNearClipDist", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23720,7 +23720,7 @@ fail:
 		SWIG_check_num_args("Camera::GetFarClipDist", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetFarClipDist", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetFarClipDist", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23744,7 +23744,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::SetZByViewRadius", 1, "Camera *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Camera::SetZByViewRadius", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_SetZByViewRadius", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23769,7 +23769,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::SetNearClipDist", 1, "Camera *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Camera::SetNearClipDist", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_SetNearClipDist", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23794,7 +23794,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::SetFarClipDist", 1, "Camera *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("Camera::SetFarClipDist", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_SetFarClipDist", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23823,7 +23823,7 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("Camera::SetViewCenter", 3, "float");
 		if (!lua_isnumber(L, 4)) SWIG_fail_arg("Camera::SetViewCenter", 4, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_SetViewCenter", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23849,7 +23849,7 @@ fail:
 		SWIG_check_num_args("Camera::GetViewCenter", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetViewCenter", 1, "Camera *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetViewCenter", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23872,7 +23872,7 @@ fail:
 		SWIG_check_num_args("Camera::GetClassName", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("Camera::GetClassName", 1, "Camera const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_Camera, 0))) {
 			SWIG_fail_ptr("Camera_GetClassName", 1, SWIGTYPE_p_Camera);
 		}
 
@@ -23957,7 +23957,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetDensity", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetDensity", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetDensity", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -23982,7 +23982,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetFriction", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetFriction", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetFriction", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24007,7 +24007,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetRestitution", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetRestitution", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetRestitution", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24032,7 +24032,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetShapeType", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetShapeType", 2, "PhysicsActor::eShapeType");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetShapeType", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24057,7 +24057,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetIsSensor", 1, "PhysicsActor *");
 		if (!lua_isboolean(L, 2)) SWIG_fail_arg("PhysicsActor::SetIsSensor", 2, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetIsSensor", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24082,7 +24082,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetGroupIndex", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetGroupIndex", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetGroupIndex", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24107,7 +24107,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetFixedRotation", 1, "PhysicsActor *");
 		if (!lua_isboolean(L, 2)) SWIG_fail_arg("PhysicsActor::SetFixedRotation", 2, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetFixedRotation", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24130,7 +24130,7 @@ fail:
 		SWIG_check_num_args("PhysicsActor::InitPhysics", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::InitPhysics", 1, "PhysicsActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_InitPhysics", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24152,7 +24152,7 @@ fail:
 		SWIG_check_num_args("PhysicsActor::CustomInitPhysics", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::CustomInitPhysics", 1, "PhysicsActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_CustomInitPhysics", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24176,71 +24176,71 @@ fail:
 		SWIG_check_num_args("PhysicsActor::ApplyForce", 3, 3)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::ApplyForce", 1, "PhysicsActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ApplyForce", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  (arg1)->ApplyForce((Vector2 const &)*arg2, (Vector2 const &)*arg3);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		(arg1)->ApplyForce((Vector2 const &)*arg2, (Vector2 const &)*arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_ApplyLocalForce(lua_State* L) {
@@ -24252,71 +24252,71 @@ fail:
 		SWIG_check_num_args("PhysicsActor::ApplyLocalForce", 3, 3)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::ApplyLocalForce", 1, "PhysicsActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ApplyLocalForce", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  (arg1)->ApplyLocalForce((Vector2 const &)*arg2, (Vector2 const &)*arg3);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		(arg1)->ApplyLocalForce((Vector2 const &)*arg2, (Vector2 const &)*arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_ApplyTorque(lua_State* L) {
@@ -24328,7 +24328,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::ApplyTorque", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::ApplyTorque", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ApplyTorque", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24353,71 +24353,71 @@ fail:
 		SWIG_check_num_args("PhysicsActor::ApplyLinearImpulse", 3, 3)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::ApplyLinearImpulse", 1, "PhysicsActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ApplyLinearImpulse", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg3 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 3);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 3);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg3 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 3);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 3);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg3 = &vec;
-	  }
-  }
-  (arg1)->ApplyLinearImpulse((Vector2 const &)*arg2, (Vector2 const &)*arg3);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg3 = &vec;
+			}
+		}
+		(arg1)->ApplyLinearImpulse((Vector2 const &)*arg2, (Vector2 const &)*arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_ApplyAngularImpulse(lua_State* L) {
@@ -24429,7 +24429,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::ApplyAngularImpulse", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::ApplyAngularImpulse", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ApplyAngularImpulse", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24456,7 +24456,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetSize", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::SetSize", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetSize", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24482,7 +24482,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetSize", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetSize", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetSize", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24506,45 +24506,45 @@ fail:
 		SWIG_check_num_args("PhysicsActor::SetSize", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetSize", 1, "PhysicsActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetSize", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetSize((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetSize((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_SetSize(lua_State* L) {
@@ -24672,7 +24672,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetDrawSize", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::SetDrawSize", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetDrawSize", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24698,7 +24698,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetDrawSize", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetDrawSize", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetDrawSize", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24785,7 +24785,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetPosition", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::SetPosition", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetPosition", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24810,45 +24810,45 @@ fail:
 		SWIG_check_num_args("PhysicsActor::SetPosition", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetPosition", 1, "PhysicsActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetPosition", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetPosition((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetPosition((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_SetPosition(lua_State* L) {
@@ -24953,7 +24953,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::SetRotation", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::SetRotation", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_SetRotation", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -24983,48 +24983,48 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("PhysicsActor::MoveTo", 4, "bool");
 		if (!lua_isstring(L, 5)) SWIG_fail_arg("PhysicsActor::MoveTo", 5, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_MoveTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
-  (arg1)->MoveTo((Vector2 const &)*arg2, arg3, arg4, arg5);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
+		(arg1)->MoveTo((Vector2 const &)*arg2, arg3, arg4, arg5);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_MoveTo__SWIG_1(lua_State* L) {
@@ -25039,47 +25039,47 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::MoveTo", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("PhysicsActor::MoveTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_MoveTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (arg1)->MoveTo((Vector2 const &)*arg2, arg3, arg4);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(arg1)->MoveTo((Vector2 const &)*arg2, arg3, arg4);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_MoveTo__SWIG_2(lua_State* L) {
@@ -25092,46 +25092,46 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::MoveTo", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::MoveTo", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_MoveTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  (arg1)->MoveTo((Vector2 const &)*arg2, arg3);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		(arg1)->MoveTo((Vector2 const &)*arg2, arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_MoveTo(lua_State* L) {
@@ -25354,7 +25354,7 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("PhysicsActor::RotateTo", 4, "bool");
 		if (!lua_isstring(L, 5)) SWIG_fail_arg("PhysicsActor::RotateTo", 5, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_RotateTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -25386,7 +25386,7 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::RotateTo", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("PhysicsActor::RotateTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_RotateTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -25415,7 +25415,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::RotateTo", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::RotateTo", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_RotateTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -25552,48 +25552,48 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 4, "bool");
 		if (!lua_isstring(L, 5)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 5, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ChangeSizeTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
-  (arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3, arg4, arg5);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(&arg5)->assign(lua_tostring(L, 5), lua_rawlen(L, 5));
+		(arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3, arg4, arg5);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_ChangeSizeTo__SWIG_1(lua_State* L) {
@@ -25608,47 +25608,47 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ChangeSizeTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  arg4 = (lua_toboolean(L, 4) != 0);
-  (arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3, arg4);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		arg4 = (lua_toboolean(L, 4) != 0);
+		(arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3, arg4);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_ChangeSizeTo__SWIG_2(lua_State* L) {
@@ -25661,46 +25661,46 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 1, "PhysicsActor *");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ChangeSizeTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  (arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		(arg1)->ChangeSizeTo((Vector2 const &)*arg2, arg3);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_PhysicsActor_ChangeSizeTo__SWIG_3(lua_State* L) {
@@ -25718,7 +25718,7 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 4, "bool");
 		if (!lua_isstring(L, 5)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 5, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ChangeSizeTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -25750,7 +25750,7 @@ fail:
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 3, "float");
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 4, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ChangeSizeTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -25779,7 +25779,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("PhysicsActor::ChangeSizeTo", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_ChangeSizeTo", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -26102,7 +26102,7 @@ fail:
 		SWIG_check_num_args("PhysicsActor::GetClassName", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("PhysicsActor::GetClassName", 1, "PhysicsActor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_PhysicsActor, 0))) {
 			SWIG_fail_ptr("PhysicsActor_GetClassName", 1, SWIGTYPE_p_PhysicsActor);
 		}
 
@@ -26189,7 +26189,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetParticlesPerSecond", 1, "ParticleActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ParticleActor::SetParticlesPerSecond", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetParticlesPerSecond", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26214,7 +26214,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetSystemLifetime", 1, "ParticleActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ParticleActor::SetSystemLifetime", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetSystemLifetime", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26239,7 +26239,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetParticleLifetime", 1, "ParticleActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ParticleActor::SetParticleLifetime", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetParticleLifetime", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26264,7 +26264,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetSpread", 1, "ParticleActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ParticleActor::SetSpread", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetSpread", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26289,7 +26289,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetEndScale", 1, "ParticleActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ParticleActor::SetEndScale", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetEndScale", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26313,58 +26313,58 @@ fail:
 		SWIG_check_num_args("ParticleActor::SetEndColor", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetEndColor", 1, "ParticleActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetEndColor", 1, SWIGTYPE_p_ParticleActor);
 		}
 
-  {
-	  // Color conversion
-	  Color *colPtr;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = *colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// Color conversion
+			Color *colPtr;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = *colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  arg2 = Color(r, g, b, a);
-	  }
-  }
-  (arg1)->SetEndColor(arg2);
+				// build the color
+				arg2 = Color(r, g, b, a);
+			}
+		}
+		(arg1)->SetEndColor(arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_ParticleActor_SetSpeedRange(lua_State* L) {
@@ -26378,7 +26378,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ParticleActor::SetSpeedRange", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("ParticleActor::SetSpeedRange", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetSpeedRange", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26404,7 +26404,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetMinSpeed", 1, "ParticleActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ParticleActor::SetMinSpeed", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetMinSpeed", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26429,7 +26429,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetMaxSpeed", 1, "ParticleActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ParticleActor::SetMaxSpeed", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetMaxSpeed", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26453,45 +26453,45 @@ fail:
 		SWIG_check_num_args("ParticleActor::SetGravity", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetGravity", 1, "ParticleActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetGravity", 1, SWIGTYPE_p_ParticleActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetGravity((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetGravity((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_ParticleActor_SetAttractor(lua_State* L) {
@@ -26502,45 +26502,45 @@ fail:
 		SWIG_check_num_args("ParticleActor::SetAttractor", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetAttractor", 1, "ParticleActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetAttractor", 1, SWIGTYPE_p_ParticleActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetAttractor((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetAttractor((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_ParticleActor_SetAttractorStrength(lua_State* L) {
@@ -26552,7 +26552,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetAttractorStrength", 1, "ParticleActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ParticleActor::SetAttractorStrength", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetAttractorStrength", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26577,7 +26577,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::SetMaxParticles", 1, "ParticleActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("ParticleActor::SetMaxParticles", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_SetMaxParticles", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26601,7 +26601,7 @@ fail:
 		SWIG_check_num_args("ParticleActor::GetClassName", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("ParticleActor::GetClassName", 1, "ParticleActor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_ParticleActor, 0))) {
 			SWIG_fail_ptr("ParticleActor_GetClassName", 1, SWIGTYPE_p_ParticleActor);
 		}
 
@@ -26858,7 +26858,7 @@ fail:
 		SWIG_check_num_args("TextActor::GetFont", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::GetFont", 1, "TextActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_GetFont", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -26882,7 +26882,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::SetFont", 1, "TextActor *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("TextActor::SetFont", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_SetFont", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -26906,7 +26906,7 @@ fail:
 		SWIG_check_num_args("TextActor::GetDisplayString", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::GetDisplayString", 1, "TextActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_GetDisplayString", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -26930,7 +26930,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::SetDisplayString", 1, "TextActor *");
 		if (!lua_isstring(L, 2)) SWIG_fail_arg("TextActor::SetDisplayString", 2, "String");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_SetDisplayString", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -26954,7 +26954,7 @@ fail:
 		SWIG_check_num_args("TextActor::GetAlignment", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::GetAlignment", 1, "TextActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_GetAlignment", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -26978,7 +26978,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::SetAlignment", 1, "TextActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("TextActor::SetAlignment", 2, "TextAlignment");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_SetAlignment", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -27002,7 +27002,7 @@ fail:
 		SWIG_check_num_args("TextActor::GetLineSpacing", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::GetLineSpacing", 1, "TextActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_GetLineSpacing", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -27026,7 +27026,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::SetLineSpacing", 1, "TextActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("TextActor::SetLineSpacing", 2, "int");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_SetLineSpacing", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -27053,7 +27053,7 @@ fail:
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("TextActor::SetPosition", 2, "float");
 		if (!lua_isnumber(L, 3)) SWIG_fail_arg("TextActor::SetPosition", 3, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_SetPosition", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -27078,45 +27078,45 @@ fail:
 		SWIG_check_num_args("TextActor::SetPosition", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::SetPosition", 1, "TextActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_SetPosition", 1, SWIGTYPE_p_TextActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetPosition((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetPosition((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_TextActor_SetPosition(lua_State* L) {
@@ -27221,7 +27221,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::SetRotation", 1, "TextActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("TextActor::SetRotation", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_SetRotation", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -27245,7 +27245,7 @@ fail:
 		SWIG_check_num_args("TextActor::GetClassName", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("TextActor::GetClassName", 1, "TextActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_TextActor, 0))) {
 			SWIG_fail_ptr("TextActor_GetClassName", 1, SWIGTYPE_p_TextActor);
 		}
 
@@ -27365,112 +27365,112 @@ fail:
 				arg1 = &col;
 			}
 		}
-  {
-	  // const Color& conversion
-	  Color *colPtr;
-	  Color col;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Color& conversion
+			Color *colPtr;
+			Color col;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  col.R = r;
-		  col.G = g;
-		  col.B = b;
-		  col.A = a;
-		  arg2 = &col;
-	  }
-  }
-  arg3 = (float)lua_tonumber(L, 3);
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg4 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 4);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 4);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the color
+				col.R = r;
+				col.G = g;
+				col.B = b;
+				col.A = a;
+				arg2 = &col;
+			}
+		}
+		arg3 = (float)lua_tonumber(L, 3);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 4, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg4 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 4);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 4);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg4 = &vec;
-	  }
-  }
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 5, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg5 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 5);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 5);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg4 = &vec;
+			}
+		}
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 5, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg5 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 5);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 5);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg5 = &vec;
-	  }
-  }
-  result = (GridActor *)new GridActor((Color const &)*arg1, (Color const &)*arg2, arg3, (Vector2 const &)*arg4, (Vector2 const &)*arg5);
-  SWIG_NewPointerObj(L, result, SWIGTYPE_p_GridActor, 1); SWIG_arg++;
-  return SWIG_arg;
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg5 = &vec;
+			}
+		}
+		result = (GridActor *)new GridActor((Color const &)*arg1, (Color const &)*arg2, arg3, (Vector2 const &)*arg4, (Vector2 const &)*arg5);
+		SWIG_NewPointerObj(L, result, SWIGTYPE_p_GridActor, 1); SWIG_arg++;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_new_GridActor(lua_State* L) {
@@ -27668,63 +27668,63 @@ fail:
 		SWIG_check_num_args("GridActor::SetLineColor", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GridActor::SetLineColor", 1, "GridActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))) {
 			SWIG_fail_ptr("GridActor_SetLineColor", 1, SWIGTYPE_p_GridActor);
 		}
 
-  {
-	  // const Color& conversion
-	  Color *colPtr;
-	  Color col;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Color& conversion
+			Color *colPtr;
+			Color col;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  col.R = r;
-		  col.G = g;
-		  col.B = b;
-		  col.A = a;
-		  arg2 = &col;
-	  }
-  }
-  (arg1)->SetLineColor((Color const &)*arg2);
+				// build the color
+				col.R = r;
+				col.G = g;
+				col.B = b;
+				col.A = a;
+				arg2 = &col;
+			}
+		}
+		(arg1)->SetLineColor((Color const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_GridActor_GetLineColor(lua_State* L) {
@@ -27735,7 +27735,7 @@ fail:
 		SWIG_check_num_args("GridActor::GetLineColor", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GridActor::GetLineColor", 1, "GridActor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))) {
 			SWIG_fail_ptr("GridActor_GetLineColor", 1, SWIGTYPE_p_GridActor);
 		}
 
@@ -27758,63 +27758,63 @@ fail:
 		SWIG_check_num_args("GridActor::SetAxisColor", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GridActor::SetAxisColor", 1, "GridActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))) {
 			SWIG_fail_ptr("GridActor_SetAxisColor", 1, SWIGTYPE_p_GridActor);
 		}
 
-  {
-	  // const Color& conversion
-	  Color *colPtr;
-	  Color col;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
-	  {
-		  arg2 = colPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float r = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float g = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 3);
-		  lua_gettable(L, 2);
-		  float b = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Color& conversion
+			Color *colPtr;
+			Color col;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&colPtr, SWIGTYPE_p_Color, 0)))
+			{
+				arg2 = colPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float r = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float g = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 3);
+				lua_gettable(L, 2);
+				float b = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  float a = 1.0f;
-		  if (lua_rawlen(L, 2) >= 4)
-		  {
-			  lua_pushinteger(L, 4);
-			  lua_gettable(L, 2);
-			  if (lua_isnumber(L, -1))
-			  {
-				  a = lua_tonumber(L, -1);
-			  }
-			  lua_pop(L, 1);
-		  }
+				float a = 1.0f;
+				if (lua_rawlen(L, 2) >= 4)
+				{
+					lua_pushinteger(L, 4);
+					lua_gettable(L, 2);
+					if (lua_isnumber(L, -1))
+					{
+						a = lua_tonumber(L, -1);
+					}
+					lua_pop(L, 1);
+				}
 
-		  // build the color
-		  col.R = r;
-		  col.G = g;
-		  col.B = b;
-		  col.A = a;
-		  arg2 = &col;
-	  }
-  }
-  (arg1)->SetAxisColor((Color const &)*arg2);
+				// build the color
+				col.R = r;
+				col.G = g;
+				col.B = b;
+				col.A = a;
+				arg2 = &col;
+			}
+		}
+		(arg1)->SetAxisColor((Color const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_GridActor_GetAxisColor(lua_State* L) {
@@ -27825,7 +27825,7 @@ fail:
 		SWIG_check_num_args("GridActor::GetAxisColor", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GridActor::GetAxisColor", 1, "GridActor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))) {
 			SWIG_fail_ptr("GridActor_GetAxisColor", 1, SWIGTYPE_p_GridActor);
 		}
 
@@ -27849,7 +27849,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GridActor::SetInterval", 1, "GridActor *");
 		if (!lua_isnumber(L, 2)) SWIG_fail_arg("GridActor::SetInterval", 2, "float");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))) {
 			SWIG_fail_ptr("GridActor_SetInterval", 1, SWIGTYPE_p_GridActor);
 		}
 
@@ -27873,7 +27873,7 @@ fail:
 		SWIG_check_num_args("GridActor::GetInterval", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GridActor::GetInterval", 1, "GridActor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))) {
 			SWIG_fail_ptr("GridActor_GetInterval", 1, SWIGTYPE_p_GridActor);
 		}
 
@@ -27896,45 +27896,45 @@ fail:
 		SWIG_check_num_args("GridActor::SetMinCoord", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GridActor::SetMinCoord", 1, "GridActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))) {
 			SWIG_fail_ptr("GridActor_SetMinCoord", 1, SWIGTYPE_p_GridActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetMinCoord((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetMinCoord((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_GridActor_GetMinCoord(lua_State* L) {
@@ -27945,7 +27945,7 @@ fail:
 		SWIG_check_num_args("GridActor::GetMinCoord", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GridActor::GetMinCoord", 1, "GridActor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))) {
 			SWIG_fail_ptr("GridActor_GetMinCoord", 1, SWIGTYPE_p_GridActor);
 		}
 
@@ -27971,45 +27971,45 @@ fail:
 		SWIG_check_num_args("GridActor::SetMaxCoord", 2, 2)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GridActor::SetMaxCoord", 1, "GridActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))) {
 			SWIG_fail_ptr("GridActor_SetMaxCoord", 1, SWIGTYPE_p_GridActor);
 		}
 
-  {
-	  // const Vector2& conversion
-	  Vector2 *vecPtr;
-	  Vector2 vec;
-	  if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
-	  {
-		  arg2 = vecPtr;
-	  }
-	  else
-	  {
-		  // convert table parameters to floats
-		  lua_pushinteger(L, 1);
-		  lua_gettable(L, 2);
-		  float x = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
-		  lua_pushinteger(L, 2);
-		  lua_gettable(L, 2);
-		  float y = lua_tonumber(L, -1);
-		  lua_pop(L, 1);
+		{
+			// const Vector2& conversion
+			Vector2 *vecPtr;
+			Vector2 vec;
+			if (SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&vecPtr, SWIGTYPE_p_Vector2, 0)))
+			{
+				arg2 = vecPtr;
+			}
+			else
+			{
+				// convert table parameters to floats
+				lua_pushinteger(L, 1);
+				lua_gettable(L, 2);
+				float x = lua_tonumber(L, -1);
+				lua_pop(L, 1);
+				lua_pushinteger(L, 2);
+				lua_gettable(L, 2);
+				float y = lua_tonumber(L, -1);
+				lua_pop(L, 1);
 
-		  // build the vector
-		  vec.X = x;
-		  vec.Y = y;
-		  arg2 = &vec;
-	  }
-  }
-  (arg1)->SetMaxCoord((Vector2 const &)*arg2);
+				// build the vector
+				vec.X = x;
+				vec.Y = y;
+				arg2 = &vec;
+			}
+		}
+		(arg1)->SetMaxCoord((Vector2 const &)*arg2);
 
-  return SWIG_arg;
+		return SWIG_arg;
 
-  if (0) SWIG_fail;
+		if (0) SWIG_fail;
 
-fail:
-  lua_error(L);
-  return SWIG_arg;
+	fail:
+		lua_error(L);
+		return SWIG_arg;
 	}
 
 	static int _wrap_GridActor_GetMaxCoord(lua_State* L) {
@@ -28020,7 +28020,7 @@ fail:
 		SWIG_check_num_args("GridActor::GetMaxCoord", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("GridActor::GetMaxCoord", 1, "GridActor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_GridActor, 0))) {
 			SWIG_fail_ptr("GridActor_GetMaxCoord", 1, SWIGTYPE_p_GridActor);
 		}
 
@@ -28096,7 +28096,7 @@ fail:
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("FullScreenActor::SetLock", 1, "FullScreenActor *");
 		if (!lua_isboolean(L, 2)) SWIG_fail_arg("FullScreenActor::SetLock", 2, "bool");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_FullScreenActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_FullScreenActor, 0))) {
 			SWIG_fail_ptr("FullScreenActor_SetLock", 1, SWIGTYPE_p_FullScreenActor);
 		}
 
@@ -28120,7 +28120,7 @@ fail:
 		SWIG_check_num_args("FullScreenActor::IsLocked", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("FullScreenActor::IsLocked", 1, "FullScreenActor *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_FullScreenActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_FullScreenActor, 0))) {
 			SWIG_fail_ptr("FullScreenActor_IsLocked", 1, SWIGTYPE_p_FullScreenActor);
 		}
 
@@ -28143,7 +28143,7 @@ fail:
 		SWIG_check_num_args("FullScreenActor::GetClassName", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("FullScreenActor::GetClassName", 1, "FullScreenActor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_FullScreenActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_FullScreenActor, 0))) {
 			SWIG_fail_ptr("FullScreenActor_GetClassName", 1, SWIGTYPE_p_FullScreenActor);
 		}
 
@@ -28192,7 +28192,7 @@ fail:
 		SWIG_check_num_args("HUDActor::GetClassName", 1, 1)
 			if (!SWIG_isptrtype(L, 1)) SWIG_fail_arg("HUDActor::GetClassName", 1, "HUDActor const *");
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_HUDActor, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 1, (void**)&arg1, SWIGTYPE_p_HUDActor, 0))) {
 			SWIG_fail_ptr("HUDActor_GetClassName", 1, SWIGTYPE_p_HUDActor);
 		}
 
@@ -28323,12 +28323,12 @@ fail:
 		if (!lua_isboolean(L, 4)) SWIG_fail_arg("GetTextureReference", 4, "bool");
 		temp1.assign(lua_tostring(L, 1), lua_rawlen(L, 1)); arg1 = &temp1;
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("GetTextureReference", 2, SWIGTYPE_p_GLint);
 		}
 		arg2 = *argp2;
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&argp3, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&argp3, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("GetTextureReference", 3, SWIGTYPE_p_GLint);
 		}
 		arg3 = *argp3;
@@ -28361,12 +28361,12 @@ fail:
 		if (!lua_isuserdata(L, 3)) SWIG_fail_arg("GetTextureReference", 3, "GLint");
 		temp1.assign(lua_tostring(L, 1), lua_rawlen(L, 1)); arg1 = &temp1;
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 2, (void**)&argp2, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("GetTextureReference", 2, SWIGTYPE_p_GLint);
 		}
 		arg2 = *argp2;
 
-		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&argp3, SWIGTYPE_p_GLint, 0))){
+		if (!SWIG_IsOK(SWIG_ConvertPtr(L, 3, (void**)&argp3, SWIGTYPE_p_GLint, 0))) {
 			SWIG_fail_ptr("GetTextureReference", 3, SWIGTYPE_p_GLint);
 		}
 		arg3 = *argp3;
@@ -29274,25 +29274,25 @@ extern "C" {
 		/* begin the module (its a table with the same name as the module) */
 		SWIG_Lua_module_begin(L, SWIG_name);
 		/* add commands/functions */
-		for (i = 0; swig_commands[i].name; i++){
+		for (i = 0; swig_commands[i].name; i++) {
 			SWIG_Lua_module_add_function(L, swig_commands[i].name, swig_commands[i].func);
 		}
 		/* add variables */
-		for (i = 0; swig_variables[i].name; i++){
+		for (i = 0; swig_variables[i].name; i++) {
 			SWIG_Lua_module_add_variable(L, swig_variables[i].name, swig_variables[i].get, swig_variables[i].set);
 		}
 #endif
 
 #if (SWIG_LUA_TARGET != SWIG_LUA_FLAVOR_ELUAC)
 		/* set up base class pointers (the hierarchy) */
-		for (i = 0; swig_types[i]; i++){
-			if (swig_types[i]->clientdata){
+		for (i = 0; swig_types[i]; i++) {
+			if (swig_types[i]->clientdata) {
 				SWIG_Lua_init_base_class(L, (swig_lua_class*)(swig_types[i]->clientdata));
 			}
 		}
 		/* additional registration structs & classes in lua */
-		for (i = 0; swig_types[i]; i++){
-			if (swig_types[i]->clientdata){
+		for (i = 0; swig_types[i]; i++) {
+			if (swig_types[i]->clientdata) {
 				SWIG_Lua_class_register(L, (swig_lua_class*)(swig_types[i]->clientdata));
 			}
 		}

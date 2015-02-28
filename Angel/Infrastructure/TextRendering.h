@@ -38,17 +38,17 @@
 
 #include "../Util/StringUtil.h"
 
-/**
- * Register a font with our text rendering system.
- *
- * @param filename The path to the font file you want to use. Must be a format
- *   readable by FreeType (http://www.freetype.org). Most major font formats
- *   are acceptable.
- * @param pointSize The size, in points, that you want the text to render.
- * @param nickname How you want to refer to the font when telling it to draw
- * @return Whether or not it successfully registered (check the error log if
- *   this returns false)
- */
+ /**
+  * Register a font with our text rendering system.
+  *
+  * @param filename The path to the font file you want to use. Must be a format
+  *   readable by FreeType (http://www.freetype.org). Most major font formats
+  *   are acceptable.
+  * @param pointSize The size, in points, that you want the text to render.
+  * @param nickname How you want to refer to the font when telling it to draw
+  * @return Whether or not it successfully registered (check the error log if
+  *   this returns false)
+  */
 const bool RegisterFont(const String& filename, int pointSize, const String& nickname);
 
 /**

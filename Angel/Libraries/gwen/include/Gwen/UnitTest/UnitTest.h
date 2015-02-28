@@ -28,7 +28,7 @@ public:
 		m_pUnitTest = NULL;
 	}
 
-	void SetUnitTest(UnitTest* u){ m_pUnitTest = u; }
+	void SetUnitTest(UnitTest* u) { m_pUnitTest = u; }
 
 	void UnitPrint(Gwen::UnicodeString str);
 	void UnitPrint(Gwen::String str);

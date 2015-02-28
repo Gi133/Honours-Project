@@ -22,15 +22,15 @@
 
  ********************************************************************/
 
-/* Note that the lpc-lsp conversion finds the roots of polynomial with
-   an iterative root polisher (CACM algorithm 283).  It *is* possible
-   to confuse this algorithm into not converging; that should only
-   happen with absurdly closely spaced roots (very sharp peaks in the
-   LPC f response) which in turn should be impossible in our use of
-   the code.  If this *does* happen anyway, it's a bug in the floor
-   finder; find the cause of the confusion (probably a single bin
-   spike or accidental near-float-limit resolution problems) and
-   correct it. */
+ /* Note that the lpc-lsp conversion finds the roots of polynomial with
+	an iterative root polisher (CACM algorithm 283).  It *is* possible
+	to confuse this algorithm into not converging; that should only
+	happen with absurdly closely spaced roots (very sharp peaks in the
+	LPC f response) which in turn should be impossible in our use of
+	the code.  If this *does* happen anyway, it's a bug in the floor
+	finder; find the cause of the confusion (probably a single bin
+	spike or accidental near-float-limit resolution problems) and
+	correct it. */
 
 #include <math.h>
 #include <string.h>
@@ -41,18 +41,18 @@
 #include "lookup.h"
 #include "scales.h"
 
-/* three possible LSP to f curve functions; the exact computation
-   (float), a lookup based float implementation, and an integer
-   implementation.  The float lookup is likely the optimal choice on
-   any machine with an FPU.  The integer implementation is *not* fixed
-   point (due to the need for a large dynamic range and thus a
-   separately tracked exponent) and thus much more complex than the
-   relatively simple float implementations. It's mostly for future
-   work on a fully fixed point implementation for processors like the
-   ARM family. */
+	/* three possible LSP to f curve functions; the exact computation
+	   (float), a lookup based float implementation, and an integer
+	   implementation.  The float lookup is likely the optimal choice on
+	   any machine with an FPU.  The integer implementation is *not* fixed
+	   point (due to the need for a large dynamic range and thus a
+	   separately tracked exponent) and thus much more complex than the
+	   relatively simple float implementations. It's mostly for future
+	   work on a fully fixed point implementation for processors like the
+	   ARM family. */
 
-/* define either of these (preferably FLOAT_LOOKUP) to have faster
-   but less precise implementation. */
+	   /* define either of these (preferably FLOAT_LOOKUP) to have faster
+		  but less precise implementation. */
 #undef FLOAT_LOOKUP
 #undef INT_LOOKUP
 
@@ -61,9 +61,9 @@
    compilers (like gcc) that can't inline across
    modules */
 
-/* side effect: changes *lsp to cosines of lsp */
+   /* side effect: changes *lsp to cosines of lsp */
 void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int m,
-	float amp, float ampoffset){
+	float amp, float ampoffset) {
 	int i;
 	float wdel = M_PI / ln;
 	vorbis_fpu_control fpu;
@@ -72,7 +72,7 @@ void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int 
 	for (i = 0; i < m; i++)lsp[i] = vorbis_coslook(lsp[i]);
 
 	i = 0;
-	while (i < n){
+	while (i < n) {
 		int k = map[i];
 		int qexp;
 		float p = .7071067812f;
@@ -81,20 +81,20 @@ void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int 
 		float *ftmp = lsp;
 		int c = m >> 1;
 
-		while (c--){
+		while (c--) {
 			q *= ftmp[0] - w;
 			p *= ftmp[1] - w;
 			ftmp += 2;
 		}
 
-		if (m & 1){
+		if (m & 1) {
 			/* odd order filter; slightly assymetric */
 			/* the last coefficient */
 			q *= ftmp[0] - w;
 			q *= q;
 			p *= p*(1.f - w*w);
 		}
-		else{
+		else {
 			/* even order filter; still symmetric */
 			q *= q*(1.f + w);
 			p *= p*(1.f - w);
@@ -106,7 +106,7 @@ void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int 
 			vorbis_invsq2explook(qexp + m) -
 			ampoffset);
 
-		do{
+		do {
 			curve[i++] *= q;
 		} while (map[i] == k);
 	}
@@ -138,7 +138,7 @@ static const int MLOOP_3[8] = { 0, 1, 2, 2, 3, 3, 3, 3 };
 
 /* side effect: changes *lsp to cosines of lsp */
 void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int m,
-	float amp, float ampoffset){
+	float amp, float ampoffset) {
 	/* 0 <= m < 256 */
 
 	/* set up for using all int later */
@@ -149,7 +149,7 @@ void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int 
 	for (i = 0; i < m; i++)ilsp[i] = vorbis_coslook_i(lsp[i] / M_PI*65536.f + .5f);
 
 	i = 0;
-	while (i < n){
+	while (i < n) {
 		int j, k = map[i];
 		unsigned long pi = 46341; /* 2**-.5 in 0.16 */
 		unsigned long qi = 46341;
@@ -159,7 +159,7 @@ void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int 
 		qi *= labs(ilsp[0] - wi);
 		pi *= labs(ilsp[1] - wi);
 
-		for (j = 3; j < m; j += 2){
+		for (j = 3; j < m; j += 2) {
 			if (!(shift = MLOOP_1[(pi | qi) >> 25]))
 				if (!(shift = MLOOP_2[(pi | qi) >> 19]))
 					shift = MLOOP_3[(pi | qi) >> 16];
@@ -173,7 +173,7 @@ void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int 
 
 		/* pi,qi normalized collectively, both tracked using qexp */
 
-		if (m & 1){
+		if (m & 1) {
 			/* odd order filter; slightly assymetric */
 			/* the last coefficient */
 			qi = (qi >> shift)*labs(ilsp[j - 1] - wi);
@@ -195,7 +195,7 @@ void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int 
 			pi *= (1 << 14) - ((wi*wi) >> 14);
 			qi += pi >> 14;
 		}
-		else{
+		else {
 			/* even order filter; still symmetric */
 
 			/* p*=p(1-w), q*=q(1+w), let normalization drift because it isn't
@@ -218,11 +218,11 @@ void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int 
 		   however, for the lookup, things must be normalized again.  We
 		   need at most one right shift or a number of left shifts */
 
-		if (qi & 0xffff0000){ /* checks for 1.xxxxxxxxxxxxxxxx */
+		if (qi & 0xffff0000) { /* checks for 1.xxxxxxxxxxxxxxxx */
 			qi >>= 1; qexp++;
 		}
 		else
-			while (qi && !(qi & 0x8000)){ /* checks for 0.0xxxxxxxxxxxxxxx or less*/
+			while (qi && !(qi & 0x8000)) { /* checks for 0.0xxxxxxxxxxxxxxx or less*/
 				qi <<= 1; qexp--;
 			}
 
@@ -238,35 +238,35 @@ void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int 
 
 #else
 
-/* old, nonoptimized but simple version for any poor sap who needs to
-   figure out what the hell this code does, or wants the other
-   fraction of a dB precision */
+		  /* old, nonoptimized but simple version for any poor sap who needs to
+			 figure out what the hell this code does, or wants the other
+			 fraction of a dB precision */
 
-/* side effect: changes *lsp to cosines of lsp */
+			 /* side effect: changes *lsp to cosines of lsp */
 void vorbis_lsp_to_curve(float *curve, int *map, int n, int ln, float *lsp, int m,
-	float amp, float ampoffset){
+	float amp, float ampoffset) {
 	int i;
 	float wdel = M_PI / ln;
 	for (i = 0; i < m; i++)lsp[i] = 2.f*cos(lsp[i]);
 
 	i = 0;
-	while (i < n){
+	while (i < n) {
 		int j, k = map[i];
 		float p = .5f;
 		float q = .5f;
 		float w = 2.f*cos(wdel*k);
-		for (j = 1; j < m; j += 2){
+		for (j = 1; j < m; j += 2) {
 			q *= w - lsp[j - 1];
 			p *= w - lsp[j];
 		}
-		if (j == m){
+		if (j == m) {
 			/* odd order filter; slightly assymetric */
 			/* the last coefficient */
 			q *= w - lsp[j - 1];
 			p *= p*(4.f - w*w);
 			q *= q;
 		}
-		else{
+		else {
 			/* even order filter; still symmetric */
 			p *= p*(2.f - w);
 			q *= q*(2.f + w);
@@ -294,7 +294,7 @@ static void cheby(float *g, int ord) {
 	}
 }
 
-static int comp(const void *a, const void *b){
+static int comp(const void *a, const void *b) {
 	return (*(float *)a<*(float *)b) - (*(float *)a>*(float *)b);
 }
 
@@ -306,21 +306,21 @@ static int comp(const void *a, const void *b){
    afford to fail) */
 
 #define EPSILON 10e-7
-static int Laguerre_With_Deflation(float *a, int ord, float *r){
+static int Laguerre_With_Deflation(float *a, int ord, float *r) {
 	int i, m;
 	double lastdelta = 0.f;
 	double *defl = alloca(sizeof(*defl)*(ord + 1));
 	for (i = 0; i <= ord; i++)defl[i] = a[i];
 
-	for (m = ord; m > 0; m--){
+	for (m = ord; m > 0; m--) {
 		double new = 0.f, delta;
 
 		/* iterate a root */
-		while (1){
+		while (1) {
 			double p = defl[m], pp = 0.f, ppp = 0.f, denom;
 
 			/* eval the polynomial and its first two derivatives */
-			for (i = m; i > 0; i--){
+			for (i = m; i > 0; i--) {
 				ppp = new*ppp + pp;
 				pp = new*pp + p;
 				p = new*p + defl[i - 1];
@@ -331,11 +331,11 @@ static int Laguerre_With_Deflation(float *a, int ord, float *r){
 			if (denom < 0)
 				return(-1);  /* complex root!  The LPC generator handed us a bad filter */
 
-			if (pp > 0){
+			if (pp > 0) {
 				denom = pp + sqrt(denom);
 				if (denom < EPSILON)denom = EPSILON;
 			}
-			else{
+			else {
 				denom = pp - sqrt(denom);
 				if (denom > -(EPSILON))denom = -(EPSILON);
 			}
@@ -361,14 +361,14 @@ static int Laguerre_With_Deflation(float *a, int ord, float *r){
 }
 
 /* for spit-and-polish only */
-static int Newton_Raphson(float *a, int ord, float *r){
+static int Newton_Raphson(float *a, int ord, float *r) {
 	int i, k, count = 0;
 	double error = 1.f;
 	double *root = alloca(ord*sizeof(*root));
 
 	for (i = 0; i < ord; i++) root[i] = r[i];
 
-	while (error > 1e-20){
+	while (error > 1e-20) {
 		error = 0;
 
 		for (i = 0; i < ord; i++) { /* Update each point. */
@@ -385,7 +385,7 @@ static int Newton_Raphson(float *a, int ord, float *r){
 			error += delta*delta;
 		}
 
-		if (count>40)return(-1);
+		if (count > 40)return(-1);
 
 		count++;
 	}
@@ -398,7 +398,7 @@ static int Newton_Raphson(float *a, int ord, float *r){
 }
 
 /* Convert lpc coefficients to lsp coefficients */
-int vorbis_lpc_to_lsp(float *lpc, float *lsp, int m){
+int vorbis_lpc_to_lsp(float *lpc, float *lsp, int m) {
 	int order2 = (m + 1) >> 1;
 	int g1_order, g2_order;
 	float *g1 = alloca(sizeof(*g1)*(order2 + 1));
@@ -421,10 +421,10 @@ int vorbis_lpc_to_lsp(float *lpc, float *lsp, int m){
 	g2[g2_order] = 1.f;
 	for (i = 1; i <= g2_order; i++) g2[g2_order - i] = lpc[i - 1] - lpc[m - i];
 
-	if (g1_order > g2_order){
+	if (g1_order > g2_order) {
 		for (i = 2; i <= g2_order; i++) g2[g2_order - i] += g2[g2_order - i + 2];
 	}
-	else{
+	else {
 		for (i = 1; i <= g1_order; i++) g1[g1_order - i] -= g1[g1_order - i + 1];
 		for (i = 1; i <= g2_order; i++) g2[g2_order - i] += g2[g2_order - i + 1];
 	}

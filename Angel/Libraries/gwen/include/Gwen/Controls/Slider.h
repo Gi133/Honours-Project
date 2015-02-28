@@ -23,8 +23,8 @@ namespace Gwen
 			GWEN_CONTROL(SliderBar, ControlsInternal::Dragger);
 
 			virtual void Render(Skin::Base* skin);
-			virtual void SetHorizontal(bool b){ m_bHorizontal = b; }
-			virtual bool IsHorizontal(){ return m_bHorizontal; }
+			virtual void SetHorizontal(bool b) { m_bHorizontal = b; }
+			virtual bool IsHorizontal() { return m_bHorizontal; }
 
 		protected:
 
@@ -53,19 +53,19 @@ namespace Gwen
 			virtual float CalculateValue();
 			virtual void OnMoved(Controls::Base * control);
 
-			virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/){};
+			virtual void OnMouseClickLeft(int /*x*/, int /*y*/, bool /*bDown*/) {};
 
-			virtual bool OnKeyRight(bool bDown)	{ if (bDown) SetFloatValue(GetFloatValue() + 1, true); return true; }
-			virtual bool OnKeyLeft(bool bDown)	{ if (bDown) SetFloatValue(GetFloatValue() - 1, true); return true; }
-			virtual bool OnKeyUp(bool bDown)		{ if (bDown) SetFloatValue(GetFloatValue() + 1, true); return true; }
-			virtual bool OnKeyDown(bool bDown)	{ if (bDown) SetFloatValue(GetFloatValue() - 1, true); return true; }
+			virtual bool OnKeyRight(bool bDown) { if (bDown) SetFloatValue(GetFloatValue() + 1, true); return true; }
+			virtual bool OnKeyLeft(bool bDown) { if (bDown) SetFloatValue(GetFloatValue() - 1, true); return true; }
+			virtual bool OnKeyUp(bool bDown) { if (bDown) SetFloatValue(GetFloatValue() + 1, true); return true; }
+			virtual bool OnKeyDown(bool bDown) { if (bDown) SetFloatValue(GetFloatValue() - 1, true); return true; }
 
 			virtual void RenderFocus(Gwen::Skin::Base* skin);
 
 			Gwen::Event::Caller	onValueChanged;
 
-			virtual float GetMin(){ return m_fMin; }
-			virtual float GetMax(){ return m_fMax; }
+			virtual float GetMin() { return m_fMin; }
+			virtual float GetMax() { return m_fMax; }
 
 		protected:
 

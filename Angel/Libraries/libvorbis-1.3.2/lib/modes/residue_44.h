@@ -19,7 +19,7 @@
 #include "backends.h"
 #include "books/coupled/res_books_stereo.h"
 
-/***** residue backends *********************************************/
+ /***** residue backends *********************************************/
 
 static const vorbis_info_residue0 _residue_44_low = {
 	0, -1, -1, 9, -1, -1,

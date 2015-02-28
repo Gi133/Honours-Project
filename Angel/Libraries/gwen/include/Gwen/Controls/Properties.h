@@ -51,15 +51,15 @@ namespace Gwen
 
 			GWEN_CONTROL(PropertyRow, Base);
 
-			virtual Label* GetLabel(){ return m_Label; }
+			virtual Label* GetLabel() { return m_Label; }
 			virtual void SetProperty(Property::Base* prop);
-			virtual Property::Base* GetProperty(){ return m_Property; }
+			virtual Property::Base* GetProperty() { return m_Property; }
 
 			virtual void Layout(Gwen::Skin::Base* skin);
 			virtual void Render(Gwen::Skin::Base* skin);
 
-			virtual bool IsEditing(){ return m_Property && m_Property->IsEditing(); }
-			virtual bool IsHovered(){ return BaseClass::IsHovered() || (m_Property && m_Property->IsHovered()); }
+			virtual bool IsEditing() { return m_Property && m_Property->IsEditing(); }
+			virtual bool IsHovered() { return BaseClass::IsHovered() || (m_Property && m_Property->IsHovered()); }
 			virtual void OnEditingChanged();
 			virtual void OnHoverChanged();
 

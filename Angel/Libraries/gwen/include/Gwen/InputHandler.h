@@ -61,8 +61,8 @@ namespace Gwen
 		bool GWEN_EXPORT IsRightMouseDown();
 		Gwen::Point GWEN_EXPORT GetMousePosition();
 
-		inline bool IsShiftDown(){ return IsKeyDown(Gwen::Key::Shift); }
-		inline bool IsControlDown(){ return IsKeyDown(Gwen::Key::Control); }
+		inline bool IsShiftDown() { return IsKeyDown(Gwen::Key::Shift); }
+		inline bool IsControlDown() { return IsKeyDown(Gwen::Key::Control); }
 
 		// Does copy, paste etc
 		bool GWEN_EXPORT DoSpecialKeys(Controls::Base* pCanvas, Gwen::UnicodeChar chr);

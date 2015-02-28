@@ -37,54 +37,54 @@ extern "C" {
 	 * Doxygen documentation
 	 *************************************************************************/
 
-	/*! @defgroup clipboard Clipboard support
-	 */
-	/*! @defgroup context Context handling
-	 */
-	/*! @defgroup error Error handling
-	 */
-	/*! @defgroup init Initialization and version information
-	 */
-	/*! @defgroup input Input handling
-	 */
-	/*! @defgroup monitor Monitor handling
-	 *
-	 *  This is the reference documentation for monitor related functions and types.
-	 *  For more information, see the @ref monitor.
-	 */
-	/*! @defgroup time Time input
-	 */
-	/*! @defgroup window Window handling
-	 *
-	 *  This is the reference documentation for window related functions and types,
-	 *  including creation, deletion and event polling.  For more information, see
-	 *  the @ref window.
-	 */
+	 /*! @defgroup clipboard Clipboard support
+	  */
+	  /*! @defgroup context Context handling
+	   */
+	   /*! @defgroup error Error handling
+		*/
+		/*! @defgroup init Initialization and version information
+		 */
+		 /*! @defgroup input Input handling
+		  */
+		  /*! @defgroup monitor Monitor handling
+		   *
+		   *  This is the reference documentation for monitor related functions and types.
+		   *  For more information, see the @ref monitor.
+		   */
+		   /*! @defgroup time Time input
+			*/
+			/*! @defgroup window Window handling
+			 *
+			 *  This is the reference documentation for window related functions and types,
+			 *  including creation, deletion and event polling.  For more information, see
+			 *  the @ref window.
+			 */
 
-	/*************************************************************************
-	 * Global definitions
-	 *************************************************************************/
+			 /*************************************************************************
+			  * Global definitions
+			  *************************************************************************/
 
-	/* ------------------- BEGIN SYSTEM/COMPILER SPECIFIC -------------------- */
+			  /* ------------------- BEGIN SYSTEM/COMPILER SPECIFIC -------------------- */
 
-	/* Please report any problems that you find with your compiler, which may
-	 * be solved in this section! There are several compilers that I have not
-	 * been able to test this file with yet.
-	 *
-	 * First: If we are we on Windows, we want a single define for it (_WIN32)
-	 * (Note: For Cygwin the compiler flag -mwin32 should be used, but to
-	 * make sure that things run smoothly for Cygwin users, we add __CYGWIN__
-	 * to the list of "valid Win32 identifiers", which removes the need for
-	 * -mwin32)
-	 */
+			  /* Please report any problems that you find with your compiler, which may
+			   * be solved in this section! There are several compilers that I have not
+			   * been able to test this file with yet.
+			   *
+			   * First: If we are we on Windows, we want a single define for it (_WIN32)
+			   * (Note: For Cygwin the compiler flag -mwin32 should be used, but to
+			   * make sure that things run smoothly for Cygwin users, we add __CYGWIN__
+			   * to the list of "valid Win32 identifiers", which removes the need for
+			   * -mwin32)
+			   */
 #if !defined(_WIN32) && (defined(__WIN32__) || defined(WIN32) || defined(__CYGWIN__))
 #define _WIN32
 #endif /* _WIN32 */
 
-	/* In order for extension support to be portable, we need to define an
-	 * OpenGL function call method. We use the keyword APIENTRY, which is
-	 * defined for Win32. (Note: Windows also needs this for <GL/gl.h>)
-	 */
+			   /* In order for extension support to be portable, we need to define an
+				* OpenGL function call method. We use the keyword APIENTRY, which is
+				* defined for Win32. (Note: Windows also needs this for <GL/gl.h>)
+				*/
 #ifndef APIENTRY
 #ifdef _WIN32
 #define APIENTRY __stdcall
@@ -93,12 +93,12 @@ extern "C" {
 #endif
 #endif /* APIENTRY */
 
-	/* The following three defines are here solely to make some Windows-based
-	 * <GL/gl.h> files happy. Theoretically we could include <windows.h>, but
-	 * it has the major drawback of severely polluting our namespace.
-	 */
+				/* The following three defines are here solely to make some Windows-based
+				 * <GL/gl.h> files happy. Theoretically we could include <windows.h>, but
+				 * it has the major drawback of severely polluting our namespace.
+				 */
 
-	/* Under Windows, we need WINGDIAPI defined */
+				 /* Under Windows, we need WINGDIAPI defined */
 #if !defined(WINGDIAPI) && defined(_WIN32)
 #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__POCC__)
 	/* Microsoft Visual C++, Borland C++ Builder and Pelles C */
@@ -135,8 +135,8 @@ extern "C" {
 #include <stddef.h>
 #endif
 
-	/* Include the chosen client API headers.
-	 */
+	 /* Include the chosen client API headers.
+	  */
 #if defined(__APPLE_CC__)
 #if defined(GLFW_INCLUDE_GLCOREARB)
 #include <OpenGL/gl3.h>
@@ -165,21 +165,21 @@ extern "C" {
 #endif
 
 #if defined(GLFW_DLL) && defined(_GLFW_BUILD_DLL)
-	/* GLFW_DLL is defined by users of GLFW when compiling programs that will link
-	 * to the DLL version of the GLFW library.  _GLFW_BUILD_DLL is defined by the
-	 * GLFW configuration header when compiling the DLL version of the library.
-	 */
+	  /* GLFW_DLL is defined by users of GLFW when compiling programs that will link
+	   * to the DLL version of the GLFW library.  _GLFW_BUILD_DLL is defined by the
+	   * GLFW configuration header when compiling the DLL version of the library.
+	   */
 #error "You must not have both GLFW_DLL and _GLFW_BUILD_DLL defined"
 #endif
 
 #if defined(_WIN32) && defined(_GLFW_BUILD_DLL)
 
-	/* We are building a Win32 DLL */
+	   /* We are building a Win32 DLL */
 #define GLFWAPI __declspec(dllexport)
 
 #elif defined(_WIN32) && defined(GLFW_DLL)
 
-	/* We are calling a Win32 DLL */
+	   /* We are calling a Win32 DLL */
 #if defined(__LCC__)
 #define GLFWAPI extern
 #else
@@ -192,7 +192,7 @@ extern "C" {
 
 #else
 
-	/* We are either building/calling a static lib or we are non-win32 */
+	   /* We are either building/calling a static lib or we are non-win32 */
 #define GLFWAPI
 
 #endif
@@ -203,68 +203,68 @@ extern "C" {
 	 * GLFW API tokens
 	 *************************************************************************/
 
-	/*! @name GLFW version macros
-	 *  @{ */
-	/*! @brief The major version number of the GLFW library.
-	 *
-	 *  This is incremented when the API is changed in non-compatible ways.
-	 *  @ingroup init
-	 */
+	 /*! @name GLFW version macros
+	  *  @{ */
+	  /*! @brief The major version number of the GLFW library.
+	   *
+	   *  This is incremented when the API is changed in non-compatible ways.
+	   *  @ingroup init
+	   */
 #define GLFW_VERSION_MAJOR          3
-	/*! @brief The minor version number of the GLFW library.
-	 *
-	 *  This is incremented when features are added to the API but it remains
-	 *  backward-compatible.
-	 *  @ingroup init
-	 */
+	   /*! @brief The minor version number of the GLFW library.
+		*
+		*  This is incremented when features are added to the API but it remains
+		*  backward-compatible.
+		*  @ingroup init
+		*/
 #define GLFW_VERSION_MINOR          0
-	/*! @brief The revision number of the GLFW library.
-	 *
-	 *  This is incremented when a bug fix release is made that does not contain any
-	 *  API changes.
-	 *  @ingroup init
-	 */
+		/*! @brief The revision number of the GLFW library.
+		 *
+		 *  This is incremented when a bug fix release is made that does not contain any
+		 *  API changes.
+		 *  @ingroup init
+		 */
 #define GLFW_VERSION_REVISION       3
-	/*! @} */
+		 /*! @} */
 
-	/*! @name Key and button actions
-	 *  @{ */
-	/*! @brief The key or button was released.
-	 *  @ingroup input
-	 */
+		 /*! @name Key and button actions
+		  *  @{ */
+		  /*! @brief The key or button was released.
+		   *  @ingroup input
+		   */
 #define GLFW_RELEASE                0
-	/*! @brief The key or button was pressed.
-	 *  @ingroup input
-	 */
+		   /*! @brief The key or button was pressed.
+			*  @ingroup input
+			*/
 #define GLFW_PRESS                  1
-	/*! @brief The key was held down until it repeated.
-	 *  @ingroup input
-	 */
+			/*! @brief The key was held down until it repeated.
+			 *  @ingroup input
+			 */
 #define GLFW_REPEAT                 2
-	/*! @} */
+			 /*! @} */
 
-	/*! @defgroup keys Keyboard keys
-	 *
-	 * These key codes are inspired by the *USB HID Usage Tables v1.12* (p. 53-60),
-	 * but re-arranged to map to 7-bit ASCII for printable keys (function keys are
-	 * put in the 256+ range).
-	 *
-	 * The naming of the key codes follow these rules:
-	 *  - The US keyboard layout is used
-	 *  - Names of printable alpha-numeric characters are used (e.g. "A", "R",
-	 *    "3", etc.)
-	 *  - For non-alphanumeric characters, Unicode:ish names are used (e.g.
-	 *    "COMMA", "LEFT_SQUARE_BRACKET", etc.). Note that some names do not
-	 *    correspond to the Unicode standard (usually for brevity)
-	 *  - Keys that lack a clear US mapping are named "WORLD_x"
-	 *  - For non-printable keys, custom names are used (e.g. "F4",
-	 *    "BACKSPACE", etc.)
-	 *
-	 *  @ingroup input
-	 *  @{
-	 */
+			 /*! @defgroup keys Keyboard keys
+			  *
+			  * These key codes are inspired by the *USB HID Usage Tables v1.12* (p. 53-60),
+			  * but re-arranged to map to 7-bit ASCII for printable keys (function keys are
+			  * put in the 256+ range).
+			  *
+			  * The naming of the key codes follow these rules:
+			  *  - The US keyboard layout is used
+			  *  - Names of printable alpha-numeric characters are used (e.g. "A", "R",
+			  *    "3", etc.)
+			  *  - For non-alphanumeric characters, Unicode:ish names are used (e.g.
+			  *    "COMMA", "LEFT_SQUARE_BRACKET", etc.). Note that some names do not
+			  *    correspond to the Unicode standard (usually for brevity)
+			  *  - Keys that lack a clear US mapping are named "WORLD_x"
+			  *  - For non-printable keys, custom names are used (e.g. "F4",
+			  *    "BACKSPACE", etc.)
+			  *
+			  *  @ingroup input
+			  *  @{
+			  */
 
-	/* The unknown key */
+			  /* The unknown key */
 #define GLFW_KEY_UNKNOWN            -1
 
 	/* Printable keys */
@@ -398,24 +398,24 @@ extern "C" {
 	 *  @ingroup input
 	 *  @{ */
 
-	/*! @brief If this bit is set one or more Shift keys were held down.
-	 */
+	 /*! @brief If this bit is set one or more Shift keys were held down.
+	  */
 #define GLFW_MOD_SHIFT           0x0001
-	/*! @brief If this bit is set one or more Control keys were held down.
-	 */
+	  /*! @brief If this bit is set one or more Control keys were held down.
+	   */
 #define GLFW_MOD_CONTROL         0x0002
-	/*! @brief If this bit is set one or more Alt keys were held down.
-	 */
+	   /*! @brief If this bit is set one or more Alt keys were held down.
+		*/
 #define GLFW_MOD_ALT             0x0004
-	/*! @brief If this bit is set one or more Super keys were held down.
-	 */
+		/*! @brief If this bit is set one or more Super keys were held down.
+		 */
 #define GLFW_MOD_SUPER           0x0008
 
-	/*! @} */
+		 /*! @} */
 
-	/*! @defgroup buttons Mouse buttons
-	 *  @ingroup input
-	 *  @{ */
+		 /*! @defgroup buttons Mouse buttons
+		  *  @ingroup input
+		  *  @{ */
 #define GLFW_MOUSE_BUTTON_1         0
 #define GLFW_MOUSE_BUTTON_2         1
 #define GLFW_MOUSE_BUTTON_3         2
@@ -428,11 +428,11 @@ extern "C" {
 #define GLFW_MOUSE_BUTTON_LEFT      GLFW_MOUSE_BUTTON_1
 #define GLFW_MOUSE_BUTTON_RIGHT     GLFW_MOUSE_BUTTON_2
 #define GLFW_MOUSE_BUTTON_MIDDLE    GLFW_MOUSE_BUTTON_3
-	/*! @} */
+		  /*! @} */
 
-	/*! @defgroup joysticks Joysticks
-	 *  @ingroup input
-	 *  @{ */
+		  /*! @defgroup joysticks Joysticks
+		   *  @ingroup input
+		   *  @{ */
 #define GLFW_JOYSTICK_1             0
 #define GLFW_JOYSTICK_2             1
 #define GLFW_JOYSTICK_3             2
@@ -450,42 +450,42 @@ extern "C" {
 #define GLFW_JOYSTICK_15            14
 #define GLFW_JOYSTICK_16            15
 #define GLFW_JOYSTICK_LAST          GLFW_JOYSTICK_16
-	/*! @} */
+		   /*! @} */
 
-	/*! @defgroup errors Error codes
-	 *  @ingroup error
-	 *  @{ */
-	/*! @brief GLFW has not been initialized.
-	 */
+		   /*! @defgroup errors Error codes
+			*  @ingroup error
+			*  @{ */
+			/*! @brief GLFW has not been initialized.
+			 */
 #define GLFW_NOT_INITIALIZED        0x00010001
-	/*! @brief No context is current for this thread.
-	 */
+			 /*! @brief No context is current for this thread.
+			  */
 #define GLFW_NO_CURRENT_CONTEXT     0x00010002
-	/*! @brief One of the enum parameters for the function was given an invalid
-	 *  enum.
-	 */
+			  /*! @brief One of the enum parameters for the function was given an invalid
+			   *  enum.
+			   */
 #define GLFW_INVALID_ENUM           0x00010003
-	/*! @brief One of the parameters for the function was given an invalid value.
-	 */
+			   /*! @brief One of the parameters for the function was given an invalid value.
+				*/
 #define GLFW_INVALID_VALUE          0x00010004
-	/*! @brief A memory allocation failed.
-	 */
+				/*! @brief A memory allocation failed.
+				 */
 #define GLFW_OUT_OF_MEMORY          0x00010005
-	/*! @brief GLFW could not find support for the requested client API on the
-	 *  system.
-	 */
+				 /*! @brief GLFW could not find support for the requested client API on the
+				  *  system.
+				  */
 #define GLFW_API_UNAVAILABLE        0x00010006
-	/*! @brief The requested client API version is not available.
-	 */
+				  /*! @brief The requested client API version is not available.
+				   */
 #define GLFW_VERSION_UNAVAILABLE    0x00010007
-	/*! @brief A platform-specific error occurred that does not match any of the
-	 *  more specific categories.
-	 */
+				   /*! @brief A platform-specific error occurred that does not match any of the
+					*  more specific categories.
+					*/
 #define GLFW_PLATFORM_ERROR         0x00010008
-	/*! @brief The clipboard did not contain data in the requested format.
-	 */
+					/*! @brief The clipboard did not contain data in the requested format.
+					 */
 #define GLFW_FORMAT_UNAVAILABLE     0x00010009
-	/*! @} */
+					 /*! @} */
 
 #define GLFW_FOCUSED                0x00020001
 #define GLFW_ICONIFIED              0x00020002
@@ -544,13 +544,13 @@ extern "C" {
 	 * GLFW API types
 	 *************************************************************************/
 
-	/*! @brief Client API function pointer type.
-	 *
-	 *  Generic function pointer used for returning client API function pointers
-	 *  without forcing a cast from a regular pointer.
-	 *
-	 *  @ingroup context
-	 */
+	 /*! @brief Client API function pointer type.
+	  *
+	  *  Generic function pointer used for returning client API function pointers
+	  *  without forcing a cast from a regular pointer.
+	  *
+	  *  @ingroup context
+	  */
 	typedef void(*GLFWglproc)(void);
 
 	/*! @brief Opaque monitor object.
@@ -838,37 +838,37 @@ extern "C" {
 	 * GLFW API functions
 	 *************************************************************************/
 
-	/*! @brief Initializes the GLFW library.
-	 *
-	 *  This function initializes the GLFW library.  Before most GLFW functions can
-	 *  be used, GLFW must be initialized, and before a program terminates GLFW
-	 *  should be terminated in order to free any resources allocated during or
-	 *  after initialization.
-	 *
-	 *  If this function fails, it calls @ref glfwTerminate before returning.  If it
-	 *  succeeds, you should call @ref glfwTerminate before the program exits.
-	 *
-	 *  Additional calls to this function after successful initialization but before
-	 *  termination will succeed but will do nothing.
-	 *
-	 *  @return `GL_TRUE` if successful, or `GL_FALSE` if an error occurred.
-	 *
-	 *  @par New in GLFW 3
-	 *  This function no longer registers @ref glfwTerminate with `atexit`.
-	 *
-	 *  @note This function may only be called from the main thread.
-	 *
-	 *  @note This function may take several seconds to complete on some systems,
-	 *  while on other systems it may take only a fraction of a second to complete.
-	 *
-	 *  @note **Mac OS X:** This function will change the current directory of the
-	 *  application to the `Contents/Resources` subdirectory of the application's
-	 *  bundle, if present.
-	 *
-	 *  @sa glfwTerminate
-	 *
-	 *  @ingroup init
-	 */
+	 /*! @brief Initializes the GLFW library.
+	  *
+	  *  This function initializes the GLFW library.  Before most GLFW functions can
+	  *  be used, GLFW must be initialized, and before a program terminates GLFW
+	  *  should be terminated in order to free any resources allocated during or
+	  *  after initialization.
+	  *
+	  *  If this function fails, it calls @ref glfwTerminate before returning.  If it
+	  *  succeeds, you should call @ref glfwTerminate before the program exits.
+	  *
+	  *  Additional calls to this function after successful initialization but before
+	  *  termination will succeed but will do nothing.
+	  *
+	  *  @return `GL_TRUE` if successful, or `GL_FALSE` if an error occurred.
+	  *
+	  *  @par New in GLFW 3
+	  *  This function no longer registers @ref glfwTerminate with `atexit`.
+	  *
+	  *  @note This function may only be called from the main thread.
+	  *
+	  *  @note This function may take several seconds to complete on some systems,
+	  *  while on other systems it may take only a fraction of a second to complete.
+	  *
+	  *  @note **Mac OS X:** This function will change the current directory of the
+	  *  application to the `Contents/Resources` subdirectory of the application's
+	  *  bundle, if present.
+	  *
+	  *  @sa glfwTerminate
+	  *
+	  *  @ingroup init
+	  */
 	GLFWAPI int glfwInit(void);
 
 	/*! @brief Terminates the GLFW library.
@@ -2252,7 +2252,7 @@ extern "C" {
 	 * Global definition cleanup
 	 *************************************************************************/
 
-	/* ------------------- BEGIN SYSTEM/COMPILER SPECIFIC -------------------- */
+	 /* ------------------- BEGIN SYSTEM/COMPILER SPECIFIC -------------------- */
 
 #ifdef GLFW_WINGDIAPI_DEFINED
 #undef WINGDIAPI

@@ -74,17 +74,17 @@ FT_Library      library)
 				line[xx - 2] = (FT_Byte)pix;
 			}
 
-		{
-			FT_UInt  pix;
+			{
+				FT_UInt  pix;
 
-			pix = fir[0] >> 8;
-			pix |= -(pix >> 8);
-			line[xx - 2] = (FT_Byte)pix;
+				pix = fir[0] >> 8;
+				pix |= -(pix >> 8);
+				line[xx - 2] = (FT_Byte)pix;
 
-			pix = fir[1] >> 8;
-			pix |= -(pix >> 8);
-			line[xx - 1] = (FT_Byte)pix;
-		}
+				pix = fir[1] >> 8;
+				pix |= -(pix >> 8);
+				line[xx - 1] = (FT_Byte)pix;
+			}
 		}
 	}
 
@@ -132,17 +132,17 @@ FT_Library      library)
 				col += pitch;
 			}
 
-		{
-			FT_UInt  pix;
+			{
+				FT_UInt  pix;
 
-			pix = fir[0] >> 8;
-			pix |= -(pix >> 8);
-			col[-2 * pitch] = (FT_Byte)pix;
+				pix = fir[0] >> 8;
+				pix |= -(pix >> 8);
+				col[-2 * pitch] = (FT_Byte)pix;
 
-			pix = fir[1] >> 8;
-			pix |= -(pix >> 8);
-			col[-pitch] = (FT_Byte)pix;
-		}
+				pix = fir[1] >> 8;
+				pix |= -(pix >> 8);
+				col[-pitch] = (FT_Byte)pix;
+			}
 		}
 	}
 }
