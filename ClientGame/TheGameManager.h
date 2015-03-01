@@ -22,6 +22,7 @@ private:
 	unsigned int activeNPCIterator;
 
 	void AddNPC(const int numberToAdd);
+	void InitializeNPC();
 
 	virtual void ReceiveMessage(Message *message) override;
 protected:

@@ -7,6 +7,8 @@ class Inventory
 private:
 	bool city; // Bool to store whether the inventory belongs to a city or not.
 
+	int numPerLine; // Used to structure the inventory string.
+
 	std::vector<std::shared_ptr<InventoryBag>> bagContainer;
 	std::unique_ptr<InventoryPurse> purse;
 

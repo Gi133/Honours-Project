@@ -261,6 +261,7 @@
     <None Include="Resources\Files\resource_base_price.config">
       <Filter>Config\Files</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resources\Files\city_names.txt">

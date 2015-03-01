@@ -4,6 +4,7 @@
 namespace
 {
 	const auto purseStartingLimitFallBack = 10000;
+	const auto numPerLineFallBack = 2;
 }
 
 Inventory::Inventory(const bool isCity /* = false */, int startingBagNumber /* = 1 */, int StartingGold /* = 0 */)
@@ -30,6 +31,10 @@ void Inventory::LoadDefauts()
 	auto purseStartingLimit = thePrefs.GetInt("InventorySettings", "startingGoldLimit");
 	if (!purseStartingLimit)
 		purseStartingLimit = purseStartingLimitFallBack;
+
+	numPerLine = thePrefs.GetInt("InventorySettings", "numPerLine");
+	if (!numPerLine)
+		numPerLine = numPerLineFallBack;
 
 	purse->SetGoldLimit(purseStartingLimit);
 }
@@ -125,7 +130,8 @@ int Inventory::GetTotalResourceAmount(const int iter)
 std::string Inventory::GetInventoryString()
 {
 	std::string inventoryString = "";
-	const auto numPerLine = 2;
+
+	inventoryString += "Gold: " + IntToString(purse->GetGold()) + " / " + IntToString(purse->GetGoldLimit()) + "\n";
 
 	// Assemble the string.
 	for (int i = 0; i < theResourceManager.GetTotalResources(); i++)

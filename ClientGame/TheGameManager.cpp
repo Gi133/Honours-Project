@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "TheGameManager.h"
 
+namespace
+{
+	const auto startingNPCNumberFallBack = 1;
+}
+
 TheGameManager* TheGameManager::_instance = nullptr;
 
 TheGameManager& TheGameManager::getInstance()
@@ -13,6 +18,8 @@ TheGameManager& TheGameManager::getInstance()
 TheGameManager::TheGameManager()
 {
 	theSwitchboard.SubscribeTo(this, "SpaceBar");
+	theSwitchboard.SubscribeTo(this, "E");
+	theSwitchboard.SubscribeTo(this, "Q");
 
 	mapSize = halfMapSize = Vector2(0.0f, 0.0f);
 	activeNPCIterator = 0;
@@ -26,7 +33,7 @@ TheGameManager::TheGameManager()
 
 	uiManager->SetupMapActors();
 
-	AddNPC(1);
+	InitializeNPC();
 
 	uiManager->SetCurrentNPC(npcContainer.at(0));
 
@@ -41,6 +48,15 @@ void TheGameManager::Update(float dt)
 {
 	uiManager->Update();
 	timeManager->Update();
+}
+
+void TheGameManager::InitializeNPC()
+{
+	auto startingNPCNumber = thePrefs.GetInt("GameSettings", "startingNPCNumber");
+	if (!startingNPCNumber)
+		startingNPCNumber = startingNPCNumberFallBack;
+
+	AddNPC(startingNPCNumber);
 }
 
 void TheGameManager::AddNPC(const int numberToAdd)
@@ -63,21 +79,27 @@ void TheGameManager::ReceiveMessage(Message *message)
 
 	if (message->GetMessageName() == "E")
 	{
-		if (activeNPCIterator < npcContainer.size())
-			activeNPCIterator++;
-		else
-			activeNPCIterator = 0;
+		if (npcContainer.size() > 1)
+		{
+			if (activeNPCIterator < (npcContainer.size() - 1))
+				activeNPCIterator++;
+			else
+				activeNPCIterator = 0;
 
-		uiManager->SetCurrentNPC(npcContainer.at(activeNPCIterator));
+			uiManager->SetCurrentNPC(npcContainer.at(activeNPCIterator));
+		}
 	}
 
 	if (message->GetMessageName() == "Q")
 	{
-		if (activeNPCIterator > 0)
-			activeNPCIterator--;
-		else
-			activeNPCIterator = npcContainer.size();
+		if (npcContainer.size() > 1)
+		{
+			if (activeNPCIterator > 0)
+				activeNPCIterator--;
+			else
+				activeNPCIterator = npcContainer.size() - 1;
 
-		uiManager->SetCurrentNPC(npcContainer.at(activeNPCIterator));
+			uiManager->SetCurrentNPC(npcContainer.at(activeNPCIterator));
+		}
 	}
 }

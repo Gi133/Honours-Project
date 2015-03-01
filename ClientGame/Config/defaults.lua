@@ -166,6 +166,7 @@ BagSettings =
 InventorySettings = 
 {
 	purseStartingLimit = 10000,
+	numPerLine = 2,
 }
 
 -- City Inventory Settings
@@ -179,4 +180,10 @@ NPCSettings =
 {
 	startingBagNumber = 1,
 	startingGoldNumber = 1000,
+}
+
+-- Game Settings
+GameSettings = 
+{
+	startingNPCNumber = 1,
 }
