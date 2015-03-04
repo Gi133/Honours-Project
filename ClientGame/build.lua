@@ -2,6 +2,7 @@
 --  At the moment it just sets the name, but there may be more settings
 --  in the future.
 
-game_info = {
+game_info = 
+{
   name = "Honours Project"
 }

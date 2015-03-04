@@ -153,6 +153,15 @@
     <ClCompile Include="UIObjectInfo.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
+    <ClCompile Include="AIGoal.cpp">
+      <Filter>SourceCode\Code\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGoalAtomic.cpp">
+      <Filter>SourceCode\Code\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGoalComposite.cpp">
+      <Filter>SourceCode\Code\AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -229,6 +238,18 @@
     <ClInclude Include="Map.h">
       <Filter>SourceCode\Headers\Core</Filter>
     </ClInclude>
+    <ClInclude Include="AIGoal.h">
+      <Filter>SourceCode\Headers\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGoalAtomic.h">
+      <Filter>SourceCode\Headers\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGoalComposite.h">
+      <Filter>SourceCode\Headers\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalStatusEnum.h">
+      <Filter>SourceCode\Headers\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Config\input_bindings.ini">
@@ -261,7 +282,6 @@
     <None Include="Resources\Files\resource_base_price.config">
       <Filter>Config\Files</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resources\Files\city_names.txt">

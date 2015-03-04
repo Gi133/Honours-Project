@@ -33,9 +33,10 @@
 #include "../Infrastructure/Vector2.h"
 #include "../Infrastructure/Log.h"
 
-#if defined(WIN32)
+// CHANGE: Use backwards compatible version of XInput. (Used to be : "XInput.lb")
+#if defined (WIN32)
 #include <XInput.h>
-#pragma comment(lib, "XInput.lib")
+#pragma comment(lib, "XInput9_1_0.lib")
 #include <assert.h>
 #elif defined(__APPLE__)
 #include <Carbon/Carbon.h>

@@ -182,6 +182,9 @@ cd ..\Tools\BuildScripts\
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/wd4716 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/wd4716 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="AIGoal.cpp" />
+    <ClCompile Include="AIGoalAtomic.cpp" />
+    <ClCompile Include="AIGoalComposite.cpp" />
     <ClCompile Include="Brain.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -213,8 +216,12 @@ cd ..\Tools\BuildScripts\
     <ResourceCompile Include="platforms\win\ClientGame.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIGoal.h" />
+    <ClInclude Include="AIGoalAtomic.h" />
+    <ClInclude Include="AIGoalComposite.h" />
     <ClInclude Include="Brain.h" />
     <ClInclude Include="City.h" />
+    <ClInclude Include="GoalStatusEnum.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryBag.h" />
     <ClInclude Include="InventoryPurse.h" />
@@ -238,7 +245,6 @@ cd ..\Tools\BuildScripts\
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="Config\defaults.lua" />
     <None Include="Config\input_bindings.ini" />
     <None Include="Config\tuning.lua" />
