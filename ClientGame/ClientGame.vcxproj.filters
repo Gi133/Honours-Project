@@ -79,6 +79,9 @@
     <Filter Include="SourceCode\Headers\AI">
       <UniqueIdentifier>{c4933f99-05b9-4224-9993-65ef5c019c24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\Headers\AI\Base">
+      <UniqueIdentifier>{eef9e174-00fe-43ab-9e69-8b416e53ac94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Angel\Scripting\Interfaces\AngelLuaWrapping.cpp">
@@ -152,15 +155,6 @@
     </ClCompile>
     <ClCompile Include="UIObjectInfo.cpp">
       <Filter>SourceCode\Code\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="AIGoal.cpp">
-      <Filter>SourceCode\Code\AI</Filter>
-    </ClCompile>
-    <ClCompile Include="AIGoalAtomic.cpp">
-      <Filter>SourceCode\Code\AI</Filter>
-    </ClCompile>
-    <ClCompile Include="AIGoalComposite.cpp">
-      <Filter>SourceCode\Code\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,16 +232,13 @@
     <ClInclude Include="Map.h">
       <Filter>SourceCode\Headers\Core</Filter>
     </ClInclude>
-    <ClInclude Include="AIGoal.h">
-      <Filter>SourceCode\Headers\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="AIGoalAtomic.h">
-      <Filter>SourceCode\Headers\AI</Filter>
-    </ClInclude>
     <ClInclude Include="AIGoalComposite.h">
-      <Filter>SourceCode\Headers\AI</Filter>
+      <Filter>SourceCode\Headers\AI\Base</Filter>
     </ClInclude>
-    <ClInclude Include="GoalStatusEnum.h">
+    <ClInclude Include="AIGoal.h">
+      <Filter>SourceCode\Headers\AI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="GoalTypeEnum.h">
       <Filter>SourceCode\Headers\AI</Filter>
     </ClInclude>
   </ItemGroup>
