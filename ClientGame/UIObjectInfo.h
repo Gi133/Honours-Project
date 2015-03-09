@@ -1,6 +1,5 @@
 #pragma once
 #include "UIWindow.h"
-#include "NPC.h"
 
 class UIObjectInfo :
 	public UIWindow

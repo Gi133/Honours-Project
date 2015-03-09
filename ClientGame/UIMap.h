@@ -1,7 +1,5 @@
 #pragma once
 #include "UIWindow.h"
-#include "City.h"
-#include "Location.h"
 
 class UIMap :
 	public UIWindow

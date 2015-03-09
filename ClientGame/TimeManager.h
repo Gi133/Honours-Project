@@ -1,6 +1,5 @@
 #pragma once
 #include <chrono>
-#include "stdafx.h"
 
 class TimeManager : public MessageListener
 {

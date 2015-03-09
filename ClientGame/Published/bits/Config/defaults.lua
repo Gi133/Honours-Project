@@ -163,14 +163,27 @@ BagSettings =
 	bagUpgradeLevelSpace = 20,
 }
 
+InventorySettings = 
+{
+	purseStartingLimit = 10000,
+	numPerLine = 2,
+}
+
 -- City Inventory Settings
 CityInventorySettings =
 {
 	minResourceQuantity = 1000,
 }
 
--- NPC Inventory Settings
-NPCInventorySettings = 
+-- NPC Settings
+NPCSettings = 
 {
-	
+	startingBagNumber = 1,
+	startingGoldNumber = 1000,
+}
+
+-- Game Settings
+GameSettings = 
+{
+	startingNPCNumber = 1,
 }

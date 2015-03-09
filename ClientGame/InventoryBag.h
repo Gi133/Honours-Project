@@ -2,10 +2,6 @@
 // Map<string, int> : Map<ResourceName, InventoryQuantity>
 
 #pragma once
-#include <regex>
-#include "stdafx.h"
-#include "ResourceManager.h"
-
 class InventoryBag
 {
 private:

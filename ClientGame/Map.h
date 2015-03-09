@@ -1,8 +1,5 @@
 #pragma once
 #include "LocationGenerator.h"
-#include "City.h"
-#include "Location.h"
-#include "NameManager.h"
 
 #define theMap Map::getInstance()
 
@@ -29,6 +26,12 @@ public:
 	static Map& getInstance();
 
 	void GenerateMap();
+
+	float GetDistanceBetween(std::weak_ptr<City> cityA, std::weak_ptr<City> cityB);
+	float GetDistanceBetween(std::string cityNameA, std::string cityNameB);
+
+	std::weak_ptr<City> GetRandomCity();
+	std::weak_ptr<City> CityNameToPtr(std::string cityName);
 
 	std::reference_wrapper<std::vector<std::shared_ptr<City>>> GetCityContainerRef() { return std::ref(cityContainer); }
 	std::reference_wrapper<std::vector<std::shared_ptr<Location>>> GetLocationContainerRed() { return std::ref(locationContainer); }

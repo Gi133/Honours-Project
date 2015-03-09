@@ -7,8 +7,6 @@
 #include <functional>
 #include <cctype>
 
-#include "stdafx.h"
-
 #define BUFFER_SIZE 4096
 
 class Utils

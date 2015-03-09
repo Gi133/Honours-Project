@@ -5,16 +5,25 @@ namespace
 {
 	const auto startingGoldNumberFallBack = 1000;
 	const auto startingBagNumberFallBack = 1;
+	const auto baseMoveSpeedFallBack = 1.0f;
 }
 
 NPC::NPC()
 {
+	baseMoveSpeed = 0;
+	calculatedMoveSpeed = 0;
+	aiControlled = true;
+
 	LoadDefaults();
 	GenerateName();
 	GenerateStartingCity();
 }
 
 NPC::~NPC()
+{
+}
+
+void NPC::Update()
 {
 }
 
@@ -26,7 +35,12 @@ void NPC::GenerateName()
 void NPC::GenerateStartingCity()
 {
 	// Ugly as all hell, but it will randomly generate a starting location by picking a random index number.
-	currentCity = theMap.GetCityContainerRef().get().at(MathUtil::RandomIntInRange(0, theMap.GetCityContainerRef().get().size()));
+	currentCity = theMap.GetRandomCity();
+}
+
+void NPC::SetCity(const std::weak_ptr<City> destination)
+{
+	currentCity = destination;
 }
 
 void NPC::SetStartingCity(const std::string cityName)
@@ -41,6 +55,10 @@ void NPC::SetStartingCity(const std::string cityName)
 
 void NPC::LoadDefaults()
 {
+	baseMoveSpeed = thePrefs.GetFloat("NPCSettings", "baseMoveSpeed");
+	if (!baseMoveSpeed)
+		baseMoveSpeed = baseMoveSpeedFallBack;
+
 	auto startingGoldNumber = thePrefs.GetInt("NPCSettings", "startingGoldNumber");
 	if (!startingGoldNumber)
 		startingGoldNumber = startingGoldNumberFallBack;
@@ -56,4 +74,15 @@ void NPC::LoadDefaults()
 void NPC::InitializeInventory(const int startingBagNumber, const int startingGoldNumber)
 {
 	inventory.reset(new Inventory(false, startingBagNumber, startingGoldNumber));
+}
+
+void NPC::CalculateMoveSpeed()
+{
+	// Change this if required.
+	calculatedMoveSpeed = baseMoveSpeed;
+}
+
+float NPC::GetMoveSpeed()const
+{
+	return calculatedMoveSpeed;
 }

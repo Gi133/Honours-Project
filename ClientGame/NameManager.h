@@ -1,7 +1,4 @@
 #pragma once
-#include <fstream>
-#include "stdafx.h"
-
 #define theNameManager NameManager::getInstance()
 
 class NameManager

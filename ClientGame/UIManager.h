@@ -1,10 +1,7 @@
 #pragma once
-#include "stdafx.h"
 #include "UIWorldInfo.h"
 #include "UIMap.h"
 #include "UIObjectInfo.h"
-#include "TimeManager.h"
-#include "Map.h"
 
 class UIManager
 {

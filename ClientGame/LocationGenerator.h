@@ -1,11 +1,5 @@
 #pragma once
-#include "City.h"
-#include "Location.h"
-
-#include <mutex>
-
-// Variable name verbosity for the sake of not having to pass around values too much or needlessly re-reading files.
-
+#include "stdafx.h"
 class LocationGenerator
 {
 private:

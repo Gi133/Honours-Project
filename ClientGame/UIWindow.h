@@ -1,7 +1,5 @@
 #pragma once
-#include "stdafx.h"
 #include "UIElement.h"
-#include <regex>
 
 enum UIWindowAnchors
 {

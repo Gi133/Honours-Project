@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 #include "UIWindow.h"
-#include "TimeManager.h"
 
 class UIWorldInfo :
 	public UIWindow

@@ -1,11 +1,5 @@
 #pragma once
-
-#include "stdafx.h"
-#include "NameManager.h"
 #include "UIManager.h"
-#include "NPC.h"
-#include "ResourceManager.h"
-#include "TimeManager.h"
 
 #define theGameManger TheGameManager::getInstance()
 

@@ -1,7 +1,5 @@
 // Base class for all the map entities.
-
 #pragma once
-#include "stdafx.h"
 
 class MapPOI
 {

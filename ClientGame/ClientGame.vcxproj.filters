@@ -82,6 +82,15 @@
     <Filter Include="SourceCode\Headers\AI\Base">
       <UniqueIdentifier>{eef9e174-00fe-43ab-9e69-8b416e53ac94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\Headers\AI\Goals">
+      <UniqueIdentifier>{11b7ecda-2aa3-41f6-a8a1-e54ac9776fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Code\AI\Goals">
+      <UniqueIdentifier>{670efb1b-93f2-46d6-839f-83946539873b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Code\AI\Base">
+      <UniqueIdentifier>{4ba854c3-cef8-4eea-8087-d1282e2ced24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Angel\Scripting\Interfaces\AngelLuaWrapping.cpp">
@@ -126,9 +135,6 @@
     <ClCompile Include="TimeManager.cpp">
       <Filter>SourceCode\Code\Core\Time</Filter>
     </ClCompile>
-    <ClCompile Include="Brain.cpp">
-      <Filter>SourceCode\Code\AI</Filter>
-    </ClCompile>
     <ClCompile Include="UIWindow.cpp">
       <Filter>SourceCode\Code\UI</Filter>
     </ClCompile>
@@ -155,6 +161,15 @@
     </ClCompile>
     <ClCompile Include="UIObjectInfo.cpp">
       <Filter>SourceCode\Code\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGoalComposite.cpp">
+      <Filter>SourceCode\Code\AI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGoal_Think.cpp">
+      <Filter>SourceCode\Code\AI\Goals</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGoalEvaluator.cpp">
+      <Filter>SourceCode\Code\AI\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,9 +220,6 @@
     <ClInclude Include="TimeManager.h">
       <Filter>SourceCode\Headers\Core\Time</Filter>
     </ClInclude>
-    <ClInclude Include="Brain.h">
-      <Filter>SourceCode\Headers\AI</Filter>
-    </ClInclude>
     <ClInclude Include="UIWindow.h">
       <Filter>SourceCode\Headers\UI</Filter>
     </ClInclude>
@@ -232,14 +244,17 @@
     <ClInclude Include="Map.h">
       <Filter>SourceCode\Headers\Core</Filter>
     </ClInclude>
-    <ClInclude Include="AIGoalComposite.h">
-      <Filter>SourceCode\Headers\AI\Base</Filter>
-    </ClInclude>
     <ClInclude Include="AIGoal.h">
       <Filter>SourceCode\Headers\AI\Base</Filter>
     </ClInclude>
-    <ClInclude Include="GoalTypeEnum.h">
-      <Filter>SourceCode\Headers\AI</Filter>
+    <ClInclude Include="AIGoalComposite.h">
+      <Filter>SourceCode\Headers\AI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGoal_Think.h">
+      <Filter>SourceCode\Headers\AI\Goals</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGoalEvaluator.h">
+      <Filter>SourceCode\Headers\AI\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

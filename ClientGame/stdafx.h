@@ -5,4 +5,15 @@
 
 #include "Angel.h"
 
+#include "City.h"
+#include "NPC.h"
+#include "Map.h"
+
+#include "Location.h"
+#include "TimeManager.h"
+#include "NameManager.h"
+#include "ResourceManager.h"
+
+#include <regex>
+
 // TODO: reference additional headers your program requires here

@@ -180,10 +180,19 @@ NPCSettings =
 {
 	startingBagNumber = 1,
 	startingGoldNumber = 1000,
+
+	baseMoveSpeed = 1.0,
 }
 
 -- Game Settings
 GameSettings = 
 {
 	startingNPCNumber = 1,
+}
+
+-- AI Goal Settings
+AIGoalBias =
+{
+	biasDefaultMin = 0.5,
+	biasDefaultMax = 1.5,
 }
