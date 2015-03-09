@@ -2,7 +2,7 @@
 #include "AIGoal_Think.h"
 
 
-AIGoal_Think::AIGoal_Think(NPC* _owner):AIGoalComposite(_owner, GoalThink)
+AIGoal_Think::AIGoal_Think(std::weak_ptr<NPC> _owner):AIGoalComposite(_owner, GoalThink)
 {
 
 }
@@ -51,7 +51,7 @@ int AIGoal_Think::Process()
 
 	if (status == COMPLETED || status == FAILED)
 	{
-		if (!owner->GetAIControlled())
+		if (!owner.lock()->GetAIControlled())
 			goalStatus = INACTIVE;
 	}
 
@@ -60,7 +60,7 @@ int AIGoal_Think::Process()
 
 void AIGoal_Think::Activate()
 {
-	if (owner->GetAIControlled())
+	if (owner.lock()->GetAIControlled())
 		CalculateGoal();
 
 	goalStatus = ACTIVE;

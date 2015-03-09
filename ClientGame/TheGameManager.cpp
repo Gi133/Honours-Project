@@ -57,6 +57,13 @@ void TheGameManager::InitializeNPC()
 		startingNPCNumber = startingNPCNumberFallBack;
 
 	AddNPC(startingNPCNumber);
+
+	// Enable NPC Brain.
+	for (auto i : npcContainer)
+	{
+		i->SetupBrain();
+		i->SetAIControlled(true);
+	}
 }
 
 void TheGameManager::AddNPC(const int numberToAdd)

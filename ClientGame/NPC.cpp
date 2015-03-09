@@ -86,3 +86,8 @@ float NPC::GetMoveSpeed()const
 {
 	return calculatedMoveSpeed;
 }
+
+void NPC::SetupBrain()
+{
+	aiBrain.reset(new AIGoal_Think(shared_from_this()));
+}

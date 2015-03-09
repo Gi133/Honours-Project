@@ -13,7 +13,7 @@ protected:
 	int ProcessSubgoals();
 
 public:
-	AIGoalComposite(NPC* _owner, int _type);
+	AIGoalComposite(std::weak_ptr<NPC> _owner, int _type);
 	virtual ~AIGoalComposite();
 
 	virtual void Activate() = 0;

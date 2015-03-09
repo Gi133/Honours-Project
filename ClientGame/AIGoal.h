@@ -9,7 +9,7 @@ class NPC;
 class AIGoal
 {
 protected:
-	NPC* owner;
+	std::weak_ptr<NPC> owner;
 	int goalType, goalStatus;
 
 	void ActivateInactive() { if (isInactive()) goalStatus = INACTIVE; } // Reactive if inactive.
@@ -33,7 +33,7 @@ public:
 		FAILED
 	};
 
-	AIGoal(NPC* _owner, int _type)
+	AIGoal(std::weak_ptr<NPC> _owner, int _type)
 	{
 		goalType = _type;
 		owner = _owner;

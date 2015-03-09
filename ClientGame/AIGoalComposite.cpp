@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "AIGoalComposite.h"
 
-AIGoalComposite::AIGoalComposite(NPC* _owner, int _type) :AIGoal(_owner, _type)
+AIGoalComposite::AIGoalComposite(std::weak_ptr<NPC> _owner, int _type) :AIGoal(_owner, _type)
 {
-
 }
 
 AIGoalComposite::~AIGoalComposite()

@@ -2,7 +2,8 @@
 #include "stdafx.h"
 #include "AIGoal_Think.h"
 
-class NPC
+class NPC:
+	public std::enable_shared_from_this<NPC>
 {
 private:
 	std::string name;
@@ -25,6 +26,7 @@ public:
 
 	void Update();
 
+	void SetupBrain();
 	void SetAIControlled(const bool _aiControlled) { aiControlled = _aiControlled; }
 	bool GetAIControlled() { return aiControlled; }
 

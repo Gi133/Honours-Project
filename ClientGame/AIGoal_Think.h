@@ -13,7 +13,7 @@ private:
 	GoalEvaluators evaluators;
 
 public:
-	AIGoal_Think(NPC* _owner);
+	AIGoal_Think(std::weak_ptr<NPC> _owner);
 	~AIGoal_Think();
 
 	// Set highest scored evaluator as the current goal.

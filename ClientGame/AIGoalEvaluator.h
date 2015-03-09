@@ -9,7 +9,7 @@ public:
 	AIGoalEvaluator(const float _bias);
 	virtual ~AIGoalEvaluator();
 
-	virtual float CalculateDesirability(NPC* _owner) = 0;
-	virtual void SetGoal(NPC* _owner) = 0;
+	virtual float CalculateDesirability(std::weak_ptr<NPC> _owner) = 0;
+	virtual void SetGoal(std::weak_ptr<NPC> _owner) = 0;
 };
 
