@@ -49,6 +49,7 @@ UIManager::~UIManager()
 void UIManager::Update()
 {
 	windowWorldInfo->Update();
+	windowObjectInfo->Update();
 }
 
 void UIManager::LoadConfig()

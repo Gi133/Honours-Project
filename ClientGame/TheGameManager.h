@@ -7,6 +7,8 @@ class TheGameManager :
 	public GameManager
 {
 private:
+	bool paused;
+
 	std::unique_ptr<UIManager> uiManager;
 	std::shared_ptr<TimeManager> timeManager;
 	std::vector<std::shared_ptr<NPC>> npcContainer;
@@ -19,6 +21,10 @@ private:
 	void InitializeNPC();
 
 	virtual void ReceiveMessage(Message *message) override;
+
+	void onPause();
+	void onUnpause();
+
 protected:
 	TheGameManager();
 	~TheGameManager() { _instance = nullptr; }

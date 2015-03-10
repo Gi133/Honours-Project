@@ -2,6 +2,8 @@
 #include "AIGoalComposite.h"
 #include "AIGoalEvaluator.h"
 
+#include "AIGoal_MoveToCity.h"
+
 class AIGoalEvaluator;
 
 class AIGoal_Think :
@@ -26,9 +28,12 @@ public:
 	void Activate();
 	void Terminate();
 
+	std::string GetGoalString();
+	std::string GetGoalProgressString();
+
 	// Top Level goal functions.
 
 	// Goal queue functions.
-
+	void Queue_MoveToCity(std::weak_ptr<City> _destination);
 };
 

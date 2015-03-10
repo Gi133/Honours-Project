@@ -28,9 +28,19 @@ void UIObjectInfo::AdjustCurrentElements()
 {
 	if (!currentNPC.expired())
 	{
+		// Name
 		elementContainer.at(0)->SetContentText(currentNPC.lock()->GetName());
+
+		// Current City
 		elementContainer.at(1)->SetContentText(currentNPC.lock()->GetCityName());
 
+		// Task
+		elementContainer.at(2)->SetContentText(currentNPC.lock()->GetCurrentGoal());
+
+		// Task Progress
+		elementContainer.at(3)->SetContentText(currentNPC.lock()->GetCurrentGoalProgress());
+
+		// Inventory
 		elementContainer.at(4)->SetContentText(currentNPC.lock()->GetInventory().lock()->GetInventoryString());
 	}
 }

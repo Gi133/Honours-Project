@@ -15,11 +15,16 @@ TheGameManager& TheGameManager::getInstance()
 	return *_instance;
 }
 
+void TheGameManager::Render()
+{
+}
+
 TheGameManager::TheGameManager()
 {
 	theSwitchboard.SubscribeTo(this, "SpaceBar");
 	theSwitchboard.SubscribeTo(this, "E");
 	theSwitchboard.SubscribeTo(this, "Q");
+	theSwitchboard.SubscribeTo(this, "Z");
 
 	mapSize = halfMapSize = Vector2(0.0f, 0.0f);
 	activeNPCIterator = 0;
@@ -37,17 +42,41 @@ TheGameManager::TheGameManager()
 
 	uiManager->SetCurrentNPC(npcContainer.at(0));
 
-	theWorld.AppendToWindowName("Game Timer Paused, Press SPACE to Start.");
+	paused = false;
+	onPause();
 }
 
-void TheGameManager::Render()
+void TheGameManager::onPause()
 {
+	if (!paused)
+	{
+		theWorld.AppendToWindowName("Game Timer Paused, Press SPACE to Start.");
+		timeManager->StopTime();
+		paused = true;
+	}
+}
+
+void TheGameManager::onUnpause()
+{
+	if (paused)
+	{
+		theWorld.RemoveAppendToWindowName();
+		timeManager->StartTime();
+		paused = false;
+	}
 }
 
 void TheGameManager::Update(float dt)
 {
 	uiManager->Update();
 	timeManager->Update();
+
+	if (!paused)
+	{
+		// Update all NPC AI.
+		for (auto i : npcContainer)
+			i->Update();
+	}
 }
 
 void TheGameManager::InitializeNPC()
@@ -78,10 +107,12 @@ void TheGameManager::AddNPC(const int numberToAdd)
 
 void TheGameManager::ReceiveMessage(Message *message)
 {
-	if ((timeManager->GetStarted() == false) && (message->GetMessageName() == "SpaceBar"))
+	if (message->GetMessageName() == "SpaceBar")
 	{
-		theWorld.RemoveAppendToWindowName();
-		timeManager->StartTime();
+		if (paused)
+			onUnpause();
+		else
+			onPause();
 	}
 
 	if (message->GetMessageName() == "E")
@@ -108,5 +139,11 @@ void TheGameManager::ReceiveMessage(Message *message)
 
 			uiManager->SetCurrentNPC(npcContainer.at(activeNPCIterator));
 		}
+	}
+
+	if (message->GetMessageName() == "Z")
+	{
+		sysLog.Log("Queuing random move to city.");
+		npcContainer.at(activeNPCIterator)->QueueRandomMoveToCity();
 	}
 }

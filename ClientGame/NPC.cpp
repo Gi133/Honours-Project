@@ -17,6 +17,8 @@ NPC::NPC()
 	LoadDefaults();
 	GenerateName();
 	GenerateStartingCity();
+
+	CalculateMoveSpeed();
 }
 
 NPC::~NPC()
@@ -25,6 +27,8 @@ NPC::~NPC()
 
 void NPC::Update()
 {
+	// Process AI brain.
+	aiBrain->Process();
 }
 
 void NPC::GenerateName()
@@ -90,4 +94,19 @@ float NPC::GetMoveSpeed()const
 void NPC::SetupBrain()
 {
 	aiBrain.reset(new AIGoal_Think(shared_from_this()));
+}
+
+void NPC::QueueRandomMoveToCity()
+{
+	aiBrain->Queue_MoveToCity(theMap.GetRandomCity());
+}
+
+std::string NPC::GetCurrentGoal() const
+{
+	return aiBrain->GetGoalString();
+}
+
+std::string NPC::GetCurrentGoalProgress() const
+{
+	return aiBrain->GetGoalProgressString();
 }

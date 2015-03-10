@@ -31,7 +31,6 @@ int AIGoalComposite::ProcessSubgoals()
 	while (!subgoals.empty() && (subgoals.front()->isComplete() || subgoals.front()->hasFailed()))
 	{
 		subgoals.front()->Terminate();
-		delete subgoals.front().get();
 		subgoals.pop_front();
 	}
 

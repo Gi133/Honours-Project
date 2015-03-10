@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Map.h"
+#include <cmath>
 
 namespace
 {
@@ -49,13 +50,19 @@ float Map::GetDistanceBetween(std::weak_ptr<City> cityA, std::weak_ptr<City> cit
 		if (!cityAFound)
 		{
 			if (cityA.lock()->GetName() == city->GetName())
+			{
 				cityAPos = city->GetPosition();
+				cityAFound = true;
+			}	
 		}
 
 		if (!cityBFound)
 		{
 			if (cityB.lock()->GetName() == city->GetName())
+			{
 				cityBPos = city->GetPosition();
+				cityBFound = true;
+			}
 		}
 
 		if (cityAFound && cityBFound)
@@ -64,7 +71,7 @@ float Map::GetDistanceBetween(std::weak_ptr<City> cityA, std::weak_ptr<City> cit
 
 	// Exception Catch
 	if (!cityAFound || !cityBFound)
-		throw(std::runtime_error("Could not find one or more cities when trying to calculate the distance between them."));
+		return -1.0f;
 
 	// Knowing the position of the cities, find the distance between them.
 	float distanceX = std::abs(cityAPos.X - cityBPos.X);

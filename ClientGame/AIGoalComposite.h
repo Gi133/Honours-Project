@@ -20,6 +20,8 @@ public:
 	virtual int Process() = 0;
 	virtual void Terminate() = 0;
 
+	virtual std::string GetGoalString() = 0;
+
 	void AddSubgoal(std::unique_ptr<AIGoal> newGoal);
 	void RemoveAllSubgoals();
 };

@@ -44,4 +44,8 @@ public:
 	std::string GetCityName() { return currentCity.lock()->GetName(); }
 
 	float GetMoveSpeed()const;
+	std::string GetCurrentGoal()const;
+	std::string GetCurrentGoalProgress()const;
+
+	void QueueRandomMoveToCity(); // Function to have the merchant move to a random city after current queued goals are done.
 };
