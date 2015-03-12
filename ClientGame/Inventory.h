@@ -22,8 +22,7 @@ public:
 	void AddBag(const int numBag = 1);
 
 	// Resource Management
-	void AddToResource(const std::string resourceName, const int quantity);
-	void SubtractFromResource(const std::string resourceName, const int quantity);
+	void AdjustResource(const std::string resourceName, const int quantity);
 	void SetResource(const std::string resourceName, const int quantity);
 	int GetTotalResourceAmount(const std::string resourceName);
 	std::string GetInventoryString();
@@ -35,8 +34,7 @@ public:
 	// * iter: The position of the resource you are changing.
 	// * quantity: The amount you are setting the resource to.
 	void SetResource(const int bagNumber, const int iter, const int quantity);
-	void AddToResource(const int bagNumber, const int iter, const int quantity);
-	void SubtractFromResource(const int bagNumber, const int iter, const int quantity);
+	void AdjustResource(const int bagNumber, const int iter, const int quantity);
 	int GetResourceInBag(const int bagNumber, const int iter);
 	int GetTotalResourceAmount(const int iter);
 

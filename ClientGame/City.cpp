@@ -247,7 +247,7 @@ void City::ReceiveMessage(Message *message)
 			current = inventory->GetTotalResourceAmount(i);
 			percentage = current / 100;
 			change = MathUtil::RandomIntInRange((percentage * minConsumptionPerDay), (percentage * maxConsumptionPerDay));
-			inventory->SubtractFromResource(0, i, change);
+			inventory->AdjustResource(0, i, -change);
 		}
 	}
 
@@ -269,7 +269,7 @@ void City::ReceiveMessage(Message *message)
 			current = inventory->GetTotalResourceAmount(i);
 			percentage = current / 100;
 			change = MathUtil::RandomIntInRange((percentage * minResourceChange), (percentage * maxResourceChange));
-			inventory->SubtractFromResource(0, i, change);
+			inventory->AdjustResource(0, i, -change);
 		}
 
 		// Check if city type needs to change.

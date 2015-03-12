@@ -174,6 +174,9 @@
     <ClCompile Include="AIGoal_MoveToCity.cpp">
       <Filter>SourceCode\Code\AI\Goals</Filter>
     </ClCompile>
+    <ClCompile Include="AIGoal_SellResource.cpp">
+      <Filter>SourceCode\Code\AI\Goals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -260,6 +263,9 @@
       <Filter>SourceCode\Headers\AI\Base</Filter>
     </ClInclude>
     <ClInclude Include="AIGoal_MoveToCity.h">
+      <Filter>SourceCode\Headers\AI\Goals</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGoal_SellResource.h">
       <Filter>SourceCode\Headers\AI\Goals</Filter>
     </ClInclude>
   </ItemGroup>

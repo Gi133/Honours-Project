@@ -4,7 +4,6 @@
 
 AIGoal_Think::AIGoal_Think(std::weak_ptr<NPC> _owner):AIGoalComposite(_owner, GoalThink)
 {
-	
 }
 
 

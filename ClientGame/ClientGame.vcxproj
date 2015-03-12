@@ -184,6 +184,7 @@ cd ..\Tools\BuildScripts\
     </ClCompile>
     <ClCompile Include="AIGoalComposite.cpp" />
     <ClCompile Include="AIGoal_MoveToCity.cpp" />
+    <ClCompile Include="AIGoal_SellResource.cpp" />
     <ClCompile Include="AIGoal_Think.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="AIGoalEvaluator.cpp" />
@@ -219,6 +220,7 @@ cd ..\Tools\BuildScripts\
     <ClInclude Include="AIGoal.h" />
     <ClInclude Include="AIGoalComposite.h" />
     <ClInclude Include="AIGoal_MoveToCity.h" />
+    <ClInclude Include="AIGoal_SellResource.h" />
     <ClInclude Include="AIGoal_Think.h" />
     <ClInclude Include="City.h" />
     <ClInclude Include="AIGoalEvaluator.h" />

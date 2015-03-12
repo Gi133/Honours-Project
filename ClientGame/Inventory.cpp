@@ -50,14 +50,14 @@ void Inventory::AddBag(int numBag /*= 1*/)
 	}
 }
 
-void Inventory::AddToResource(std::string resourceName, int quantity)
+void Inventory::AdjustResource(std::string resourceName, int quantity)
 {
 	// Check for a bag with available space, once found, add that resource quantity to it.
 	for (auto i : bagContainer)
 	{
 		if (i->CheckBagSpace(quantity))
 		{
-			i->AddResource(resourceName, quantity);
+			i->AdjustResource(resourceName, quantity);
 			break;
 		}
 	}
@@ -91,20 +91,12 @@ void Inventory::SetResource(const int bagNumber, const int iter, const int quant
 		sysLog.Log("ERROR: SetResource command used with an invalid bag number.");
 }
 
-void Inventory::AddToResource(const int bagNumber, const int iter, const int quantity)
+void Inventory::AdjustResource(const int bagNumber, const int iter, const int quantity)
 {
 	if (static_cast<unsigned int>(bagNumber) <= bagContainer.size())
-		bagContainer.at(bagNumber)->AddResource(iter, quantity);
+		bagContainer.at(bagNumber)->AdjustResource(iter, quantity);
 	else
 		sysLog.Log("ERROR: AddToResource command used with an invalid bag number.");
-}
-
-void Inventory::SubtractFromResource(const int bagNumber, const int iter, const int quantity)
-{
-	if (static_cast<unsigned int>(bagNumber) <= bagContainer.size())
-		bagContainer.at(bagNumber)->SubtractResource(iter, quantity);
-	else
-		sysLog.Log("ERROR: SubtractFromResource command used with an invalid bag number.");
 }
 
 int Inventory::GetResourceInBag(const int bagNumber, const int iter)
@@ -123,6 +115,16 @@ int Inventory::GetTotalResourceAmount(const int iter)
 
 	for (auto i : bagContainer)
 		total += i->GetResourceQuantity(iter);
+
+	return total;
+}
+
+int Inventory::GetTotalResourceAmount(const std::string resourceName)
+{
+	auto total = 0;
+
+	for (auto i : bagContainer)
+		total += i->GetResourceQuantity(theResourceManager.GetResourceIterator(resourceName));
 
 	return total;
 }

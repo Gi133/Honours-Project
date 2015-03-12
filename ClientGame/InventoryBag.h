@@ -28,10 +28,8 @@ public:
 	bool CheckBagSpace(const int quantity); // Function to check if there is enough space available.
 
 	// Resource Quantity controls.
-	void AddResource(const std::string resourceName, int quantity);
-	void AddResource(const unsigned int iterator, int quantity);
-	void SubtractResource(const std::string resourceName, int quantity);
-	void SubtractResource(const unsigned int iterator, int quantity);
+	void AdjustResource(const std::string resourceName, int quantity);
+	void AdjustResource(const unsigned int iterator, int quantity);
 	void SetResource(const std::string resourceName, int quantity);
 	void SetResource(const unsigned int iterator, int quantity);
 	int GetResourceQuantity(const std::string resourceName);

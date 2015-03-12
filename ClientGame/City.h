@@ -26,7 +26,7 @@ private:
 
 	CityType cityType;
 	std::string cityTypeName;
-	std::unique_ptr<Inventory> inventory;
+	std::shared_ptr<Inventory> inventory;
 
 	void UpdateCityType();
 	void LoadDefinitions() override;
@@ -44,4 +44,6 @@ public:
 
 	int GetPopulation() { return population; }
 	std::string GetCityType() { return cityTypeName; }
+
+	std::weak_ptr<Inventory> GetInventory() { return inventory; }
 };

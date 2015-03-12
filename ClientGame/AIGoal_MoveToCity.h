@@ -6,7 +6,6 @@ class AIGoal_MoveToCity :
 private:
 	std::weak_ptr<City> destination;
 	float distance, progress;
-	bool tick;
 
 	std::string tickMessageName;
 

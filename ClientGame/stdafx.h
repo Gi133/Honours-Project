@@ -5,6 +5,8 @@
 
 #include "Angel.h"
 
+#include "Inventory.h"
+
 #include "City.h"
 #include "NPC.h"
 #include "Map.h"

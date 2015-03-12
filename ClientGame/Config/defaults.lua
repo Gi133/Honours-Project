@@ -121,6 +121,7 @@ LocationSettings =
 ResourceFileSettings = 
 {
 	resourceBasePriceLocation = "Resources/Files/resource_base_price.config",
+	priceMultiplier = 10,
 }
 
 -- UI Settings

@@ -1,17 +1,9 @@
 #include "stdafx.h"
 #include "AIGoal_MoveToCity.h"
 
-namespace
-{
-	const auto tickMessageNameFallBack = "Tick";
-}
-
 AIGoal_MoveToCity::AIGoal_MoveToCity(std::weak_ptr<NPC> _owner, std::weak_ptr<City> _destination) :AIGoal(_owner, GoalMoveToCity)
 {
 	destination = _destination;
-	owner = _owner;
-
-	tick = false;
 
 	distance = progress = 0.0f;
 
@@ -68,14 +60,10 @@ unsigned int AIGoal_MoveToCity::ConvertProgresstoPercentage()
 
 void AIGoal_MoveToCity::LoadDefaults()
 {
-	tickMessageName = thePrefs.GetString("CitySettings", "tickMessageName");
-	if (tickMessageName.empty())
-		tickMessageName = tickMessageNameFallBack;
 }
 
 void AIGoal_MoveToCity::SetupMessageSubscription()
 {
-	theSwitchboard.SubscribeTo(this, tickMessageName);
 }
 
 void AIGoal_MoveToCity::ReceiveMessage(Message *message)

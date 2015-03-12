@@ -3,8 +3,13 @@
 // Don't worry compiler,
 // you will see this at some point 
 // but for now heres a forward declaration 
-// so you don't flip your shit.
-class NPC; 
+// so you don't flip your shit. 
+class NPC;
+
+namespace AIGOAL_FALLBACK
+{
+	const auto tickMessageNameFallBack = "Tick";
+}
 
 class AIGoal:
 	public MessageListener
@@ -13,8 +18,18 @@ protected:
 	std::weak_ptr<NPC> owner;
 	int goalType, goalStatus;
 
+	bool tick;
+	std::string tickMessageName;
+
 	void ActivateInactive() { if (isInactive()) Activate(); } // Reactive if inactive.
 	void ReActivate() { if (hasFailed()) goalStatus = INACTIVE; }
+	void SetupTickMessage()
+	{
+		tickMessageName = thePrefs.GetString("CitySettings", "tickMessageName");
+		if (tickMessageName.empty())
+			tickMessageName = AIGOAL_FALLBACK::tickMessageNameFallBack;
+		theSwitchboard.SubscribeTo(this, tickMessageName);
+	}
 
 public:
 	enum AIGOALTYPE
@@ -24,6 +39,7 @@ public:
 
 		// Atomic
 		GoalMoveToCity,
+		GoalSellResource,
 	};
 
 	enum AIGOALSTATUS
@@ -39,6 +55,10 @@ public:
 		goalType = _type;
 		owner = _owner;
 		goalStatus = INACTIVE;
+		tick = false;
+		tickMessageName = "";
+
+		SetupTickMessage();
 	}
 	virtual ~AIGoal() {}
 

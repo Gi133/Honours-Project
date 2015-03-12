@@ -10,6 +10,8 @@ private:
 	~ResourceManager() { _instance = nullptr; }
 	static ResourceManager* _instance;
 
+	unsigned int priceMultiplier;
+
 	void LoadPrefs();
 	void LoadResourceTable();
 	void LoadResourceNames();
@@ -33,4 +35,10 @@ public:
 
 	// Return the number of all resources in the game.
 	int GetTotalResources() { return resourceNames.size(); }
+
+	std::string GetResourceName(unsigned int resourceIterator); // Return the name of the resource at iterator.
+	std::string GetResourceName(std::string _resourceName); // In case the name passed was misspelled.
+	unsigned int GetResourceIterator(std::string resourceName);
+
+	unsigned int GetResourceSellingPriceAtCity(std::weak_ptr<City> _city, std::string _resource);
 };

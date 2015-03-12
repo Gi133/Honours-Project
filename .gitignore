@@ -249,3 +249,4 @@ Angel/Debug/vc110.idb
 *.tlog
 *.tlog
 Angel/Debug/CL.write.1.tlog
+*.lastbuildstate
