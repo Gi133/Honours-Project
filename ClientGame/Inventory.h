@@ -40,8 +40,9 @@ public:
 
 	// Gold Managing.
 	void SetGold(const int newGold, const bool checkLimit = true) { purse->SetGold(newGold, checkLimit); }
-	void AddGold(const int goldToAdd, const bool checkLimit = true) { purse->AddGold(goldToAdd, checkLimit); } // Dual Purpose, can add and subtract.
+	void AdjustGold(const int goldToAdd, const bool checkLimit = true) { purse->AdjustGold(goldToAdd, checkLimit); } // Dual Purpose, can add and subtract.
 	void SetGoldLimit(const int newGoldLimit) { SetGoldLimit(newGoldLimit); }
 	int GetGold() { return purse->GetGold(); }
 	int GetGoldLimit() { return purse->GetGoldLimit(); }
+	int GetAvailableSpace() const;
 };

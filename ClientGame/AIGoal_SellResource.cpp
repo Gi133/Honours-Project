@@ -35,7 +35,7 @@ int AIGoal_SellResource::Process()
 			owner.lock()->GetCurrentCityPtr().lock()->GetInventory().lock()->AdjustResource(resourceName, quantity);
 
 			// Add money to NPC.
-			owner.lock()->GetInventory().lock()->AddGold(quantity);
+			owner.lock()->GetInventory().lock()->AdjustGold(quantity);
 
 
 			goalStatus = COMPLETED;
@@ -56,7 +56,7 @@ void AIGoal_SellResource::Terminate()
 
 std::string AIGoal_SellResource::GetGoalString()
 {
-	return "Selling: " + IntToString(quantity) + " x " + theResourceManager.GetResourceName(resourceName);
+	return "Selling " + IntToString(quantity) + " units of " + theResourceManager.GetResourceName(resourceName);
 }
 
 std::string AIGoal_SellResource::GetGoalProgressString()

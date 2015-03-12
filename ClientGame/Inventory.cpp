@@ -129,6 +129,16 @@ int Inventory::GetTotalResourceAmount(const std::string resourceName)
 	return total;
 }
 
+int Inventory::GetAvailableSpace() const
+{
+	auto emptySpace = 0;
+
+	for (auto bag : bagContainer)
+		emptySpace += bag->GetAvailableBagSpace();
+
+	return emptySpace;
+}
+
 std::string Inventory::GetInventoryString()
 {
 	std::string inventoryString = "";

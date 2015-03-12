@@ -183,6 +183,7 @@ cd ..\Tools\BuildScripts\
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/wd4716 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="AIGoalComposite.cpp" />
+    <ClCompile Include="AIGoal_BuyResources.cpp" />
     <ClCompile Include="AIGoal_MoveToCity.cpp" />
     <ClCompile Include="AIGoal_SellResource.cpp" />
     <ClCompile Include="AIGoal_Think.cpp" />
@@ -219,6 +220,7 @@ cd ..\Tools\BuildScripts\
   <ItemGroup>
     <ClInclude Include="AIGoal.h" />
     <ClInclude Include="AIGoalComposite.h" />
+    <ClInclude Include="AIGoal_BuyResources.h" />
     <ClInclude Include="AIGoal_MoveToCity.h" />
     <ClInclude Include="AIGoal_SellResource.h" />
     <ClInclude Include="AIGoal_Think.h" />

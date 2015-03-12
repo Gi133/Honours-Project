@@ -40,6 +40,7 @@ public:
 		// Atomic
 		GoalMoveToCity,
 		GoalSellResource,
+		GoalBuyResource,
 	};
 
 	enum AIGOALSTATUS
