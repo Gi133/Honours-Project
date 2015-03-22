@@ -14,15 +14,13 @@ void AIGoalComposite::AddSubgoal(std::unique_ptr<AIGoal> newGoal)
 	subgoals.push_front(std::move(newGoal));
 }
 
+void AIGoalComposite::QueueSubgoal(std::unique_ptr<AIGoal> newGoal)
+{
+	subgoals.push_back(std::move(newGoal));
+}
+
 void AIGoalComposite::RemoveAllSubgoals()
 {
-	for (subgoalList::iterator i = subgoals.begin(); i != subgoals.end(); ++i)
-	{
-		i->get()->Terminate();
-
-		delete i->get();
-	}
-
 	subgoals.clear();
 }
 
@@ -46,5 +44,3 @@ int AIGoalComposite::ProcessSubgoals()
 	else
 		return COMPLETED;
 }
-
-

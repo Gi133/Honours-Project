@@ -8,6 +8,7 @@ private:
 	bool city; // Bool to store whether the inventory belongs to a city or not.
 
 	int numPerLine; // Used to structure the inventory string.
+	unsigned int maxBagNumber;
 
 	std::vector<std::shared_ptr<InventoryBag>> bagContainer;
 	std::unique_ptr<InventoryPurse> purse;
@@ -20,6 +21,14 @@ public:
 
 	// Add bags.
 	void AddBag(const int numBag = 1);
+
+	// Bag Limit
+	unsigned int GetBagNumber()const { return bagContainer.size(); }
+	unsigned int GetBagLimit()const { return maxBagNumber; }
+	void SetBagLimit(unsigned int _newBagLimit) { maxBagNumber = _newBagLimit; }
+
+	// Bag Upgrading.
+	unsigned int GetBagUpgradeCost(); // Return the lowest price required to upgrade a bag.
 
 	// Resource Management
 	void AdjustResource(const std::string resourceName, const int quantity);

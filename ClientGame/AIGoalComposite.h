@@ -22,7 +22,7 @@ public:
 
 	virtual std::string GetGoalString() = 0;
 
-	void AddSubgoal(std::unique_ptr<AIGoal> newGoal);
+	void AddSubgoal(std::unique_ptr<AIGoal> newGoal); // Add goal to the front of the subgoal list.
+	void QueueSubgoal(std::unique_ptr<AIGoal> newGoal); // Add goal to the back of the subgoal list.
 	void RemoveAllSubgoals();
 };
-

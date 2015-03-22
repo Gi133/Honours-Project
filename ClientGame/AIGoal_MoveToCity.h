@@ -7,8 +7,6 @@ private:
 	std::weak_ptr<City> destination;
 	float distance, progress;
 
-	std::string tickMessageName;
-
 	unsigned int ConvertProgresstoPercentage();
 
 	void LoadDefaults();
@@ -27,4 +25,3 @@ public:
 	std::string GetGoalString();
 	std::string GetGoalProgressString();
 };
-

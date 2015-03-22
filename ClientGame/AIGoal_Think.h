@@ -14,6 +14,8 @@ private:
 
 	GoalEvaluators evaluators;
 
+	void SetupEvaluators();
+
 public:
 	AIGoal_Think(std::weak_ptr<NPC> _owner);
 	~AIGoal_Think();
@@ -32,8 +34,8 @@ public:
 	std::string GetGoalProgressString();
 
 	// Top Level goal functions.
+	void AddTradeGoal();
 
 	// Goal queue functions.
 	void Queue_MoveToCity(std::weak_ptr<City> _destination);
 };
-

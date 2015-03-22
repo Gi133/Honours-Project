@@ -5,6 +5,7 @@ namespace
 {
 	const auto purseStartingLimitFallBack = 10000;
 	const auto numPerLineFallBack = 2;
+	const auto maxBagNumberFallBack = 5;
 }
 
 Inventory::Inventory(const bool isCity /* = false */, int startingBagNumber /* = 1 */, int StartingGold /* = 0 */)
@@ -36,10 +37,14 @@ void Inventory::LoadDefauts()
 	if (!numPerLine)
 		numPerLine = numPerLineFallBack;
 
+	maxBagNumber = thePrefs.GetInt("InventorySettings", "maxBagNumber");
+	if (!maxBagNumber)
+		maxBagNumber = maxBagNumberFallBack;
+
 	purse->SetGoldLimit(purseStartingLimit);
 }
 
-void Inventory::AddBag(int numBag /*= 1*/)
+void Inventory::AddBag(const int numBag /*= 1*/)
 {
 	for (int i = 0; i < numBag; i++)
 	{
@@ -50,7 +55,22 @@ void Inventory::AddBag(int numBag /*= 1*/)
 	}
 }
 
-void Inventory::AdjustResource(std::string resourceName, int quantity)
+unsigned int Inventory::GetBagUpgradeCost()
+{
+	unsigned int lowestPrice = 0;
+	unsigned int bagPrice = 0;
+
+	for (std::weak_ptr<InventoryBag> bagPtr : bagContainer)
+	{
+		bagPrice = bagPtr.lock()->GetBagUpradeCost();
+		if ((bagPrice < lowestPrice) || (bagPrice == 0))
+			lowestPrice = bagPrice;
+	}
+
+	return lowestPrice;
+}
+
+void Inventory::AdjustResource(const std::string resourceName, const int quantity)
 {
 	// Check for a bag with available space, once found, add that resource quantity to it.
 	for (auto i : bagContainer)
@@ -63,8 +83,10 @@ void Inventory::AdjustResource(std::string resourceName, int quantity)
 	}
 }
 
-void Inventory::SetResource(std::string resourceName, int quantity)
+void Inventory::SetResource(const std::string resourceName, const int quantity)
 {
+	auto quantityRemaining = quantity;
+
 	// Zero the resource.
 	for (auto i : bagContainer)
 		i->SetResource(resourceName, 0);
@@ -72,13 +94,13 @@ void Inventory::SetResource(std::string resourceName, int quantity)
 	for (auto i : bagContainer)
 	{
 		auto available = i->GetAvailableBagSpace();
-		if (available >= quantity)
-			i->SetResource(resourceName, quantity);
+		if (available >= quantityRemaining)
+			i->SetResource(resourceName, quantityRemaining);
 		else
 		{
 			// Add as much as possible and move to next bag.
 			i->SetResource(resourceName, available);
-			quantity -= available;
+			quantityRemaining -= available;
 		}
 	}
 }

@@ -53,7 +53,7 @@ float Map::GetDistanceBetween(std::weak_ptr<City> cityA, std::weak_ptr<City> cit
 			{
 				cityAPos = city->GetPosition();
 				cityAFound = true;
-			}	
+			}
 		}
 
 		if (!cityBFound)
@@ -184,4 +184,59 @@ void Map::GenerateLocation()
 		// Move the location into the container.
 		locationContainer.push_back(newLocation);
 	}
+}
+
+void Map::GetSortedNeighbors(std::reference_wrapper<std::vector<std::weak_ptr<City>>> _neighborContainer, const std::weak_ptr<City> _city, float _distanceCutOff /*= 0.0f*/)
+{
+	float distance = 0.0f;
+	std::map<float, std::weak_ptr<City>> cityDistanceMap;
+
+	// Empty the container.
+	_neighborContainer.get().clear();
+
+	// In case of a negative value passed in, convert it to positive.
+	if (_distanceCutOff < 0.0f)
+		_distanceCutOff = abs(_distanceCutOff);
+
+	// Add all cities that are within the cutoff distance into the map.
+	for (auto city : cityContainer)
+	{
+		if (city->GetName() != _city.lock()->GetName())
+		{
+			distance = GetDistanceBetween(city, _city);
+			if ((distance < _distanceCutOff) || (_distanceCutOff == 0.0f))
+				cityDistanceMap.insert(std::pair<float, std::weak_ptr<City>>(distance, city)); // Add city to container.
+		}
+	}
+
+	// Sort
+	//std::sort(cityDistanceMap.begin(), cityDistanceMap.end());
+
+	for (auto city : cityDistanceMap)
+		_neighborContainer.get().push_back(std::move(city.second));
+}
+
+std::weak_ptr<City> Map::GetClosestNeighbor(std::weak_ptr<City> _city, float _maxDistance /* = 0.0f*/)
+{
+	float distance = 0.0f;
+
+	if (_maxDistance < 0.0f)
+		_maxDistance = abs(_maxDistance);
+
+	std::map<float, std::weak_ptr<City>> cityDistanceMap;
+
+	for (auto city : cityContainer)
+	{
+		if (city->GetName() != _city.lock()->GetName())
+		{
+			distance = GetDistanceBetween(city, _city);
+			if ((distance < _maxDistance) || (_maxDistance == 0.0f))
+				cityDistanceMap.insert(std::pair<float, std::weak_ptr<City>>(distance, city)); // Add city to container.
+		}
+	}
+
+	// Sort
+	//std::sort(cityDistanceMap.begin(), cityDistanceMap.end());
+
+	return cityDistanceMap.begin()->second;
 }

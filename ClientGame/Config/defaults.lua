@@ -33,7 +33,7 @@ FontSettings =
 
 TimeManagerSettings = 
 {
-	tickTime = 1,
+	tickTime = 3,
 	tickMessageName = "Tick",
 	maxTicksDay = 1,
 	dayMessageName = "Day",
@@ -168,6 +168,7 @@ InventorySettings =
 {
 	purseStartingLimit = 10000,
 	numPerLine = 2,
+	maxBagNumber = 5,
 }
 
 -- City Inventory Settings
@@ -181,8 +182,7 @@ NPCSettings =
 {
 	startingBagNumber = 1,
 	startingGoldNumber = 1000,
-
-	baseMoveSpeed = 100.0,
+	baseMoveSpeed = 20.0,
 }
 
 -- Game Settings

@@ -11,7 +11,13 @@ namespace
 
 InventoryBag::InventoryBag(const bool isCity /* = false */)
 {
-	bagUpgradeLevel = 1;
+	bagUpgradeLevel = 0;
+	bagMaxSpaceBase = 0;
+	bagMaxUpgradeLevel = 0;
+	bagUpgradeBasePrice = 0;
+	bagUpgradeLevelSpace = 0;
+	bagMaxSpace = 0;
+	bagAvailableSpace = 0;
 
 	LoadConfig(isCity);
 	Setup();
@@ -25,7 +31,6 @@ InventoryBag::~InventoryBag()
 void InventoryBag::Setup()
 {
 	// Initialize an empty bag.
-
 	auto resourceName = theResourceManager.GetResourceNames();
 	for (std::string i : resourceName)
 		bagContents.insert(std::pair<std::string, int>(i, 0));
@@ -37,12 +42,6 @@ void InventoryBag::LoadConfig(const bool isCity)
 	if (isCity)
 	{
 		// Cities do not really care about upgrades and max space.
-		bagMaxSpaceBase = 0;
-		bagMaxUpgradeLevel = 0;
-		bagUpgradeBasePrice = 0;
-		bagUpgradeLevelSpace = 0;
-		bagMaxSpace = 0;
-		bagAvailableSpace = 0;
 	}
 	else
 	{
@@ -61,14 +60,18 @@ void InventoryBag::LoadConfig(const bool isCity)
 		bagUpgradeLevelSpace = thePrefs.GetInt("InventoryBagSettings", "bagUpgradeLevelSpace");
 		if (!bagUpgradeLevelSpace)
 			bagUpgradeLevelSpace = bagUpgradeLevelSpaceFallBack;
+
+		// Initialise the max bag space value.
+		bagMaxSpace = bagMaxSpaceBase;
 	}
 }
 
 void InventoryBag::UpdateBagSpace()
 {
 	bagUsedSpace = 0;
-	for (auto i : bagContents)
-		bagUsedSpace += i.second;
+
+	for (auto resourceName : theResourceManager.GetResourceNames())
+		bagUsedSpace += bagContents.at(resourceName);
 
 	if (bagMaxSpace > 0) // If 0 then bag is for a city, no need to update available space.
 	{
@@ -88,91 +91,88 @@ bool InventoryBag::CheckBagSpace(const int quantity)
 void InventoryBag::EmptyBag()
 {
 	// Set all bag contents to 0.
-	for (auto i : bagContents)
-		i.second = 0;
+	for (auto resourceName : theResourceManager.GetResourceNames())
+		bagContents.at(resourceName) = 0;
 
 	UpdateBagSpace();
 }
 
-void InventoryBag::AdjustResource(const std::string resourceName, int quantity)
+void InventoryBag::AdjustResource(std::string resourceName, int quantity)
 {
-	for (auto i : bagContents)
-		if (std::regex_search(i.first, std::regex(resourceName, std::regex_constants::ECMAScript | std::regex_constants::icase)))
-		{
-			i.second += quantity;
-			break;
-		}
+	resourceName = theResourceManager.GetResourceName(resourceName);
+
+	if (resourceName != "")
+		bagContents.at(resourceName) += quantity;
+	else
+		sysLog.Log("ERROR: Wrong resource name used!");
 }
 
 void InventoryBag::AdjustResource(const unsigned int iterator, int quantity)
 {
-	if (iterator <= bagContents.size())
-	{
-		// Convert the integer into an iterator position
-		auto it = bagContents.begin();
-		std::advance(it, iterator);
-		it->second += quantity;
-	}
+	auto resourceName = theResourceManager.GetResourceName(iterator);
+
+	if (resourceName != "")
+		bagContents.at(resourceName) += quantity;
 	else
-		sysLog.Log("ERROR: bag content iterator out of bounds!");
+		sysLog.Log("ERROR: Wrong resource name used!");
 }
 
-void InventoryBag::SetResource(const std::string resourceName, int quantity)
+void InventoryBag::SetResource(std::string resourceName, int quantity)
 {
-	for (auto i : bagContents)
-		if (std::regex_search(i.first, std::regex(resourceName, std::regex_constants::ECMAScript | std::regex_constants::icase)))
-		{
-			i.second = quantity;
-			break;
-		}
+	resourceName = theResourceManager.GetResourceName(resourceName);
+
+	if (resourceName != "")
+		bagContents.at(resourceName) = quantity;
+	else
+		sysLog.Log("ERROR: Wrong resource name used!");
 }
 
 void InventoryBag::SetResource(const unsigned int iterator, int quantity)
 {
-	if (iterator <= bagContents.size())
-	{
-		// Convert the integer into an iterator position
-		auto it = bagContents.begin();
-		std::advance(it, iterator);
-		it->second = quantity;
-	}
+	auto resourceName = theResourceManager.GetResourceName(iterator);
+
+	if (resourceName != "")
+		bagContents.at(resourceName) = quantity;
 	else
-		sysLog.Log("ERROR: bag content iterator out of bounds!");
+		sysLog.Log("ERROR: Wrong resource name used!");
 }
 
-std::string InventoryBag::OutputResourceQuantity(const std::string resourceName)
+std::string InventoryBag::OutputResourceQuantity(std::string resourceName)
 {
-	for (auto i : bagContents)
-		if (std::regex_search(i.first, std::regex(resourceName, std::regex_constants::ECMAScript | std::regex_constants::icase)))
-		{
-			auto output = i.first + ": " + std::to_string(i.second);
-			sysLog.Log(output);
-			return output;
-		}
+	resourceName = theResourceManager.GetResourceName(resourceName);
+
+	if (resourceName != "")
+	{
+		auto output = resourceName + ": " + std::to_string(bagContents.at(resourceName));
+		sysLog.Log(output);
+		return output;
+	}
+	else
+		sysLog.Log("ERROR: Wrong resource name used!");
 
 	return 0;
 }
 
-int InventoryBag::GetResourceQuantity(const std::string resourceName)
+int InventoryBag::GetResourceQuantity(std::string resourceName)
 {
-	for (auto i : bagContents)
-		if (std::regex_search(i.first, std::regex(resourceName, std::regex_constants::ECMAScript | std::regex_constants::icase)))
-			return i.second;
+	resourceName = theResourceManager.GetResourceName(resourceName);
+
+	if (resourceName != "")
+		return bagContents.at(resourceName);
+	else
+		sysLog.Log("ERROR: Wrong resource name used!");
 
 	return 0;
 }
 
 int InventoryBag::GetResourceQuantity(const int iterator)
 {
-	if (static_cast<unsigned int>(iterator) <= bagContents.size())
-	{
-		// Convert the integer into an iterator position
-		auto it = bagContents.begin();
-		std::advance(it, iterator);
-		return it->second;
-	}
+	auto resourceName = theResourceManager.GetResourceName(iterator);
+
+	if (resourceName != "")
+		return bagContents.at(resourceName);
 	else
-		sysLog.Log("ERROR: bag content iterator out of bounds!");
+		sysLog.Log("ERROR: Wrong resource name used!");
 
 	return 0;
 }
@@ -180,9 +180,7 @@ int InventoryBag::GetResourceQuantity(const int iterator)
 int InventoryBag::GetBagUpradeCost()
 {
 	if (CheckBagUpgradeable())
-	{
 		return (bagUpgradeLevel * bagUpgradeBasePrice);
-	}
 	else
 		return 0;
 }

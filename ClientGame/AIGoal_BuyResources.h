@@ -1,5 +1,6 @@
 #pragma once
 #include "AIGoal.h"
+
 class AIGoal_BuyResources :
 	public AIGoal
 {
@@ -20,4 +21,3 @@ public:
 	std::string GetGoalString();
 	std::string GetGoalProgressString();
 };
-

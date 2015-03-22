@@ -4,7 +4,9 @@
 AIGoal_BuyResources::AIGoal_BuyResources(std::weak_ptr<NPC> _owner, const std::string _resourceName, const unsigned int _quantity) :
 	AIGoal(_owner, GoalBuyResource)
 {
-
+	resourceName = _resourceName;
+	resourceIterator = theResourceManager.GetResourceIterator(_resourceName);
+	quantity = _quantity;
 }
 
 AIGoal_BuyResources::~AIGoal_BuyResources()
@@ -18,7 +20,7 @@ void AIGoal_BuyResources::Activate()
 
 int AIGoal_BuyResources::Process()
 {
-	ActivateInactive(); // Activate if inactive.
+	ReactivateInactive(); // Activate if inactive.
 
 	if (tick)
 	{
@@ -35,13 +37,12 @@ int AIGoal_BuyResources::Process()
 			owner.lock()->GetCurrentCityPtr().lock()->GetInventory().lock()->AdjustResource(resourceName, -quantity);
 
 			// Subtract money to NPC.
-			owner.lock()->GetInventory().lock()->AdjustGold(-quantity);
-
+			owner.lock()->GetInventory().lock()->AdjustGold(-quantity*resourcePrice);
 
 			goalStatus = COMPLETED;
 		}
 		else
-			goalStatus = FAILED;
+			goalStatus = ACTIVE;
 
 		tick = false;
 	}

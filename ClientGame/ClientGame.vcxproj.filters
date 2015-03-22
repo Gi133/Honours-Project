@@ -91,6 +91,12 @@
     <Filter Include="SourceCode\Code\AI\Base">
       <UniqueIdentifier>{4ba854c3-cef8-4eea-8087-d1282e2ced24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SourceCode\Code\AI\Evaluators">
+      <UniqueIdentifier>{0c4e0025-13ac-4f3a-9ad4-2f2bed298e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceCode\Headers\AI\Evaluators">
+      <UniqueIdentifier>{75aef095-dee1-42ed-ba16-a530492dcb4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Angel\Scripting\Interfaces\AngelLuaWrapping.cpp">
@@ -174,11 +180,17 @@
     <ClCompile Include="AIGoal_MoveToCity.cpp">
       <Filter>SourceCode\Code\AI\Goals</Filter>
     </ClCompile>
-    <ClCompile Include="AIGoal_SellResource.cpp">
-      <Filter>SourceCode\Code\AI\Goals</Filter>
-    </ClCompile>
     <ClCompile Include="AIGoal_BuyResources.cpp">
       <Filter>SourceCode\Code\AI\Goals</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGoal_Trade.cpp">
+      <Filter>SourceCode\Code\AI\Goals</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGoal_SellResources.cpp">
+      <Filter>SourceCode\Code\AI\Goals</Filter>
+    </ClCompile>
+    <ClCompile Include="AIEvaluator_Trade.cpp">
+      <Filter>SourceCode\Code\AI\Evaluators</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,11 +280,17 @@
     <ClInclude Include="AIGoal_MoveToCity.h">
       <Filter>SourceCode\Headers\AI\Goals</Filter>
     </ClInclude>
-    <ClInclude Include="AIGoal_SellResource.h">
-      <Filter>SourceCode\Headers\AI\Goals</Filter>
-    </ClInclude>
     <ClInclude Include="AIGoal_BuyResources.h">
       <Filter>SourceCode\Headers\AI\Goals</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGoal_Trade.h">
+      <Filter>SourceCode\Headers\AI\Goals</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGoal_SellResources.h">
+      <Filter>SourceCode\Headers\AI\Goals</Filter>
+    </ClInclude>
+    <ClInclude Include="AIEvaluator_Trade.h">
+      <Filter>SourceCode\Headers\AI\Evaluators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

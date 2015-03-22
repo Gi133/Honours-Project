@@ -7,8 +7,8 @@
 
 #include "Inventory.h"
 
-#include "City.h"
 #include "NPC.h"
+#include "City.h"
 #include "Map.h"
 
 #include "Location.h"

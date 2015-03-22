@@ -16,6 +16,7 @@ NPC::NPC()
 
 	LoadDefaults();
 	GenerateName();
+	GenerateBias();
 	GenerateStartingCity();
 
 	CalculateMoveSpeed();
@@ -109,4 +110,22 @@ std::string NPC::GetCurrentGoal() const
 std::string NPC::GetCurrentGoalProgress() const
 {
 	return aiBrain->GetGoalProgressString();
+}
+
+void NPC::GenerateBias()
+{
+	// Hardcoded but either extend class for traders and so on or use a personality manager.
+	biasProfitability = 1.0f;
+	biasPatience = 0.0f; // 0.0f = Unlimited
+	biasTrade = 0.6f;
+}
+
+void NPC::QueueMoveToCity(std::weak_ptr<City> _city)
+{
+	aiBrain->Queue_MoveToCity(_city);
+}
+
+void NPC::QueueTrade()
+{
+	aiBrain->AddTradeGoal();
 }

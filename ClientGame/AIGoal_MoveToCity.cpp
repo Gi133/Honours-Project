@@ -29,7 +29,7 @@ void AIGoal_MoveToCity::Activate()
 
 int AIGoal_MoveToCity::Process()
 {
-	ActivateInactive(); // Activate if inactive.
+	ReactivateInactive(); // Activate if inactive.
 
 	// Check if tick has passed, if so then add to progress and flip tick to false.
 	if (tick)

@@ -1,9 +1,9 @@
 #pragma once
 
 // Don't worry compiler,
-// you will see this at some point 
-// but for now heres a forward declaration 
-// so you don't flip your shit. 
+// you will see this at some point
+// but for now heres a forward declaration
+// so you don't flip your shit.
 class NPC;
 
 namespace AIGOAL_FALLBACK
@@ -11,7 +11,7 @@ namespace AIGOAL_FALLBACK
 	const auto tickMessageNameFallBack = "Tick";
 }
 
-class AIGoal:
+class AIGoal :
 	public MessageListener
 {
 protected:
@@ -21,8 +21,8 @@ protected:
 	bool tick;
 	std::string tickMessageName;
 
-	void ActivateInactive() { if (isInactive()) Activate(); } // Reactive if inactive.
-	void ReActivate() { if (hasFailed()) goalStatus = INACTIVE; }
+	void ReactivateInactive() { if (isInactive()) Activate(); } // Reactive if inactive.
+	void ReactivateFailed() { if (hasFailed()) goalStatus = INACTIVE; }
 	void SetupTickMessage()
 	{
 		tickMessageName = thePrefs.GetString("CitySettings", "tickMessageName");
@@ -31,11 +31,14 @@ protected:
 		theSwitchboard.SubscribeTo(this, tickMessageName);
 	}
 
+	virtual void ReceiveMessage(Message *message) {} // Default behavior.
+
 public:
 	enum AIGOALTYPE
 	{
 		// High Level
 		GoalThink,
+		GoalTrade,
 
 		// Atomic
 		GoalMoveToCity,
@@ -71,8 +74,6 @@ public:
 	virtual std::string GetGoalProgressString() { return "Not Applicable."; } // Default behavior.
 
 	virtual void AddSubgoal(std::unique_ptr<AIGoal>) { throw(std::runtime_error("Attempted to add subgoal to an atomic goal.")); }
-
-	virtual void ReceiveMessage(Message *message) {} // Default behavior.
 
 	bool isComplete()const { return goalStatus == COMPLETED; }
 	bool isActive()const { return goalStatus == ACTIVE; }
