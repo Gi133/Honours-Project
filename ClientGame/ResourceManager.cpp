@@ -151,8 +151,8 @@ int ResourceManager::GetTradeProfitabilityBetween(std::weak_ptr<City> _cityStart
 	throw(std::runtime_error("Resource Iterator out of range when checking for profitability"));
 }
 
-std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRoutes(const std::weak_ptr<City> _city, std::string _resourceName,
-	const int _profitabilityBias /* = 0*/, const float _maxDistance /*= 0.0f*/)
+std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRoutesFromCity(const std::weak_ptr<City> _city, std::string _resourceName,
+	const int _profitabilityBias /* = 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /* = -1.0f */)
 {
 	if (!averagePricesUpdated)
 		UpdateAveragePrices();
@@ -179,7 +179,7 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 		for (auto neighbor : neighbors)
 		{
 			auto profitability = GetTradeProfitabilityBetween(_city, neighbor, _resourceName);
-			if (static_cast<unsigned int>(profitability) >= _profitabilityBias)
+			if (profitability >= _profitabilityBias)
 			{
 				TradingStruct tradeRoute;
 
@@ -189,8 +189,11 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 				tradeRoute.resource = _resourceName;
 				tradeRoute.profitability = profitability;
 
-				// Add to possible trade routes.
-				output.push_back(tradeRoute);
+				// Check Threat.
+				auto threat = theMap.GetDangerRatingBetween(_city, neighbor);
+				if ((threat <= _maxThreat) || (_maxThreat <= -1.0f))
+					// Add to possible trade routes.
+					output.push_back(tradeRoute);
 			}
 		}
 	}
@@ -200,8 +203,8 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 	return output;
 }
 
-std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRoutes(const std::weak_ptr<City> _city, const unsigned int _resourceIt,
-	const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/)
+std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRoutesFromCity(const std::weak_ptr<City> _city, const unsigned int _resourceIt,
+	const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
 {
 	if (!averagePricesUpdated)
 		UpdateAveragePrices();
@@ -239,8 +242,11 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 				tradeRoute.resource = resourceNames.at(_resourceIt);
 				tradeRoute.profitability = profitability;
 
-				// Add to possible trade routes.
-				output.push_back(tradeRoute);
+				// Check Threat.
+				auto threat = theMap.GetDangerRatingBetween(_city, neighbor);
+				if ((threat <= _maxThreat) || (_maxThreat <= -1.0f))
+					// Add to possible trade routes.
+					output.push_back(tradeRoute);
 			}
 		}
 	}
@@ -250,14 +256,15 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 	return output;
 }
 
-std::vector<ResourceManager::TradingStruct> ResourceManager::GetTradeRoutesFromCity(const std::weak_ptr<City> _city, const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/)
+std::vector<ResourceManager::TradingStruct> ResourceManager::GetTradeRoutesFromCity(const std::weak_ptr<City> _city, const int _profitabilityBias /*= 0*/,
+	const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
 {
 	std::vector<TradingStruct> output;
 
 	for (unsigned int i = 0; i < resourceNames.size(); i++)
 	{
 		// For each resource, find potential trade routes.
-		auto potentialTrade = GetSpecificTradeRoutes(_city, i, _profitabilityBias, _maxDistance);
+		auto potentialTrade = GetSpecificTradeRoutesFromCity(_city, i, _profitabilityBias, _maxDistance);
 
 		// Add the potential trade routes into the output vector.
 		if (output.empty())
@@ -266,6 +273,37 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetTradeRoutesFromC
 		{
 			output.reserve(output.size() + potentialTrade.size());
 			std::move(std::begin(potentialTrade), std::end(potentialTrade), std::back_inserter(output));
+		}
+	}
+
+	return output;
+}
+
+std::vector<ResourceManager::TradingStruct> ResourceManager::GetTradeRoutesBetween(const std::weak_ptr<City> _cityBegin, const std::weak_ptr<City> _cityFinish,
+	const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
+{
+	std::vector<TradingStruct> output;
+
+	for (unsigned int resourceIt = 0; resourceIt < resourceNames.size(); resourceIt++)
+	{
+		auto profitability = GetTradeProfitabilityBetween(_cityBegin, _cityFinish, resourceIt);
+		if (profitability >= _profitabilityBias)
+		{
+			TradingStruct tradeRoute;
+
+			auto threat = theMap.GetDangerRatingBetween(_cityBegin, _cityFinish);
+			if ((_maxThreat <= -1.0f) || (threat <= _maxThreat))
+			{
+				// Ignore threat and add everything to the output.
+				// Configure the trade route.
+				tradeRoute.start = _cityBegin;
+				tradeRoute.finish = _cityFinish;
+				tradeRoute.resource = resourceNames.at(resourceIt);
+				tradeRoute.profitability = profitability;
+
+				// Add to possible trade routes.
+				output.push_back(tradeRoute);
+			}
 		}
 	}
 

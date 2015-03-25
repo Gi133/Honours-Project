@@ -64,8 +64,9 @@ public:
 	int GetTradeProfitabilityBetween(std::weak_ptr<City> _cityStart, std::weak_ptr<City> _cityFinish, std::string _resourceName);
 	int GetTradeProfitabilityBetween(std::weak_ptr<City> _cityStart, std::weak_ptr<City> _cityFinish, const unsigned int _resourceIt);
 
-	std::vector<TradingStruct> GetSpecificTradeRoutes(const std::weak_ptr<City> _city, std::string _resourceName, const int _profitabilityBias = 0, const float _maxDistance = 0.0f);
-	std::vector<TradingStruct> GetSpecificTradeRoutes(const std::weak_ptr<City> _city, const unsigned int _resourceIt, const int _profitabilityBias = 0, const float _maxDistance = 0.0f);
+	std::vector<TradingStruct> GetSpecificTradeRoutesFromCity(const std::weak_ptr<City> _city, std::string _resourceName, const int _profitabilityBias = 0, const float _maxDistance = 0.0f, float _maxThreat = -1.0f);
+	std::vector<TradingStruct> GetSpecificTradeRoutesFromCity(const std::weak_ptr<City> _city, const unsigned int _resourceIt, const int _profitabilityBias = 0, const float _maxDistance = 0.0f, float _maxThreat = -1.0f);
 
-	std::vector<TradingStruct> GetTradeRoutesFromCity(const std::weak_ptr<City> _city, const int _profitabilityBias = 0, const float _maxDistance = 0.0f);
+	std::vector<TradingStruct> GetTradeRoutesFromCity(const std::weak_ptr<City> _city, const int _profitabilityBias = 0, const float _maxDistance = 0.0f, float _maxThreat = -1.0f);
+	std::vector<TradingStruct> GetTradeRoutesBetween(const std::weak_ptr<City> _cityBegin, const std::weak_ptr<City> _cityFinish, const int _profitabilityBias = 0, const float _maxDistance = 0.0f, float _maxThreat = -1.0f);
 };

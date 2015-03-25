@@ -18,7 +18,22 @@ int AIGoal_Trade::Process()
 {
 	ReactivateInactive();
 
-	goalStatus = ProcessSubgoals();
+	// Error checking, if the NPC goals were overridden and the top goal is to buy or sell resources but not at the target city,
+	// If that is the case then queue an atomic goal to move it back to where it was supposed to be, else keep processing subgoals.
+	if ((GetFrontType() == GoalBuyResource) && (owner.lock()->GetCurrentCityPtr().lock()->GetName() != cityNameStart))
+	{
+		std::unique_ptr<AIGoal_MoveToCity> moveToBuyGoal;
+		moveToBuyGoal.reset(new AIGoal_MoveToCity(owner, theMap.CityNameToPtr(cityNameStart)));
+		AddSubgoal(std::move(moveToBuyGoal));
+	}
+	else if ((GetFrontType() == GoalSellResource) && (owner.lock()->GetCurrentCityPtr().lock()->GetName() != cityNameFinish))
+	{
+		std::unique_ptr<AIGoal_MoveToCity> moveToSellGoal;
+		moveToSellGoal.reset(new AIGoal_MoveToCity(owner, theMap.CityNameToPtr(cityNameFinish)));
+		AddSubgoal(std::move(moveToSellGoal));
+	}
+	else
+		goalStatus = ProcessSubgoals();
 
 	ReactivateFailed();
 
@@ -58,7 +73,7 @@ int AIGoal_Trade::FindTrade()
 	std::vector<ResourceManager::TradingStruct> tradeRoutes;
 
 	// Get trade routes from current city.
-	tradeRoutes = theResourceManager.GetTradeRoutesFromCity(owner.lock()->GetCurrentCityPtr(), owner.lock()->GetBiasProfitability(), owner.lock()->GetBiasPatience());
+	tradeRoutes = theResourceManager.GetTradeRoutesFromCity(owner.lock()->GetCurrentCityPtr(), owner.lock()->GetBiasProfitability(), owner.lock()->GetBiasPatience(), owner.lock()->GetBiasFear());
 
 	if (!tradeRoutes.empty())
 	{
@@ -85,7 +100,7 @@ int AIGoal_Trade::FindTrade()
 
 		for (auto city : neighbors)
 		{
-			auto newTradeRoutes = theResourceManager.GetTradeRoutesFromCity(city, owner.lock()->GetBiasProfitability(), owner.lock()->GetBiasPatience());
+			auto newTradeRoutes = theResourceManager.GetTradeRoutesFromCity(city, owner.lock()->GetBiasProfitability(), owner.lock()->GetBiasPatience(), owner.lock()->GetBiasFear());
 			tradeRoutes.reserve(tradeRoutes.size() + newTradeRoutes.size());
 			std::move(std::begin(newTradeRoutes), std::end(newTradeRoutes), std::back_inserter(tradeRoutes));
 		}
@@ -113,7 +128,7 @@ int AIGoal_Trade::FindTrade()
 	}
 }
 
-void AIGoal_Trade::QueueTrade(std::weak_ptr<City> _start, std::weak_ptr<City> _finish, std::string _resourceName, unsigned int _quantity, const bool moveBack /* = true */)
+void AIGoal_Trade::QueueTrade(std::weak_ptr<City> _start, std::weak_ptr<City> _finish, std::string _resourceName, unsigned int _quantity)
 {
 	std::unique_ptr<AIGoal_MoveToCity> goalMove;
 	std::unique_ptr<AIGoal_BuyResources> goalBuy;
@@ -146,15 +161,6 @@ void AIGoal_Trade::QueueTrade(std::weak_ptr<City> _start, std::weak_ptr<City> _f
 	goalSell.reset(new AIGoal_SellResources(owner, resourceName, quantity));
 	QueueSubgoal(std::move(goalSell));
 	totalProgress++;
-
-	if (moveBack)
-	{
-		goalMove.reset(new AIGoal_MoveToCity(owner, _start));
-		QueueSubgoal(std::move(goalMove));
-		totalProgress++;
-
-		// Potentially include code to have the AI trade something on the way back also.
-	}
 }
 
 void AIGoal_Trade::PopulateNeighbors()

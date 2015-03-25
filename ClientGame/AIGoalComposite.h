@@ -22,6 +22,8 @@ public:
 
 	virtual std::string GetGoalString() = 0;
 
+	int GetFrontType() { return subgoals.front()->GetType(); }
+
 	void AddSubgoal(std::unique_ptr<AIGoal> newGoal); // Add goal to the front of the subgoal list.
 	void QueueSubgoal(std::unique_ptr<AIGoal> newGoal); // Add goal to the back of the subgoal list.
 	void RemoveAllSubgoals();

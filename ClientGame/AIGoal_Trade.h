@@ -13,7 +13,7 @@ private:
 	unsigned int totalProgress;
 
 	int FindTrade();
-	void QueueTrade(std::weak_ptr<City> _start, std::weak_ptr<City> _finish, std::string _resourceName, unsigned int _quantity, const bool moveBack = true);
+	void QueueTrade(std::weak_ptr<City> _start, std::weak_ptr<City> _finish, std::string _resourceName, unsigned int _quantity);
 
 	void PopulateNeighbors();
 

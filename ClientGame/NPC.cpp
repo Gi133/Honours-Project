@@ -118,6 +118,7 @@ void NPC::GenerateBias()
 	biasProfitability = 1.0f;
 	biasPatience = 0.0f; // 0.0f = Unlimited
 	biasTrade = 0.6f;
+	biasFear = 0.2f;
 }
 
 void NPC::QueueMoveToCity(std::weak_ptr<City> _city)
@@ -128,4 +129,9 @@ void NPC::QueueMoveToCity(std::weak_ptr<City> _city)
 void NPC::QueueTrade()
 {
 	aiBrain->AddTradeGoal();
+}
+
+void NPC::AddMoveToCity(std::weak_ptr<City> _city)
+{
+	aiBrain->Add_MoveToCity(_city);
 }

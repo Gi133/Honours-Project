@@ -17,6 +17,10 @@ namespace
 	const auto colorThreatLowFallBack = "#C68C8C";
 	const auto colorThreatMedFallBack = "#851818";
 	const auto colorThreatHighFallBack = "#EE2C2C";
+
+	const auto radiusThreatLowFallBack = 10.0f;
+	const auto radiusThreatMedFallBack = 20.0f;
+	const auto radiusThreatHighFallBack = 30.0f;
 }
 
 Location::Location()
@@ -79,6 +83,18 @@ void Location::LoadDefinitions()
 	colorThreatHigh = thePrefs.GetString("LocationSettings", "colorThreatHigh");
 	if (colorThreatHigh.empty())
 		colorThreatHigh = colorThreatHighFallBack;
+
+	radiusThreatLow = thePrefs.GetFloat("LocationSettings", "radiusThreatLow");
+	if (!radiusThreatLow)
+		radiusThreatLow = radiusThreatLowFallBack;
+
+	radiusThreatMed = thePrefs.GetFloat("LocationSettings", "radiusThreatMed");
+	if (!radiusThreatMed)
+		radiusThreatMed = radiusThreatMedFallBack;
+
+	radiusThreatHigh = thePrefs.GetFloat("LocationSettings", "radiusThreatHigh");
+	if (!radiusThreatHigh)
+		radiusThreatHigh = radiusThreatHighFallBack;
 }
 
 void Location::UpdateType()
@@ -87,16 +103,19 @@ void Location::UpdateType()
 	{
 		threatLevelName = maxThreatLowName;
 		iconActor->SetColor(Color::FromHexString(colorThreatLow));
+		radius = radiusThreatLow;
 	}
 	else if (threatLevel <= maxThreatMed)
 	{
 		threatLevelName = maxThreatMedName;
 		iconActor->SetColor(Color::FromHexString(colorThreatMed));
+		radius = radiusThreatMed;
 	}
 	else if (threatLevel <= maxThreatHigh)
 	{
 		threatLevelName = maxThreatHighName;
 		iconActor->SetColor(Color::FromHexString(colorThreatHigh));
+		radius = radiusThreatHigh;
 	}
 	else
 		sysLog.Log("Invalid location threat level.");

@@ -17,6 +17,7 @@ private:
 	float biasProfitability; // Value showing how profitable the trade should be for the AI to think about taking it.
 	float biasPatience; // Value to show the distance the NPC is willing to travel for trades.
 	float biasTrade; // Value showing NPC bias to trade.
+	float biasFear; // Value showing how safe the AI will play.
 
 	float baseMoveSpeed, calculatedMoveSpeed;
 	void LoadDefaults();
@@ -56,8 +57,10 @@ public:
 	float GetBiasProfitability() const { return biasProfitability; }
 	float GetBiasPatience() const { return biasPatience; }
 	float GetBiasTrade() const { return biasTrade; }
+	float GetBiasFear() const { return biasFear; }
 
 	void QueueRandomMoveToCity(); // Function to have the merchant move to a random city after current queued goals are done.
 	void QueueMoveToCity(std::weak_ptr<City> _city);
+	void AddMoveToCity(std::weak_ptr<City> _city);
 	void QueueTrade();
 };

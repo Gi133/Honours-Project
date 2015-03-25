@@ -38,4 +38,5 @@ public:
 
 	// Goal queue functions.
 	void Queue_MoveToCity(std::weak_ptr<City> _destination);
+	void Add_MoveToCity(std::weak_ptr<City> _destiantion);
 };

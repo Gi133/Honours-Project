@@ -119,6 +119,67 @@ float Map::GetDistanceBetween(std::string cityNameA, std::string cityNameB)
 	return std::sqrtf(distanceX + distanceY);
 }
 
+float Map::GetDangerRatingBetween(const std::weak_ptr<City> cityA, const std::weak_ptr<City> cityB)
+{
+	Vector2 locationToStartPoint;
+	auto distance = GetDistanceBetween(cityA, cityB);
+
+	unsigned int locationNumber = 0;
+	unsigned int combinedThreat = 0;
+
+	// Find the locations that intersect with the vector line between the two cities.
+	Vector2 direction = cityB.lock()->GetPosition() - cityA.lock()->GetPosition();
+
+	for (auto location : locationContainer)
+	{
+		locationToStartPoint = cityA.lock()->GetPosition() - location->GetPosition();
+
+		float a = Vector2::Dot(direction, direction);
+		float b = 2 * Vector2::Dot(locationToStartPoint, distance);
+		float c = Vector2::Dot(locationToStartPoint, locationToStartPoint) - pow(location->GetRadius(), 2);
+
+		float discriminant = b * b - 4 * a * c;
+
+		// Bigger than 0 means there are 2 intersections while 0 means there is only one. Adjust as necessary.
+		if (discriminant >= 0) // Found an intersection.
+			combinedThreat += location->GetThreatLevel();
+	}
+
+	// Calculate and return the average threat per distance unit.
+	auto output = combinedThreat / distance;
+	return output;
+}
+
+float Map::GetDangerRatingBetween(const std::string cityNameA, const std::string cityNameB)
+{
+	Vector2 locationToStartPoint;
+	auto distance = GetDistanceBetween(cityNameA, cityNameB);
+
+	unsigned int locationNumber = 0;
+	unsigned int combinedThreat = 0;
+
+	// Find the locations that intersect with the vector line between the two cities.
+	Vector2 direction = theMap.CityNameToPtr(cityNameB).lock()->GetPosition() - theMap.CityNameToPtr(cityNameA).lock()->GetPosition();
+
+	for (auto location : locationContainer)
+	{
+		locationToStartPoint = theMap.CityNameToPtr(cityNameA).lock()->GetPosition() - location->GetPosition();
+
+		float a = Vector2::Dot(direction, direction);
+		float b = 2 * Vector2::Dot(locationToStartPoint, distance);
+		float c = Vector2::Dot(locationToStartPoint, locationToStartPoint) - pow(location->GetRadius(), 2);
+
+		float discriminant = b * b - 4 * a * c;
+
+		if (discriminant > 0) // Found an intersection.
+			combinedThreat += location->GetThreatLevel();
+	}
+
+	// Calculate and return the average threat per distance unit.
+	auto output = combinedThreat / distance;
+	return output;
+}
+
 std::weak_ptr<City> Map::GetRandomCity()
 {
 	return cityContainer.at(MathUtil::RandomIntInRange(0, theMap.GetCityContainerRef().get().size()));

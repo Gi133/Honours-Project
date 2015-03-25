@@ -64,6 +64,7 @@ public:
 
 		SetupTickMessage();
 	}
+
 	virtual ~AIGoal() {}
 
 	virtual void Activate() = 0;

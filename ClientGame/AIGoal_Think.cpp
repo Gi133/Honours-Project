@@ -103,3 +103,10 @@ void AIGoal_Think::Queue_MoveToCity(std::weak_ptr<City> _destination)
 	newGoal.reset(new AIGoal_MoveToCity(owner, _destination));
 	subgoals.push_back(std::move(newGoal));
 }
+
+void AIGoal_Think::Add_MoveToCity(std::weak_ptr<City> _destination)
+{
+	std::unique_ptr<AIGoal_MoveToCity> newGoal;
+	newGoal.reset(new AIGoal_MoveToCity(owner, _destination));
+	subgoals.push_front(std::move(newGoal));
+}

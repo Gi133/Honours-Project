@@ -30,6 +30,9 @@ public:
 	float GetDistanceBetween(std::weak_ptr<City> cityA, std::weak_ptr<City> cityB);
 	float GetDistanceBetween(std::string cityNameA, std::string cityNameB);
 
+	float GetDangerRatingBetween(const std::weak_ptr<City> cityA, const std::weak_ptr<City> cityB);
+	float GetDangerRatingBetween(const std::string cityNameA, const std::string cityNameB);
+
 	std::weak_ptr<City> GetRandomCity();
 	std::weak_ptr<City> CityNameToPtr(std::string cityName);
 
@@ -47,5 +50,6 @@ public:
 	// *	_distanceCutOff : The maximum distance of the neighbors (if value is 0 then the distance is ignored).
 	void GetSortedNeighbors(std::reference_wrapper<std::vector<std::weak_ptr<City>>> _neighborContainer, const std::weak_ptr<City> _city, float _distanceCutOff = 0.0f);
 
+	// Return the closest neighbor city with an optional distance limit, if set to 0 then distance is Unlimited.
 	std::weak_ptr<City> GetClosestNeighbor(std::weak_ptr<City> _city, float _maxDistance = 0.0f);
 };

@@ -22,6 +22,12 @@ int AIGoal_BuyResources::Process()
 {
 	ReactivateInactive(); // Activate if inactive.
 
+// 	if (owner.lock()->GetCityName() != targetCityPtr.lock()->GetName())
+// 	{
+// 		// Add move goal to owner.
+// 		owner.lock()->AddMoveToCity(targetCityPtr);
+// 	}
+// 	else
 	if (tick)
 	{
 		// Check if NPC has enough space.

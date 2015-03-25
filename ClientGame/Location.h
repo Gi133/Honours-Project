@@ -8,6 +8,7 @@ private:
 	std::string threatLevelName, maxThreatLowName, maxThreatMedName, maxThreatHighName,
 		colorThreatLow, colorThreatMed, colorThreatHigh;
 	int threatLevel, maxThreatLow, maxThreatMed, maxThreatHigh, minStartThreat, maxStartThreat;
+	float radiusThreatLow, radiusThreatMed, radiusThreatHigh, radius;
 
 	void LoadDefinitions() override;
 	void UpdateType();
@@ -20,5 +21,6 @@ public:
 	void SetThreatLevel();
 	void SetThreatLevel(int newThreatLevel) { threatLevel = newThreatLevel; UpdateType(); }
 
-	int getThreatLevel() { return threatLevel; }
+	int GetThreatLevel() { return threatLevel; }
+	float GetRadius() { return radius; }
 };

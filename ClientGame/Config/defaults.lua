@@ -33,7 +33,7 @@ FontSettings =
 
 TimeManagerSettings = 
 {
-	tickTime = 3,
+	tickTime = 1,
 	tickMessageName = "Tick",
 	maxTicksDay = 1,
 	dayMessageName = "Day",
@@ -106,14 +106,20 @@ LocationSettings =
 {
 	minStartThreat = 0,
 	maxStartThreat = 100,
+
 	maxThreatLow = 33,
 	maxThreatLowName = "Weak",
+	radiusThreatLow = 10.0,
 	colorThreatLow = "#C68C8C",
+
 	maxThreatMed = 66,
 	maxThreatMedName = "Dangerous",
+	radiusThreatMed = 20.0,
 	colorThreadMed = "#851818",
+
 	maxThreatHigh = 100,
 	maxThreatHighName = "Deadly",
+	radiusThreatHigh = 30.0,
 	colorThreatHigh = "#EE2C2C",
 }
 
