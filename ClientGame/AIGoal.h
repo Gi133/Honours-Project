@@ -44,6 +44,8 @@ public:
 		GoalMoveToCity,
 		GoalSellResource,
 		GoalBuyResource,
+		GoalUpgradePurse,
+		GoalUpgradeBag,
 	};
 
 	enum AIGOALSTATUS

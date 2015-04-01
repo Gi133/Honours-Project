@@ -21,21 +21,12 @@ float AIEvaluator_Trade::CalculateDesirability(std::weak_ptr<NPC> _owner)
 	auto desirability = 0.0f;
 
 	auto npcInventory = _owner.lock()->GetInventory();
+	float goldLimit = npcInventory.lock()->GetGoldLimit();
+	float remainingMoneyToCap = goldLimit - npcInventory.lock()->GetGold();
 
-	// Check if you can upgrade bags.
-	if (npcInventory.lock()->GetBagLimit() > npcInventory.lock()->GetBagNumber())
-	{
-		// Get the price for the next bag upgrade.
-		auto priceBagUpgrade = _owner.lock()->GetInventory().lock()->GetBagUpgradeCost();
-
-		// Set desirability to trade.
-		desirability = 0.8f;
-	}
-	else
-	{
-		// Set desirability to some number, change this if more features are added for the npc.
-		desirability = 0.5f;
-	}
+	// Calculate desirability based on the amount of money the NPC has.
+	// For not, this desirability is set to a constant.
+	desirability = remainingMoneyToCap/goldLimit;
 
 	return (desirability*bias);
 }

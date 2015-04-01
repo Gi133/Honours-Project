@@ -18,6 +18,8 @@ private:
 	float biasPatience; // Value to show the distance the NPC is willing to travel for trades.
 	float biasTrade; // Value showing NPC bias to trade.
 	float biasFear; // Value showing how safe the AI will play.
+	float biasBagUpgrade; // Value showing how inclined the AI is at upgrading bags.
+	float biasPurseUpgrade; // Value showing how inclined the AI is at upgrade the purse.
 
 	float baseMoveSpeed, calculatedMoveSpeed;
 	void LoadDefaults();
@@ -58,9 +60,13 @@ public:
 	float GetBiasPatience() const { return biasPatience; }
 	float GetBiasTrade() const { return biasTrade; }
 	float GetBiasFear() const { return biasFear; }
+	float GetBiasBagUpgrade() const { return biasBagUpgrade; }
+	float GetBiasPurseUpgrade() const { return biasPurseUpgrade; }
 
 	void QueueRandomMoveToCity(); // Function to have the merchant move to a random city after current queued goals are done.
 	void QueueMoveToCity(std::weak_ptr<City> _city);
 	void AddMoveToCity(std::weak_ptr<City> _city);
 	void QueueTrade();
+	void AddGoal_UpgradePurse();
+	void AddGoal_UpgradeBag();
 };

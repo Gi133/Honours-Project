@@ -43,7 +43,7 @@ public:
 
 	// BagUpgrade Functions.
 	int GetBagLevel() { return bagUpgradeLevel; }
-	bool CheckBagUpgradeable() { return (bagUpgradeLevel < bagMaxUpgradeLevel); } // If upgrade level is lower than max upgrade level, return true.
+	bool CheckBagUpgradeable(); // If upgrade level is lower than max upgrade level, return true.
 	int GetBagUpradeCost();
 	void UpgradeBag();
 	void SetUpgradeLevel(const int upgradeLevel) { bagUpgradeLevel = upgradeLevel; UpdateBagSpace(); } // Debug Function, should not be used in code.

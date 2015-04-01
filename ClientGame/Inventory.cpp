@@ -12,6 +12,8 @@ Inventory::Inventory(const bool isCity /* = false */, int startingBagNumber /* =
 {
 	city = isCity;
 
+	lowestBagUpgradePrice = 0;
+
 	if (StartingGold < 0)
 		StartingGold = 0;
 	purse.reset(new InventoryPurse(StartingGold));
@@ -57,17 +59,55 @@ void Inventory::AddBag(const int numBag /*= 1*/)
 
 unsigned int Inventory::GetBagUpgradeCost()
 {
-	unsigned int lowestPrice = 0;
 	unsigned int bagPrice = 0;
+	lowestBagUpgradePrice = bagContainer.at(0)->GetBagUpradeCost();
 
 	for (std::weak_ptr<InventoryBag> bagPtr : bagContainer)
 	{
 		bagPrice = bagPtr.lock()->GetBagUpradeCost();
-		if ((bagPrice < lowestPrice) || (bagPrice == 0))
-			lowestPrice = bagPrice;
+		if ((bagPrice < lowestBagUpgradePrice) || (bagPrice == 0))
+		{
+			lowestBagUpgradePrice = bagPrice;
+			lowestUpgradePriceBagPtr = bagPtr;
+		}	
 	}
 
-	return lowestPrice;
+	return lowestBagUpgradePrice;
+}
+
+bool Inventory::GetBagUpgradeAvailable()
+{
+	for (std::weak_ptr<InventoryBag> bagPtr : bagContainer)
+	{
+		if (bagPtr.lock()->CheckBagUpgradeable())
+			return true;
+	}
+
+	return false;
+}
+
+void Inventory::UpgradeBag()
+{
+	// Remove money and upgrade bag.
+	if (purse->GetGold() >= lowestBagUpgradePrice)
+	{
+		purse->AdjustGold(-lowestBagUpgradePrice);
+		lowestUpgradePriceBagPtr.lock()->UpgradeBag();
+	}
+	else
+		sysLog.Log("ERROR: Attempted to upgrade bag without the required money amount!");
+}
+
+void Inventory::UpgradePurse()
+{
+	// Remove money and upgrade purse.
+	if (purse->GetGold() >= purse->GetUpgradePrice())
+	{
+		purse->Upgrade();
+		purse->AdjustGold(-purse->GetUpgradePrice());
+	}
+	else
+		sysLog.Log("ERROR: Attempted to upgrade purse without the required money amount!");
 }
 
 void Inventory::AdjustResource(const std::string resourceName, const int quantity)

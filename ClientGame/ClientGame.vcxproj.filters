@@ -192,6 +192,18 @@
     <ClCompile Include="AIEvaluator_Trade.cpp">
       <Filter>SourceCode\Code\AI\Evaluators</Filter>
     </ClCompile>
+    <ClCompile Include="AIEvaluator_UpgradePurse.cpp">
+      <Filter>SourceCode\Code\AI\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGoal_UpgradePurse.cpp">
+      <Filter>SourceCode\Code\AI\Goals</Filter>
+    </ClCompile>
+    <ClCompile Include="AIEvaluator_UpgradeBag.cpp">
+      <Filter>SourceCode\Code\AI\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGoal_UpgradeBag.cpp">
+      <Filter>SourceCode\Code\AI\Goals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -291,6 +303,18 @@
     </ClInclude>
     <ClInclude Include="AIEvaluator_Trade.h">
       <Filter>SourceCode\Headers\AI\Evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="AIEvaluator_UpgradePurse.h">
+      <Filter>SourceCode\Headers\AI\Evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGoal_UpgradePurse.h">
+      <Filter>SourceCode\Headers\AI\Goals</Filter>
+    </ClInclude>
+    <ClInclude Include="AIEvaluator_UpgradeBag.h">
+      <Filter>SourceCode\Headers\AI\Evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGoal_UpgradeBag.h">
+      <Filter>SourceCode\Headers\AI\Goals</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

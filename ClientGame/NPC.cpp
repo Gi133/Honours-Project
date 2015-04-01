@@ -119,6 +119,8 @@ void NPC::GenerateBias()
 	biasPatience = 0.0f; // 0.0f = Unlimited
 	biasTrade = 0.6f;
 	biasFear = 0.2f;
+	biasBagUpgrade = 1.0f;
+	biasPurseUpgrade = 1.0f;
 }
 
 void NPC::QueueMoveToCity(std::weak_ptr<City> _city)
@@ -134,4 +136,14 @@ void NPC::QueueTrade()
 void NPC::AddMoveToCity(std::weak_ptr<City> _city)
 {
 	aiBrain->Add_MoveToCity(_city);
+}
+
+void NPC::AddGoal_UpgradePurse()
+{
+	aiBrain->Add_UpgradePurse();
+}
+
+void NPC::AddGoal_UpgradeBag()
+{
+	aiBrain->Add_UpgradeBag();
 }

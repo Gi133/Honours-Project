@@ -11,7 +11,7 @@ namespace
 
 InventoryBag::InventoryBag(const bool isCity /* = false */)
 {
-	bagUpgradeLevel = 0;
+	bagUpgradeLevel = 1;
 	bagMaxSpaceBase = 0;
 	bagMaxUpgradeLevel = 0;
 	bagUpgradeBasePrice = 0;
@@ -177,12 +177,14 @@ int InventoryBag::GetResourceQuantity(const int iterator)
 	return 0;
 }
 
+bool InventoryBag::CheckBagUpgradeable()
+{
+	return (bagUpgradeLevel < bagMaxUpgradeLevel);
+}
+
 int InventoryBag::GetBagUpradeCost()
 {
-	if (CheckBagUpgradeable())
-		return (bagUpgradeLevel * bagUpgradeBasePrice);
-	else
-		return 0;
+	return (bagUpgradeLevel * bagUpgradeBasePrice);
 }
 
 void InventoryBag::UpgradeBag()

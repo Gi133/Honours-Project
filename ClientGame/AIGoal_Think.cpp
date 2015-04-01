@@ -2,6 +2,10 @@
 #include "AIGoal_Think.h"
 #include "AIGoal_Trade.h"
 #include "AIEvaluator_Trade.h"
+#include "AIGoal_UpgradePurse.h"
+#include "AIGoal_UpgradeBag.h"
+#include "AIEvaluator_UpgradeBag.h"
+#include "AIEvaluator_UpgradePurse.h"
 
 AIGoal_Think::AIGoal_Think(std::weak_ptr<NPC> _owner) :AIGoalComposite(_owner, GoalThink)
 {
@@ -18,6 +22,14 @@ void AIGoal_Think::SetupEvaluators()
 	std::shared_ptr<AIEvaluator_Trade> evaluatorTrade;
 	evaluatorTrade.reset(new AIEvaluator_Trade(owner.lock()->GetBiasTrade()));
 	evaluators.push_back(std::move(evaluatorTrade));
+
+	std::shared_ptr<AIEvaluator_UpgradeBag> evaluatorBagUpgrade;
+	evaluatorBagUpgrade.reset(new AIEvaluator_UpgradeBag(owner.lock()->GetBiasBagUpgrade()));
+	evaluators.push_back(std::move(evaluatorBagUpgrade));
+
+	std::shared_ptr<AIEvaluator_UpgradePurse> evaluatorPurseUpgrade;
+	evaluatorPurseUpgrade.reset(new AIEvaluator_UpgradePurse(owner.lock()->GetBiasPurseUpgrade()));
+	evaluators.push_back(std::move(evaluatorPurseUpgrade));
 }
 
 void AIGoal_Think::CalculateGoal()
@@ -108,5 +120,19 @@ void AIGoal_Think::Add_MoveToCity(std::weak_ptr<City> _destination)
 {
 	std::unique_ptr<AIGoal_MoveToCity> newGoal;
 	newGoal.reset(new AIGoal_MoveToCity(owner, _destination));
+	subgoals.push_front(std::move(newGoal));
+}
+
+void AIGoal_Think::Add_UpgradePurse()
+{
+	std::unique_ptr<AIGoal_UpgradePurse> newGoal;
+	newGoal.reset(new AIGoal_UpgradePurse(owner));
+	subgoals.push_front(std::move(newGoal));
+}
+
+void AIGoal_Think::Add_UpgradeBag()
+{
+	std::unique_ptr<AIGoal_UpgradeBag> newGoal;
+	newGoal.reset(new AIGoal_UpgradeBag(owner));
 	subgoals.push_front(std::move(newGoal));
 }

@@ -9,9 +9,12 @@ private:
 
 	int numPerLine; // Used to structure the inventory string.
 	unsigned int maxBagNumber;
+	unsigned int lowestBagUpgradePrice;
 
 	std::vector<std::shared_ptr<InventoryBag>> bagContainer;
 	std::unique_ptr<InventoryPurse> purse;
+
+	std::weak_ptr<InventoryBag> lowestUpgradePriceBagPtr;
 
 	void LoadDefauts();
 
@@ -29,6 +32,14 @@ public:
 
 	// Bag Upgrading.
 	unsigned int GetBagUpgradeCost(); // Return the lowest price required to upgrade a bag.
+	bool GetBagUpgradeAvailable();
+	void UpgradeBag();
+
+	// Purse Upgrading
+	unsigned int GetPurseUpgradeCost() { return purse->GetUpgradePrice(); }
+	unsigned int GetPurseUpgradeLevel() { return purse->GetUpgradeLevel(); }
+	unsigned int GetPurseMaxUpgradeLevel() { return purse->GetMaxUpgradeLevel(); }
+	void UpgradePurse();
 
 	// Resource Management
 	void AdjustResource(const std::string resourceName, const int quantity);

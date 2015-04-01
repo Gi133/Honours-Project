@@ -162,12 +162,20 @@ UIElementSettings =
 }
 
 -- Bag and Inventory Settings
-BagSettings = 
+InventoryBagSettings = 
 {
 	bagMaxSpaceBase = 100,
 	bagMaxUpgradeLevel = 10,
-	bagUpgradeBasePrice = 50,
+	bagUpgradeBasePrice = 1000,
 	bagUpgradeLevelSpace = 20,
+}
+
+InventoryPurseSettings = 
+{
+	baseUpgradePrice = 500,
+	upgradeCapIncrease = 5000,
+	upgradePriceIncrease = 1000,
+	maxUpgradeLevel = 10,
 }
 
 InventorySettings = 
