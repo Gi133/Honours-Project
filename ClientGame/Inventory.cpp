@@ -69,7 +69,7 @@ unsigned int Inventory::GetBagUpgradeCost()
 		{
 			lowestBagUpgradePrice = bagPrice;
 			lowestUpgradePriceBagPtr = bagPtr;
-		}	
+		}
 	}
 
 	return lowestBagUpgradePrice;

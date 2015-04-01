@@ -32,7 +32,7 @@ InventoryPurse::~InventoryPurse()
 
 unsigned int InventoryPurse::GetUpgradePrice()
 {
-	return baseUpgradePrice +  (upgradePriceIncrease * (upgradeLevel - 1));
+	return baseUpgradePrice + (upgradePriceIncrease * (upgradeLevel - 1));
 }
 
 void InventoryPurse::Upgrade()
