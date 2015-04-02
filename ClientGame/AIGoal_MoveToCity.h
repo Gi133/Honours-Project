@@ -24,4 +24,5 @@ public:
 
 	std::string GetGoalString();
 	std::string GetGoalProgressString();
+	unsigned int GetGoalProgress();
 };

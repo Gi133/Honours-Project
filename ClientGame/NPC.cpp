@@ -13,6 +13,7 @@ NPC::NPC()
 	baseMoveSpeed = 0;
 	calculatedMoveSpeed = 0;
 	aiControlled = true;
+	buyPrice = sellPrice = 0;
 
 	LoadDefaults();
 	GenerateName();

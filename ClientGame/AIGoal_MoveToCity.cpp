@@ -81,3 +81,8 @@ std::string AIGoal_MoveToCity::GetGoalProgressString()
 {
 	return IntToString(ConvertProgresstoPercentage()) + "%";
 }
+
+unsigned int AIGoal_MoveToCity::GetGoalProgress()
+{
+	return ConvertProgresstoPercentage();
+}

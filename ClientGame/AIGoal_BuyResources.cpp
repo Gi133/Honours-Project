@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "AIGoal_BuyResources.h"
 
-AIGoal_BuyResources::AIGoal_BuyResources(std::weak_ptr<NPC> _owner, const std::string _resourceName, const unsigned int _quantity) :
-	AIGoal(_owner, GoalBuyResource)
+AIGoal_BuyResources::AIGoal_BuyResources(std::weak_ptr<NPC> _owner, const std::string _resourceName, 
+	const unsigned int _quantity, const unsigned int _expectedPrice) :AIGoal(_owner, GoalBuyResource)
 {
 	resourceName = _resourceName;
 	resourceIterator = theResourceManager.GetResourceIterator(_resourceName);
 	quantity = _quantity;
+	expectedPrice = _expectedPrice;
 }
 
 AIGoal_BuyResources::~AIGoal_BuyResources()
@@ -36,19 +37,28 @@ int AIGoal_BuyResources::Process()
 			// Get resource price at location.
 			auto resourcePrice = theResourceManager.GetResourceSellingPriceAtCity(owner.lock()->GetCurrentCityPtr(), resourceName);
 
-			// Add quantity to NPC.
-			owner.lock()->GetInventory().lock()->AdjustResource(resourceName, quantity);
+			// Check Prices, if buy price is less or same as expected.
+			if (resourcePrice <= expectedPrice)
+			{
+				// Add quantity to NPC.
+				owner.lock()->GetInventory().lock()->AdjustResource(resourceName, quantity);
 
-			// Subtract Resources from city.
-			owner.lock()->GetCurrentCityPtr().lock()->GetInventory().lock()->AdjustResource(resourceName, -quantity);
+				// Subtract Resources from city.
+				owner.lock()->GetCurrentCityPtr().lock()->GetInventory().lock()->AdjustResource(resourceName, -quantity);
 
-			// Subtract money to NPC.
-			owner.lock()->GetInventory().lock()->AdjustGold(-quantity*resourcePrice);
+				// Subtract money to NPC.
+				owner.lock()->GetInventory().lock()->AdjustGold(-quantity*resourcePrice);
 
-			goalStatus = COMPLETED;
+				// Save the price.
+				owner.lock()->SetBuyPrice(resourcePrice);
+
+				goalStatus = COMPLETED;
+			}
+			else
+				goalStatus = FAILED;
 		}
 		else
-			goalStatus = ACTIVE;
+			goalStatus = FAILED;
 
 		tick = false;
 	}

@@ -8,12 +8,13 @@ private:
 	std::vector<std::weak_ptr<City>> neighbors;
 
 	std::string resourceName, cityNameStart, cityNameFinish;
-	unsigned int quantity;
+	unsigned int quantity, buyPrice;
 
 	unsigned int totalProgress;
 
 	int FindTrade();
-	void QueueTrade(std::weak_ptr<City> _start, std::weak_ptr<City> _finish, std::string _resourceName, unsigned int _quantity);
+	int FindTradeForResourcesInBag();
+	void QueueTrade(const ResourceManager::TradingStruct _trade, const unsigned int _quantity);
 
 	void PopulateNeighbors();
 

@@ -255,7 +255,8 @@ void City::ReceiveMessage(Message *message)
 	{
 		// For population.
 		percentage = population / 100;
-		change = MathUtil::RandomIntInRange((percentage * minPopulationChange), (percentage * maxPopulationChange));
+		if (percentage > 0)
+			change = MathUtil::RandomIntInRange((percentage * minPopulationChange), (percentage * maxPopulationChange));
 
 		// Randomly add to resource stock and adjust population.
 		if (MathUtil::RandomBool())
@@ -268,8 +269,11 @@ void City::ReceiveMessage(Message *message)
 		{
 			current = inventory->GetTotalResourceAmount(i);
 			percentage = current / 100;
-			change = MathUtil::RandomIntInRange((percentage * minResourceChange), (percentage * maxResourceChange));
-			inventory->AdjustResource(0, i, -change);
+			if (percentage > 0)
+			{
+				change = MathUtil::RandomIntInRange((percentage * minResourceChange), (percentage * maxResourceChange));
+				inventory->AdjustResource(0, i, -change);
+			}
 		}
 
 		// Check if city type needs to change.

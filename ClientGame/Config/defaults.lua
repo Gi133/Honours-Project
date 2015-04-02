@@ -15,6 +15,11 @@ WindowSettings =
 	enableDebugGrid = 1,
 }
 
+DebugSettings = 
+{
+	maxCounter = 1000,
+}
+
 LayerNames = 
 {
 	UI = "UILayer",
@@ -202,7 +207,7 @@ NPCSettings =
 -- Game Settings
 GameSettings = 
 {
-	startingNPCNumber = 2,
+	startingNPCNumber = 10,
 }
 
 -- AI Goal Settings

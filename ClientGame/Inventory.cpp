@@ -89,7 +89,7 @@ bool Inventory::GetBagUpgradeAvailable()
 void Inventory::UpgradeBag()
 {
 	// Remove money and upgrade bag.
-	if (purse->GetGold() >= lowestBagUpgradePrice)
+	if (static_cast<unsigned int>(purse->GetGold()) >= lowestBagUpgradePrice)
 	{
 		purse->AdjustGold(-lowestBagUpgradePrice);
 		lowestUpgradePriceBagPtr.lock()->UpgradeBag();
@@ -101,7 +101,7 @@ void Inventory::UpgradeBag()
 void Inventory::UpgradePurse()
 {
 	// Remove money and upgrade purse.
-	if (purse->GetGold() >= purse->GetUpgradePrice())
+	if (static_cast<unsigned int>(purse->GetGold()) >= purse->GetUpgradePrice())
 	{
 		purse->Upgrade();
 		purse->AdjustGold(-purse->GetUpgradePrice());
@@ -191,6 +191,30 @@ int Inventory::GetTotalResourceAmount(const std::string resourceName)
 	return total;
 }
 
+bool Inventory::GetEmpty()
+{
+	for (int i = 0; i < theResourceManager.GetResourceNames().size(); i++)
+	{
+		if (GetTotalResourceAmount(i))
+			return false;
+	}
+	return true;
+}
+
+std::map<std::string, int> Inventory::GetAllResourcesFiltered()
+{
+	std::map<std::string, int> output;
+	auto resourceNames = theResourceManager.GetResourceNames();
+
+	for (int i = 0; i < resourceNames.size(); i++)
+	{
+		if (GetTotalResourceAmount(i) > 0)
+			output.emplace(std::pair<std::string, int>(resourceNames.at(i), GetTotalResourceAmount(i)));
+	}
+
+	return output;
+}
+
 int Inventory::GetAvailableSpace() const
 {
 	auto emptySpace = 0;
@@ -205,7 +229,8 @@ std::string Inventory::GetInventoryString()
 {
 	std::string inventoryString = "";
 
-	inventoryString += "Gold: " + IntToString(purse->GetGold()) + " / " + IntToString(purse->GetGoldLimit()) + "\n";
+	inventoryString += "Gold: " + IntToString(purse->GetGold()) + " / " + IntToString(purse->GetGoldLimit()) + " \t " 
+		+ "Space: " + IntToString(GetAvailableSpace()) + "\n";
 
 	// Assemble the string.
 	for (int i = 0; i < theResourceManager.GetTotalResources(); i++)

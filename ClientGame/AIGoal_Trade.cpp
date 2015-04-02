@@ -45,8 +45,19 @@ void AIGoal_Trade::Activate()
 	// Clear the subgoal list.
 	RemoveAllSubgoals();
 
-	// Pick a trade.
-	goalStatus = FindTrade();
+	// Check if the inventory is empty.
+	// This also means that NPCs will prioritize emptying their inventory before getting another trade.
+	if (!owner.lock()->GetInventory().lock()->GetEmpty())
+	{
+		// Inventory was not empty so assume that one of the previous goals failed.
+		// Find a trade for the resources in inventory.
+		goalStatus = FindTradeForResourcesInBag();
+	}
+	else
+	{
+		// Pick a trade.
+		goalStatus = FindTrade();
+	}
 }
 
 void AIGoal_Trade::Terminate()
@@ -57,8 +68,7 @@ void AIGoal_Trade::Terminate()
 std::string AIGoal_Trade::GetGoalString()
 {
 	return "Trading " + IntToString(quantity) + " units of " + resourceName + "\n" + cityNameStart + " -> " +
-		cityNameFinish + "\n" + subgoals.front()->GetGoalString() + "(" +
-		subgoals.front()->GetGoalProgressString() + ")";
+		cityNameFinish + "\n" + subgoals.front()->GetGoalString();
 }
 
 std::string AIGoal_Trade::GetGoalProgressString()
@@ -68,12 +78,12 @@ std::string AIGoal_Trade::GetGoalProgressString()
 }
 
 int AIGoal_Trade::FindTrade()
-{
+{	
 	unsigned int quantity = 0;
-	std::vector<ResourceManager::TradingStruct> tradeRoutes;
 
 	// Get trade routes from current city.
-	tradeRoutes = theResourceManager.GetTradeRoutesFromCity(owner.lock()->GetCurrentCityPtr(), owner.lock()->GetBiasProfitability(), owner.lock()->GetBiasPatience(), owner.lock()->GetBiasFear());
+	auto tradeRoutes = theResourceManager.GetTradeRoutesFromCity(owner.lock()->GetCurrentCityPtr(), owner.lock()->GetBiasProfitability(),
+		owner.lock()->GetBiasPatience(), owner.lock()->GetBiasFear());
 
 	if (!tradeRoutes.empty())
 	{
@@ -89,9 +99,7 @@ int AIGoal_Trade::FindTrade()
 		else
 			quantity = maxTradeGold;
 
-		QueueTrade(trade.start, trade.finish, trade.resource, quantity);
-
-		return ACTIVE;
+		QueueTrade(trade, quantity);
 	}
 	else
 	{
@@ -121,44 +129,115 @@ int AIGoal_Trade::FindTrade()
 			else
 				quantity = maxTradeGold;
 
-			QueueTrade(trade.start, trade.finish, trade.resource, quantity);
+			QueueTrade(trade, quantity);
+		}
+	}
+
+	return ACTIVE;
+}
+
+int AIGoal_Trade::FindTradeForResourcesInBag()
+{
+	bool tradeFound = false;
+
+	// Get a map of all the resources in bag.
+	auto resourcesInBag = owner.lock()->GetInventory().lock()->GetAllResourcesFiltered();
+
+	// Check if you can sell resources in current city.
+	for (std::map<std::string, int>::iterator i = resourcesInBag.begin(); i != resourcesInBag.end(); ++i)
+	{
+		// Calculate profitability.
+		auto priceAtCity = theResourceManager.GetResourceSellingPriceAtCity(owner.lock()->GetCurrentCityPtr(), i->first);
+		auto profitability = priceAtCity - owner.lock()->GetBuyPrice();
+		if (profitability >= owner.lock()->GetBiasProfitability())
+		{
+			std::unique_ptr<AIGoal_SellResources> newGoal;
+			newGoal.reset(new AIGoal_SellResources(owner, i->first, i->second, priceAtCity));
+			subgoals.push_back(std::move(newGoal));
+			tradeFound = true;
+		}
+	}
+
+	if (!tradeFound)
+	{
+		// NO TRADE FOUND
+		auto tradeRoutes = theResourceManager.GetSpecificTradeRoutesFromCity(owner.lock()->GetCurrentCityPtr(), resourcesInBag,
+			owner.lock()->GetBiasProfitability(), owner.lock()->GetBiasPatience(), owner.lock()->GetBiasFear());
+
+		if (!tradeRoutes.empty())
+		{
+			// Pick random trade route and queue trade.
+			auto trade = tradeRoutes.at(MathUtil::RandomIntInRange(0, tradeRoutes.size()));
+
+			// Calculate quantity.
+			unsigned int maxTradeGold = owner.lock()->GetInventory().lock()->GetGold() / theResourceManager.GetResourceSellingPriceAtCity(trade.start, trade.resource);
+			unsigned int maxTradeInventory = owner.lock()->GetInventory().lock()->GetAvailableSpace();
+
+			if (maxTradeGold > maxTradeInventory)
+				quantity = maxTradeInventory;
+			else
+				quantity = maxTradeGold;
+
+			QueueTrade(trade, quantity);
 
 			return ACTIVE;
 		}
+		else // No trades found
+		{
+			// Check if there is space in bags.
+			if (owner.lock()->GetInventory().lock()->GetAvailableSpace() > 0)
+				tradeFound = FindTrade();
+			if (tradeFound)
+				return ACTIVE;
+			else
+			{
+				// If no trade routes found at all (tradeFound == false), active "Holy Shit" mode and try to sell inventory at whatever price.
+				for (std::map<std::string, int>::iterator i = resourcesInBag.begin(); i != resourcesInBag.end(); ++i)
+				{
+					// Calculate profitability.
+					auto priceAtCity = theResourceManager.GetResourceSellingPriceAtCity(owner.lock()->GetCurrentCityPtr(), i->first);
+					
+					std::unique_ptr<AIGoal_SellResources> newGoal;
+					newGoal.reset(new AIGoal_SellResources(owner, i->first, i->second, priceAtCity));
+					subgoals.push_back(std::move(newGoal));
+				}
+			}
+		}
 	}
+	return ACTIVE;
 }
 
-void AIGoal_Trade::QueueTrade(std::weak_ptr<City> _start, std::weak_ptr<City> _finish, std::string _resourceName, unsigned int _quantity)
+void AIGoal_Trade::QueueTrade(const ResourceManager::TradingStruct _trade, const unsigned int _quantity)
 {
 	std::unique_ptr<AIGoal_MoveToCity> goalMove;
 	std::unique_ptr<AIGoal_BuyResources> goalBuy;
 	std::unique_ptr<AIGoal_SellResources> goalSell;
 
-	// Save variables.
-	resourceName = _resourceName;
+	// Save variables for goal strings
+	cityNameStart = _trade.start.lock()->GetName();
+	cityNameFinish = _trade.finish.lock()->GetName();
 	quantity = _quantity;
-	cityNameStart = _start.lock()->GetName();
-	cityNameFinish = _finish.lock()->GetName();
+	resourceName = _trade.resource;
 
-	if (owner.lock()->GetCityName() != _start.lock()->GetName()) // If start city isn't the current city, queue move to start.
+	if (owner.lock()->GetCityName() != cityNameStart) // If start city isn't the current city, queue move to start.
 	{
-		goalMove.reset(new AIGoal_MoveToCity(owner, _start));
+		goalMove.reset(new AIGoal_MoveToCity(owner, _trade.start));
 		QueueSubgoal(std::move(goalMove));
 		totalProgress++;
 	}
 
 	// Queue resource buy.
-	goalBuy.reset(new AIGoal_BuyResources(owner, resourceName, quantity));
+	goalBuy.reset(new AIGoal_BuyResources(owner, _trade.resource, _quantity, _trade.expectedBuyPrice));
 	QueueSubgoal(std::move(goalBuy));
 	totalProgress++;
 
 	// Queue move to finish.
-	goalMove.reset(new AIGoal_MoveToCity(owner, _finish));
+	goalMove.reset(new AIGoal_MoveToCity(owner, _trade.finish));
 	QueueSubgoal(std::move(goalMove));
 	totalProgress++;
 
 	// Queue Sell Resources.
-	goalSell.reset(new AIGoal_SellResources(owner, resourceName, quantity));
+	goalSell.reset(new AIGoal_SellResources(owner, _trade.resource, _quantity, _trade.expectedSellPrice));
 	QueueSubgoal(std::move(goalSell));
 	totalProgress++;
 }
@@ -170,5 +249,7 @@ void AIGoal_Trade::PopulateNeighbors()
 
 int AIGoal_Trade::ConvertProgressToPercentage()
 {
-	return (totalProgress - subgoals.size()) / totalProgress * 100;
+	auto totalGoals = (totalProgress - subgoals.size()) / totalProgress * 100;
+	auto currentGoalProgress = subgoals.front()->GetGoalProgress()/totalProgress;
+	return totalGoals + currentGoalProgress;
 }

@@ -45,6 +45,8 @@ public:
 	void AdjustResource(const std::string resourceName, const int quantity);
 	void SetResource(const std::string resourceName, const int quantity);
 	int GetTotalResourceAmount(const std::string resourceName);
+	bool GetEmpty(); // Return true if inventory is empty of items.
+	std::map<std::string, int> GetAllResourcesFiltered(); // Return map<string, int> of all non-zero resources in the inventory.
 	std::string GetInventoryString();
 
 	// Resource Management via Iterator.

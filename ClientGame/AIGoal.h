@@ -75,6 +75,7 @@ public:
 
 	virtual std::string GetGoalString() = 0;
 	virtual std::string GetGoalProgressString() { return "Not Applicable."; } // Default behavior.
+	virtual unsigned int GetGoalProgress() { return 0; }
 
 	virtual void AddSubgoal(std::unique_ptr<AIGoal>) { throw(std::runtime_error("Attempted to add subgoal to an atomic goal.")); }
 

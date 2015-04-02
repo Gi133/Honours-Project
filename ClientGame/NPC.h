@@ -14,6 +14,9 @@ private:
 
 	bool aiControlled;
 
+	// AI Memory values.
+	unsigned int sellPrice, buyPrice;
+
 	float biasProfitability; // Value showing how profitable the trade should be for the AI to think about taking it.
 	float biasPatience; // Value to show the distance the NPC is willing to travel for trades.
 	float biasTrade; // Value showing NPC bias to trade.
@@ -32,6 +35,12 @@ private:
 public:
 	NPC();
 	~NPC();
+
+	// AI Memory
+	void SetSellPrice(const unsigned int _sellPrice) { sellPrice = _sellPrice; }
+	void SetBuyPrice(const unsigned int _buyPrice) { buyPrice = _buyPrice; }
+	unsigned int GetSellPrice() { return sellPrice; }
+	unsigned int GetBuyPrice() { return buyPrice; }
 
 	void Update();
 

@@ -21,6 +21,8 @@ void TheGameManager::Render()
 
 TheGameManager::TheGameManager()
 {
+	LoadDefaults();
+
 	theSwitchboard.SubscribeTo(this, "SpaceBar");
 	theSwitchboard.SubscribeTo(this, "E");
 	theSwitchboard.SubscribeTo(this, "Q");
@@ -73,9 +75,21 @@ void TheGameManager::Update(float dt)
 
 	if (!paused)
 	{
+#ifdef _DEBUG
+		totalTimerStart = std::chrono::high_resolution_clock::now();
+		loopCounter = 0;
+#endif
 		// Update all NPC AI.
 		for (auto i : npcContainer)
 			i->Update();
+
+#ifdef _DEBUG
+		loopCounter++;
+		totalTimerEnd = std::chrono::high_resolution_clock::now();
+		auto totalTimer = totalTimerEnd - totalTimerStart;
+
+		sysLog.Log("Total AI Time: " + IntToString(std::chrono::duration_cast<std::chrono::microseconds>(totalTimer).count()));
+#endif
 	}
 }
 
@@ -93,6 +107,13 @@ void TheGameManager::InitializeNPC()
 		i->SetupBrain();
 		i->SetAIControlled(true);
 	}
+}
+
+void TheGameManager::LoadDefaults()
+{
+#ifdef _DEBUG
+	maxCounter = thePrefs.GetInt("DebugSettings", "maxCounter");
+#endif // _DEBUG
 }
 
 void TheGameManager::AddNPC(const int numberToAdd)

@@ -7,6 +7,11 @@ class TheGameManager :
 	public GameManager
 {
 private:
+#ifdef _DEBUG
+	unsigned int loopCounter, maxCounter;
+	std::chrono::time_point<std::chrono::high_resolution_clock> totalTimerStart, totalTimerEnd;
+#endif // _DEBUG
+
 	bool paused;
 
 	std::unique_ptr<UIManager> uiManager;
@@ -16,6 +21,8 @@ private:
 	Vector2 mapSize, halfMapSize;
 
 	unsigned int activeNPCIterator;
+
+	void LoadDefaults();
 
 	void AddNPC(const int numberToAdd);
 	void InitializeNPC();

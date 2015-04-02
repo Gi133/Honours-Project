@@ -35,5 +35,4 @@ void AIEvaluator_UpgradePurse::SetGoal(std::weak_ptr<NPC> _owner)
 
 void AIEvaluator_UpgradePurse::LoadDefaults()
 {
-
 }

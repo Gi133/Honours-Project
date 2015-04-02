@@ -7,11 +7,12 @@ class AIGoal_SellResources :
 private:
 	std::string resourceName;
 	int resourceIterator, quantity;
+	unsigned int expectedPrice;
 
 	void ReceiveMessage(Message *message);
 
 public:
-	AIGoal_SellResources(std::weak_ptr<NPC> _owner, const std::string _resourceName, const unsigned int _quantity);
+	AIGoal_SellResources(std::weak_ptr<NPC> _owner, const std::string _resourceName, const unsigned int _quantity, const unsigned int _expectedPrice);
 	~AIGoal_SellResources();
 
 	void Activate();

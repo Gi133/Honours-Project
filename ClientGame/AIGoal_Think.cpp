@@ -34,6 +34,10 @@ void AIGoal_Think::SetupEvaluators()
 
 void AIGoal_Think::CalculateGoal()
 {
+#ifdef _DEBUG
+	auto timeStart = std::chrono::high_resolution_clock::now();
+#endif // _DEBUG
+
 	auto bestScore = 0.0f;
 	std::weak_ptr<AIGoalEvaluator> bestScoreGoal;
 
@@ -49,6 +53,11 @@ void AIGoal_Think::CalculateGoal()
 	}
 
 	bestScoreGoal.lock()->SetGoal(owner);
+
+#ifdef _DEBUG
+	auto timeDifference = std::chrono::high_resolution_clock::now() - timeStart;
+	sysLog.Log("Time " + owner.lock()->GetName() + "spent thinking: " + IntToString(std::chrono::duration_cast<std::chrono::microseconds>(timeDifference).count()));
+#endif // _DEBUG
 }
 
 bool AIGoal_Think::isNotFront(unsigned int _goalType) const
