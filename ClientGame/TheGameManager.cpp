@@ -85,10 +85,9 @@ void TheGameManager::Update(float dt)
 
 #ifdef _DEBUG
 		loopCounter++;
-		totalTimerEnd = std::chrono::high_resolution_clock::now();
-		auto totalTimer = totalTimerEnd - totalTimerStart;
-
-		sysLog.Log("Total AI Time: " + IntToString(std::chrono::duration_cast<std::chrono::microseconds>(totalTimer).count()));
+		auto timeDifference = std::chrono::high_resolution_clock::now() - totalTimerStart;
+		auto timeCount = std::chrono::duration_cast<std::chrono::milliseconds>(timeDifference).count();
+		sysLog.Log("Total AI Time: " + IntToString(timeCount));
 #endif
 	}
 }

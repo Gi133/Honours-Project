@@ -56,7 +56,8 @@ void AIGoal_Think::CalculateGoal()
 
 #ifdef _DEBUG
 	auto timeDifference = std::chrono::high_resolution_clock::now() - timeStart;
-	sysLog.Log("Time " + owner.lock()->GetName() + "spent thinking: " + IntToString(std::chrono::duration_cast<std::chrono::microseconds>(timeDifference).count()));
+	auto timeCount = std::chrono::duration_cast<std::chrono::microseconds>(timeDifference).count();
+	sysLog.Log("Time " + owner.lock()->GetName() + "spent thinking: " + IntToString(timeCount));
 #endif // _DEBUG
 }
 

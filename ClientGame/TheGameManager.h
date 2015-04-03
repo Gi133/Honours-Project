@@ -9,7 +9,7 @@ class TheGameManager :
 private:
 #ifdef _DEBUG
 	unsigned int loopCounter, maxCounter;
-	std::chrono::time_point<std::chrono::high_resolution_clock> totalTimerStart, totalTimerEnd;
+	std::chrono::time_point<std::chrono::high_resolution_clock> totalTimerStart;
 #endif // _DEBUG
 
 	bool paused;
