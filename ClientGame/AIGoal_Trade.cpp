@@ -22,20 +22,23 @@ int AIGoal_Trade::Process()
 	// If that is the case then queue an atomic goal to move it back to where it was supposed to be, else keep processing subgoals.
 	if (!subgoals.empty())
 	{
-		if ((GetFrontType() == GoalBuyResource) && (owner.lock()->GetCurrentCityPtr().lock()->GetName() != cityNameStart))
+		if ((cityNameStart != "") && (cityNameFinish != ""))
 		{
-			std::unique_ptr<AIGoal_MoveToCity> moveToBuyGoal;
-			moveToBuyGoal.reset(new AIGoal_MoveToCity(owner, theMap.CityNameToPtr(cityNameStart)));
-			AddSubgoal(std::move(moveToBuyGoal));
+			if ((GetFrontType() == GoalBuyResource) && (owner.lock()->GetCurrentCityPtr().lock()->GetName() != cityNameStart))
+			{
+				std::unique_ptr<AIGoal_MoveToCity> moveToBuyGoal;
+				moveToBuyGoal.reset(new AIGoal_MoveToCity(owner, theMap.CityNameToPtr(cityNameStart)));
+				AddSubgoal(std::move(moveToBuyGoal));
+			}
+			else if ((GetFrontType() == GoalSellResource) && (owner.lock()->GetCurrentCityPtr().lock()->GetName() != cityNameFinish))
+			{
+				std::unique_ptr<AIGoal_MoveToCity> moveToSellGoal;
+				moveToSellGoal.reset(new AIGoal_MoveToCity(owner, theMap.CityNameToPtr(cityNameFinish)));
+				AddSubgoal(std::move(moveToSellGoal));
+			}
 		}
-		else if ((GetFrontType() == GoalSellResource) && (owner.lock()->GetCurrentCityPtr().lock()->GetName() != cityNameFinish))
-		{
-			std::unique_ptr<AIGoal_MoveToCity> moveToSellGoal;
-			moveToSellGoal.reset(new AIGoal_MoveToCity(owner, theMap.CityNameToPtr(cityNameFinish)));
-			AddSubgoal(std::move(moveToSellGoal));
-		}
-		else
-			goalStatus = ProcessSubgoals();
+
+		goalStatus = ProcessSubgoals();
 	}
 	else
 		goalStatus = COMPLETED;
@@ -271,7 +274,7 @@ void AIGoal_Trade::PopulateNeighbors()
 
 int AIGoal_Trade::ConvertProgressToPercentage()
 {
-	if (!subgoals.empty())
+	if (!subgoals.empty() && (totalProgress > 0))
 	{
 		float totalGoals = (totalProgress - subgoals.size()) / totalProgress * 100;
 		float currentGoalProgress = subgoals.front()->GetGoalProgress() / totalProgress;
