@@ -6,6 +6,8 @@
 #include "AIGoal_UpgradeBag.h"
 #include "AIEvaluator_UpgradeBag.h"
 #include "AIEvaluator_UpgradePurse.h"
+#include "AIEvaluator_PurchaseBag.h"
+#include "AIGoal_PurchaseBag.h"
 
 AIGoal_Think::AIGoal_Think(std::weak_ptr<NPC> _owner) :AIGoalComposite(_owner, GoalThink)
 {
@@ -30,6 +32,10 @@ void AIGoal_Think::SetupEvaluators()
 	std::shared_ptr<AIEvaluator_UpgradePurse> evaluatorPurseUpgrade;
 	evaluatorPurseUpgrade.reset(new AIEvaluator_UpgradePurse(owner.lock()->GetBiasPurseUpgrade()));
 	evaluators.push_back(std::move(evaluatorPurseUpgrade));
+
+	std::shared_ptr<AIEvaluator_PurchaseBag> evaluatorBagPurchase;
+	evaluatorBagPurchase.reset(new AIEvaluator_PurchaseBag(owner.lock()->GetBiasBagPurchase()));
+	evaluators.push_back(std::move(evaluatorBagPurchase));
 }
 
 void AIGoal_Think::CalculateGoal()
@@ -130,6 +136,13 @@ void AIGoal_Think::Add_MoveToCity(std::weak_ptr<City> _destination)
 {
 	std::unique_ptr<AIGoal_MoveToCity> newGoal;
 	newGoal.reset(new AIGoal_MoveToCity(owner, _destination));
+	subgoals.push_front(std::move(newGoal));
+}
+
+void AIGoal_Think::Add_PurchaseBag()
+{
+	std::unique_ptr<AIGoal_PurchaseBag> newGoal;
+	newGoal.reset(new AIGoal_PurchaseBag(owner));
 	subgoals.push_front(std::move(newGoal));
 }
 

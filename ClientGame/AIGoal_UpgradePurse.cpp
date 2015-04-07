@@ -20,8 +20,22 @@ int AIGoal_UpgradePurse::Process()
 
 	if (tick)
 	{
-		owner.lock()->GetInventory().lock()->UpgradePurse();
-		goalStatus = COMPLETED;
+		int ownerGold = owner.lock()->GetInventory().lock()->GetGold();
+		int upgradeGold = owner.lock()->GetInventory().lock()->GetPurseUpgradeCost();
+
+		if (ownerGold > upgradeGold)
+		{
+			// Remove money
+			owner.lock()->GetInventory().lock()->AdjustGold(-upgradeGold);
+
+			// Upgrade purse.
+			owner.lock()->GetInventory().lock()->UpgradePurse();
+		}
+		else
+		{
+			sysLog.Log("AI ERROR : Could not upgrade purse.");
+			goalStatus = COMPLETED;
+		}
 	}
 
 	return goalStatus;

@@ -6,6 +6,7 @@ namespace
 	const auto purseStartingLimitFallBack = 10000;
 	const auto numPerLineFallBack = 2;
 	const auto maxBagNumberFallBack = 5;
+	const auto bagPurchaseCostFallBack = 5000;
 }
 
 Inventory::Inventory(const bool isCity /* = false */, int startingBagNumber /* = 1 */, int StartingGold /* = 0 */)
@@ -43,6 +44,9 @@ void Inventory::LoadDefauts()
 	if (!maxBagNumber)
 		maxBagNumber = maxBagNumberFallBack;
 
+	bagPurchaseCost = thePrefs.GetInt("InventorySettings", "bagPurchaseCost");
+	if (!bagPurchaseCost)
+		bagPurchaseCost = bagPurchaseCostFallBack;
 	purse->SetGoldLimit(purseStartingLimit);
 }
 
@@ -61,6 +65,7 @@ unsigned int Inventory::GetBagUpgradeCost()
 {
 	unsigned int bagPrice = 0;
 	lowestBagUpgradePrice = bagContainer.at(0)->GetBagUpradeCost();
+	lowestUpgradePriceBagPtr = bagContainer.at(0);
 
 	for (std::weak_ptr<InventoryBag> bagPtr : bagContainer)
 	{
@@ -88,26 +93,13 @@ bool Inventory::GetBagUpgradeAvailable()
 
 void Inventory::UpgradeBag()
 {
-	// Remove money and upgrade bag.
-	if (static_cast<unsigned int>(purse->GetGold()) >= lowestBagUpgradePrice)
-	{
-		purse->AdjustGold(-lowestBagUpgradePrice);
-		lowestUpgradePriceBagPtr.lock()->UpgradeBag();
-	}
-	else
-		sysLog.Log("ERROR: Attempted to upgrade bag without the required money amount!");
+	// Upgrade bag.
+	lowestUpgradePriceBagPtr.lock()->UpgradeBag();
 }
 
 void Inventory::UpgradePurse()
 {
-	// Remove money and upgrade purse.
-	if (static_cast<unsigned int>(purse->GetGold()) >= purse->GetUpgradePrice())
-	{
 		purse->Upgrade();
-		purse->AdjustGold(-purse->GetUpgradePrice());
-	}
-	else
-		sysLog.Log("ERROR: Attempted to upgrade purse without the required money amount!");
 }
 
 void Inventory::AdjustResource(const std::string resourceName, const int quantity)

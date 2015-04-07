@@ -46,6 +46,7 @@ public:
 		GoalBuyResource,
 		GoalUpgradePurse,
 		GoalUpgradeBag,
+		GoalPurchaseBag,
 	};
 
 	enum AIGOALSTATUS

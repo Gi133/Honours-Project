@@ -162,7 +162,7 @@ int ResourceManager::GetTradeProfitabilityBetween(std::weak_ptr<City> _cityStart
 }
 
 std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRoutesFromCity(const std::weak_ptr<City> _city, std::string _resourceName,
-	const int _profitabilityBias /* = 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /* = -1.0f */)
+	const unsigned int _moneyAvailable, const int _profitabilityBias /* = 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /* = -1.0f */)
 {
 	if (!averagePricesUpdated)
 		UpdateAveragePrices();
@@ -181,31 +181,35 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 	// Get price of item in city.
 	auto buyingPrice = GetResourceSellingPriceAtCity(_city, _resourceName);
 
-	// If buying price is below average then consider it a good sale.
-	if (buyingPrice <= averagePrice.at(GetResourceIterator(_resourceName)))
+	// Check that you can buy at least one unit of the resource.
+	if (_moneyAvailable >= buyingPrice)
 	{
-		// Check for trades by looking at neighbors starting with closest.
-		theMap.GetSortedNeighbors(std::ref(neighbors), _city, _maxDistance);
-		for (auto neighbor : neighbors)
+		// If buying price is below average then consider it a good sale.
+		if (buyingPrice <= averagePrice.at(GetResourceIterator(_resourceName)))
 		{
-			auto profitability = GetTradeProfitabilityBetween(_city, neighbor, _resourceName);
-			if (profitability >= _profitabilityBias)
+			// Check for trades by looking at neighbors starting with closest.
+			theMap.GetSortedNeighbors(std::ref(neighbors), _city, _maxDistance);
+			for (auto neighbor : neighbors)
 			{
-				// Check Threat.
-				auto threat = theMap.GetDangerRatingBetween(_city, neighbor);
-				if ((threat <= _maxThreat) || (_maxThreat <= -1.0f))
+				auto profitability = GetTradeProfitabilityBetween(_city, neighbor, _resourceName);
+				if (profitability >= _profitabilityBias)
 				{
-					TradingStruct tradeRoute;
+					// Check Threat.
+					auto threat = theMap.GetDangerRatingBetween(_city, neighbor);
+					if ((threat <= _maxThreat) || (_maxThreat <= -1.0f))
+					{
+						TradingStruct tradeRoute;
 
-					// Configure the trade route.
-					tradeRoute.start = _city;
-					tradeRoute.finish = neighbor;
-					tradeRoute.resource = _resourceName;
-					tradeRoute.expectedBuyPrice = GetResourceSellingPriceAtCity(_city, _resourceName);
-					tradeRoute.expectedSellPrice = GetResourceSellingPriceAtCity(neighbor, _resourceName);
+						// Configure the trade route.
+						tradeRoute.start = _city;
+						tradeRoute.finish = neighbor;
+						tradeRoute.resource = _resourceName;
+						tradeRoute.expectedBuyPrice = GetResourceSellingPriceAtCity(_city, _resourceName);
+						tradeRoute.expectedSellPrice = GetResourceSellingPriceAtCity(neighbor, _resourceName);
 
-					// Add to possible trade routes.
-					output.push_back(tradeRoute);
+						// Add to possible trade routes.
+						output.push_back(tradeRoute);
+					}
 				}
 			}
 		}
@@ -217,7 +221,7 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 }
 
 std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRoutesFromCity(const std::weak_ptr<City> _city, const unsigned int _resourceIt,
-	const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
+	const unsigned int _moneyAvailable, const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
 {
 	if (!averagePricesUpdated)
 		UpdateAveragePrices();
@@ -237,31 +241,35 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 	// Get price of item in city.
 	auto buyingPrice = GetResourceSellingPriceAtCity(_city, _resourceIt);
 
-	// If buying price is below average then consider it a good sale.
-	if (buyingPrice <= averagePrice.at(_resourceIt))
+	// Check that you can buy at least one unit of the resource.
+	if ((_moneyAvailable >= buyingPrice) && (buyingPrice != 0))
 	{
-		// Check for trades by looking at neighbors starting with closest.
-		theMap.GetSortedNeighbors(std::ref(neighbors), _city, _maxDistance);
-		for (auto neighbor : neighbors)
+		// If buying price is below average then consider it a good sale.
+		if (buyingPrice <= averagePrice.at(_resourceIt))
 		{
-			auto profitability = GetTradeProfitabilityBetween(_city, neighbor, _resourceIt);
-			if (profitability >= _profitabilityBias)
+			// Check for trades by looking at neighbors starting with closest.
+			theMap.GetSortedNeighbors(std::ref(neighbors), _city, _maxDistance);
+			for (auto neighbor : neighbors)
 			{
-				// Check Threat.
-				auto threat = theMap.GetDangerRatingBetween(_city, neighbor);
-				if ((threat <= _maxThreat) || (_maxThreat <= -1.0f))
+				auto profitability = GetTradeProfitabilityBetween(_city, neighbor, _resourceIt);
+				if (profitability >= _profitabilityBias)
 				{
-					TradingStruct tradeRoute;
+					// Check Threat.
+					auto threat = theMap.GetDangerRatingBetween(_city, neighbor);
+					if ((threat <= _maxThreat) || (_maxThreat <= -1.0f))
+					{
+						TradingStruct tradeRoute;
 
-					// Configure the trade route.
-					tradeRoute.start = _city;
-					tradeRoute.finish = neighbor;
-					tradeRoute.resource = resourceNames.at(_resourceIt);
-					tradeRoute.expectedBuyPrice = GetResourceSellingPriceAtCity(_city, _resourceIt);
-					tradeRoute.expectedSellPrice = GetResourceSellingPriceAtCity(neighbor, _resourceIt);
+						// Configure the trade route.
+						tradeRoute.start = _city;
+						tradeRoute.finish = neighbor;
+						tradeRoute.resource = resourceNames.at(_resourceIt);
+						tradeRoute.expectedBuyPrice = GetResourceSellingPriceAtCity(_city, _resourceIt);
+						tradeRoute.expectedSellPrice = GetResourceSellingPriceAtCity(neighbor, _resourceIt);
 
-					// Add to possible trade routes.
-					output.push_back(tradeRoute);
+						// Add to possible trade routes.
+						output.push_back(tradeRoute);
+					}
 				}
 			}
 		}
@@ -272,7 +280,8 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 	return output;
 }
 
-std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRoutesFromCity(const std::weak_ptr<City> _city, std::map<std::string, int> inventory, const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
+std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRoutesFromCity(const std::weak_ptr<City> _city, std::map<std::string, int> inventory, 
+	const unsigned int _moneyAvailable, const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
 {
 	if (!averagePricesUpdated)
 		UpdateAveragePrices();
@@ -294,31 +303,35 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 		// Get price of item in city.
 		auto buyingPrice = GetResourceSellingPriceAtCity(_city, resourceIt);
 
-		// If buying price is below average then consider it a good sale.
-		if (buyingPrice <= averagePrice.at(resourceIt))
+		// Check that you can buy at least one unit of the resource.
+		if ((_moneyAvailable >= buyingPrice) && (buyingPrice != 0))
 		{
-			// Check for trades by looking at neighbors starting with closest.
-			theMap.GetSortedNeighbors(std::ref(neighbors), _city, _maxDistance);
-			for (auto neighbor : neighbors)
+			// If buying price is below average then consider it a good sale.
+			if (buyingPrice <= averagePrice.at(resourceIt))
 			{
-				auto profitability = GetTradeProfitabilityBetween(_city, neighbor, resourceIt);
-				if (profitability >= _profitabilityBias)
+				// Check for trades by looking at neighbors starting with closest.
+				theMap.GetSortedNeighbors(std::ref(neighbors), _city, _maxDistance);
+				for (auto neighbor : neighbors)
 				{
-					// Check Threat.
-					auto threat = theMap.GetDangerRatingBetween(_city, neighbor);
-					if ((threat <= _maxThreat) || (_maxThreat <= -1.0f))
+					auto profitability = GetTradeProfitabilityBetween(_city, neighbor, resourceIt);
+					if (profitability >= _profitabilityBias)
 					{
-						TradingStruct tradeRoute;
+						// Check Threat.
+						auto threat = theMap.GetDangerRatingBetween(_city, neighbor);
+						if ((threat <= _maxThreat) || (_maxThreat <= -1.0f))
+						{
+							TradingStruct tradeRoute;
 
-						// Configure the trade route.
-						tradeRoute.start = _city;
-						tradeRoute.finish = neighbor;
-						tradeRoute.resource = resourceNames.at(resourceIt);
-						tradeRoute.expectedBuyPrice = GetResourceSellingPriceAtCity(_city, resourceIt);
-						tradeRoute.expectedSellPrice = GetResourceSellingPriceAtCity(neighbor, resourceIt);
+							// Configure the trade route.
+							tradeRoute.start = _city;
+							tradeRoute.finish = neighbor;
+							tradeRoute.resource = resourceNames.at(resourceIt);
+							tradeRoute.expectedBuyPrice = GetResourceSellingPriceAtCity(_city, resourceIt);
+							tradeRoute.expectedSellPrice = GetResourceSellingPriceAtCity(neighbor, resourceIt);
 
-						// Add to possible trade routes.
-						output.push_back(tradeRoute);
+							// Add to possible trade routes.
+							output.push_back(tradeRoute);
+						}
 					}
 				}
 			}
@@ -330,15 +343,15 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetSpecificTradeRou
 	return output;
 }
 
-std::vector<ResourceManager::TradingStruct> ResourceManager::GetTradeRoutesFromCity(const std::weak_ptr<City> _city, const int _profitabilityBias /*= 0*/,
-	const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
+std::vector<ResourceManager::TradingStruct> ResourceManager::GetTradeRoutesFromCity(const std::weak_ptr<City> _city,
+	const unsigned int _moneyAvailable, const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
 {
 	std::vector<TradingStruct> output;
 
 	for (unsigned int i = 0; i < resourceNames.size(); i++)
 	{
 		// For each resource, find potential trade routes.
-		auto potentialTrade = GetSpecificTradeRoutesFromCity(_city, i, _profitabilityBias, _maxDistance);
+		auto potentialTrade = GetSpecificTradeRoutesFromCity(_city, i, _moneyAvailable, _profitabilityBias, _maxDistance, _maxThreat);
 
 		// Add the potential trade routes into the output vector.
 		if (output.empty())
@@ -354,30 +367,37 @@ std::vector<ResourceManager::TradingStruct> ResourceManager::GetTradeRoutesFromC
 }
 
 std::vector<ResourceManager::TradingStruct> ResourceManager::GetTradeRoutesBetween(const std::weak_ptr<City> _cityBegin, const std::weak_ptr<City> _cityFinish,
-	const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
+const unsigned int _moneyAvailable, const int _profitabilityBias /*= 0*/, const float _maxDistance /*= 0.0f*/, float _maxThreat /*= -1.0f*/)
 {
 	std::vector<TradingStruct> output;
 
 	for (unsigned int resourceIt = 0; resourceIt < resourceNames.size(); resourceIt++)
 	{
-		auto profitability = GetTradeProfitabilityBetween(_cityBegin, _cityFinish, resourceIt);
-		if (profitability >= _profitabilityBias)
+		// Get price of item in city.
+		auto buyingPrice = GetResourceSellingPriceAtCity(_cityBegin, resourceIt);
+
+		// Check that you can buy at least one unit of the resource.
+		if ((_moneyAvailable >= buyingPrice) && (buyingPrice != 0))
 		{
-			TradingStruct tradeRoute;
-
-			auto threat = theMap.GetDangerRatingBetween(_cityBegin, _cityFinish);
-			if ((_maxThreat <= -1.0f) || (threat <= _maxThreat))
+			auto profitability = GetTradeProfitabilityBetween(_cityBegin, _cityFinish, resourceIt);
+			if (profitability >= _profitabilityBias)
 			{
-				// Ignore threat and add everything to the output.
-				// Configure the trade route.
-				tradeRoute.start = _cityBegin;
-				tradeRoute.finish = _cityFinish;
-				tradeRoute.resource = resourceNames.at(resourceIt);
-				tradeRoute.expectedBuyPrice = GetResourceSellingPriceAtCity(_cityBegin, resourceIt);
-				tradeRoute.expectedSellPrice = GetResourceSellingPriceAtCity(_cityFinish, resourceIt);
+				TradingStruct tradeRoute;
 
-				// Add to possible trade routes.
-				output.push_back(tradeRoute);
+				auto threat = theMap.GetDangerRatingBetween(_cityBegin, _cityFinish);
+				if ((_maxThreat <= -1.0f) || (threat <= _maxThreat))
+				{
+					// Ignore threat and add everything to the output.
+					// Configure the trade route.
+					tradeRoute.start = _cityBegin;
+					tradeRoute.finish = _cityFinish;
+					tradeRoute.resource = resourceNames.at(resourceIt);
+					tradeRoute.expectedBuyPrice = GetResourceSellingPriceAtCity(_cityBegin, resourceIt);
+					tradeRoute.expectedSellPrice = GetResourceSellingPriceAtCity(_cityFinish, resourceIt);
+
+					// Add to possible trade routes.
+					output.push_back(tradeRoute);
+				}
 			}
 		}
 	}

@@ -34,25 +34,31 @@ int AIGoal_SellResources::Process()
 		// Get resource price at location.
 		auto resourcePrice = theResourceManager.GetResourceSellingPriceAtCity(owner.lock()->GetCurrentCityPtr(), resourceName);
 		
-		// Check Prices, if sell price is higher or same as expected.
-		if (resourcePrice >= expectedPrice)
+		if (owner.lock()->GetInventory().lock()->GetTotalResourceAmount(resourceName) >= quantity)
 		{
-			// Subtract quantity from NPC.
-			owner.lock()->GetInventory().lock()->AdjustResource(resourceName, -quantity);
+			// Check Prices, if sell price is higher or same as expected.
+			if (resourcePrice >= expectedPrice)
+			{
+				// Subtract quantity from NPC.
+				owner.lock()->GetInventory().lock()->AdjustResource(resourceName, -quantity);
 
-			// Add Resources to city.
-			owner.lock()->GetCurrentCityPtr().lock()->GetInventory().lock()->AdjustResource(resourceName, quantity);
+				// Add Resources to city.
+				owner.lock()->GetCurrentCityPtr().lock()->GetInventory().lock()->AdjustResource(resourceName, quantity);
 
-			// Add money to NPC.
-			owner.lock()->GetInventory().lock()->AdjustGold(quantity*resourcePrice);
+				// Add money to NPC.
+				owner.lock()->GetInventory().lock()->AdjustGold(quantity*resourcePrice);
 
-			// Save the price.
-			owner.lock()->SetSellPrice(resourcePrice);
+				// Save the price.
+				owner.lock()->SetSellPrice(resourcePrice);
 
-			goalStatus = COMPLETED;
+				goalStatus = COMPLETED;
+			}
+			else
+				goalStatus = FAILED;
 		}
 		else
 			goalStatus = FAILED;
+		
 
 		tick = false;
 	}

@@ -10,6 +10,7 @@ private:
 	int numPerLine; // Used to structure the inventory string.
 	unsigned int maxBagNumber;
 	unsigned int lowestBagUpgradePrice;
+	unsigned int bagPurchaseCost;
 
 	std::vector<std::shared_ptr<InventoryBag>> bagContainer;
 	std::unique_ptr<InventoryPurse> purse;
@@ -28,7 +29,9 @@ public:
 	// Bag Limit
 	unsigned int GetBagNumber()const { return bagContainer.size(); }
 	unsigned int GetBagLimit()const { return maxBagNumber; }
+	bool GetBagNumberUpgradeAvailable()const { return (GetBagNumber() < maxBagNumber); }
 	void SetBagLimit(unsigned int _newBagLimit) { maxBagNumber = _newBagLimit; }
+	unsigned int GetBagPurchaseCost()const { return bagPurchaseCost; }
 
 	// Bag Upgrading.
 	unsigned int GetBagUpgradeCost(); // Return the lowest price required to upgrade a bag.

@@ -31,8 +31,10 @@ int AIGoal_BuyResources::Process()
 // 	else
 	if (tick)
 	{
+		auto availableSpace = owner.lock()->GetInventory().lock()->GetAvailableSpace();
+
 		// Check if NPC has enough space.
-		if (owner.lock()->GetInventory().lock()->GetAvailableSpace() >= quantity)
+		if (availableSpace >= quantity)
 		{
 			// Get resource price at location.
 			auto resourcePrice = theResourceManager.GetResourceSellingPriceAtCity(owner.lock()->GetCurrentCityPtr(), resourceName);

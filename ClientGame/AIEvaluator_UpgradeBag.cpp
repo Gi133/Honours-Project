@@ -13,16 +13,16 @@ AIEvaluator_UpgradeBag::~AIEvaluator_UpgradeBag()
 float AIEvaluator_UpgradeBag::CalculateDesirability(std::weak_ptr<NPC> _owner)
 {
 	auto desirability = 0.0f;
-	auto inventoryPtr = _owner.lock()->GetInventory();
 
 	// If there are still upgrades to be done.
-	if (inventoryPtr.lock()->GetBagUpgradeAvailable())
+	if (_owner.lock()->GetInventory().lock()->GetBagUpgradeAvailable())
 	{
-		if (static_cast<unsigned int>(inventoryPtr.lock()->GetGold()) >= inventoryPtr.lock()->GetBagUpgradeCost()) 
+		if (static_cast<unsigned int>(_owner.lock()->GetInventory().lock()->GetGold()) >= _owner.lock()->GetInventory().lock()->GetBagUpgradeCost())
 		{
-			float remainingMoney = inventoryPtr.lock()->GetGold() - inventoryPtr.lock()->GetBagUpgradeCost();
-
-			desirability = remainingMoney / inventoryPtr.lock()->GetBagUpgradeCost();
+			float upgradeCost = _owner.lock()->GetInventory().lock()->GetBagUpgradeCost();
+			float remainingMoney = _owner.lock()->GetInventory().lock()->GetGold() - upgradeCost;
+			
+			desirability = remainingMoney / upgradeCost;
 		}
 	}
 

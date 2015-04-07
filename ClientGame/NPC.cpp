@@ -96,6 +96,7 @@ float NPC::GetMoveSpeed()const
 void NPC::SetupBrain()
 {
 	aiBrain.reset(new AIGoal_Think(shared_from_this()));
+	aiControlled = true;
 }
 
 void NPC::QueueRandomMoveToCity()
@@ -118,10 +119,11 @@ void NPC::GenerateBias()
 	// Hardcoded but either extend class for traders and so on or use a personality manager.
 	biasProfitability = 1.0f;
 	biasPatience = 0.0f; // 0.0f = Unlimited
-	biasTrade = 0.6f;
+	biasTrade = 1.0f;
 	biasFear = 0.2f;
 	biasBagUpgrade = 1.0f;
 	biasPurseUpgrade = 1.0f;
+	biasBagPurchase = 1.0f;
 }
 
 void NPC::QueueMoveToCity(std::weak_ptr<City> _city)
@@ -147,4 +149,9 @@ void NPC::AddGoal_UpgradePurse()
 void NPC::AddGoal_UpgradeBag()
 {
 	aiBrain->Add_UpgradeBag();
+}
+
+void NPC::AddGoal_PurchaseBag()
+{
+	aiBrain->Add_PurchaseBag();
 }

@@ -20,8 +20,23 @@ int AIGoal_UpgradeBag::Process()
 
 	if (tick)
 	{
-		owner.lock()->GetInventory().lock()->UpgradeBag();
-		goalStatus = COMPLETED;
+		int ownerGold = owner.lock()->GetInventory().lock()->GetGold();
+		int upgradeCost = owner.lock()->GetInventory().lock()->GetBagUpgradeCost();
+
+		if (ownerGold > upgradeCost)
+		{
+			// Remove money.
+			owner.lock()->GetInventory().lock()->AdjustGold(-upgradeCost);
+
+			// Upgrade bag.
+			owner.lock()->GetInventory().lock()->UpgradeBag();
+			goalStatus = COMPLETED;
+		}
+		else
+		{
+			sysLog.Log("AI ERROR : Could not upgrade bag.");
+			goalStatus = FAILED;
+		}
 	}
 		
 	return goalStatus;

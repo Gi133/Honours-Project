@@ -9,7 +9,7 @@ WindowSettings =
 	height = 768,
 	antiAliasing = 1,
 	fullScreen = 0,
-	resizable = 1,
+	resizable = 0,
 	vsync = 1,
 	enableBackground = 1,
 	enableDebugGrid = 1,
@@ -188,6 +188,7 @@ InventorySettings =
 	purseStartingLimit = 10000,
 	numPerLine = 2,
 	maxBagNumber = 5,
+	bagPurchaseCost = 10000,
 }
 
 -- City Inventory Settings
@@ -207,7 +208,7 @@ NPCSettings =
 -- Game Settings
 GameSettings = 
 {
-	startingNPCNumber = 10,
+	startingNPCNumber = 1,
 }
 
 -- AI Goal Settings

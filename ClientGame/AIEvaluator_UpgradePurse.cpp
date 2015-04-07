@@ -12,16 +12,16 @@ AIEvaluator_UpgradePurse::~AIEvaluator_UpgradePurse()
 float AIEvaluator_UpgradePurse::CalculateDesirability(std::weak_ptr<NPC> _owner)
 {
 	auto desirability = 0.0f;
-	auto inventoryPtr = _owner.lock()->GetInventory();
 
 	// If there are still upgrades to be done.
-	if (inventoryPtr.lock()->GetPurseUpgradeLevel() < inventoryPtr.lock()->GetPurseMaxUpgradeLevel())
+	if (_owner.lock()->GetInventory().lock()->GetPurseUpgradeLevel() < _owner.lock()->GetInventory().lock()->GetPurseMaxUpgradeLevel())
 	{
-		if (static_cast<unsigned int>(inventoryPtr.lock()->GetGold()) >= inventoryPtr.lock()->GetPurseUpgradeCost())
+		if (static_cast<unsigned int>(_owner.lock()->GetInventory().lock()->GetGold()) >= _owner.lock()->GetInventory().lock()->GetPurseUpgradeCost())
 		{
-			float remainingMoney = inventoryPtr.lock()->GetGold() - inventoryPtr.lock()->GetPurseUpgradeCost();
+			float upgradeCost = _owner.lock()->GetInventory().lock()->GetPurseUpgradeCost();
+			int remainingMoney = _owner.lock()->GetInventory().lock()->GetGold() - upgradeCost;
 
-			desirability = remainingMoney / inventoryPtr.lock()->GetPurseUpgradeCost();
+			desirability = remainingMoney / static_cast<float>(upgradeCost);
 		}
 	}
 	

@@ -27,6 +27,8 @@ TheGameManager::TheGameManager()
 	theSwitchboard.SubscribeTo(this, "E");
 	theSwitchboard.SubscribeTo(this, "Q");
 	theSwitchboard.SubscribeTo(this, "Z");
+	theSwitchboard.SubscribeTo(this, "N");
+	theSwitchboard.SubscribeTo(this, "M");
 
 	mapSize = halfMapSize = Vector2(0.0f, 0.0f);
 	activeNPCIterator = 0;
@@ -99,13 +101,6 @@ void TheGameManager::InitializeNPC()
 		startingNPCNumber = startingNPCNumberFallBack;
 
 	AddNPC(startingNPCNumber);
-
-	// Enable NPC Brain.
-	for (auto i : npcContainer)
-	{
-		i->SetupBrain();
-		i->SetAIControlled(true);
-	}
 }
 
 void TheGameManager::LoadDefaults()
@@ -121,6 +116,7 @@ void TheGameManager::AddNPC(const int numberToAdd)
 	{
 		std::shared_ptr<NPC> newNPC;
 		newNPC.reset(new NPC);
+		newNPC->SetupBrain();
 		npcContainer.push_back(std::move(newNPC));
 	}
 }
@@ -146,6 +142,8 @@ void TheGameManager::ReceiveMessage(Message *message)
 
 			uiManager->SetCurrentNPC(npcContainer.at(activeNPCIterator));
 		}
+		else
+			uiManager->SetCurrentNPC(npcContainer.at(activeNPCIterator));
 	}
 
 	if (message->GetMessageName() == "Q")
@@ -159,11 +157,35 @@ void TheGameManager::ReceiveMessage(Message *message)
 
 			uiManager->SetCurrentNPC(npcContainer.at(activeNPCIterator));
 		}
+		else
+			uiManager->SetCurrentNPC(npcContainer.at(activeNPCIterator));
 	}
 
 	if (message->GetMessageName() == "Z")
 	{
 		sysLog.Log("Queuing random move to city.");
 		npcContainer.at(activeNPCIterator)->QueueRandomMoveToCity();
+	}
+
+	if (message->GetMessageName() == "N")
+	{
+		sysLog.Log("Adding a new NPC in the world");
+		AddNPC(1);
+		
+		// If it is the only NPC available, make sure to update the pointer for the UI.
+		if (npcContainer.size() == 1)
+			uiManager->SetCurrentNPC(npcContainer.at(0));
+	}
+
+	if (message->GetMessageName() == "M")
+	{
+		if (!npcContainer.empty())
+		{
+			sysLog.Log("Removing current active NPC");
+			npcContainer.erase(npcContainer.begin()+activeNPCIterator);
+
+			if (!npcContainer.empty())
+				uiManager->SetCurrentNPC(npcContainer.at(activeNPCIterator));
+		}
 	}
 }

@@ -37,6 +37,7 @@ unsigned int InventoryPurse::GetUpgradePrice()
 
 void InventoryPurse::Upgrade()
 {
+	upgradeLevel++;
 	goldLimit += upgradeCapIncrease;
 }
 

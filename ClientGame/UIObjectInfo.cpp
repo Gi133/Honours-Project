@@ -43,6 +43,23 @@ void UIObjectInfo::AdjustCurrentElements()
 		// Inventory
 		elementContainer.at(4)->SetContentText(currentNPC.lock()->GetInventory().lock()->GetInventoryString());
 	}
+	else
+	{
+		// Name
+		elementContainer.at(0)->SetContentText("N/A");
+
+		// Current City
+		elementContainer.at(1)->SetContentText("N/A");
+
+		// Task
+		elementContainer.at(2)->SetContentText("N/A");
+
+		// Task Progress
+		elementContainer.at(3)->SetContentText("N/A");
+
+		// Inventory
+		elementContainer.at(4)->SetContentText("N/A");
+	}
 }
 
 void UIObjectInfo::Update()

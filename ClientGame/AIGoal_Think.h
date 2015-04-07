@@ -37,6 +37,7 @@ public:
 	void AddTradeGoal();
 	void Add_UpgradePurse();
 	void Add_UpgradeBag();
+	void Add_PurchaseBag();
 
 	// Goal queue functions.
 	void Queue_MoveToCity(std::weak_ptr<City> _destination);

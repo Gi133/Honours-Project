@@ -182,12 +182,14 @@ cd ..\Tools\BuildScripts\
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/wd4716 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/wd4716 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="AIEvaluator_PurchaseBag.cpp" />
     <ClCompile Include="AIEvaluator_Trade.cpp" />
     <ClCompile Include="AIEvaluator_UpgradeBag.cpp" />
     <ClCompile Include="AIEvaluator_UpgradePurse.cpp" />
     <ClCompile Include="AIGoalComposite.cpp" />
     <ClCompile Include="AIGoal_BuyResources.cpp" />
     <ClCompile Include="AIGoal_MoveToCity.cpp" />
+    <ClCompile Include="AIGoal_PurchaseBag.cpp" />
     <ClCompile Include="AIGoal_SellResources.cpp" />
     <ClCompile Include="AIGoal_Think.cpp" />
     <ClCompile Include="AIGoal_Trade.cpp" />
@@ -224,6 +226,7 @@ cd ..\Tools\BuildScripts\
     <ResourceCompile Include="platforms\win\ClientGame.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AIEvaluator_PurchaseBag.h" />
     <ClInclude Include="AIEvaluator_Trade.h" />
     <ClInclude Include="AIEvaluator_UpgradeBag.h" />
     <ClInclude Include="AIEvaluator_UpgradePurse.h" />
@@ -231,6 +234,7 @@ cd ..\Tools\BuildScripts\
     <ClInclude Include="AIGoalComposite.h" />
     <ClInclude Include="AIGoal_BuyResources.h" />
     <ClInclude Include="AIGoal_MoveToCity.h" />
+    <ClInclude Include="AIGoal_PurchaseBag.h" />
     <ClInclude Include="AIGoal_SellResources.h" />
     <ClInclude Include="AIGoal_Think.h" />
     <ClInclude Include="AIGoal_Trade.h" />

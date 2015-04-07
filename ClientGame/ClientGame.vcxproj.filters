@@ -204,6 +204,12 @@
     <ClCompile Include="AIGoal_UpgradeBag.cpp">
       <Filter>SourceCode\Code\AI\Goals</Filter>
     </ClCompile>
+    <ClCompile Include="AIEvaluator_PurchaseBag.cpp">
+      <Filter>SourceCode\Code\AI\Evaluators</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGoal_PurchaseBag.cpp">
+      <Filter>SourceCode\Code\AI\Goals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="platforms\win\ClientGame.rc">
@@ -314,6 +320,12 @@
       <Filter>SourceCode\Headers\AI\Evaluators</Filter>
     </ClInclude>
     <ClInclude Include="AIGoal_UpgradeBag.h">
+      <Filter>SourceCode\Headers\AI\Goals</Filter>
+    </ClInclude>
+    <ClInclude Include="AIEvaluator_PurchaseBag.h">
+      <Filter>SourceCode\Headers\AI\Evaluators</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGoal_PurchaseBag.h">
       <Filter>SourceCode\Headers\AI\Goals</Filter>
     </ClInclude>
   </ItemGroup>

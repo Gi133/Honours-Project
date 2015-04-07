@@ -235,7 +235,7 @@ void City::ReceiveMessage(Message *message)
 
 	if (message->GetMessageName() == "CameraChange")
 	{
-		// Cheap way to initialise stuff after everything else is done.
+		// Cheap way to initialize stuff after everything else is done.
 		UpdateCityType();
 	}
 
@@ -246,7 +246,9 @@ void City::ReceiveMessage(Message *message)
 		{
 			current = inventory->GetTotalResourceAmount(i);
 			percentage = current / 100;
-			change = MathUtil::RandomIntInRange((percentage * minConsumptionPerDay), (percentage * maxConsumptionPerDay));
+			if (percentage > 0)
+				change = MathUtil::RandomIntInRange((percentage * minConsumptionPerDay), (percentage * maxConsumptionPerDay));
+			
 			inventory->AdjustResource(0, i, -change);
 		}
 	}

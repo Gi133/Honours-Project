@@ -23,6 +23,7 @@ private:
 	float biasFear; // Value showing how safe the AI will play.
 	float biasBagUpgrade; // Value showing how inclined the AI is at upgrading bags.
 	float biasPurseUpgrade; // Value showing how inclined the AI is at upgrade the purse.
+	float biasBagPurchase; // Value showing how inclined the AI is at purchasing a bag.
 
 	float baseMoveSpeed, calculatedMoveSpeed;
 	void LoadDefaults();
@@ -44,7 +45,7 @@ public:
 
 	void Update();
 
-	void SetupBrain();
+	void SetupBrain(); // NOTE: This can not be called in the constructor because of the way "shared_from_this" works. It has to be called manually.
 	void SetAIControlled(const bool _aiControlled) { aiControlled = _aiControlled; }
 	bool GetAIControlled() { return aiControlled; }
 
@@ -71,6 +72,7 @@ public:
 	float GetBiasFear() const { return biasFear; }
 	float GetBiasBagUpgrade() const { return biasBagUpgrade; }
 	float GetBiasPurseUpgrade() const { return biasPurseUpgrade; }
+	float GetBiasBagPurchase() const { return biasBagPurchase; }
 
 	void QueueRandomMoveToCity(); // Function to have the merchant move to a random city after current queued goals are done.
 	void QueueMoveToCity(std::weak_ptr<City> _city);
@@ -78,4 +80,5 @@ public:
 	void QueueTrade();
 	void AddGoal_UpgradePurse();
 	void AddGoal_UpgradeBag();
+	void AddGoal_PurchaseBag();
 };
