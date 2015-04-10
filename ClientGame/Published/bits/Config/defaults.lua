@@ -9,10 +9,15 @@ WindowSettings =
 	height = 768,
 	antiAliasing = 1,
 	fullScreen = 0,
-	resizable = 1,
+	resizable = 0,
 	vsync = 1,
 	enableBackground = 1,
 	enableDebugGrid = 1,
+}
+
+DebugSettings = 
+{
+	maxCounter = 1000,
 }
 
 LayerNames = 
@@ -106,14 +111,20 @@ LocationSettings =
 {
 	minStartThreat = 0,
 	maxStartThreat = 100,
+
 	maxThreatLow = 33,
 	maxThreatLowName = "Weak",
+	radiusThreatLow = 10.0,
 	colorThreatLow = "#C68C8C",
+
 	maxThreatMed = 66,
 	maxThreatMedName = "Dangerous",
+	radiusThreatMed = 20.0,
 	colorThreadMed = "#851818",
+
 	maxThreatHigh = 100,
 	maxThreatHighName = "Deadly",
+	radiusThreatHigh = 30.0,
 	colorThreatHigh = "#EE2C2C",
 }
 
@@ -121,6 +132,7 @@ LocationSettings =
 ResourceFileSettings = 
 {
 	resourceBasePriceLocation = "Resources/Files/resource_base_price.config",
+	priceMultiplier = 10,
 }
 
 -- UI Settings
@@ -155,18 +167,28 @@ UIElementSettings =
 }
 
 -- Bag and Inventory Settings
-BagSettings = 
+InventoryBagSettings = 
 {
 	bagMaxSpaceBase = 100,
 	bagMaxUpgradeLevel = 10,
-	bagUpgradeBasePrice = 50,
+	bagUpgradeBasePrice = 1000,
 	bagUpgradeLevelSpace = 20,
+}
+
+InventoryPurseSettings = 
+{
+	baseUpgradePrice = 500,
+	upgradeCapIncrease = 5000,
+	upgradePriceIncrease = 1000,
+	maxUpgradeLevel = 10,
 }
 
 InventorySettings = 
 {
 	purseStartingLimit = 10000,
 	numPerLine = 2,
+	maxBagNumber = 5,
+	bagPurchaseCost = 10000,
 }
 
 -- City Inventory Settings
@@ -180,14 +202,13 @@ NPCSettings =
 {
 	startingBagNumber = 1,
 	startingGoldNumber = 1000,
-
-	baseMoveSpeed = 100.0,
+	baseMoveSpeed = 20.0,
 }
 
 -- Game Settings
 GameSettings = 
 {
-	startingNPCNumber = 2,
+	startingNPCNumber = 1,
 }
 
 -- AI Goal Settings

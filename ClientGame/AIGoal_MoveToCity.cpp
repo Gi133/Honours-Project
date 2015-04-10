@@ -34,7 +34,7 @@ int AIGoal_MoveToCity::Process()
 	// Check if tick has passed, if so then add to progress and flip tick to false.
 	if (tick)
 	{
-		progress += owner.lock()->GetMoveSpeed() * theWorld.GetDT();
+		progress += owner.lock()->GetMoveSpeed();
 		tick = false;
 	}
 

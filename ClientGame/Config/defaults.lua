@@ -202,7 +202,7 @@ NPCSettings =
 {
 	startingBagNumber = 1,
 	startingGoldNumber = 1000,
-	baseMoveSpeed = 20.0,
+	baseMoveSpeed = 0.5,
 }
 
 -- Game Settings

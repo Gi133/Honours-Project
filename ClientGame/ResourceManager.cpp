@@ -129,7 +129,7 @@ unsigned int ResourceManager::GetResourceSellingPriceAtCity(std::weak_ptr<City> 
 	auto city = _city.lock();
 
 	// Formula:
-	// Resource Price =  BasePrice + ((Population / CurrentStock) / CurrentStock) * BasePrice * MULTIPLIER_CONSTANT(10);
+	// Resource Price =  BasePrice + ((Population / CurrentStock) / CurrentStock) * BasePrice * MULTIPLIER_CONSTANT(10));
 	auto deviation = static_cast<float>(city->GetPopulation()) / static_cast<float>(city->GetInventory().lock()->GetTotalResourceAmount(_resource))* resourceBasePrice * priceMultiplier;
 	return resourceBasePrice + deviation;
 }
@@ -140,8 +140,8 @@ unsigned int ResourceManager::GetResourceSellingPriceAtCity(std::weak_ptr<City> 
 	auto city = _city.lock();
 
 	// Formula:
-	// Resource Price =  BasePrice + ((Population / CurrentStock) / CurrentStock) * BasePrice * MULTIPLIER_CONSTANT(10);
-	auto deviation = static_cast<float>(city->GetPopulation()) / static_cast<float>(city->GetInventory().lock()->GetTotalResourceAmount(_resourceIt))* resourceBasePrice * priceMultiplier;
+	// Resource Price =  BasePrice + ((Population / CurrentStock) / CurrentStock) * BasePrice * MULTIPLIER_CONSTANT(10));
+	auto deviation = static_cast<float>(city->GetPopulation()) / static_cast<float>(city->GetInventory().lock()->GetTotalResourceAmount(_resourceIt)) * resourceBasePrice * priceMultiplier;
 	return resourceBasePrice + deviation;
 }
 
