@@ -1,16 +1,29 @@
-This file should contain: 
-    a) A basic setup for how to play your game
-    b) Any notes, stories, anecdotes, trials, or tribulations you wish to 
-       convey to someone who might one day download your game and not have 
-       you there to explain it to them. 
+Controls:
+Q : Switch to previous NPC
+E : Switch to next NPC
+N : Create a new NPC
+M : Remove current NPC
 
-Use the associated Attributions.txt for any assets or code you use that you 
-didn't create yourself from scratch. Be VERY careful with licensing. Creative 
-Commons is good, but make sure you give attribution. Open source code is also 
-OK, but make sure you understand the implications of the license.
+Information:
+The screen is split into three main windows, the top part of the screen shows the Game Time window where
+the runtime is shown converted into days, months and years. The left side of the application houses the
+information pane, this is where the current active NPC information is displayed. This includes its current
+goal, its progress through that goal as well as other information such as inventory, name and current city.
+Lastly, the majority of the window is dedicated to the map, this shows the randomly generated game world
+with the colours and sizes of the different shapes indicating whether they are a dungeon or dangerous area or
+a city.
 
-Replace any text in this file with your own information. It *will* be copied
-to your final distribution directory when you build in Release mode, so if you
-still have this placeholder text here, you'll look mighty foolish.
+Cities grow and change over time and this can be reflected on the map when they change between a Small City to
+a Normal or Large one. On the other hand, dungeon colours indicate how threatening that dungeon is which in turn
+changes the threat value it exterts and the radius of the area this value is influencing.
 
-And we wouldn't want that.
+Trading NPCs have various behaviours, their main goal is the acquisition of wealth and as such they have a minimum
+profit margin they will always attempt to achieve. If a trade that achieves this profit margin can not be found
+then they enter a state where they will keep checking trades until one is found. If a trade is found then they will
+proceed to queue the necessary subgoals to complete the trade, this includes buying the necessary resources if they
+are not already in their inventory and moving to the city to either buy or sell those resources.
+
+Due to the nature of the application, it features an extensive economy simulation. This does not take into account
+random events that may happen in real world situations but it does a good job at modeling the economy and trading that
+can potentially happen between multiple cities and how threats on the road between these cities can impact how favourably
+traders may see these routes. 

@@ -84,22 +84,15 @@ int MathUtil::RandomInt(int maximum)
 {
 	// Now featuring actual c++11
 
-	std::random_device randomDevice;
-	std::mt19937 generator(randomDevice());
-	std::uniform_int_distribution<int> distribution(0, maximum - 1);
-	return distribution(generator);
-
-	//  	static bool firstTime = true;
-	// 	if (firstTime)
-	//  	{
-	//  		firstTime = false;
-	//  		srand((int)time(NULL));
-	//  	}
-	//  	if (maximum <= 0)
-	//  	{
-	//  		return 0;
-	//  	}
-	//  	return (rand() % maximum);
+	if (maximum <= 0)
+		return 0;
+	else
+	{
+		std::random_device randomDevice;
+		std::mt19937 generator(randomDevice());
+		std::uniform_int_distribution<int> distribution(0, maximum - 1);
+		return distribution(generator);
+	}
 }
 
 int MathUtil::RandomIntInRange(int min, int max)
