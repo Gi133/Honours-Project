@@ -173,7 +173,7 @@
       <AdditionalIncludeDirectories>..\..\..\freetype-2.4.8\include;..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;WIN32;_LIB;FTGL_LIBRARY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeaderOutputFile>.\Release_ST/ftgl_static_lib.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\Release_ST/</AssemblerListingLocation>

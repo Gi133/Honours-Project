@@ -27,3 +27,7 @@ Due to the nature of the application, it features an extensive economy simulatio
 random events that may happen in real world situations but it does a good job at modeling the economy and trading that
 can potentially happen between multiple cities and how threats on the road between these cities can impact how favourably
 traders may see these routes. 
+
+Note:
+You may change any of the application settings by going into the bits/config/defaults.lua file. Almost all values are
+exposed there and there are hardcoded fallbacks incase any of them end up missing or having completely wrong values assigned.
