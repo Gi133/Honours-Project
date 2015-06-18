@@ -1,5 +1,9 @@
 # Honours-Project
-Goal Oriented and Personality AI for Background NPCs
+The application makes use of the Angel2D game engine and the AI was heavily influenced from other Goal Oriented Action Planning (GOAP) implementations such as the one found in the book "Programming Game AI by Example" by Mat Buckland.
+
+The research behind this project aimed to test whether such an AI could be used to power world NPCs in games such as Skyrim or other open world games that feature NPCs traveling the world. This would mean that the AI is acting in a more realistic way, trying to achieve its goals rather than falling back to predetermined and scripted paths and actions.
+
+The results showed that this AI is perfectly capable of doing so, with its computation time per goal being extremely low even when it is something complex such as the example given where the agents have to trade between towns in the game world dynamically.
 
 ## How to run
 Simply download the whole thing (yes, unfortunately), build and run. I currently don't own a website so I have nowhere to upload the executable itself.
